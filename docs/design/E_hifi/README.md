@@ -1,8 +1,9 @@
-# Nelio: Deliverable E, high-fidelity UI
+# Nelio: Deliverable E, high-fidelity UI (v2)
 
-The live design canvas is the source of truth: https://claude.ai/artifact/5rE8YAdMngxLvgf5GsdPKu
+Live canvas (source of truth): https://claude.ai/artifact/5rE8YAdMngxLvgf5GsdPKu
 
-- `canvas/`: a copy of every board (`*.dc.html`) and the canvas layout (`canvas.json`) as published on 12 Nov 2026. If someone edits the canvas by hand, the canvas wins.
-- `generator/`: the Python that produced the boards. `lib.py` holds the tokens and components, `p00…p12` build one canvas page each, `canvas.py` lays the pages out. Run `python3 run.py` (it writes to `/home/claude/nelio-design/project`; change `OUT` in `lib.py`).
+- `canvas/`: a copy of all 369 boards (`*.dc.html`) and `canvas.json` as published on 12 Nov 2026. If the canvas is edited by hand, the canvas wins.
+- `generator/`: the Python that builds every board. `lib2.py` = tokens, components, shells, skeletons, motion keyframes · `illus.py` = 32 illustrations · `frame.py` = state framework and page shells · `s00…s12` = one canvas page each · `canvas2.py` = layout. Run `python3 run2.py` (writes to `/home/claude/nelio-design2/project`; change `OUT` in `lib2.py`).
+- `v1_archive/`: the first (dark, pre-reference) generator, kept for history.
 
-122 boards: 94 screens (IDs from A §2) + foundations, interactive onboarding, 7 state sheets, 10 mobile and 9 light-theme boards. See `../H_handoff/SCREEN_INVENTORY.md`.
+Style: light default, flat colour (no gradients), references: ClipGen, Pop Site, Retro, lime savings site. Motion: GSAP (see `../H_handoff/MOTION.md`).

@@ -159,7 +159,7 @@ Prototype treatment key: **UI** = fully interactive with local state · **SIM** 
 |---|---|---|---|
 | D-01 | One major public launch after private beta. Unapproved integrations and generative video are never shown as working. | IN-*, CS-03, M-04, M-08 | GATED states |
 | D-02 | Responsive web + installable PWA first; React Native/Expo later (not a deliverable) | SY-01, all | UI |
-| D-03 | Dark / Light / System themes; dark default; full parity; persisted | ST-03, all | UI (functional toggle, persisted locally) |
+| D-03 | Dark / Light / System themes; ~~dark default~~ **light default (D-21)**; full parity; persisted | ST-03, all | UI (functional toggle, persisted locally) |
 | D-04 | 4 onboarding steps, all skippable, dashboard checklist | ON-01–05 | UI |
 | D-05 | Autonomous publishing requires explicit authorization | ON-04, APP-05, APP-02 | UI (authorization dialog) |
 | D-06 | YouTube + Instagram first, then TikTok + Facebook; availability gated by real app approval | IN-01, ON-03, PB-03, M-04 | UI: YouTube/Instagram "in development"; TikTok/Facebook "coming later"; all labelled mock |
@@ -175,6 +175,10 @@ Prototype treatment key: **UI** = fully interactive with local state · **SIM** 
 | D-16 | Agency workspaces, client login and direct approvals from launch | AG-*, CP-* | UI |
 | D-17 | Design first → explicit approval → then implementation | — | Process: ends with "DESIGN PHASE COMPLETE — AWAITING USER APPROVAL" |
 | D-18 | **AI provider confidentiality (user decision, 12 Nov 2026):** the product never names the AI, transcription or media vendors it uses (no "Claude", "Anthropic", "Deepgram", "Whisper", "FFmpeg", "Remotion", etc.) in UI, marketing, emails, notifications, errors or AI-generated text. The AI is presented as **Nelio AI**. Vendor names stay in internal docs and code only. ⚠ Legal review: data-protection law (e.g. Nigeria's NDPA, GDPR) may require a sub-processor list in the privacy policy; legal decides how that is handled. | All | UI copy rule |
+| D-19 | **Animation library: GSAP** (`gsap` + `@gsap/react` + ScrollTrigger). Motion spec in `H_handoff/MOTION.md`; respects reduced motion. (User decision, 12 Nov 2026) | All | Canvas uses CSS keyframes that mirror the GSAP timelines |
+| D-20 | **Flat colour, no gradients**, reaffirmed while adopting the user's reference designs (ClipGen, Pop Site, Retro, savings site) for layout, stickers, illustrations and type. (User, 12 Nov) | All | — |
+| D-21 | **Light theme is the default**; Dark stays available with full parity; System follows the OS. **Supersedes** the addendum's "dark default" (D-03) by user decision, 12 Nov 2026. | All, ST-03 | — |
+| D-22 | Every data screen is designed in Filled, Empty (with illustration) and Loading (skeleton) states, plus its specific states; every journey is a clickable flow. (User, 12 Nov) | All | 369 boards |
 
 ### 4.4 Autonomy & policy engine (PRD §6, ARCH §7)
 

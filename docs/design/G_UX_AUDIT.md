@@ -96,3 +96,24 @@ All text pairs meet WCAG AA (4.5:1). Light-theme status chips are close to the l
 ## 4. Recommendation
 
 The design is ready for review. Before implementation starts on the affected modules, do the E2 follow-up for G-01 (missing secondary surfaces) and a human visual pass for G-03. G-02, G-04, G-05, G-10 and G-11 are build rules and are recorded in the handoff (H).
+
+---
+
+# v2 audit addendum (12 Nov 2026, redesign in reference style)
+
+**Scope:** 369 boards on the redesigned canvas (light default, flat, reference-inspired).
+
+| # | Status | Finding |
+|---|---|---|
+| G-01 | **Closed** | All missing secondary surfaces are now drawn: emergency pause + resume confirm, command palette (3 states), account menu with surface switcher, agent Budget/Destinations/Runs tabs, calendar month view + drag, Strategist history, notification dropdown + push prompt, admin global-pause confirm, client portal Approved/Published tabs, approvals internal-review step. |
+| G-02 | Closed in design | Top bar hides credits for Editor/Viewer and Pause for Viewer (`topbar(role=…)`); Roles board adds “See credits” and “Pause agents” rows. |
+| G-03 | Open (lower risk) | Mobile boards are fixed 390×844; content heights estimated. Needs a human visual pass. |
+| G-05 | Improved | Pill tabs are now 40 px min (+4 px padding = 44 px target). |
+| G-07 | Re-checked | v2 palette contrast (computed): white on blue 5.2 · muted text 6.2 on white / 5.7 on page · blue tint 6.5 · lime tint 6.6 · AI pink tint 5.4 · success 5.2 · warning 5.4 · error 4.7 · ink on lime 14.7 · dark muted 7.9 · dark tints 7.2–9.1. All text ≥ 4.5:1. |
+| G-08 | **Closed** | Composer “Licensed source” state shows auto-added attribution (“via @chefkemi”). |
+| G-09 | **Closed** | Onboarding automation step has a Free-plan locked state. |
+| G-12 | New, Medium | Canvas motion is CSS that mirrors GSAP; real GSAP timing must be checked in the build against MOTION.md. |
+| G-13 | New, Low | People are illustrations, not photos. Fine for the product; marketing may want real creator photography (with consent) later. |
+| G-14 | New, Low | Dark parity is drawn for 16 key boards; the rest rely on tokens. Build must use tokens only. |
+
+**Checks run:** coverage (94/94 original screen IDs present + 7 new overlay/system IDs); every internal board link resolves; no AI/media vendor names on any board; “gradient” appears only in the Foundations rule text.

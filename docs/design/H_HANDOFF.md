@@ -1,6 +1,6 @@
-# Nelio: Design Deliverable H, Handoff package
+# Nelio: Design Deliverable H, Handoff package (v2)
 
-**Phase:** Design (Master Prompt 1), checkpoint H
+**Phase:** Design (Master Prompt 1), checkpoint H · **Version 2** (redesign in the user's reference style)
 **Date:** 12 November 2026
 **For:** the implementation phase (Master Prompt 2). Read with `docs/source/*`, A, B, C and G.
 
@@ -8,133 +8,103 @@
 
 | Item | Where |
 |---|---|
-| High-fidelity design canvas (source of truth for visuals) | https://claude.ai/artifact/5rE8YAdMngxLvgf5GsdPKu |
+| High-fidelity design canvas (visual source of truth) | https://claude.ai/artifact/5rE8YAdMngxLvgf5GsdPKu |
 | Canvas board sources (`.dc.html`) + layout (`canvas.json`) | `docs/design/E_hifi/canvas/` |
-| Generator used to build the boards (tokens + components in Python) | `docs/design/E_hifi/generator/` |
-| Screen inventory: ID → route → board → state sheet → roles | `docs/design/H_handoff/SCREEN_INVENTORY.md` |
-| Design tokens (dark + light, type, radius, spacing, rules) | `docs/design/H_handoff/tokens.json` |
-| Sample / seed data used in the designs | `docs/design/H_handoff/sample-data.json` |
-| Requirements & traceability | `A_REQUIREMENTS_INVENTORY.md` |
-| IA, routes, permissions, journeys, state machines | `B_INFORMATION_ARCHITECTURE.md` |
-| Low-fidelity wireframes | `C_wireframes/index.html` |
-| UX audit and open findings | `G_UX_AUDIT.md` |
+| Generator (tokens, components, illustrations, every screen as code) | `docs/design/E_hifi/generator/` |
+| Screen & state inventory: every ID → every state board | `docs/design/H_handoff/SCREEN_INVENTORY.md` |
+| Design tokens v2 (light default + dark, type, radius, stickers, rules) | `docs/design/H_handoff/tokens.json` |
+| Motion spec (GSAP) with code | `docs/design/H_handoff/MOTION.md` |
+| Sample / seed data | `docs/design/H_handoff/sample-data.json` |
+| Requirements, IA, wireframes, audit | `A_…`, `B_…`, `C_…`, `G_UX_AUDIT.md` |
 
-**Canvas pages:** 0 Foundations · 1 Public site · 2 Sign-in & onboarding · 3 Command Center & AI · 4 Clipping & Content · 5 Calendar, approvals & publishing · 6 Analytics · 7 Licensing & Creator Portal · 8 Connections, agency & client portal · 9 Billing · 10 Settings · 11 Admin · 12 System · 13 States · 14 Mobile · 15 Light theme. **122 boards** in total: 94 screens + 28 supporting boards.
+**Canvas pages (18):** 0 Foundations & illustrations · 0b Motion · 0c Flows · 1 Public site · 2 Sign in & onboarding · 3 Command Center & AI · 4 Clipping & Content · 5 Calendar, approvals & publishing · 6 Analytics · 7 Licensing · 8 Creator Portal · 9 Connections, agency & client portal · 10 Billing · 11 Settings · 12 Admin · 13 System & overlays · 14 Mobile · 15 Dark theme.
 
-**Interactive:** the onboarding flow board (press Play). All other boards are static comps.
+**369 boards:** every screen in **Filled**, **Empty** (with an illustration) and **Loading** (skeleton) where it shows data, plus every specific state (errors, limits, held, confirming, paused, trial, past-due, etc.), 31 mobile boards, 16 dark-parity boards, 15 clickable flows and an interactive onboarding flow. On the canvas each screen is one row with its states side by side.
 
-## 2. Visual language: "Nelio"
+**Clickable:** sidebar, top bar, tab bar and key buttons link to the right boards, so Play mode walks the product. The flow maps (page 0c) link every step to its exact state board.
 
-- **Feel:** fun, confident creative studio. Flat colour blocks, bold display type, characterful agents. **No gradients, glows or glass.**
-- **Dark default**, Light with full token parity, System follows the OS. Theme is saved per user (ST-03).
-- **Colour roles:** *Volt* `#D4FF3F` = primary action / active / focus. *Grape* = Nelio AI and agents. Blue = scheduled/info, Orange = needs attention/blocked, Red = failed/revoked, Teal = published/approved. Every status shows **icon + word + colour**.
-- **Type:** Bricolage Grotesque (display, 500/700/800) + Inter (UI, 400–700), both from Google Fonts.
-- **Shape:** radius 12 controls · 16 rows/banners · 20 cards · 24 panels/empty states · 28 dialogs · pill chips. 4 px spacing grid.
-- **Agents** are flat shapes with two eyes; each agent keeps a fixed colour and shape (see `sample-data.json`).
-- Full values: `H_handoff/tokens.json`. Build with CSS variables / Tailwind theme tokens, never raw hex in components.
+## 2. Visual language v2
+
+Built from the user's references, kept **flat** (D-20) and **light by default** (D-21):
+
+| From | What Nelio takes |
+|---|---|
+| ClipGen | Clean white canvas + electric blue `#2F5BFF`; fanned phone mock-ups with score badges; alternating feature rows on solid blue panels; 3-step workflow; FAQ accordion; big blue CTA band; giant faded wordmark footer |
+| Pop Site | Centered heroes with an input + button pill; floating cards around phones; generous white space |
+| Retro | Bright sticker cards (yellow / cyan / pink) with chunky ink outlines and hard shadows; tilted sticker labels; bold display type |
+| Lime savings site | Lime `#B6F24A` organic blobs; black pill CTA with a lime circular arrow; big stat strips; white cards over colour blocks |
+
+- **Type:** Plus Jakarta Sans 800 for display/titles, Inter for UI.
+- **Shape:** pill buttons and chips; cards 24 px; panels 32–36 px; stickers have a 2 px ink border and 3 px hard shadow.
+- **Colour roles:** Blue = primary action and active nav · Ink pill + lime arrow = hero CTA · Lime = credits, highlights, success fills · **Pink = Nelio AI** · status tints for info/success/warning/error (all ≥ 4.5:1, see G).
+- **Illustrations:** 32-piece kit, flat fills, 3 px ink outline, organic blob behind each scene (canvas page 0, `SCREEN_INVENTORY.md`). People and creators are illustrated; **no stock photos** were used (the workspace couldn't download them). Real photography can be swapped into the phone/video components later.
+- **Agents:** flat shapes with a 2 px ink outline and blinking eyes; fixed colour/shape per agent.
+- **Skeletons:** flat grey blocks that pulse opacity (no shimmer gradient).
 
 ## 3. Components → implementation
 
-Mapped to shadcn/ui where one exists. Source of each look: `E_hifi/generator/lib.py`.
-
-| Component | Variants / props | States | shadcn/ui base | Accessibility notes |
-|---|---|---|---|---|
-| Button | primary (Volt), grape (AI), secondary, ghost, danger · sm/md/lg · icon-only | default, hover, focus, disabled, loading | `Button` | min 44 px; icon-only needs `aria-label` |
-| Chip / status badge | tones: lime, grape, blue, orange, red, teal, neutral · optional icon | static | `Badge` | always icon + text for status |
-| Banner | tone · title · text · one action | info, warning, error, success, AI | `Alert` | `role="status"` (error: `alert`) |
-| Card / Section | padding, background, border | — | `Card` | headings inside are real `h3` |
-| Stat tile | label · value · sub · optional solid fill (Volt/Grape) | loading skeleton | custom | value is text, not image |
-| Meter | label · % · right text · tone | normal, warning (≥80%), full | `Progress` | `role="progressbar"` + `aria-valuenow` |
-| Table | columns · rows · horizontal scroll | empty, loading, filtered-empty | `Table` | `th scope="col"`; mobile → stacked rows |
-| List row | leading visual · title · sub · trailing action | unread dot | custom | whole row not clickable unless it's a link |
-| Field | input / select / textarea · hint · error | default, focus, error, disabled | `Input`, `Select`, `Textarea`, `Label` | real `<label for>` |
-| Check / radio | label · sub | checked, unchecked, disabled | `Checkbox`, `RadioGroup` | label clickable |
-| Toggle | label · sub | on/off/disabled | `Switch` | `role="switch"` + `aria-checked` |
-| Choice card | title · sub · icon · badge · locked | selected, unselected, locked | custom (`RadioGroup` item) | `aria-pressed`/radio semantics |
-| Tabs (pill) | items · active | — | `Tabs` | 44 px min on touch (G-05) |
-| Stepper | n · current | — | custom | `role="progressbar"` "Step x of n" |
-| Run steps | done / running / queued / blocked / failed | — | custom | text label per step, no fake % |
-| Agent avatar | colour · shape · size | — | custom | decorative: `aria-hidden` |
-| Platform badge | yt / ig / tt / fb | — | custom | `role="img"` + platform name |
-| Video preview | caption · ratio · tag · play | — | custom | `role="img"` with caption text |
-| Dialog | title · body · actions | — | `Dialog` | focus trap, Esc closes (not for destructive confirm without choice) |
-| Top bar | workspace switcher · search ⌘K · credits · pause · bell · account | role-dependent (G-02) | custom | bell `aria-label` with unread count |
-| Sidebar | groups AI / Create / Publish / Grow / Workspace / Agency | active, plan-locked | `NavigationMenu` | `aria-current="page"` |
-| Bottom tab bar (mobile) | Home · Activity · Approvals (badge) · Calendar · More | active | custom | < 768 px only |
-| Empty state | icon · title · text · primary + secondary action | — | custom | — |
+| Component | Variants | shadcn/ui base | Notes |
+|---|---|---|---|
+| Button | primary (blue), cta (ink + lime arrow), lime, ai (pink tint), secondary, ghost, danger · sm/md/lg · icon-only | `Button` | pill; ≥ 44 px |
+| Chip | blue, lime, ai, ok, warn, err, neutral, ink | `Badge` | icon + word |
+| Sticker | any fill, tilt −6…6°, optional icon | custom | decorative emphasis; pop animation |
+| Card / Stat tile | plain, solid fill (lime/pink/yellow) | `Card` | count-up on stat value |
+| Feature panel | solid blue/lime/pink, radius 36 | custom | marketing + Command Center hero |
+| Sticker card | yellow/cyan/pink/lime/orange, ink border + 6 px hard shadow | custom | Retro-style tool cards |
+| Banner / top strip | info, ok, warn, err, ai | `Alert` | one action |
+| Empty state | illustration + title + text + CTA (+ secondary) | custom | dashed border panel |
+| Skeletons | line, stat, card, rows, table, media grid, page head | `Skeleton` | opacity pulse |
+| Meter, bars, stepper, run steps | — | `Progress` / custom | animated per MOTION.md |
+| Table | header tint, row stagger | `Table` | mobile → stacked rows |
+| Field, check, radio, toggle, choice card, tabs (pill) | — | `Input`, `Checkbox`, `RadioGroup`, `Switch`, `Tabs` | real labels |
+| Phone mock-up, video card, thumb | caption sticker, platform badge, score pill | custom | illustration inside |
+| Dialog / overlay | — | `Dialog` | pop-in |
+| Top bar, sidebar, bottom tab bar, command palette, account menu, notification panel | role-aware (G-02) | custom / `Command` / `DropdownMenu` / `Popover` | |
 
 ## 4. Routes
 
-Use B §5 exactly. The inventory (`SCREEN_INVENTORY.md`) repeats each route next to its board.
+Unchanged: B §5. New overlays: command palette (⌘K), account menu, notification panel, pause/resume confirm, admin global-pause confirm.
 
-## 5. Copy rules
+## 5. Copy rules (unchanged)
 
-1. **The AI is "Nelio AI".** Never name model, transcription, rendering or other vendors anywhere a user can see: UI, emails, push, errors, logs shown to users, AI-generated text. AI responses must not self-identify as another product. (A D-18; legal decides sub-processor disclosure.)
-2. **Credits:** "*N* left" = balance; "used *X* of *Y*" = consumption; "≈" before every estimate; show estimate → actual after.
-3. **Honest states:** "In development", "Coming later", "Confirming with Instagram" (never "failed" before reconciliation), "estimate" on scores, no guarantees of views or monetization.
-4. **Plain words** over jargon: "sign-in expired" not "token expired" in UI; "on hold" not "blocked by policy".
-5. **One clear action** per banner; say what happens next and when (e.g. "resets Monday 00:00 WAT").
-6. Times show the workspace timezone label (WAT by default).
+The AI is **Nelio AI**: never name vendors. Credits: “N left” = balance, “used X of Y” = consumption, “≈” for estimates. Honest states only. One action per banner. Workspace timezone label on times.
 
-## 6. Build rules from the audit
+## 6. Build rules
 
-- **G-02 role visibility:** credits pill hidden for Editor/Viewer; Pause hidden for Viewer; Editors pause only assigned agents; client approvers never see operator chrome.
-- **G-04 responsive nav:** under 768 px replace the sidebar with the bottom tab bar.
-- **G-05:** tabs ≥ 44 px on touch.
-- **G-10/G-11:** shared `sr-only` utility; global 3 px Volt focus ring with 2 px offset; honour `prefers-reduced-motion` (disables caption animation previews).
-- Light theme: Volt is a **fill only**, never text; use `#3D4D00` for Volt-tint chip text.
+- Role visibility (G-02): credits pill hidden for Editor/Viewer; Pause hidden for Viewer.
+- Under 768 px swap the sidebar for the bottom tab bar (mobile boards).
+- Tabs ≥ 44 px on touch; global 3 px blue focus ring.
+- Build every screen's Empty and Loading states exactly as drawn; never show a blank screen while loading.
+- Motion via GSAP per `MOTION.md`, disabled under reduced motion.
 
-## 7. Acceptance criteria (UI level)
+## 7. Acceptance criteria (UI)
 
-| Area | The build passes when… |
+As in v1, plus:
+| Area | Passes when… |
 |---|---|
-| Onboarding | 4 steps, each skippable; Assisted pre-selected; choosing Autonomous never enables publishing without the authorization dialog; ends on the checklist; checklist persists on Command Center until done/dismissed. |
-| Command Center | "Needs you" lists every pending gate (approvals, expiring sign-ins/licenses, budget pauses) with one action each; agent cards show state, budget meter, next run. |
-| Activity | Runs show real steps; blocked runs show the reason and one fix; "confirming" is distinct from failed; after reconnect the feed reloads server state and shows "Back online". |
-| Clipping | Processing can't start without a rights choice; cost estimate shown before processing and render; candidate scores labelled estimate; mobile offers trim/style/approve only. |
-| Publishing | Post detail shows one row per platform with approval + publish state; scheduling sends only approved platforms; overdue items stay held; material edits re-request the right platforms (AS-B1). |
-| Client portal | Client sees only their workspace; decides per platform; sees when a newer revision replaced what they approved. |
-| Licensing | Expired/revoked licenses block new renders and hold scheduled posts with visible reasons; owner sees impact before revoking; paid licensing shows "coming later". |
-| Billing | Estimates and actuals reconcile in the ledger; limits pause new work; no automatic top-up by default; checkout requires explicit authorization; trial never charges. |
-| Themes | Every screen works in Dark and Light from tokens; switching persists; contrast ≥ 4.5:1 for text. |
-| PWA | Install prompt per SY-01; offline shows cached data read-only and queues nothing. |
-| Confidentiality | A text scan of the built UI, emails and notification templates finds no AI/media vendor names. |
+| States | Each screen in the inventory renders its Filled, Empty and Loading versions as drawn, with the right illustration. |
+| Flows | Each of the 15 flows (page 0c) can be completed in the built product in the same order. |
+| Motion | Each pattern in MOTION.md runs once (loops only where stated) and nothing animates under reduced motion. |
+| Theme | Light is the default for new users; Dark and System switch with no unthemed colours. |
 
-## 8. Edge cases (annotated on boards)
-
-| Edge case | Where it's designed |
-|---|---|
-| Upload finished but platform didn't confirm → "Confirming", no retry until reconciled | PB-03, APP-03, StatesPublishing |
-| Instagram approved, YouTube sent back; only YouTube text changed → Instagram approval kept | PB-03, PB-05, CP-02 |
-| Video re-cut after approval → all platforms need re-approval | StatesPublishing, StatesAgency |
-| License revoked while a post is scheduled → held, with remove action; published post flagged | LI-04, PB-03, LI-09 |
-| Agent hits weekly budget mid-run → run "blocked: budget", not failed | APP-03, APP-01, BI-05 |
-| Sign-in expires with posts scheduled → posts held until reconnect | IN-01, StatesPublishing |
-| Trial ends with autonomous agent → agent paused, nothing charged | BI-08, StatesBilling |
-| Payment fails → 7-day grace, top-ups off, then Free | BI-07 |
-| Client opens an approval link for another workspace → denied without revealing it exists | StatesAgency, SY-03 |
-| Invite opened while signed in as a different email | StatesAgency |
-| Third-party music inside a licensed creator's video → excluded automatically | LI-02, LI-07 |
-| Offline while approving → disabled, nothing queued | SY-02 |
-
-## 9. Design decisions log (this phase)
+## 8. Decisions this round
 
 | # | Decision | By |
 |---|---|---|
-| D-18 | Never name AI/media vendors; the AI is "Nelio AI" | User, 12 Nov |
-| E-1 | Visual direction: dark-first, flat Volt + Grape, Bricolage Grotesque + Inter, no gradients | Design, per user brief "fun and exciting, no gradients" |
-| E-2 | Onboarding is one question per screen with big choice cards and an end-of-flow checklist | Design, per user brief "modern and simple" |
-| E-3 | Deliverable D (design system) folded into the canvas Foundations page and `tokens.json` | User asked to go straight to hi-fi |
-| E-4 | Credits wording: "left" vs "used" (G-06) | Audit fix |
-| E-5 | Light grape `#5333D6` for contrast (G-07) | Audit fix |
+| D-19 | GSAP for animation | User |
+| D-20 | Flat colour, no gradients (reference styles adapted flat) | User |
+| D-21 | Light default, dark available (supersedes “dark default”) | User |
+| D-22 | All states, all screens, every flow, illustrations | User |
+| E-6 | Illustrated people instead of photos (photos can be swapped in later) | Design (tooling limit) |
+| E-7 | Canvas motion uses CSS keyframes mirroring GSAP; GSAP itself ships in the app | Design (publishing rules) |
 
-## 10. Not yet done
+## 9. Still open
 
-- **Deliverable F (runnable prototype)** was skipped at the user's request (straight from wireframes to hi-fi, then audit and handoff). Only the onboarding flow is clickable. Master Prompt 1 lists F as a deliverable, so decide whether to build it before implementation or let the first build milestone stand in for it.
-- **G-01 secondary surfaces** (E2 follow-up).
-- **Human visual pass** of the canvas (G-03).
-- Screenshots: export any board from the canvas when needed (they weren't generated here).
+- **Deliverable F (runnable code prototype)**: still skipped by choice; the canvas is clickable in Play mode.
+- **Human visual pass** of the canvas (I don't render-check canvas boards; see G v2).
+- **Photography** if you want real creators in marketing/phone mock-ups.
+- **Legal:** sub-processor disclosure vs D-18; legal page copy.
 
 ---
 
-**DESIGN PHASE COMPLETE — AWAITING USER APPROVAL** *(with the open items in §10)*. No production code will start until you explicitly approve.
+**DESIGN PHASE COMPLETE: AWAITING USER APPROVAL.** No production code will start until you explicitly approve.
