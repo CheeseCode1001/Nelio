@@ -67,7 +67,7 @@ def H(t, size=32, color=None, mb=0, w=800, anim=''):
 def h3(t, size=17, color=None): return f'<h3 style="margin: 0; font-family: {HF}; font-weight: 700; font-size: {size}px; line-height: 1.25; color: {color or T["tx"]}">{e(t)}</h3>'
 def P(t, color=None, size=14, mb=0, w=400, anim=''): return f'<p style="margin: 0 0 {mb}px; font-size: {size}px; line-height: 1.55; color: {color or T["mu"]}; font-weight: {w}; {anim}">{e(t)}</p>'
 def small(t, color=None, w=500): return f'<span style="font-size: 12.5px; color: {color or T["mu"]}; font-weight: {w}">{e(t)}</span>'
-def eyebrow(t, color=None): return f'<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: {color or T["accTx"]}">{e(t)}</span>'
+def eyebrow(t, color=None): return f'<span style="width: fit-content; max-width: 100%; box-sizing: border-box; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: {color or T["accTx"]}">{e(t)}</span>'
 def row(*items, gap=12, align='center', wrap=True, justify='flex-start', style=''):
     return f'<div style="display: flex; flex-direction: row; gap: {gap}px; align-items: {align}; justify-content: {justify}; {"flex-wrap: wrap;" if wrap else ""} min-width: 0; {style}">{"".join(items)}</div>'
 def col(*items, gap=12, style=''): return f'<div style="display: flex; flex-direction: column; gap: {gap}px; min-width: 0; {style}">{"".join(items)}</div>'
@@ -86,11 +86,11 @@ def spacer(h=8): return f'<div style="height: {h}px"></div>'
 def chip(label, tone='neutral', ic=None, size=12.5):
     bg, fg = TONES()[tone]
     i = icon(ic, 13, fg, 2.4) if ic else ''
-    return f'<span style="display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; background: {bg}; color: {fg}; font-size: {size}px; font-weight: 700; white-space: nowrap; font-family: {BF}">{i}{e(label)}</span>'
+    return f'<span style="width: fit-content; max-width: 100%; box-sizing: border-box; display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; background: {bg}; color: {fg}; font-size: {size}px; font-weight: 700; white-space: nowrap; font-family: {BF}">{i}{e(label)}</span>'
 def sticker(label, fill='#FFD43B', rot=-4, ic=None, size=14, anim=True, d=0.3):
     i = icon(ic, 15, OL, 2.4) if ic else ''
     a = A('pop', d) if anim else ''
-    return f'<span style="--r: {rot}deg; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: {fill}; color: {OL}; border: 2px solid {OL}; font-family: {HF}; font-size: {size}px; font-weight: 800; white-space: nowrap; transform: rotate({rot}deg); box-shadow: 3px 3px 0 {OL}; {a}">{i}{e(label)}</span>'
+    return f'<span style="width: fit-content; max-width: 100%; box-sizing: border-box; --r: {rot}deg; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: {fill}; color: {OL}; border: 2px solid {OL}; font-family: {HF}; font-size: {size}px; font-weight: 800; white-space: nowrap; transform: rotate({rot}deg); box-shadow: 3px 3px 0 {OL}; {a}">{i}{e(label)}</span>'
 def arrow_circle(bg, fg, s=30):
     return f'<span aria-hidden="true" style="width: {s}px; height: {s}px; border-radius: 50%; background: {bg}; color: {fg}; display: inline-flex; align-items: center; justify-content: center; flex: none">{icon("arrowr", int(s*0.55), fg, 2.6)}</span>'
 
@@ -103,7 +103,7 @@ def btn(label, kind='primary', ic=None, href=None, size='md', full=False, arrow=
     elif kind == 'secondary': st = f'background: {T["s1"]}; color: {T["tx"]}; border: 2px solid {T["bd"]}'
     elif kind == 'danger': st = f'background: {T["errT"]}; color: {T["errTx"]}; border: 2px solid {T["errT"]}'
     else: st = f'background: transparent; color: {T["tx"]}; border: 2px solid transparent'
-    w = 'width: 100%; justify-content: center;' if full else ''
+    w = 'width: 100%; justify-content: center;' if full else 'width: fit-content; max-width: 100%;'
     i = icon(ic, 16, None, 2.2) if ic else ''
     ar = ''
     if arrow:
@@ -342,8 +342,17 @@ def msan(c):
     c = re.sub(r'grid-template-columns: ([^;"]+)', g_, c)
     c = re.sub(r'font-size: (\d+)px', lambda m: f'font-size: {round(int(m.group(1))*0.6)}px' if int(m.group(1)) >= 44 else m.group(0), c)
     return c
+def hug(c):
+    """Inline pills/badges/bars hug their content instead of stretching inside flex columns."""
+    def f(m):
+        s = m.group(1)
+        if 'display: inline-flex' in s and not re.search(r'(?<![-\w])width:', s):
+            s = 'width: fit-content; max-width: 100%; ' + s
+        return 'style="' + s + '"'
+    return re.sub(r'style="([^"]*)"', f, c)
 def mname(f): return f[:-8] + '-Mobile.dc.html'
 def write(fname, content, row_=None):
+    content = hug(content)
     if MOB['on'] and MOB.get('collect') is not None:
         body, script = CUR['lastbody']
         MOB['collect'].append(dict(desk=fname, title=LAST['title'], body=msan(body), h=LAST['h'], fixed=LAST['fixed'], script=script))
