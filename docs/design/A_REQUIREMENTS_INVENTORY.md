@@ -283,7 +283,7 @@ Empty · Loading (skeleton) · Error (recoverable / fatal) · Success · Permiss
 |---|---|
 | **A** | ✅ This document |
 | B | ✅ `B_INFORMATION_ARCHITECTURE.md` |
-| C | Low-fidelity wireframes (desktop + mobile) |
+| C | ✅ `C_WIREFRAMES.md` + `C_wireframes/index.html` |
 | D | Design tokens, typography, components, accessibility spec, Dark/Light themes, brand direction |
 | E | High-fidelity screens with all states |
 | F | Runnable Next.js prototype with mock data |
