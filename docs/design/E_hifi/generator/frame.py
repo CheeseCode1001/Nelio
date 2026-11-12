@@ -33,7 +33,7 @@ def pubfoot():
     wm = f'<div aria-hidden="true" style="font-family: {HF}; font-weight: 800; font-size: 300px; letter-spacing: -0.06em; line-height: 0.8; color: {T["s3"]}; text-align: center; overflow: hidden; white-space: nowrap; margin-top: 24px">nelio</div>'
     return f'<footer style="background: {T["s1"]}; border-top: 1px solid {T["bd"]}; padding: 56px 48px 0; overflow: hidden"><div style="display: flex; flex-wrap: wrap; gap: 48px; max-width: 1200px; margin: 0 auto"><div style="display: flex; flex-direction: column; gap: 12px; flex: 1 1 260px">{logo(26)}{P("Your AI content team, under your control.")}{row(plat("ig",30), plat("yt",30), plat("tt",30), gap=8)}</div>{cs}</div><div style="max-width: 1200px; margin: 32px auto 0; display: flex; justify-content: space-between; font-size: 13px; color: {T["mu"]}"><span>© 2026 Nelio. Made in Lagos.</span><span>Prices in USD · pay in NGN at checkout</span></div>{wm}</footer>'
 def mpubnav():
-    return f'<header style="position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: {T["s1"]}; border-bottom: 1px solid {T["bd"]}"><a href="Home-Mobile.dc.html" style="text-decoration: none">{logo(22)}</a>{grow()}{btn("Start free","cta",href="SignUp.dc.html",size="sm")}{ibtn("menu","Open menu","MobileSiteMenu.dc.html")}</header>'
+    return f'<header style="position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: {T["s1"]}; border-bottom: 1px solid {T["bd"]}"><a href="Home-Mobile.dc.html" style="text-decoration: none">{logo(22)}</a>{grow()}{btn("Start free","cta",href="SignUp.dc.html",size="sm")}{ibtn("menu","Open menu","Home-Mobile.dc.html")}</header>'
 def mpubfoot():
     cols_ = [('Product',['Features','Pricing','Status']),('Use cases',['Creators','Businesses','Agencies']),('Company',['Licensing','FAQ','Contact']),('Legal',['Terms','Privacy','Takedowns'])]
     cs = ''.join(f'<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 14px; font-weight: 800; color: {T["tx"]}">{t}</span>' + ''.join(f'<a href="#" style="font-size: 14px; color: {T["mu"]}; text-decoration: none; min-height: 28px">{l}</a>' for l in ls) + '</div>' for t, ls in cols_)
@@ -100,22 +100,58 @@ def mobile_page(fname_, title, inner, tab='home', top=None, h=844, w=390, bar=Tr
     write(fname_, doc(title, tp + f'<main style="flex-grow: 1; overflow: hidden; padding: 16px; display: flex; flex-direction: column; gap: 14px">{inner}</main>' + (tabbar(tab) if bar else ''), w, h, fixed=True))
 
 # ---------- marketing pieces ----------
+import json as _json
+PH = _json.load(open('/tmp/nb2/photos.json'))
+PORTRAIT = ['p1','p6','p10','p8','p2','p7','p4','p3','p5']
+def pick(seed):
+    s = sum(ord(c) for c in str(seed)); return PORTRAIT[s % len(PORTRAIT)]
+def photo(key, alt='', pos='center top', style=''):
+    a = f'alt="{e(alt)}"' if alt else 'alt="" aria-hidden="true"'
+    return f'<img src="{PH[key]}" {a} style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {pos}; {style}">'
+def iphone(screen, w=210, rot=0, d=0, float_=True):
+    """Flat iPhone 16 Pro style frame: titanium band, black bezel, Dynamic Island, side buttons."""
+    r = round(w * 0.2); bz = max(5, round(w * 0.035)); fl = A('float', d, 5) if float_ else ''
+    isl_w, isl_h = round(w * 0.3), max(10, round(w * 0.085))
+    btn_ = lambda side, top, h: f'<span aria-hidden="true" style="position: absolute; {side}: -4px; top: {top}%; width: 4px; height: {h}%; border-radius: 3px; background: #8B8781"></span>'
+    return (f'<div style="--r: {rot}deg; transform: rotate({rot}deg); width: {w}px; aspect-ratio: 71.5/149.6; flex: none; position: relative; {fl}">'
+            + btn_('left', 17, 5) + btn_('left', 26, 9) + btn_('left', 37, 9) + btn_('right', 29, 14) +
+            f'<div style="position: absolute; inset: 0; border-radius: {r}px; background: #C9C4BC; padding: 2px; box-sizing: border-box; box-shadow: 0 0 0 1px #6F6B66">'
+            f'<div style="width: 100%; height: 100%; border-radius: {r-2}px; background: #050507; padding: {bz}px; box-sizing: border-box">'
+            f'<div style="position: relative; width: 100%; height: 100%; border-radius: {r-2-bz}px; overflow: hidden; background: #111">{screen}'
+            f'<span aria-hidden="true" style="position: absolute; top: {round(w*0.035)}px; left: 50%; transform: translateX(-50%); width: {isl_w}px; height: {isl_h}px; border-radius: 999px; background: #000; z-index: 3"></span>'
+            f'<span aria-hidden="true" style="position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%); width: 36%; height: 4px; border-radius: 999px; background: rgba(255,255,255,0.85); z-index: 3"></span>'
+            '</div></div></div></div>')
 def phone_html(inner_svg_or_html, rot=0, w=210, d=0, float_=True, r=None):
-    fl = A('float', d, 5) if float_ else ''
-    return f'<div style="--r: {rot}deg; transform: rotate({rot}deg); width: {w}px; aspect-ratio: 9/19; border-radius: 36px; background: {OL}; padding: 9px; box-sizing: border-box; flex: none; position: relative; {fl}"><div style="position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 70px; height: 20px; border-radius: 999px; background: {OL}; z-index: 2"></div><div style="width: 100%; height: 100%; border-radius: 28px; overflow: hidden; background: #FFFFFF; position: relative">{inner_svg_or_html}</div></div>'
-def vid_svg(bg='#9B7BFF', cap='WAIT FOR IT', skin=2, shirt='#FFD43B', score=None, plat_=None, style=0):
-    sc = f'<div style="position: absolute; top: 46px; right: 12px; padding: 4px 10px; border-radius: 999px; background: #B6F24A; border: 2px solid {OL}; font-family: {HF}; font-weight: 800; font-size: 14px; color: {OL}">{score}</div>' if score else ''
-    pb = f'<div style="position: absolute; top: 46px; left: 12px">{plat(plat_, 30)}</div>' if plat_ else ''
-    svgp = f'<svg viewBox="0 0 200 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%"><rect width="200" height="420" fill="{bg}"></rect>{IL.person(100, 260, 2.6, skin, "#2B1A10", shirt, style)}</svg>'
-    capd = f'<div style="position: absolute; left: 12px; right: 12px; bottom: 70px; text-align: center"><span style="background: #FFD43B; color: {OL}; font-family: {HF}; font-weight: 800; font-size: 16px; padding: 3px 10px; border-radius: 8px; line-height: 1.6; box-decoration-break: clone; -webkit-box-decoration-break: clone; border: 2px solid {OL}">{e(cap)}</span></div>'
-    return f'<div role="img" aria-label="Short video: {e(cap)}" style="position: absolute; inset: 0">{svgp}{pb}{sc}{capd}</div>'
-def video(caption='STOP BUDGETING LIKE THIS', maxw=260, bg='#9B7BFF', skin=2, shirt='#FFD43B', score=None, plat_=None, play=True, style=0, radius=22):
-    pl = f'<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 56px; height: 56px; border-radius: 50%; background: rgba(11,11,20,0.75); display: flex; align-items: center; justify-content: center">{icon("play",24,"#FFFFFF")}</div>' if play else ''
-    return f'<div style="position: relative; width: 100%; max-width: {maxw}px; aspect-ratio: 9/16; border-radius: {radius}px; overflow: hidden; margin: 0 auto; flex: none; border: 2px solid {OL}; box-sizing: border-box">{vid_svg(bg, caption, skin, shirt, score, plat_, style)}{pl}</div>'
-def thumb(caption='MYTHS', bg='#9B7BFF', w=44, skin=2, shirt='#FFD43B'):
-    return f'<span aria-hidden="true" style="position: relative; display: inline-block; width: {w}px; aspect-ratio: 9/16; border-radius: 10px; overflow: hidden; flex: none; border: 2px solid {OL}; box-sizing: border-box"><svg viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice" style="position: absolute; inset: 0; width: 100%; height: 100%"><rect width="90" height="160" fill="{bg}"></rect>{IL.person(45, 100, 1.1, skin, "#2B1A10", shirt, w % 3)}</svg></span>'
+    return iphone(inner_svg_or_html, w, rot, d, float_)
+def vid_svg(bg='#9B7BFF', cap='WAIT FOR IT', skin=2, shirt='#FFD43B', score=None, plat_=None, style=0, key=None):
+    k = key or pick(cap)
+    sc = f'<div style="position: absolute; top: 48px; right: 12px; z-index: 2; padding: 4px 10px; border-radius: 999px; background: #B6F24A; border: 2px solid {OL}; font-family: {HF}; font-weight: 800; font-size: 14px; color: {OL}">{score}</div>' if score else ''
+    pb = f'<div style="position: absolute; top: 48px; left: 12px; z-index: 2">{plat(plat_, 30)}</div>' if plat_ else ''
+    capd = f'<div style="position: absolute; left: 12px; right: 12px; bottom: 64px; text-align: center; z-index: 2"><span style="background: #FFD43B; color: {OL}; font-family: {HF}; font-weight: 800; font-size: 15px; padding: 3px 10px; border-radius: 8px; line-height: 1.6; box-decoration-break: clone; -webkit-box-decoration-break: clone; border: 2px solid {OL}">{e(cap)}</span></div>'
+    return f'<div role="img" aria-label="Short video: {e(cap)}" style="position: absolute; inset: 0; background: {bg}">{photo(k)}{pb}{sc}{capd}</div>'
+def video(caption='STOP BUDGETING LIKE THIS', maxw=260, bg='#9B7BFF', skin=2, shirt='#FFD43B', score=None, plat_=None, play=True, style=0, radius=22, key=None):
+    pl = f'<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 2; width: 56px; height: 56px; border-radius: 50%; background: rgba(11,11,20,0.75); display: flex; align-items: center; justify-content: center">{icon("play",24,"#FFFFFF")}</div>' if play else ''
+    return f'<div style="position: relative; width: 100%; max-width: {maxw}px; aspect-ratio: 9/16; border-radius: {radius}px; overflow: hidden; margin: 0 auto; flex: none; border: 2px solid {OL}; box-sizing: border-box">{vid_svg(bg, caption, skin, shirt, score, plat_, style, key)}{pl}</div>'
+def thumb(caption='MYTHS', bg='#9B7BFF', w=44, skin=2, shirt='#FFD43B', key=None):
+    return f'<span aria-hidden="true" style="position: relative; display: inline-block; width: {w}px; aspect-ratio: 9/16; border-radius: 10px; overflow: hidden; flex: none; border: 2px solid {OL}; box-sizing: border-box; background: {bg}">{photo(key or pick(caption + str(w)))}</span>'
 def wide_video(label='podcast_ep12.mp4', bg='#59D8FF'):
-    return f'<div role="img" aria-label="Source video {e(label)}" style="position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 22px; overflow: hidden; border: 2px solid {OL}; box-sizing: border-box"><svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%"><rect width="320" height="180" fill="{bg}"></rect><rect x="20" y="120" width="280" height="60" fill="#FFD43B" stroke="{OL}" stroke-width="3"></rect>{IL.person(100, 140, 1.5, 1, "#2B1A10", "#FF4FB8", 0)}{IL.person(220, 140, 1.5, 3, "#1B0F08", "#2F5BFF", 1)}</svg><div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 60px; height: 60px; border-radius: 50%; background: rgba(11,11,20,0.75); display: flex; align-items: center; justify-content: center">{icon("play",26,"#FFFFFF")}</div><div style="position: absolute; left: 12px; top: 12px">{chip(label, "ink")}</div></div>'
+    return f'<div role="img" aria-label="Source video {e(label)}" style="position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 22px; overflow: hidden; border: 2px solid {OL}; box-sizing: border-box; background: {bg}">{photo("p9", pos="center")}<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 60px; height: 60px; border-radius: 50%; background: rgba(11,11,20,0.75); display: flex; align-items: center; justify-content: center">{icon("play",26,"#FFFFFF")}</div><div style="position: absolute; left: 12px; top: 12px">{chip(label, "ink")}</div></div>'
+def avatar_photo(key, s=72, ring='#FFD43B'):
+    return f'<span style="position: relative; display: inline-block; width: {s}px; height: {s}px; border-radius: 50%; overflow: hidden; border: 3px solid {OL}; background: {ring}; flex: none">{photo(key)}</span>'
+def photo_carousel(bg, title, keys, stickers=(), caption='Clipped by Nelio AI'):
+    """Auth/onboarding right panel: a stack of real photos that cross-fades, with dots."""
+    n = len(keys); dur = 3 * n
+    back = ''.join(f'<div aria-hidden="true" style="position: absolute; top: 18px; {side}: -34px; width: 74%; aspect-ratio: 3/4; border-radius: 30px; overflow: hidden; border: 3px solid {OL}; transform: rotate({rot}deg); background: #FFFFFF">{photo(k)}</div>' for side, rot, k in (('left', -8, keys[1 % n]), ('right', 7, keys[2 % n])))
+    imgs = ''.join(photo(k, style=f'animation: nCycle {dur}s linear {3*i}s infinite; opacity: {1 if i == 0 else 0};') for i, k in enumerate(keys))
+    dots = ''.join(f'<span style="display: inline-block; height: 10px; width: {28 if i == 0 else 10}px; border-radius: 999px; background: {OL if i == 0 else "rgba(11,11,20,.25)"}; animation: nDot {dur}s linear {3*i}s infinite"></span>' for i in range(n))
+    front = (f'<div style="position: relative; width: 74%; aspect-ratio: 3/4; margin: 0 auto; border-radius: 30px; overflow: hidden; border: 3px solid {OL}; box-shadow: 8px 8px 0 {OL}; background: #FFFFFF" role="img" aria-label="Creators recording with their phones and mics">{imgs}'
+             f'<div style="position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; align-items: center; gap: 8px; padding: 8px 10px 8px 8px; border-radius: 18px; background: #FFFFFF; border: 2px solid {OL}; z-index: 2">{agent("pink","blob",30,False)}<span style="font-size: 13px; font-weight: 800; color: {OL}; flex-grow: 1">{e(caption)}</span><span style="padding: 3px 9px; border-radius: 999px; background: #B6F24A; border: 2px solid {OL}; font-family: {HF}; font-weight: 800; font-size: 13px; color: {OL}">98</span></div></div>')
+    st = ''.join(f'<div style="position: absolute; {pos}; z-index: 3">{sticker(t, c, r, None, 14, True, .4+.1*i)}</div>' for i, (t, c, r, pos) in enumerate(stickers))
+    body = (f'<div style="position: relative; width: 100%; max-width: 460px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center">'
+            f'<div style="position: relative; width: 100%">{back}{front}{st}</div>'
+            f'<div style="display: flex; gap: 8px; align-items: center" aria-hidden="true">{dots}</div>{big(title, 38, OL)}</div>')
+    strip = f'<div style="display: flex; gap: 10px; padding: 4px 20px 8px; overflow: hidden">' + ''.join(f'<div style="position: relative; flex: 1 1 0; aspect-ratio: 3/4; border-radius: 20px; overflow: hidden; border: 2px solid {OL}; transform: rotate({r}deg)">{photo(k)}</div>' for k, r in zip(keys[:3], (-3, 0, 3))) + '</div>'
+    return (bg, f'{lime_blob(520, "rgba(255,255,255,0.25)", "right: -120px; top: -120px")}{body}', strip)
 def lime_blob(w=520, color=None, style=''):
     c = color or T['lime']
     return f'<svg aria-hidden="true" viewBox="0 0 200 200" style="position: absolute; width: {w}px; height: {w}px; {style}"><path d="M44,-58 C58,-46 70,-28 72,-9 C74,10 66,30 52,44 C38,58 18,66 -3,69 C-24,72 -46,70 -60,57 C-74,44 -80,20 -77,-1 C-74,-22 -62,-40 -46,-52 C-30,-64 -15,-70 3,-73 C21,-76 30,-70 44,-58 Z" transform="translate(100 100)" fill="{c}"></path></svg>'

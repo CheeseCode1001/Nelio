@@ -109,6 +109,25 @@ As in v1, plus:
 
 **DESIGN PHASE COMPLETE: AWAITING USER APPROVAL.** No production code will start until you explicitly approve.
 
+## v2.2 addendum: one canvas, real photos, iPhone mockups (12 Nov 2026)
+
+- **One canvas** holds every screen: https://claude.ai/artifact/5rE8YAdMngxLvgf5GsdPKu (471 boards; source in `E_hifi/canvas/`).
+  - Each screen is one titled row: its desktop states, then one mobile board showing the 390 px view in every state, side by side.
+  - Modals open as bottom sheets on mobile.
+  - The Home mobile board also shows the open site menu.
+- **Real photos.** The 10 creator photos the product owner supplied (`E_hifi/photos/`) are uploaded as canvas assets. They're used in:
+  - the landing page hero and feature phones;
+  - the creator avatars and the beta wall (quotes stay placeholders);
+  - media and marketplace thumbnails;
+  - clip previews;
+  - the sign-up, sign-in, invite, content-owner and onboarding right-hand panels. These are a photo carousel: a stacked card that cross-fades every 3 s with progress dots. On mobile it becomes a 3-photo strip.
+- **Phone mockups** use a flat iPhone 16 Pro–style frame (titanium band, black bezel, Dynamic Island, side buttons, home indicator) with no gradients. Built with `iphone()` in `generator/frame.py`.
+- Mobile rules (`generator/s13_responsive.py`):
+  - Sticky top bar and bottom tab bar in the app.
+  - Side menus become a sideways-scrolling tab row.
+  - Grids stack; wide tables scroll inside their box; display type scales down.
+- Before launch, confirm the rights and model releases for every photo.
+
 ## v2.1 addendum: mobile responsive views (12 Nov 2026)
 
 - Every desktop screen and state now has a 390 px mobile board placed **right beside its desktop boards in the same row**. One canvas holds at most 512 files, so the 676 boards are split across two canvases by area:

@@ -2,9 +2,9 @@ from frame import *
 
 google = lambda: f'<button type="button" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 12px; border-radius: 999px; border: 2px solid {T["bd"]}; background: {T["s1"]}; color: {T["tx"]}; font-size: 15px; font-weight: 700; cursor: pointer; font-family: {BF}; min-height: 50px"><span aria-hidden="true" style="width: 22px; height: 22px; border-radius: 50%; background: #FFFFFF; border: 2px solid {OL}; color: {OL}; font-weight: 800; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box">G</span>Continue with Google</button>'
 orl = lambda: f'<div style="display: flex; align-items: center; gap: 12px; color: {T["mu"]}; font-size: 13px"><span style="flex: 1; height: 1px; background: {T["bd"]}"></span>or<span style="flex: 1; height: 1px; background: {T["bd"]}"></span></div>'
+SETS = {'welcome':['p10','p1','p6','p8'],'agents':['p8','p7','p1','p3'],'team':['p6','p4','p10','p2'],'licenses':['p1','p5','p10','p7']}
 def side(bg, il, title, stickers=()):
-    st = ''.join(f'<div style="position: absolute; {pos}">{sticker(t, c, r, None, 14, True, .4+.1*i)}</div>' for i, (t, c, r, pos) in enumerate(stickers))
-    return (bg, f'{lime_blob(520, "rgba(255,255,255,0.25)", "right: -120px; top: -120px")}<div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center">{art(il, 420)}{big(title, 40, OL)}</div>{st}')
+    return photo_carousel(bg, title, SETS.get(il, ['p10','p1','p6','p8']), stickers)
 SIDE_IN = lambda: side('#B6F24A', 'welcome', 'Your AI content team is a minute away.', [('No card needed','#FFFFFF',-5,'top: 60px; left: 60px'),('Free forever plan','#FFD43B',4,'bottom: 70px; right: 60px')])
 H2 = lambda t, s=None: H(t, 34) + (P(s, size=15) if s else '')
 
@@ -64,7 +64,8 @@ def _(st, f, t):
 # ---------- onboarding static ----------
 def onb(f, t, i, inner, h=980, il=None):
     top = f'<header style="display: flex; align-items: center; gap: 16px; padding: 20px 32px">{logo(24)}{grow()}<span style="font-size: 13px; color: {T["mu"]}; font-weight: 700">Step {i} of 4</span>{btn("Skip for now","ghost",None,"CommandCenter-Empty.dc.html")}</header>'
-    sd = ('#F1F3F9', f'<div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 18px">{art(il, 400)}</div>') if il else None
+    ONB = {1:('#FFD43B',['p6','p10','p1','p2'],'Made for creators, brands and agencies.'),2:('#59D8FF',['p8','p1','p7','p4'],'Tell us what you want more of.'),3:('#FF4FB8',['p2','p3','p10','p5'],'Connect once. Post everywhere.'),4:('#B6F24A',['p1','p6','p8','p10'],'You stay in control. Always.')}
+    c = ONB.get(i, ONB[1]); sd = photo_carousel(c[0], c[2], c[1]) if il else None
     center_page(f, t, steps(4, i-1) + inner, h=h, top=top, width=600, side=sd)
 foot = lambda back=True, label='Continue', href='#': row(btn('Back','ghost') if back else '', grow(), btn(label,'cta',None,href,'lg',arrow=True), gap=10)
 

@@ -37,6 +37,8 @@ MOTION_CSS = '''@keyframes nUp{from{opacity:0;transform:translateY(18px)}to{opac
 @keyframes nGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes nBar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 @keyframes nDash{to{stroke-dashoffset:0}}
+@keyframes nCycle{0%{opacity:0}4%{opacity:1}25%{opacity:1}29%{opacity:0}100%{opacity:0}}
+@keyframes nDot{0%{width:10px;background:rgba(11,11,20,.25)}4%,25%{width:28px;background:#0B0B14}29%,100%{width:10px;background:rgba(11,11,20,.25)}}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
 :focus-visible{outline:3px solid #2F5BFF;outline-offset:2px}'''
 def A(kind='up', d=0.0, dur=None):
@@ -294,6 +296,7 @@ def doc(title, body, w, h, fixed=False, script=None):
         if CUR.get('modal'): h, fixed = 844, True
         else: h = max(844, int(h * CUR.get('hmul', 1.9)))
     LAST.update(title=title, w=w, h=h, fixed=fixed)
+    if MOB['on']: CUR['lastbody'] = (body, script)
     root = f'width: {w}px; height: {h}px; overflow: hidden;' if fixed else ('min-height: 100vh; overflow-x: hidden;' if MOB['on'] else 'min-height: 100vh;')
     sc = script or 'class Component extends DCLogic {\n  renderVals() { return {}; }\n}'
     props = json.dumps({"$preview": {"width": w, "height": h}})
@@ -337,6 +340,10 @@ def msan(c):
     return c
 def mname(f): return f[:-8] + '-Mobile.dc.html'
 def write(fname, content, row_=None):
+    if MOB['on'] and MOB.get('collect') is not None:
+        body, script = CUR['lastbody']
+        MOB['collect'].append(dict(desk=fname, title=LAST['title'], body=msan(body), h=LAST['h'], fixed=LAST['fixed'], script=script))
+        CUR['modal'] = False; return
     if MOB['on']:
         desk = fname; fname = mname(fname); content = msan(content)
         d = REG.get(desk, {})
