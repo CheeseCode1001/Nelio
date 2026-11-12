@@ -1,0 +1,274 @@
+// Nelio database schema.
+// Milestone 1 covers identity, tenancy, invitations, creator profiles, audit and idempotency.
+// Later milestones add their own tables through new migrations (architecture document §5).
+//
+// Access model: the application connects with a privileged role through Prisma, server-side only,
+// and every query is scoped by the tenancy helpers in src/tenancy.ts. Row-level security is enabled
+// on every table with no policies, so the browser keys (anon / authenticated) can read nothing.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AccountType {
+  creator
+  business
+  agency
+
+  @@map("account_type")
+}
+
+enum OrgRole {
+  owner
+  admin
+
+  @@map("org_role")
+}
+
+enum WorkspaceRole {
+  manager
+  editor
+  viewer
+  client_approver
+
+  @@map("workspace_role")
+}
+
+enum WorkspaceKind {
+  primary
+  client
+
+  @@map("workspace_kind")
+}
+
+enum Plan {
+  free
+  trial
+  starter
+  creator_pro
+  business
+  agency
+  enterprise
+
+  @@map("plan")
+}
+
+enum ThemePreference {
+  light
+  dark
+  system
+
+  @@map("theme_preference")
+}
+
+enum AutomationMode {
+  manual
+  assisted
+  autonomous
+
+  @@map("automation_mode")
+}
+
+enum VerificationStatus {
+  unverified
+  pending
+  verified
+  failed
+
+  @@map("verification_status")
+}
+
+enum AuditActorType {
+  user
+  system
+  platform_admin
+
+  @@map("audit_actor_type")
+}
+
+/// Application user. `id` equals the Supabase Auth user id.
+model User {
+  id                    String          @id @db.Uuid
+  email                 String          @unique @db.Citext
+  fullName              String          @map("full_name")
+  isPlatformAdmin       Boolean         @default(false) @map("is_platform_admin")
+  theme                 ThemePreference @default(light)
+  timezone              String          @default("Africa/Lagos")
+  onboardingStep        Int             @default(0) @map("onboarding_step")
+  onboardingCompletedAt DateTime?       @map("onboarding_completed_at") @db.Timestamptz(6)
+  createdAt             DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt             DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt             DateTime?       @map("deleted_at") @db.Timestamptz(6)
+
+  orgMemberships       OrganizationMembership[]
+  workspaceMemberships WorkspaceMembership[]
+  creatorProfile       CreatorProfile?
+  invitationsSent      Invitation[]             @relation("InvitedBy")
+  invitationsAccepted  Invitation[]             @relation("AcceptedBy")
+  auditEvents          AuditEvent[]
+
+  @@map("users")
+}
+
+/// Unit of ownership and money (B §1).
+model Organization {
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String
+  slug           String          @unique
+  accountType    AccountType     @map("account_type")
+  plan           Plan            @default(free)
+  automationMode AutomationMode? @map("automation_mode")
+  createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt      DateTime?       @map("deleted_at") @db.Timestamptz(6)
+
+  memberships          OrganizationMembership[]
+  workspaces           Workspace[]
+  workspaceMemberships WorkspaceMembership[]
+  invitations          Invitation[]
+  auditEvents          AuditEvent[]
+
+  @@map("organizations")
+}
+
+model OrganizationMembership {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId     String   @map("org_id") @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  role      OrgRole
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, userId])
+  @@index([userId])
+  @@map("organization_memberships")
+}
+
+/// Unit of work (B §1). Agents, content, accounts and approvals always belong to one workspace.
+model Workspace {
+  id             String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId          String        @map("org_id") @db.Uuid
+  name           String
+  slug           String        @unique
+  kind           WorkspaceKind @default(primary)
+  timezone       String        @default("Africa/Lagos")
+  pausedAt       DateTime?     @map("paused_at") @db.Timestamptz(6)
+  pausedByUserId String?       @map("paused_by_user_id") @db.Uuid
+  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt      DateTime?     @map("deleted_at") @db.Timestamptz(6)
+
+  org         Organization          @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  memberships WorkspaceMembership[]
+  invitations Invitation[]
+  auditEvents AuditEvent[]
+
+  // Lets child tables carry (workspace_id, org_id) with a foreign key that proves they match.
+  @@unique([id, orgId])
+  @@index([orgId])
+  @@map("workspaces")
+}
+
+model WorkspaceMembership {
+  id          String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId String        @map("workspace_id") @db.Uuid
+  orgId       String        @map("org_id") @db.Uuid
+  userId      String        @map("user_id") @db.Uuid
+  role        WorkspaceRole
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  workspace Workspace    @relation(fields: [workspaceId, orgId], references: [id, orgId], onDelete: Cascade)
+  org       Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@index([userId])
+  @@index([orgId])
+  @@map("workspace_memberships")
+}
+
+/// Invitation to an organization (orgRole) or to one workspace (workspaceRole). Exactly one is set.
+/// Only a SHA-256 hash of the token is stored. Invitations last 7 days (journey J-02).
+model Invitation {
+  id               String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId            String         @map("org_id") @db.Uuid
+  workspaceId      String?        @map("workspace_id") @db.Uuid
+  email            String         @db.Citext
+  orgRole          OrgRole?       @map("org_role")
+  workspaceRole    WorkspaceRole? @map("workspace_role")
+  tokenHash        String         @unique @map("token_hash")
+  invitedByUserId  String         @map("invited_by_user_id") @db.Uuid
+  expiresAt        DateTime       @map("expires_at") @db.Timestamptz(6)
+  acceptedAt       DateTime?      @map("accepted_at") @db.Timestamptz(6)
+  acceptedByUserId String?        @map("accepted_by_user_id") @db.Uuid
+  revokedAt        DateTime?      @map("revoked_at") @db.Timestamptz(6)
+  createdAt        DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  org        Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  workspace  Workspace?   @relation(fields: [workspaceId, orgId], references: [id, orgId], onDelete: Cascade)
+  invitedBy  User         @relation("InvitedBy", fields: [invitedByUserId], references: [id])
+  acceptedBy User?        @relation("AcceptedBy", fields: [acceptedByUserId], references: [id])
+
+  @@index([orgId])
+  @@index([workspaceId])
+  @@index([email])
+  @@map("invitations")
+}
+
+/// Licensed content owner (role R-CO). Free, no subscription, no organization needed.
+model CreatorProfile {
+  id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId             String             @unique @map("user_id") @db.Uuid
+  displayName        String             @map("display_name")
+  primaryPlatform    String             @map("primary_platform")
+  verificationStatus VerificationStatus @default(unverified) @map("verification_status")
+  createdAt          DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("creator_profiles")
+}
+
+/// Append-only audit trail. A database trigger rejects UPDATE and DELETE.
+model AuditEvent {
+  id          String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId       String?        @map("org_id") @db.Uuid
+  workspaceId String?        @map("workspace_id") @db.Uuid
+  actorUserId String?        @map("actor_user_id") @db.Uuid
+  actorType   AuditActorType @default(user) @map("actor_type")
+  action      String
+  targetType  String?        @map("target_type")
+  targetId    String?        @map("target_id")
+  metadata    Json           @default("{}")
+  createdAt   DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  org       Organization? @relation(fields: [orgId], references: [id], onDelete: SetNull)
+  workspace Workspace?    @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  actor     User?         @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([orgId, createdAt])
+  @@index([workspaceId, createdAt])
+  @@index([actorUserId, createdAt])
+  @@map("audit_events")
+}
+
+/// Makes retried mutations safe: the same (scope, key) is processed once.
+model IdempotencyKey {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  scope     String
+  key       String
+  userId    String?  @map("user_id") @db.Uuid
+  result    Json?
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@unique([scope, key])
+  @@map("idempotency_keys")
+}

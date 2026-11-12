@@ -1,0 +1,16 @@
+node_modules
+.next
+dist
+.turbo
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+coverage
+playwright-report
+test-results
+packages/db/src/generated
+.DS_Store
+Thumbs.db
+__pycache__
+*.pyc

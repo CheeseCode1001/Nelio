@@ -1,0 +1,124 @@
+@import "tailwindcss";
+@import "@nelio/ui/tokens.css";
+
+@source "../../../packages/ui/src";
+
+/* Tokens -> Tailwind theme (handoff §6.1). Colours follow the active theme through CSS variables. */
+@theme inline {
+  --color-bg: var(--n-bg);
+  --color-surface-1: var(--n-s1);
+  --color-surface-2: var(--n-s2);
+  --color-surface-3: var(--n-s3);
+  --color-border: var(--n-bd);
+  --color-text: var(--n-tx);
+  --color-muted: var(--n-mu);
+  --color-accent: var(--n-acc);
+  --color-on-accent: var(--n-on-acc);
+  --color-accent-tint: var(--n-acc-t);
+  --color-accent-text: var(--n-acc-tx);
+  --color-ink: var(--n-ink);
+  --color-on-ink: var(--n-on-ink);
+  --color-lime: var(--n-lime);
+  --color-lime-tint: var(--n-lime-t);
+  --color-lime-text: var(--n-lime-tx);
+  --color-ai: var(--n-ai);
+  --color-ai-tint: var(--n-ai-t);
+  --color-ai-text: var(--n-ai-tx);
+  --color-ok: var(--n-ok);
+  --color-ok-tint: var(--n-ok-t);
+  --color-ok-text: var(--n-ok-tx);
+  --color-warn: var(--n-warn);
+  --color-warn-tint: var(--n-warn-t);
+  --color-warn-text: var(--n-warn-tx);
+  --color-err: var(--n-err);
+  --color-err-tint: var(--n-err-t);
+  --color-err-text: var(--n-err-tx);
+  --color-yellow: var(--n-yellow);
+  --color-cyan: var(--n-cyan);
+  --color-orange: var(--n-orange);
+  --color-pink: var(--n-pink);
+  --color-violet: var(--n-violet);
+  --color-outline: var(--n-ol);
+
+  --font-display: var(--font-jakarta), Inter, system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+
+  --radius-input: 14px;
+  --radius-row: 20px;
+  --radius-card: 24px;
+  --radius-sheet: 28px;
+  --radius-panel: 32px;
+  --radius-feature: 36px;
+
+  --shadow-card: var(--n-shadow);
+  --shadow-sticker: 3px 3px 0 var(--n-ol);
+  --shadow-sticker-card: 6px 6px 0 var(--n-ol);
+  --shadow-photo: 8px 8px 0 var(--n-ol);
+  --shadow-menu: 0 20px 60px rgba(11, 11, 20, 0.18);
+}
+
+@layer base {
+  html {
+    background: var(--n-bg);
+    color: var(--n-tx);
+    font-family: var(--font-body);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--n-bg);
+    display: flex;
+    flex-direction: column;
+  }
+  a {
+    color: var(--n-acc-tx);
+  }
+  a:hover {
+    color: var(--n-tx);
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font-family: var(--font-body);
+  }
+
+  /* Handoff §6.4 rule 2: no visible scrollbars anywhere; scrolling still works. */
+  * {
+    scrollbar-width: none;
+  }
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Handoff §6.3: focus ring 3px accent, offset 2. */
+  :focus-visible {
+    outline: 3px solid var(--n-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* Screen-reader-only text (audit G-10). */
+@utility sr-only-focusable {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  &:focus {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 100;
+    width: auto;
+    height: auto;
+    clip-path: none;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: var(--n-ink);
+    color: var(--n-on-ink);
+    font-weight: 700;
+  }
+}

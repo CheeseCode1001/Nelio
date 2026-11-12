@@ -1,0 +1,8 @@
+{ "name": "@nelio/db", "version": "0.0.0", "private": true, "type": "module", "main": "./src/index.ts", "types": "./src/index.ts",
+  "scripts": {
+    "generate": "prisma generate",
+    "migrate:sql": "prisma migrate diff --from-migrations prisma/migrations --to-schema prisma/schema.prisma --script",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": { "@nelio/domain": "workspace:*", "@prisma/client": "7.10.1", "@prisma/adapter-pg": "7.10.1", "pg": "^8.16.0" },
+  "devDependencies": { "prisma": "7.10.1", "@types/pg": "^8.15.0", "@types/node": "^24.0.0", "dotenv": "^17.0.0" } }

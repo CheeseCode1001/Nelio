@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Lint, types, tests, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Generate database client
+        run: pnpm db:generate
+      - name: Design tokens are in sync with tokens.json
+        run: pnpm tokens && git diff --exit-code packages/ui/src/tokens.css
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test
+      - name: No vendor names in user-facing text (D-18)
+        run: pnpm check:vendors
+      - name: Build
+        run: pnpm build
+        env:
+          # Public placeholders: the build never connects to these.
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_placeholder
+          NEXT_PUBLIC_APP_URL: http://localhost:3000
+
+  database:
+    name: Migrations and integrity checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: nelio_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGPASSWORD: postgres
+      DB: postgresql://postgres:postgres@localhost:5432/nelio_test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create the browser roles that exist on the hosted database
+        run: psql "$DB" -v ON_ERROR_STOP=1 -c "CREATE ROLE anon NOLOGIN; CREATE ROLE authenticated NOLOGIN; GRANT USAGE ON SCHEMA public TO anon, authenticated;"
+      - name: Apply every migration in order
+        run: |
+          for f in packages/db/prisma/migrations/*/migration.sql; do
+            echo "applying $f"
+            psql "$DB" -v ON_ERROR_STOP=1 -q -f "$f"
+          done
+      - name: Integrity and isolation checks
+        run: |
+          psql "$DB" -v ON_ERROR_STOP=1 -q -t -A -f packages/db/tests/integrity.sql | tee result.txt
+          if grep -q "|f|" result.txt; then echo "integrity check failed"; exit 1; fi
+          test "$(grep -c '|t|' result.txt)" -ge 14
+
+  compose:
+    name: Local stack definition is valid
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose -f infra/docker-compose.yml config --quiet
