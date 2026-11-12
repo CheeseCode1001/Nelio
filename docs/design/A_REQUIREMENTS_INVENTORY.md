@@ -228,7 +228,7 @@ Empty · Loading (skeleton) · Error (recoverable / fatal) · Success · Permiss
 | C-3 | ARCH §4 role list omits the licensed content owner / creator partner | Added as R-CO (§1). Content owners have their own portal and no subscription. |
 | C-4 | PRD calls the middle mode "semi-autonomous"; MP1 says "assisted" | UI label **Assisted**, with a "semi-autonomous" explanation in help text. |
 | C-5 | PRD lists "Agency editor/manager" as one persona; ARCH splits Workspace Manager and Editor | ARCH split used; the PRD persona maps to both. |
-| C-6 | PRD numbering jumps from §16 to §21 | Flagged to user (Q-1). Treated as non-blocking: §21 is the addendum. |
+| C-6 | PRD numbering jumps from §16 to §21 | User confirmed (12 Nov) the gap was **not** intentional: sections 17–20 are missing content. Design proceeds on the available text; if the sections are recovered they are merged and this matrix is updated. |
 | C-7 | PRD FR-02 lists "brand kit" and "first agent and first video wizard" as onboarding steps; addendum limits onboarding to 4 steps | Addendum wins. Brand kit, first agent and first video become **checklist items** (ON-05), not onboarding steps. |
 | C-8 | PRD data model (§10) and ARCH data model (§5) use different entity names | Build-phase concern; ARCH names are used in handoff (H). No design impact. |
 
@@ -241,7 +241,7 @@ Empty · Loading (skeleton) · Error (recoverable / fatal) · Success · Permiss
 | AS-1 | Plan entitlements (agents, accounts, workspaces, credits) are **illustrative** placeholders, as below, until cost benchmarking | Build phase, cost benchmark |
 | AS-2 | 1 credit ≈ an abstract unit; UI shows credits plus an estimated USD equivalent | Credit formula approved |
 | AS-3 | Business plan includes team seats but not client workspaces; Agency plan includes client workspaces + client portal | Pricing approval |
-| AS-4 | Client approvers approve per post across all its destinations (not per platform) by default; per-platform approval is a policy toggle shown as "optional" | Q-4 answered |
+| AS-4 | **Decided (12 Nov):** client approvers can approve, reject or request changes **per platform** destination. A post publishes only to the destinations that are approved; others stay held. | — (resolved) |
 | AS-5 | Default approval policy: mandatory when a client approver is assigned; otherwise owner/manager approval in Assisted mode | Policy defaults approved |
 | AS-6 | NGN conversion shown with an illustrative rate and a "final amount confirmed at checkout" note | Paystack verification |
 | AS-7 | Legal pages use clearly labelled placeholder copy | Legal review |
@@ -266,10 +266,10 @@ Empty · Loading (skeleton) · Error (recoverable / fatal) · Success · Permiss
 ## 8. Open questions
 
 **Non-blocking (design proceeds on the assumption shown):**
-- **Q-1** PRD sections 17–20 are missing. Were they removed on purpose? (Assumed: yes.)
+- ~~Q-1~~ **Answered:** sections 17–20 were not removed on purpose; content is missing. Recover if possible (see C-6).
 - **Q-2** Which specialist provider will handle original AI video generation? (CS-03 stays gated.)
 - **Q-3** Media retention windows (AS-9).
-- **Q-4** Can clients approve per platform? (AS-4.)
+- ~~Q-4~~ **Answered:** yes, per-platform approval (AS-4).
 - **Q-5** Target markets beyond Nigeria and compliance obligations (affects legal pages and privacy UI copy).
 - **Q-6** Brand visual identity: colours, logo, tone. Deliverable D will propose a direction for approval.
 
@@ -282,7 +282,7 @@ Empty · Loading (skeleton) · Error (recoverable / fatal) · Success · Permiss
 | Checkpoint | Deliverable |
 |---|---|
 | **A** | ✅ This document |
-| B | Information architecture, sitemap, role/permission matrix, journey maps |
+| B | ✅ `B_INFORMATION_ARCHITECTURE.md` |
 | C | Low-fidelity wireframes (desktop + mobile) |
 | D | Design tokens, typography, components, accessibility spec, Dark/Light themes, brand direction |
 | E | High-fidelity screens with all states |

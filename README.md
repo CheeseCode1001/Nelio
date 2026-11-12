@@ -12,7 +12,7 @@ AI social media operating system for creators, businesses and agencies. AI agent
 | Checkpoint | Deliverable | Status |
 |---|---|---|
 | A | Requirements inventory & traceability | Draft for review |
-| B | Information architecture, sitemap, permissions, journeys | Not started |
+| B | Information architecture, sitemap, permissions, journeys | Draft for review |
 | C | Low-fidelity wireframes | Not started |
 | D | Design system & themes | Not started |
 | E | High-fidelity screens | Not started |
