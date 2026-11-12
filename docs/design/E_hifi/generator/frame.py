@@ -37,7 +37,7 @@ def mpubnav():
 def mpubfoot():
     cols_ = [('Product',['Features','Pricing','Status']),('Use cases',['Creators','Businesses','Agencies']),('Company',['Licensing','FAQ','Contact']),('Legal',['Terms','Privacy','Takedowns'])]
     cs = ''.join(f'<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 14px; font-weight: 800; color: {T["tx"]}">{t}</span>' + ''.join(f'<a href="#" style="font-size: 14px; color: {T["mu"]}; text-decoration: none; min-height: 28px">{l}</a>' for l in ls) + '</div>' for t, ls in cols_)
-    return f'<footer style="background: {T["s1"]}; border-top: 1px solid {T["bd"]}; padding: 36px 20px 0; overflow: hidden; display: flex; flex-direction: column; gap: 24px">{logo(24)}{P("Your AI content team, under your control.")}<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px">{cs}</div><span style="font-size: 12.5px; color: {T["mu"]}">© 2026 Nelio. Made in Lagos. Prices in USD, pay in NGN.</span><div aria-hidden="true" style="font-family: {HF}; font-weight: 800; font-size: 120px; letter-spacing: -0.06em; line-height: 0.8; color: {T["s3"]}; text-align: center">nelio</div></footer>'
+    return f'<footer style="background: {T["s1"]}; border-top: 1px solid {T["bd"]}; padding: 40px 16px 0; overflow: hidden; display: flex; flex-direction: column; gap: 24px">{logo(24)}{P("Your AI content team, under your control.")}<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px">{cs}</div><span style="font-size: 12.5px; color: {T["mu"]}">© 2026 Nelio. Made in Lagos. Prices in USD, pay in NGN.</span><div aria-hidden="true" style="font-family: {HF}; font-weight: 800; font-size: 120px; letter-spacing: -0.06em; line-height: 0.8; color: {T["s3"]}; text-align: center">nelio</div></footer>'
 def pub_page(fname_, title, inner, h=3000, w=1440):
     if MOB['on']:
         CUR['hmul'] = 1.7
@@ -46,9 +46,9 @@ def pub_page(fname_, title, inner, h=3000, w=1440):
 def center_page(fname_, title, inner, h=920, w=1440, top='', width=480, side=None):
     if MOB['on']:
         CUR['hmul'] = 1.0
-        tb = top or f'<header style="display: flex; align-items: center; padding: 16px 20px">{logo(22)}</header>'
+        tb = top or f'<header style="display: flex; align-items: center; padding: 12px 16px">{logo(22)}</header>'
         ph = side[2] if side and len(side) > 2 else ''
-        write(fname_, doc(title, tb + ph + f'<main style="flex-grow: 1; display: flex; justify-content: center; padding: 12px 20px 32px"><div style="width: 100%; display: flex; flex-direction: column; gap: 16px">{inner}</div></main>', w, h)); return
+        write(fname_, doc(title, tb + ph + f'<main style="flex-grow: 1; display: flex; justify-content: center; padding: 16px"><div style="width: 100%; display: flex; flex-direction: column; gap: 16px">{inner}</div></main>', w, h)); return
     tb = top or f'<header style="display: flex; align-items: center; padding: 20px 32px">{logo(24)}</header>'
     if side:
         body = f'<div style="display: flex; flex-wrap: wrap; flex-grow: 1"><div style="flex: 1 1 520px; display: flex; flex-direction: column">{tb}<main style="flex-grow: 1; display: flex; justify-content: center; padding: 32px 24px"><div style="width: 100%; max-width: {width}px; display: flex; flex-direction: column; gap: 18px">{inner}</div></main></div><aside style="flex: 1 1 480px; background: {side[0]}; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 48px; gap: 24px; position: relative; overflow: hidden">{side[1]}</aside></div>'
@@ -59,7 +59,7 @@ def portal_page(fname_, title, inner, h=1000, w=1440, modal=''):
     hd = f'<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 14px 28px; border-bottom: 1px solid {T["bd"]}; background: {T["s1"]}"><span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 14px; background: {T["orange"]}; color: {OL}; border: 2px solid {OL}; box-sizing: border-box; font-family: {HF}; font-weight: 800; font-size: 20px; display: inline-flex; align-items: center; justify-content: center">B</span><div><div style="font-size: 15px; font-weight: 800">BrightReach Agency</div><div style="font-size: 12px; color: {T["mu"]}">Client portal · Acme Foods</div></div>{grow()}<span style="font-size: 12px; color: {T["mu"]}">Powered by</span>{logo(16)}{ibtn("bell","Notifications")}{person("CN","#22C55E",44)}</header>'
     if MOB['on']:
         CUR['hmul'] = 1.9
-        hd = hd.replace('padding: 14px 28px', 'padding: 10px 14px').replace('<span style="font-size: 12px; color: ' + T["mu"] + '">Powered by</span>' + logo(16), '')
+        hd = hd.replace('padding: 14px 28px', 'padding: 12px 16px').replace('<span style="font-size: 12px; color: ' + T["mu"] + '">Powered by</span>' + logo(16), '')
     write(fname_, doc(title, hd + content_wrap(inner, maxw=1080) + modal, w, h))
 def creator_nav(active):
     items = [('c-over','home','Overview','CreatorOverview'),('c-verify','shield','Verification','Verification'),('c-terms','file','Licensing terms','LicenseTerms'),('c-usage','eye','Usage','Usage'),('c-rev','x','Revocations','Revoke'),('c-pay','wallet','Payouts','Payouts')]
@@ -85,19 +85,13 @@ def admin_page(fname_, title, active, inner, h=1000, w=1440, modal=''):
 # ---------- mobile ----------
 MTAB = {'home':'MobileHome','activity':'MobileActivity','approvals':'MobileApprovals','calendar':'MobileCalendar','more':'MobileMore'}
 def tabbar(active):
-    out = ''
-    for k, ic, l in [('home','home','Home'),('activity','activity','Activity'),('approvals','check','Approvals'),('calendar','calendar','Calendar'),('more','menu','More')]:
-        on = k == active
-        pill = f'background: {T["acc"]}; color: {T["onacc"]};' if on else f'color: {T["mu"]};'
-        badge = f'<span style="position: absolute; top: -4px; right: -8px; min-width: 18px; height: 18px; border-radius: 999px; background: {T["ai"]}; color: {OL}; font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center">4</span>' if k == 'approvals' else ''
-        out += f'<a href="{MTAB[k]}.dc.html" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: {T["tx"] if on else T["mu"]}; font-size: 11px; font-weight: 700"><span style="position: relative; width: 54px; height: 32px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; {pill}">{icon(ic,20)}{badge}</span>{l}</a>'
-    return f'<nav aria-label="Main" style="display: flex; padding: 10px 6px 20px; border-top: 1px solid {T["bd"]}; background: {T["s1"]}">{out}</nav>'
+    return tabbar_html([(k, l, MTAB[k] + '.dc.html') for k, l in [('home','Home'),('activity','Activity'),('approvals','Approvals'),('calendar','Calendar'),('more','More')]], active)
 def mtop(title=None):
     t = f'<span style="font-family: {HF}; font-weight: 800; font-size: 17px">{e(title)}</span>' if title else f'<a href="WorkspaceSwitcher.dc.html" style="display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border-radius: 999px; border: 2px solid {T["bd"]}; background: {T["s1"]}; color: {T["tx"]}; text-decoration: none; font-weight: 700; font-size: 14px; min-height: 44px; box-sizing: border-box">{person("A","#FFD43B",30)}Ada Studio{icon("chevd",14)}</a>'
-    return f'<header style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: {T["s1"]}; border-bottom: 1px solid {T["bd"]}">{t}{grow()}{ibtn("search","Search","CommandPalette.dc.html")}{ibtn("bell","Notifications","MobileNotifications.dc.html")}</header>'
+    return f'<header style="display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: {T["s1"]}; border-bottom: 1px solid {T["bd"]}">{t}{grow()}{ibtn("search","Search","CommandPalette.dc.html")}{ibtn("bell","Notifications","MobileNotifications.dc.html")}</header>'
 def mobile_page(fname_, title, inner, tab='home', top=None, h=844, w=390, bar=True):
     tp = top if top is not None else mtop()
-    write(fname_, doc(title, tp + f'<main style="flex-grow: 1; overflow: hidden; padding: 16px; display: flex; flex-direction: column; gap: 14px">{inner}</main>' + (tabbar(tab) if bar else ''), w, h, fixed=True))
+    write(fname_, doc(title, tp + f'<main style="flex-grow: 1; overflow: hidden; padding: 16px; display: flex; flex-direction: column; gap: 16px">{inner}</main>' + (tabbar(tab) if bar else ''), w, h, fixed=True))
 
 # ---------- marketing pieces ----------
 import json as _json
@@ -136,6 +130,14 @@ def thumb(caption='MYTHS', bg='#9B7BFF', w=44, skin=2, shirt='#FFD43B', key=None
     return f'<span aria-hidden="true" style="position: relative; display: inline-block; width: {w}px; aspect-ratio: 9/16; border-radius: 10px; overflow: hidden; flex: none; border: 2px solid {OL}; box-sizing: border-box; background: {bg}">{photo(key or pick(caption + str(w)))}</span>'
 def wide_video(label='podcast_ep12.mp4', bg='#59D8FF'):
     return f'<div role="img" aria-label="Source video {e(label)}" style="position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 22px; overflow: hidden; border: 2px solid {OL}; box-sizing: border-box; background: {bg}">{photo("p9", pos="center")}<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 60px; height: 60px; border-radius: 50%; background: rgba(11,11,20,0.75); display: flex; align-items: center; justify-content: center">{icon("play",26,"#FFFFFF")}</div><div style="position: absolute; left: 12px; top: 12px">{chip(label, "ink")}</div></div>'
+def shorts_scroller(items, w=170, label='Shorts'):
+    """Horizontal shorts row: scrolls sideways, with arrow buttons and an edge arrow so people know there is more."""
+    cards = ''.join(f'<div style="flex: none; width: {w}px; scroll-snap-align: start">{video(c, w, bg, 0, "#FFD43B", play=False, key=k)}</div>' for c, bg, k in items)
+    arrows = row(f'<button type="button" aria-label="Previous {e(label)}" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid {T["bd"]}; background: {T["s1"]}; color: {T["mu"]}; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transform: scaleX(-1)">{icon("chev",18)}</button>',
+                 f'<button type="button" aria-label="Next {e(label)}" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid {OL}; background: {T["ink"]}; color: {T["onink"]}; display: inline-flex; align-items: center; justify-content: center; cursor: pointer">{icon("chev",18)}</button>', gap=8, wrap=False)
+    edge = f'<button type="button" aria-label="Scroll to more {e(label)}" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 2px solid {OL}; background: #B6F24A; color: {OL}; display: inline-flex; align-items: center; justify-content: center; box-shadow: 3px 3px 0 {OL}; cursor: pointer; {A("pop",.3)}">{icon("chev",20,OL,2.6)}</button>'
+    track = f'<div role="region" aria-label="{e(label)}, scroll sideways for more" tabindex="0" style="display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2px 56px 10px 2px; scrollbar-width: thin">{cards}</div>'
+    return arrows, f'<div style="position: relative">{track}{edge}</div>'
 def avatar_photo(key, s=72, ring='#FFD43B'):
     return f'<span style="position: relative; display: inline-block; width: {s}px; height: {s}px; border-radius: 50%; overflow: hidden; border: 3px solid {OL}; background: {ring}; flex: none">{photo(key)}</span>'
 def photo_carousel(bg, title, keys, stickers=(), caption='Clipped by Nelio AI'):
@@ -150,7 +152,7 @@ def photo_carousel(bg, title, keys, stickers=(), caption='Clipped by Nelio AI'):
     body = (f'<div style="position: relative; width: 100%; max-width: 460px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center">'
             f'<div style="position: relative; width: 100%">{back}{front}{st}</div>'
             f'<div style="display: flex; gap: 8px; align-items: center" aria-hidden="true">{dots}</div>{big(title, 38, OL)}</div>')
-    strip = f'<div style="display: flex; gap: 10px; padding: 4px 20px 8px; overflow: hidden">' + ''.join(f'<div style="position: relative; flex: 1 1 0; aspect-ratio: 3/4; border-radius: 20px; overflow: hidden; border: 2px solid {OL}; transform: rotate({r}deg)">{photo(k)}</div>' for k, r in zip(keys[:3], (-3, 0, 3))) + '</div>'
+    strip = f'<div style="display: flex; gap: 12px; padding: 0 16px 8px; overflow: hidden">' + ''.join(f'<div style="position: relative; flex: 1 1 0; aspect-ratio: 3/4; border-radius: 20px; overflow: hidden; border: 2px solid {OL}; transform: rotate({r}deg)">{photo(k)}</div>' for k, r in zip(keys[:3], (-3, 0, 3))) + '</div>'
     return (bg, f'{lime_blob(520, "rgba(255,255,255,0.25)", "right: -120px; top: -120px")}{body}', strip)
 def lime_blob(w=520, color=None, style=''):
     c = color or T['lime']
@@ -160,7 +162,7 @@ def big(t, s=68, color=None, anim=''):
     return f'<h1 style="margin: 0; font-family: {HF}; font-weight: 800; font-size: {s}px; line-height: 1.02; letter-spacing: -0.045em; color: {color or T["tx"]}; {anim}">{t}</h1>'
 def hl(t, bg=None, fg=None): return f'<span style="background: {bg or T["lime"]}; color: {fg or OL}; padding: 0 14px; border-radius: 18px; display: inline-block; line-height: 1.1">{t}</span>'
 def section(inner, pad='88px 48px', bg=None, center=False, style=''):
-    if MOB['on']: pad = '44px 20px'
+    pad = '40px 16px' if MOB['on'] else '72px 48px'
     al = 'align-items: center; text-align: center;' if center else ''
     return f'<section style="padding: {pad}; position: relative; overflow: hidden; {"background: "+bg+";" if bg else ""} {style}"><div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; position: relative; {al}">{inner}</div></section>'
 def sec_head(eb, title, sub=None, center=True):

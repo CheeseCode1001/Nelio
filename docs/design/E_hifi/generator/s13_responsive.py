@@ -4,7 +4,7 @@ from frame import *
 import frame, lib2, re, os
 import s01_public
 SKIP = {'mobile', 'dark', 'flows', 'foundations', 'motion'}
-GAP, PADX = 56, 48
+GAP, PADX = 48, 48
 
 def strip(cols, desk_first, title, extra=()):
     cols = list(cols) + list(extra)
@@ -20,7 +20,7 @@ def strip(cols, desk_first, title, extra=()):
     h = max(c['h'] for c in cols) + 140
     head = f'<header style="display: flex; align-items: center; gap: 12px; padding: 0 0 22px">{logo(18)}{H(title, 22)}{chip(str(n) + (" state" if n == 1 else " states"), "lime")}{grow()}{small("Mobile · modals open as bottom sheets")}</header>'
     lib2.MOB['on'] = False
-    write(mname(desk_first), doc(title + ' · Mobile', f'<div style="padding: 36px {PADX}px 48px">{head}<div style="display: flex; gap: {GAP}px; align-items: flex-start">{out}</div></div>', w, h))
+    write(mname(desk_first), doc(title + ' · Mobile', f'<div style="padding: {PADX}px">{head}<div style="display: flex; gap: {GAP}px; align-items: flex-start">{out}</div></div>', w, h))
     lib2.REG[mname(desk_first)].update(mobile=True, desk=desk_first)
     lib2.MOB['on'] = True
 

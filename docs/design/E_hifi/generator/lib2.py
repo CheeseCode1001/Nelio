@@ -40,7 +40,8 @@ MOTION_CSS = '''@keyframes nUp{from{opacity:0;transform:translateY(18px)}to{opac
 @keyframes nCycle{0%{opacity:0}4%{opacity:1}25%{opacity:1}29%{opacity:0}100%{opacity:0}}
 @keyframes nDot{0%{width:10px;background:rgba(11,11,20,.25)}4%,25%{width:28px;background:#0B0B14}29%,100%{width:10px;background:rgba(11,11,20,.25)}}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
-:focus-visible{outline:3px solid #2F5BFF;outline-offset:2px}'''
+:focus-visible{outline:3px solid #2F5BFF;outline-offset:2px}
+*{scrollbar-width:none !important;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}'''
 def A(kind='up', d=0.0, dur=None):
     m = {'up':('nUp',.7,'cubic-bezier(.16,1,.3,1)','both'),'fade':('nFade',.6,'ease-out','both'),'pop':('nPop',.7,'cubic-bezier(.34,1.56,.64,1)','both'),
          'float':('nFloat',4,'ease-in-out','infinite'),'pulse':('nPulse',1.6,'ease-in-out','infinite'),'wiggle':('nWiggle',2.6,'ease-in-out','infinite'),
@@ -71,10 +72,11 @@ def row(*items, gap=12, align='center', wrap=True, justify='flex-start', style='
     return f'<div style="display: flex; flex-direction: row; gap: {gap}px; align-items: {align}; justify-content: {justify}; {"flex-wrap: wrap;" if wrap else ""} min-width: 0; {style}">{"".join(items)}</div>'
 def col(*items, gap=12, style=''): return f'<div style="display: flex; flex-direction: column; gap: {gap}px; min-width: 0; {style}">{"".join(items)}</div>'
 def grid(items, cols=3, gap=16, minw=None, style=''):
+    gap = SP['gap_m'] if MOB['on'] else SP['gap_d']
     if MOB['on']:
         if minw: minw = min(minw, 300)
         else: minw = 150 if cols >= 4 else 400
-        return f'<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, {minw}px), 1fr)); gap: {min(gap, 14)}px; {style}">{"".join(items)}</div>'
+        return f'<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, {minw}px), 1fr)); gap: {gap}px; {style}">{"".join(items)}</div>'
     tpl = f'repeat(auto-fit, minmax({minw}px, 1fr))' if minw else f'repeat({cols}, minmax(0, 1fr))'
     return f'<div style="display: grid; grid-template-columns: {tpl}; gap: {gap}px; {style}">{"".join(items)}</div>'
 def grow(): return '<div style="flex-grow: 1"></div>'
@@ -118,7 +120,9 @@ def ibtn(ic, label, href=None):
     return f'<button type="button" aria-label="{e(label)}" style="{st}">{icon(ic,18)}</button>'
 def link(t, href='#', color=None): return f'<a href="{href}" style="font-size: 13.5px; font-weight: 700; color: {color or T["accTx"]}; text-decoration: none">{e(t)}</a>'
 
+SP = dict(page_d=32, page_m=16, card_d=20, card_m=16, gap_d=16, gap_m=12, stack_d=24, stack_m=16)
 def card(*inner, pad=22, bg=None, gap=14, bd=True, style='', radius=24, anim=''):
+    pad = SP['card_m'] if MOB['on'] else SP['card_d']; gap = min(gap, 12) if MOB['on'] else gap
     b = f'border: 1px solid {T["bd"]};' if bd else ''
     sh = f'box-shadow: {T["shadow"]};' if bd and not bg else ''
     return f'<section style="background: {bg or T["s1"]}; {b} {sh} border-radius: {radius}px; padding: {pad}px; display: flex; flex-direction: column; gap: {gap}px; min-width: 0; box-sizing: border-box; {style} {anim}">{"".join(inner)}</section>'
@@ -280,7 +284,7 @@ def topbar(ws='Ada Studio', kind='Creator workspace', role='owner'):
     me = f'<a href="AccountMenu.dc.html" aria-label="Account menu" style="text-decoration: none">{person("AO", "#FF7A2F", 44)}</a>'
     return f'<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 20px; background: {T["s1"]}; border-bottom: 1px solid {T["bd"]}"><a href="CommandCenter.dc.html" style="text-decoration: none">{logo(22)}</a><span style="width: 6px"></span>{sw}{search}{grow()}{credits}{pause}{bell}{me}</header>'
 def content_wrap(inner, pad='32px 36px', gap=24, maxw=1260):
-    if MOB['on']: pad, gap = '18px 16px 28px', min(gap, 18)
+    pad, gap = (f"{SP['page_m']}px", SP['stack_m']) if MOB['on'] else (f"{SP['page_d']}px", SP['stack_d'])
     return f'<main style="flex: 999 1 560px; min-width: 0; padding: {pad}; box-sizing: border-box"><div style="max-width: {maxw}px; margin: 0 auto; display: flex; flex-direction: column; gap: {gap}px">{inner}</div></main>'
 def overlay(m, top=100, maxw=560):
     if MOB['on']:
@@ -369,20 +373,36 @@ def topstrip(tone, ic, text, action=None, href='#'):
     return f'<div style="padding: 10px 20px; background: {bg}; color: {T["tx"]}; font-size: 14px; font-weight: 600; display: flex; gap: 10px; align-items: center">{icon(ic,18,fg)}{e(text)}{a}</div>'
 
 # ---------- mobile shells ----------
+TABIC = {
+ 'home': ('<path d="M3.5 10.2 12 3.5l8.5 6.7V19a1.5 1.5 0 0 1-1.5 1.5h-4.2v-6h-5.6v6H5A1.5 1.5 0 0 1 3.5 19z"/>', None),
+ 'activity': ('<path d="M13 2.8 4.8 13.4h6.3l-1 7.8 8.1-10.6h-6.3z"/>', None),
+ 'approvals': ('<circle cx="12" cy="12" r="8.7"/>', '<path d="m8.2 12.2 2.6 2.6 5-5.2"/>'),
+ 'calendar': ('<rect x="3.5" y="5" width="17" height="15.5" rx="3"/>', '<path d="M3.5 9.6h17M8 3v4M16 3v4"/>'),
+ 'more': ('<rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/>', None)}
+def tabicon(k, on, s=24):
+    shape, detail = TABIC[k]
+    if on:
+        cut = T['s1']
+        det = detail.replace('<path', f'<path stroke="{cut}" stroke-width="2" fill="none"') if detail else ''
+        if k == 'calendar': det = f'<path d="M3.5 9.6h17" stroke="{cut}" stroke-width="2"/><path d="M8 3v4M16 3v4" stroke="{T["acc"]}" stroke-width="2"/>'
+        return f'<svg width="{s}" height="{s}" viewBox="0 0 24 24" aria-hidden="true" style="flex: none" fill="{T["acc"]}" stroke="{T["acc"]}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">{shape}{det}</svg>'
+    return f'<svg width="{s}" height="{s}" viewBox="0 0 24 24" aria-hidden="true" style="flex: none" fill="none" stroke="{T["mu"]}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">{shape}{detail or ""}</svg>'
+def tabbar_html(items, act):
+    out = ''
+    for k, l, href in items:
+        on = k == act
+        badge = f'<span style="position: absolute; top: -3px; right: -9px; min-width: 18px; height: 18px; padding: 0 5px; box-sizing: border-box; border-radius: 999px; background: {T["ai"]}; color: {OL}; font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; border: 2px solid {T["s1"]}">4</span>' if k == 'approvals' else ''
+        bar = f'<span aria-hidden="true" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 28px; height: 3px; border-radius: 0 0 3px 3px; background: {T["acc"] if on else "transparent"}"></span>'
+        out += f'<a href="{href}"{" aria-current=\"page\"" if on else ""} style="position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding-top: 10px; min-height: 52px; text-decoration: none; color: {T["accTx"] if on else T["mu"]}; font-size: 11px; font-weight: {800 if on else 600}">{bar}<span style="position: relative; display: inline-flex">{tabicon(k, on)}{badge}</span>{l}</a>'
+    return f'<nav aria-label="Main" style="position: sticky; bottom: 0; z-index: 5; margin-top: auto; display: flex; padding: 0 8px 20px; border-top: 1px solid {T["bd"]}; background: {T["s1"]}">{out}</nav>'
+
 MTABS = [('home','home','Home','CommandCenter'),('activity','activity','Activity','Activity'),('approvals','check','Approvals','Approvals'),('calendar','calendar','Calendar','Calendar'),('more','menu','More','MobileMore')]
 def mtabbar(active):
     act = active if active in ('home','activity','approvals','calendar') else 'more'
-    out = ''
-    for k, ic, l, f in MTABS:
-        on = k == act
-        pill = f'background: {T["acc"]}; color: {T["onacc"]};' if on else f'color: {T["mu"]};'
-        badge = f'<span style="position: absolute; top: -4px; right: -8px; min-width: 18px; height: 18px; border-radius: 999px; background: {T["ai"]}; color: {OL}; font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center">4</span>' if k == 'approvals' else ''
-        href = f + ('.dc.html' if f == 'MobileMore' else '-Mobile.dc.html')
-        out += f'<a href="{href}"{" aria-current=\"page\"" if on else ""} style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: {T["tx"] if on else T["mu"]}; font-size: 11px; font-weight: 700"><span style="position: relative; width: 54px; height: 32px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; {pill}">{icon(ic,20)}{badge}</span>{l}</a>'
-    return f'<nav aria-label="Main" style="position: sticky; bottom: 0; z-index: 5; margin-top: auto; display: flex; padding: 10px 6px 20px; border-top: 1px solid {T["bd"]}; background: {T["s1"]}">{out}</nav>'
+    return tabbar_html([('home','Home','CommandCenter-Mobile.dc.html'),('activity','Activity','Activity-Mobile.dc.html'),('approvals','Approvals','Approvals-Mobile.dc.html'),('calendar','Calendar','Calendar-Mobile.dc.html'),('more','More','MobileMore.dc.html')], act)
 def mtopbar(ws='Ada Studio'):
     sw = f'<a href="WorkspaceSwitcher.dc.html" style="display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border-radius: 999px; border: 2px solid {T["bd"]}; background: {T["s1"]}; color: {T["tx"]}; text-decoration: none; font-weight: 700; font-size: 14px; min-height: 44px; box-sizing: border-box; min-width: 0; max-width: 170px"><span style="flex: none">{person(ws[:1], "#FFD43B", 30)}</span><span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{e(ws)}</span>{icon("chevd",14)}</a>'
-    return f'<header style="position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: {T["s1"]}; border-bottom: 1px solid {T["bd"]}">{sw}{grow()}{ibtn("search","Search","CommandPalette.dc.html")}{ibtn("bell","Notifications","Notifications.dc.html")}<a href="AccountMenu.dc.html" aria-label="Account menu" style="text-decoration: none">{person("AO", "#FF7A2F", 40)}</a></header>'
+    return f'<header style="position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: {T["s1"]}; border-bottom: 1px solid {T["bd"]}">{sw}{grow()}{ibtn("search","Search","CommandPalette.dc.html")}{ibtn("bell","Notifications","Notifications.dc.html")}<a href="AccountMenu.dc.html" aria-label="Account menu" style="text-decoration: none">{person("AO", "#FF7A2F", 40)}</a></header>'
 def hnav(nav):
     nav = nav.replace('flex: 1 1 250px; max-width: 100%; box-sizing: border-box; padding: 18px 14px;', 'flex: 1 1 100%; max-width: 100%; box-sizing: border-box; padding: 10px 12px; overflow-x: auto; flex-wrap: nowrap;')
     nav = nav.replace('border-right: 1px solid', 'border-bottom: 1px solid').replace('flex-direction: column; gap: 2px', 'flex-direction: row; gap: 6px')
