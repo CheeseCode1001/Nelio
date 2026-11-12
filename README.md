@@ -13,7 +13,7 @@ AI social media operating system for creators, businesses and agencies. AI agent
 |---|---|---|
 | A | Requirements inventory & traceability | Draft for review |
 | B | Information architecture, sitemap, permissions, journeys | Draft for review |
-| C | Low-fidelity wireframes | Not started |
+| C | Low-fidelity wireframes (`docs/design/C_wireframes/index.html`) | Draft for review |
 | D | Design system & themes | Not started |
 | E | High-fidelity screens | Not started |
 | F | Runnable prototype | Not started |

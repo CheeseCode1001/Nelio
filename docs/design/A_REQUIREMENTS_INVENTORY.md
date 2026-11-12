@@ -88,7 +88,7 @@ The documents use slightly different persona and role names. The design uses thi
 ### System
 - **SY-01** PWA install prompt · **SY-02** Offline state · **SY-03** Error pages (404, 500, permission-denied, maintenance)
 
-**Total: 86 screens / surfaces.** Each will also be designed in the cross-cutting states listed in §5.
+**Total: 94 screens / surfaces** (8 public + 86 product). Each will also be designed in the cross-cutting states listed in §5.
 
 ---
 
@@ -266,7 +266,7 @@ Empty · Loading (skeleton) · Error (recoverable / fatal) · Success · Permiss
 ## 8. Open questions
 
 **Non-blocking (design proceeds on the assumption shown):**
-- ~~Q-1~~ **Answered:** sections 17–20 were not removed on purpose; content is missing. Recover if possible (see C-6).
+- ~~Q-1~~ **Answered:** sections 17–20 were not removed on purpose; content is missing. User does not have them (12 Nov); closed. Missing content will not be reconstructed or assumed.
 - **Q-2** Which specialist provider will handle original AI video generation? (CS-03 stays gated.)
 - **Q-3** Media retention windows (AS-9).
 - ~~Q-4~~ **Answered:** yes, per-platform approval (AS-4).

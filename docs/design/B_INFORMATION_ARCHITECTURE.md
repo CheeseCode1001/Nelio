@@ -279,7 +279,7 @@ Q-4 is now answered: clients decide **per platform destination**.
 - An **approval request** covers one content revision and one or more destinations (e.g. YouTube Shorts + Instagram Reels).
 - Each destination has its own decision: `pending → approved | changes_requested | rejected`.
 - A post **publishes only to approved destinations**. The others stay held, and the post shows a mixed status such as "Instagram approved · YouTube changes requested".
-- **Invalidation rule (proposed, AS-B1):** an edit to **shared media** (video cut, captions burned into the video, audio) invalidates every destination's approval. An edit to **one platform's** text (caption, title, hashtags) invalidates only that destination's approval.
+- **Invalidation rule (confirmed, AS-B1):** an edit to **shared media** (video cut, captions burned into the video, audio) invalidates every destination's approval. An edit to **one platform's** text (caption, title, hashtags) invalidates only that destination's approval.
 - **Approval chain (optional):** internal review (WM or owner) → client. Default: internal review off, client required when assigned.
 - **Deadlines (optional):** when set, a reminder goes out at 24 h and on the due date. A missed deadline **never** auto-approves; the post stays held (ARCH §11: "default to blocking").
 - Every decision records actor, time, revision, destination and comment. History is immutable and shown on PB-05 and CP-02.
@@ -437,7 +437,7 @@ Variant: if the editor had **re-cut the video** in step 4, both destinations' ap
 ### J-09 Trial
 | # | Actor | Screen | What happens | Gate / state | Notify |
 |---|---|---|---|---|---|
-| 1 | User | M-04 → BI-02 | Starts 3-day trial; no card required (proposal, AS-B2) | | Trial started |
+| 1 | User | M-04 → BI-02 | Starts 3-day trial; no card required (AS-B2) | | Trial started |
 | 2 | User | BI-08 banner | Meters: 1/1 agent · 0/1 account · 0/2 exports · compute cap | | |
 | 3 | User | CL-05 | Second export done → third blocked: "Trial limit reached" | Hard cap | |
 | 4 | System | BI-08 | Day 3: trial ends → Free plan; autonomous agents **paused** (Free can't publish autonomously) | No auto charge | Trial ending (24 h before), ended |
@@ -460,7 +460,7 @@ Top-bar **Pause** → confirmation listing what stops (N agents, M queued jobs) 
 AD-01 alert "render queue backlog > threshold" → AD-02 inspects dead-letter jobs, retries or discards with a reason → if needed, AD-05 requests time-boxed support access to a tenant (reason required, owner notified) → AD-03 shows the full audited trail.
 
 ### J-14 Payment failure
-Renewal fails (Paystack, mock) → **past_due** banner on BI-01 and APP-01 with "Update payment" → 7-day grace (proposal, AS-B3): paid features keep working, top-ups disabled → paid → restored; or grace ends → downgraded to Free, autonomous agents paused, data kept.
+Renewal fails (Paystack, mock) → **past_due** banner on BI-01 and APP-01 with "Update payment" → 7-day grace (AS-B3): paid features keep working, top-ups disabled → paid → restored; or grace ends → downgraded to Free, autonomous agents paused, data kept.
 
 ---
 
@@ -487,9 +487,9 @@ Security notices ignore quiet hours and can't be turned off (ARCH §12).
 
 | # | Item | Status |
 |---|---|---|
-| AS-B1 | Invalidation rule: shared-media edits invalidate all destinations; platform-text edits invalidate only that destination | Proposed; confirm |
-| AS-B2 | Trial starts without a payment card | Proposed; confirm (Paystack trial behaviour also needs verifying) |
-| AS-B3 | 7-day grace period on failed renewal | Proposed; confirm |
+| AS-B1 | Invalidation rule: shared-media edits invalidate all destinations; platform-text edits invalidate only that destination | **Confirmed** by user, 12 Nov 2026 |
+| AS-B2 | Trial starts without a payment card | **Confirmed** by user, 12 Nov 2026 |
+| AS-B3 | 7-day grace period on failed renewal | **Confirmed** by user, 12 Nov 2026 |
 | AS-B4 | Billing lives at organization level; workspaces get spend limits, not separate subscriptions | Proposed |
 | AS-B5 | Plan-locked features are shown with a lock; role-forbidden features are hidden | Proposed |
 | AS-B6 | Client approvers don't see analytics unless the agency turns it on | Proposed |
@@ -500,4 +500,4 @@ Security notices ignore quiet hours and can't be turned off (ARCH §12).
 
 ## 12. Next
 
-**C: Low-fidelity wireframes** for all 86 screens, desktop + mobile, starting with the core path: Command Center, Activity, Clipping Studio, Approvals and Client Portal.
+**C: Low-fidelity wireframes** for all 94 screens, desktop + mobile, starting with the core path: Command Center, Activity, Clipping Studio, Approvals and Client Portal.

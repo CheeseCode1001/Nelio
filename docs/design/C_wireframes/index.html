@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nelio — Deliverable C: Low-fidelity wireframes</title>
+<style>
+  :root{--ink:#1f1f1f;--mid:#6b6b6b;--line:#c9c9c9;--fill:#ececec;--fill2:#f6f6f6;--bg:#fafafa;--accent:#3a3a3a}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:#e4e4e4}
+  a{color:inherit}
+  .shell{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
+  .index{background:#fff;border-right:1px solid var(--line);padding:14px 10px;position:sticky;top:0;height:100vh;overflow:auto}
+  .index h1{font-size:15px;margin:0 0 2px}
+  .index .sub{font-size:12px;color:var(--mid);margin-bottom:10px}
+  .index input{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:6px;margin-bottom:8px}
+  .index h3{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);margin:12px 6px 4px}
+  .index a{display:block;padding:3px 6px;border-radius:5px;text-decoration:none;font-size:12.5px}
+  .index a:hover{background:var(--fill)}
+  .index a.on{background:var(--ink);color:#fff}
+  .index a b{display:inline-block;width:54px;font-weight:600;color:var(--mid)}
+  .index a.on b{color:#ccc}
+  .modes{display:flex;gap:6px;margin-bottom:6px}
+  .modes button{flex:1;padding:5px;border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;font-size:12px}
+  .modes button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  main{padding:20px 24px;overflow:auto}
+  .screen{margin-bottom:48px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline;margin-bottom:10px}
+  .meta h2{margin:0;font-size:20px}
+  .meta code{background:#fff;border:1px solid var(--line);padding:1px 6px;border-radius:4px;font-size:12px}
+  .meta .roles{font-size:12px;color:var(--mid)}
+  .frames{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap}
+  .frame{background:var(--bg);border:2px solid var(--ink);border-radius:10px;overflow:hidden;font-size:12px;flex:none}
+  .frame.d{width:1040px;min-height:560px}
+  .frame.m{width:360px;min-height:640px;border-radius:26px;border-width:6px;position:relative;padding-bottom:52px}
+  .flabel{font-size:11px;color:var(--mid);margin:0 0 4px 2px;text-transform:uppercase;letter-spacing:.06em}
+  .side-notes{flex:1;min-width:280px;max-width:520px}
+  .side-notes h4{margin:0 0 4px;font-size:13px}
+  .side-notes ol,.side-notes ul{margin:0 0 12px;padding-left:20px}
+  .side-notes li{margin-bottom:3px}
+  .st{display:inline-block;border:1px dashed var(--mid);border-radius:10px;padding:0 7px;margin:0 4px 4px 0;font-size:11.5px;background:#fff}
+  /* chrome */
+  .tb{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid var(--line);background:#fff}
+  .tb .sp{flex:1}
+  .pill{border:1px solid var(--line);border-radius:6px;padding:3px 8px;background:#fff;white-space:nowrap}
+  .pill.dk{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .pill.warn{border-style:dashed}
+  .ic{width:22px;height:22px;border-radius:50%;background:var(--fill);border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:10px;flex:none}
+  .logo{font-weight:800;letter-spacing:.02em}
+  .appbody{display:grid;grid-template-columns:180px 1fr;min-height:520px}
+  .sb{border-right:1px solid var(--line);background:#fff;padding:8px 6px}
+  .sb .g{font-size:9.5px;text-transform:uppercase;color:var(--mid);margin:9px 6px 2px;letter-spacing:.06em}
+  .sb .i{padding:3px 8px;border-radius:5px;display:flex;justify-content:space-between}
+  .sb .i.on{background:var(--ink);color:#fff}
+  .sb .i.lock{color:var(--mid)}
+  .content{padding:12px 14px;min-width:0}
+  .bt{position:absolute;left:0;right:0;bottom:0;height:52px;border-top:1px solid var(--line);background:#fff;display:grid;grid-template-columns:repeat(5,1fr);font-size:10px;text-align:center;align-items:center}
+  .bt div.on{font-weight:700;text-decoration:underline}
+  .adminstrip{background:var(--ink);color:#fff;padding:4px 10px;font-size:11px;display:flex;justify-content:space-between}
+  .ribbon{background:repeating-linear-gradient(45deg,#fff,#fff 6px,var(--fill) 6px,var(--fill) 12px);border-bottom:1px solid var(--line);font-size:10px;text-align:center;padding:2px}
+  .center{display:flex;justify-content:center;padding:28px 12px}
+  .center>.card{width:400px;max-width:100%}
+  /* blocks */
+  .blk{margin-bottom:10px}
+  .ph{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .ph h5{margin:0;font-size:16px;flex:1}
+  .ph .s{width:100%;color:var(--mid);margin-top:-2px}
+  .btn{border:1px solid var(--ink);border-radius:6px;padding:3px 9px;background:#fff;white-space:nowrap;display:inline-block}
+  .btn.p{background:var(--ink);color:#fff}
+  .btn.g{border-color:var(--line);color:var(--mid)}
+  .card{border:1px solid var(--line);border-radius:8px;background:#fff;padding:9px}
+  .card .t{font-weight:600;margin-bottom:5px}
+  .ln{height:7px;background:var(--fill);border-radius:4px;margin:5px 0}
+  .ln.s{width:60%}.ln.xs{width:35%}
+  .grid{display:grid;gap:8px}
+  .kpi .v{height:16px;width:50%;background:var(--line);border-radius:3px;margin-top:4px}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  th,td{text-align:left;padding:5px 7px;border-bottom:1px solid var(--fill)}
+  th{background:var(--fill2);font-weight:600;font-size:11px}
+  .row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-bottom:1px solid var(--fill);background:#fff}
+  .rows{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .row .x{flex:1;min-width:0}
+  .chip{display:inline-block;border:1px solid var(--line);border-radius:10px;padding:0 7px;font-size:10.5px;background:var(--fill2);white-space:nowrap}
+  .chip.dk{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .chip.dash{border-style:dashed;background:#fff}
+  .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);overflow:auto}
+  .tabs span{padding:4px 10px;white-space:nowrap}
+  .tabs span.on{border-bottom:2px solid var(--ink);font-weight:600}
+  .split{display:grid;gap:10px}
+  .media{background:repeating-linear-gradient(135deg,var(--fill),var(--fill) 8px,#e2e2e2 8px,#e2e2e2 16px);border:1px solid var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--mid);min-height:150px;text-align:center;padding:6px}
+  .media.v{aspect-ratio:9/16;min-height:0;max-height:300px;margin:auto}
+  .trk{display:grid;grid-template-columns:60px 1fr;gap:4px;align-items:center;margin:3px 0}
+  .trk .b{height:14px;background:var(--fill);border:1px solid var(--line);border-radius:3px;position:relative}
+  .trk .b i{position:absolute;top:-1px;bottom:-1px;background:var(--line);border:1px solid var(--mid);border-radius:3px}
+  .field{margin-bottom:7px}
+  .field label{display:block;font-size:11px;color:var(--mid);margin-bottom:2px}
+  .inp{border:1px solid var(--line);border-radius:6px;height:24px;background:#fff;padding:3px 7px;color:var(--mid)}
+  .inp.ta{height:56px}
+  .chk{display:flex;gap:6px;align-items:center;margin-bottom:6px}
+  .box{width:12px;height:12px;border:1px solid var(--ink);border-radius:2px;flex:none}
+  .box.r{border-radius:50%}
+  .bubble{border:1px solid var(--line);border-radius:10px;padding:6px 9px;margin:5px 0;max-width:85%;background:#fff}
+  .bubble.me{margin-left:auto;background:var(--fill)}
+  .banner{border:1px solid var(--ink);border-radius:7px;padding:6px 9px;display:flex;gap:8px;align-items:center;background:#fff}
+  .banner.warn,.banner.err{border-width:2px}
+  .banner.mock{border-style:dashed}
+  .banner .x{flex:1}
+  .empty{border:1px dashed var(--mid);border-radius:10px;padding:22px;text-align:center;background:#fff}
+  .hero{text-align:center;padding:26px 12px}
+  .hero h5{font-size:22px;margin:0 0 6px}
+  .stepper{display:flex;gap:6px;align-items:center}
+  .stepper span{flex:1;height:5px;background:var(--fill);border-radius:3px}
+  .stepper span.on{background:var(--ink)}
+  .chart{height:130px;border:1px solid var(--line);border-radius:8px;background:#fff;position:relative;overflow:hidden}
+  .chart svg{position:absolute;inset:0;width:100%;height:100%}
+  .chart .lbl{position:absolute;left:8px;top:6px;color:var(--mid)}
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+  .cal div{border-right:1px solid var(--fill);border-bottom:1px solid var(--fill);min-height:56px;padding:3px;font-size:10px}
+  .meter{margin-bottom:6px}
+  .meter .bar{height:8px;background:var(--fill);border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+  .meter .bar i{display:block;height:100%;background:var(--mid)}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px}
+  .kv span:nth-child(odd){color:var(--mid)}
+  .modal{border:2px solid var(--ink);border-radius:10px;background:#fff;padding:10px;box-shadow:0 0 0 2000px rgba(0,0,0,.06) inset}
+  .modal .mt{font-weight:700;margin-bottom:6px}
+  .foot{border-top:1px solid var(--line);padding:10px 14px;color:var(--mid);display:flex;gap:14px;flex-wrap:wrap;background:#fff}
+  .note{font-size:11px;color:var(--mid);font-style:italic}
+  .m .hide-m{display:none}
+  .d .hide-d{display:none}
+  @media print{.index{display:none}.shell{display:block}.screen{page-break-after:always}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <nav class="index">
+    <h1>Nelio · Wireframes</h1>
+    <div class="sub">Deliverable C · low-fidelity · greyscale on purpose (visual design comes in D)</div>
+    <div class="modes"><button id="m1" class="on">One screen</button><button id="m2">All screens</button></div>
+    <input id="q" placeholder="Filter (e.g. APP-03, approval)">
+    <div id="list"></div>
+  </nav>
+  <main id="main"></main>
+</div>
+<script>
+/* ---------- chrome definitions ---------- */
+const NAV=[
+  [null,[['home','Command Center'],['activity','Activity']]],
+  ['AI',[['strategist','Strategist'],['agents','Agents']]],
+  ['Create',[['media','Clipping Studio'],['content','Content Studio'],['exports','Exports']]],
+  ['Publish',[['calendar','Calendar'],['drafts','Drafts'],['approvals','Approvals','4']]],
+  ['Grow',[['analytics','Analytics'],['licensing','Licensing']]],
+  ['Workspace',[['connections','Connections'],['brandkits','Brand kits'],['settings','Settings']]],
+  ['Agency',[['agencyhub','Agency hub'],['clients','Clients'],['team','Team'],['audit','Audit log']]],
+  [' ',[['billing','Billing & usage']]]
+];
+const CREATORNAV=[['c-over','Overview'],['c-verify','Verification'],['c-terms','Licensing terms'],['c-usage','Usage'],['c-rev','Revocations'],['c-pay','Payouts · later']];
+const ADMINNAV=[['a-ops','Ops overview'],['a-jobs','Jobs & dead-letter'],['a-audit','Audit search'],['a-lic','License review'],['a-sup','Support access'],['a-abuse','Abuse & moderation'],['a-diag','Diagnostics'],['a-flags','Feature flags']];
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function sidebar(items,active){
+  return `<div class="sb">${items.map(([k,l,b])=>`<div class="i ${k===active?'on':''}">${esc(l)}${b?`<span class="chip">${b}</span>`:''}</div>`).join('')}</div>`;
+}
+function appSidebar(active,agency){
+  return `<div class="sb">${NAV.filter(g=>agency||g[0]!=='Agency').map(([g,items])=>
+    (g?`<div class="g">${g}</div>`:'')+items.map(([k,l,b])=>`<div class="i ${k===active?'on':''}">${l}${b?`<span class="chip ${k===active?'':'dk'}">${b}</span>`:''}</div>`).join('')).join('')}</div>`;
+}
+const appTop=(m,ws)=>m
+  ?`<div class="tb"><span class="pill">▾ ${ws||'Ada Studio'}</span><span class="sp"></span><span class="ic">⌕</span><span class="ic">❚❚</span><span class="ic">🔔</span><span class="ic">A</span></div>`
+  :`<div class="tb"><span class="logo">Nelio</span><span class="pill">▾ ${ws||'Ada Studio'}</span><span class="pill" style="min-width:220px;color:#888">⌕ Search or run a command  ⌘K</span><span class="sp"></span><span class="pill">◔ 1,240 credits</span><span class="pill">❚❚ Pause workspace</span><span class="ic">🔔</span><span class="ic">A</span></div>`;
+const bottomTabs=active=>`<div class="bt">${[['home','Home'],['activity','Activity'],['approvals','Approvals ④'],['calendar','Calendar'],['more','More']].map(([k,l])=>`<div class="${k===active?'on':''}">▢<br>${l}</div>`).join('')}</div>`;
+const pubTop=m=>`<div class="tb"><span class="logo">Nelio</span><span class="sp"></span>${m?'<span class="ic">≡</span>':'<span>Product</span><span>Use cases</span><span>Pricing</span><span>Licensing</span><span>FAQ</span><span class="btn g">Log in</span><span class="btn p">Start free</span>'}</div>`;
+const pubFoot=`<div class="foot"><b>Nelio</b><span>Product</span><span>Pricing</span><span>Licensing</span><span>Status</span><span>Terms</span><span>Privacy</span><span>Takedown</span></div>`;
+
+/* ---------- block renderer ---------- */
+function R(b,m){
+  if(!b) return '';
+  if(typeof b==='string') return `<div class="blk">${esc(b)}</div>`;
+  const [t,...a]=b;
+  const W=h=>`<div class="blk">${h}</div>`;
+  switch(t){
+    case 'head': { const [title,acts=[],sub]=a; return W(`<div class="ph"><h5>${esc(title)}</h5>${acts.map((x,i)=>`<span class="btn ${i===acts.length-1?'p':''}">${esc(x)}</span>`).join('')}${sub?`<div class="s">${esc(sub)}</div>`:''}</div>`); }
+    case 'banner': { const [k,txt,cta]=a; return W(`<div class="banner ${k}"><span class="chip ${k==='mock'?'dash':'dk'}">${{warn:'!',err:'×',info:'i',mock:'MOCK',ok:'✓'}[k]||k}</span><span class="x">${esc(txt)}</span>${cta?`<span class="btn">${esc(cta)}</span>`:''}</div>`); }
+    case 'kpis': return W(`<div class="grid" style="grid-template-columns:repeat(${m?2:a[0].length},1fr)">${a[0].map(l=>`<div class="card kpi"><div class="note" style="font-style:normal">${esc(l)}</div><div class="v"></div></div>`).join('')}</div>`);
+    case 'cards': { const [items,cols]=a; return W(`<div class="grid" style="grid-template-columns:repeat(${m?1:(cols||Math.min(items.length,3))},1fr)">${items.map(x=>{const [tt,ch]=Array.isArray(x)?x:[x];return `<div class="card"><div class="t">${esc(tt)} ${ch?`<span class="chip">${esc(ch)}</span>`:''}</div><div class="ln"></div><div class="ln s"></div></div>`}).join('')}</div>`); }
+    case 'table': { const [cols,rows]=a; const n=typeof rows==='number'?rows:rows.length;
+      if(m) return W(`<div class="rows">${Array.from({length:Math.min(n,5)},(_,i)=>Array.isArray(rows)
+        ?`<div class="row"><span class="x"><b>${esc(rows[i][0])}</b><div class="note" style="font-style:normal">${rows[i].slice(1).map((v,j)=>esc(cols[j+1])+': '+esc(v)).join(' · ')}</div></span></div>`
+        :`<div class="row"><span class="x"><b>${esc(cols[0]+' '+(i+1))}</b><div class="ln s"></div></span><span class="chip">${esc(cols[cols.length-1])}</span></div>`).join('')}</div>`);
+      return W(`<table><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join('')}</tr>${Array.from({length:n},(_,i)=>`<tr>${cols.map((c,j)=>`<td>${Array.isArray(rows)?(rows[i][j]!==undefined?esc(rows[i][j]):''):(j===0?esc(c)+' '+(i+1):'<div class="ln s"></div>')}</td>`).join('')}</tr>`).join('')}</table>`); }
+    case 'list': return W(`<div class="rows">${a[0].map(x=>{const [tt,ch,sub]=Array.isArray(x)?x:[x];return `<div class="row"><span class="ic"></span><span class="x">${esc(tt)}${sub?`<div class="note" style="font-style:normal">${esc(sub)}</div>`:''}</span>${ch?`<span class="chip">${esc(ch)}</span>`:''}</div>`}).join('')}</div>`);
+    case 'feed': return W(`<div class="rows">${a[0].map(([st,tx,tm])=>`<div class="row"><span class="chip ${/fail|blocked|unknown/.test(st)?'dk':''}">${esc(st)}</span><span class="x">${esc(tx)}</span><span class="note">${esc(tm||'')}</span></div>`).join('')}</div>`);
+    case 'form': return W(a[0].map(f=>{
+      if(f.startsWith('[]')) return `<div class="chk"><span class="box"></span>${esc(f.slice(2))}</div>`;
+      if(f.startsWith('()')) return `<div class="chk"><span class="box r"></span>${esc(f.slice(2))}</div>`;
+      if(f.startsWith('!')) return `<div style="margin-top:6px"><span class="btn p" style="display:block;text-align:center;padding:6px">${esc(f.slice(1))}</span></div>`;
+      if(f.startsWith('~')) return `<div style="margin-top:4px;text-align:center" class="note">${esc(f.slice(1))}</div>`;
+      if(f.startsWith('#')) return `<div class="field"><label>${esc(f.slice(1))}</label><div class="inp ta"></div></div>`;
+      if(f.startsWith('▾')) return `<div class="field"><label>${esc(f.slice(1))}</label><div class="inp">▾</div></div>`;
+      return `<div class="field"><label>${esc(f)}</label><div class="inp"></div></div>`;}).join(''));
+    case 'chips': return W(`<div class="chips">${a[0].map((c,i)=>`<span class="chip ${a[1]===i?'dk':''}">${esc(c)}</span>`).join('')}</div>`);
+    case 'tabs': return W(`<div class="tabs">${a[0].map((x,i)=>`<span class="${i===(a[1]||0)?'on':''}">${esc(x)}</span>`).join('')}</div>`);
+    case 'split': { const [l,r,ratio='2:1']=a; const [x,y]=ratio.split(':');
+      return `<div class="split blk" style="grid-template-columns:${m?'1fr':x+'fr '+y+'fr'}"><div>${l.map(z=>R(z,m)).join('')}</div><div>${r.map(z=>R(z,m)).join('')}</div></div>`; }
+    case 'cols': return `<div class="split blk" style="grid-template-columns:${m?'1fr':`repeat(${a[0].length},1fr)`}">${a[0].map(c=>`<div>${c.map(z=>R(z,m)).join('')}</div>`).join('')}</div>`;
+    case 'box': { const [title,inner]=a; return W(`<div class="card"><div class="t">${esc(title)}</div>${inner.map(z=>R(z,m)).join('')}</div>`); }
+    case 'video': return W(`<div class="media ${a[1]==='v'?'v':''}">${esc(a[0]||'Video preview')}</div>`);
+    case 'timeline': return W(`<div class="card"><div class="t">${esc(a[0]||'Timeline')}</div>${(a[1]||['Video','Captions','Overlay','Audio']).map((tr,i)=>`<div class="trk"><span class="note" style="font-style:normal">${esc(tr)}</span><div class="b"><i style="left:${5+i*7}%;width:${55-i*6}%"></i></div></div>`).join('')}</div>`);
+    case 'transcript': return W(`<div class="card"><div class="t">Transcript <span class="chip dash">mock transcript</span></div>${['00:12 · Speaker 1','00:19 · Speaker 2','00:31 · Speaker 1','00:47 · Speaker 1','01:05 · Speaker 2'].map((s,i)=>`<div style="margin:4px 0;${i===1?'background:var(--fill);border-radius:4px;padding:2px':''}"><span class="note" style="font-style:normal">${s}</span><div class="ln"></div></div>`).join('')}</div>`);
+    case 'chat': return W(`<div>${a[0].map(([w,tx])=>`<div class="bubble ${w==='u'?'me':''}">${w==='u'?'':'<span class="chip dash">Demo AI</span> '}${esc(tx)}</div>`).join('')}</div>`);
+    case 'chart': return W(`<div class="chart"><span class="lbl">${esc(a[0]||'Chart')}</span><svg viewBox="0 0 300 100" preserveAspectRatio="none"><polyline fill="none" stroke="#888" stroke-width="2" points="0,80 40,70 80,74 120,52 160,58 200,40 240,44 300,22"/></svg></div>`);
+    case 'calendar': return W(`<div class="cal">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div style="min-height:0;font-weight:600;background:var(--fill2)">${d}</div>`).join('')}${Array.from({length:m?7:14},(_,i)=>`<div>${i+10}${[1,3,4,8,11].includes(i)?`<div class="chip" style="display:block;margin-top:3px">▢ ${['IG','YT','IG+YT','YT','IG'][[1,3,4,8,11].indexOf(i)]}</div>`:''}${i===4?'<div class="chip dk" style="display:block;margin-top:3px">needs approval</div>':''}</div>`).join('')}</div>`);
+    case 'steps': return W(`<div class="stepper">${a[0].map((_,i)=>`<span class="${i<=a[1]?'on':''}"></span>`).join('')}</div><div class="note" style="margin-top:3px">Step ${a[1]+1} of ${a[0].length} · ${esc(a[0][a[1]])}</div>`);
+    case 'empty': return W(`<div class="empty"><div class="ic" style="width:34px;height:34px;margin:0 auto 6px"></div><b>${esc(a[0])}</b>${a[2]?`<div class="note">${esc(a[2])}</div>`:''}<div style="margin-top:8px"><span class="btn p">${esc(a[1])}</span></div></div>`);
+    case 'hero': return W(`<div class="hero"><h5>${esc(a[0])}</h5><div class="note" style="font-style:normal">${esc(a[1])}</div><div style="margin-top:10px">${(a[2]||[]).map((x,i)=>`<span class="btn ${i===0?'p':''}" style="margin:0 4px">${esc(x)}</span>`).join('')}</div></div>`);
+    case 'meters': return W(`<div class="card">${a[0].map(([l,p,t])=>`<div class="meter"><div style="display:flex;justify-content:space-between"><span>${esc(l)}</span><span class="note" style="font-style:normal">${esc(t||'')}</span></div><div class="bar"><i style="width:${p}%"></i></div></div>`).join('')}</div>`);
+    case 'kv': return W(`<div class="kv">${a[0].map(([k,v])=>`<span>${esc(k)}</span><span>${esc(v)}</span>`).join('')}</div>`);
+    case 'modal': return W(`<div class="modal"><div class="mt">${esc(a[0])}</div>${a[1].map(z=>R(z,m)).join('')}</div>`);
+    case 'text': return `<div class="blk"><div>${esc(a[0])}</div><div class="ln"></div><div class="ln s"></div></div>`;
+    case 'note': return `<div class="blk note">✎ ${esc(a[0])}</div>`;
+    case 'btns': return W(a[0].map((x,i)=>`<span class="btn ${i===0?'p':''}" style="margin-right:5px">${esc(x)}</span>`).join(''));
+    default: return W(`[${esc(t)}]`);
+  }
+}
+
+function frame(s,m){
+  const body=(s.mbody&&m?s.mbody:s.body).map(b=>R(b,m)).join('');
+  const L=s.layout;
+  const ribbon='<div class="ribbon">Prototype · mock data</div>';
+  if(L==='public') return `${pubTop(m)}<div class="content">${body}</div>${pubFoot}`;
+  if(L==='auth') return `<div class="tb"><span class="logo">Nelio</span></div><div class="center"><div class="card">${body}</div></div>`;
+  if(L==='onb') return `<div class="tb"><span class="logo">Nelio</span><span class="sp"></span><span class="btn g">Skip for now</span></div><div class="center"><div class="card" style="width:520px">${body}</div></div>`;
+  if(L==='app'||L==='agency') return ribbon+appTop(m,s.ws)+(m?`<div class="content">${body}</div>${bottomTabs(s.tab||s.nav)}`:`<div class="appbody">${appSidebar(s.nav,L==='agency'||s.agency)}<div class="content">${body}</div></div>`);
+  if(L==='portal') return ribbon+`<div class="tb"><span class="ic">◩</span><b>BrightReach Agency</b><span class="pill">Acme Foods</span><span class="sp"></span><span class="ic">🔔</span><span class="ic">C</span></div><div class="content">${body}</div>`;
+  if(L==='creator') return ribbon+`<div class="tb"><span class="logo">Nelio</span><span class="pill">Creator Portal</span><span class="sp"></span><span class="ic">🔔</span><span class="ic">K</span></div>`+(m?`<div class="content">${body}</div>`:`<div class="appbody">${sidebar(CREATORNAV,s.nav)}<div class="content">${body}</div></div>`);
+  if(L==='admin') return `<div class="adminstrip"><span>NELIO ADMIN</span><span>Your actions here are audited · session #A-2291</span></div><div class="tb"><span class="logo">Nelio</span><span class="pill dk">Admin</span><span class="sp"></span><span class="pill">❚❚ Global pause</span><span class="ic">P</span></div>`+(m?`<div class="content">${body}</div>`:`<div class="appbody">${sidebar(ADMINNAV,s.nav)}<div class="content">${body}</div></div>`);
+  if(L==='system') return `<div class="tb"><span class="logo">Nelio</span></div><div class="content">${body}</div>`;
+  if(L==='overlay') return ribbon+appTop(m)+(m?`<div class="content">${body}</div>${bottomTabs('home')}`:`<div class="appbody">${appSidebar('home')}<div class="content">${body}</div></div>`);
+  return body;
+}
+
+function screenHTML(s){
+  return `<section class="screen" id="${s.id}">
+   <div class="meta"><h2>${s.id} · ${esc(s.title)}</h2><code>${esc(s.route)}</code><span class="roles">Roles: ${esc(s.roles)}</span></div>
+   <div class="frames">
+     <div><div class="flabel">Desktop</div><div class="frame d">${frame(s,false)}</div></div>
+     <div><div class="flabel">Mobile</div><div class="frame m">${frame(s,true)}</div></div>
+     <div class="side-notes">
+       ${s.notes&&s.notes.length?`<h4>Notes</h4><ol>${s.notes.map(n=>`<li>${esc(n)}</li>`).join('')}</ol>`:''}
+       <h4>States to design</h4><div>${(s.states||[]).map(x=>`<span class="st">${esc(x)}</span>`).join('')}</div>
+       ${s.trace?`<h4 style="margin-top:12px">Traces to</h4><div class="note" style="font-style:normal">${esc(s.trace)}</div>`:''}
+     </div>
+   </div></section>`;
+}
+</script>
+<script>
+/* Nelio wireframes — screen definitions. IDs, routes and roles follow deliverables A and B. */
+const ALL_OPS='Creator, Business, Agency owner/admin, Workspace manager, Editor';
+const OWNERS='Creator, Business owner, Agency owner/admin';
+const SCREENS=[
+
+/* ===================== PUBLIC ===================== */
+{id:'M-01',group:'Public site',title:'Home',route:'/',layout:'public',roles:'Everyone',
+ body:[['hero','Your AI content team, under your control','Agents that research, clip, schedule and publish, with licensing, approvals and spending limits built in.',['Start free','See how it works']],
+  ['video','Product loop: upload → AI clips → approve → publish (illustrative)'],
+  ['cards',[['Authorized clipping','flagship'],'AI agents & Strategist','Agency approvals'],3],
+  ['cards',['Built for creators','Built for businesses','Built for agencies'],3],
+  ['box','Honest by design',[['list',[['Only licensed or owned sources'],['You approve what publishes'],['Hard spending limits'],['No “guaranteed viral” claims']]]]],
+  ['cards',[['YouTube','in development'],['Instagram','in development'],['TikTok','coming later'],['Facebook','coming later']],4],
+  ['btns',['Start free','See pricing']]],
+ notes:['Platform availability strip must match /status; never imply live publishing before app approval (D-01, D-06).','No virality or monetization guarantees anywhere in copy (MP2 safety).'],
+ states:['Default','Signed-in visitor (CTA → Command Center)'],trace:'MP1-01'},
+
+{id:'M-02',group:'Public site',title:'Product / features',route:'/product',layout:'public',roles:'Everyone',
+ body:[['head','How Nelio works',[]],['tabs',['Agents','Clipping','Content Studio','Approvals','Licensing','Analytics']],
+  ['split',[['video','Feature visual']],[['text','Feature explanation'],['list',[['Step 1'],['Step 2'],['Step 3']]]],'1:1'],
+  ['box','Under the hood (plain language)',[['list',[['Claude plans and writes'],['Transcription: Fast / Balanced / High Quality'],['Scene detection + rendering on our servers'],['Original AI video: coming later (specialist provider)','gated']]]]],
+  ['btns',['Start free']]],
+ notes:['Tech names appear only as plain-language capability statements.'],states:['Default'],trace:'MP1-01, D-07–D-09'},
+
+{id:'M-03',group:'Public site',title:'Use cases',route:'/use-cases/[creators|businesses|agencies]',layout:'public',roles:'Everyone',
+ body:[['tabs',['Creators','Businesses','Agencies'],2],['hero','Run every client from one place','Isolated client workspaces, client login and per-platform approvals.',['Start agency trial']],
+  ['cards',['Client workspaces','Client approval portal','Team roles','Audit log','Cross-client overview','Spend limits per client'],3]],
+ notes:['One template, three variants; agency variant shows client portal screenshot.'],states:['Creators','Businesses','Agencies'],trace:'MP1-01, J-02'},
+
+{id:'M-04',group:'Public site',title:'Pricing',route:'/pricing',layout:'public',roles:'Everyone',
+ body:[['head','Pricing',[] ,'USD list prices. NGN shown at checkout where supported.'],['chips',['Monthly','Yearly · later'],0],
+  ['cards',[['Free','$0'],['Starter','$19'],['Creator Pro','$49'],['Business','$99'],['Agency','$249'],['Enterprise','Custom']],6],
+  ['banner','info','Plan limits and credit amounts are provisional until we finish measuring processing costs.'],
+  ['table',['Feature','Free','Starter','Creator Pro','Business','Agency'],[['Agents','1 manual','2','5','10','25'],['Social accounts','1','3','6','12','40'],['Autonomous publishing','—','✓','✓','✓','✓'],['Client workspaces','—','—','—','—','10'],['Top-ups','—','✓','✓','✓','✓']]],
+  ['box','3-day trial',[['text','1 agent · 1 account · 2 short exports · hard compute cap · no card needed · never auto-charged']]],
+  ['btns',['Start free','Talk to sales']]],
+ notes:['Entitlements from A §7 (illustrative).','Trial: no card (AS-B2), no automatic conversion (D-12).'],
+ states:['Default','Signed-in (current plan highlighted)'],trace:'D-10–D-13, AS-1'},
+
+{id:'M-05',group:'Public site',title:'Licensing & Creator Partners',route:'/licensing',layout:'public',roles:'Everyone',
+ body:[['hero','Get your content clipped, on your terms','Free for content owners. Verify your channel, set the rules, revoke any time.',['Join free as a content owner','How licensing works']],
+  ['cards',['Verify ownership','Set allowed uses','See every use','Revoke instantly'],4],
+  ['banner','info','Paid licensing and payouts are coming later, after legal and payment readiness.'],
+  ['box','What we never do',[['list',[['Treat public videos as licensed'],['Assume silence means permission'],['Ignore third-party music or footage']]]]]],
+ notes:['CTA → AU-07 (no plan selection).'],states:['Default'],trace:'D-15, MP1-10'},
+
+{id:'M-06',group:'Public site',title:'FAQ',route:'/faq',layout:'public',roles:'Everyone',
+ body:[['head','Frequently asked questions',[]],['chips',['General','Licensing','Billing','Agencies','Platforms','Privacy'],0],
+  ['list',[['Can Nelio post without me?','+'],['Which platforms work today?','+'],['How do credits work?','+'],['What happens when a license is revoked?','+'],['Do you guarantee views?','+']]]],
+ states:['Default','Search no results'],trace:'MP1-01'},
+
+{id:'M-07',group:'Public site',title:'Legal',route:'/legal/[slug]',layout:'public',roles:'Everyone',
+ body:[['split',[['list',[['Terms of Service'],['Privacy Policy'],['Acceptable Use'],['Licensing Policy'],['Takedown requests']]]],[['banner','mock','Placeholder legal copy. Requires legal review before launch.'],['head','Terms of Service',[],'Last updated —'],['text','Body'],['text','Body']],'1:3']],
+ notes:['Takedown page includes a contact form for rights holders.'],states:['Each policy page'],trace:'AS-7'},
+
+{id:'M-08',group:'Public site',title:'System & integration status',route:'/status',layout:'public',roles:'Everyone',
+ body:[['head','Status',[]],['banner','ok','All Nelio services operational (mock)'],
+  ['table',['Service','Status','Note'],[['Web app','Operational',''],['Rendering','Operational',''],['YouTube publishing','In development','Awaiting API verification'],['Instagram publishing','In development','Awaiting app review'],['TikTok publishing','Coming later',''],['Facebook publishing','Coming later','']]],['chart','Uptime, last 90 days']],
+ states:['Operational','Degraded','Incident'],trace:'D-01, D-06'},
+
+/* ===================== AUTH ===================== */
+{id:'AU-01',group:'Auth',title:'Sign up',route:'/signup',layout:'auth',roles:'New users',
+ body:[['head','Create your Nelio account',[]],['btns',['Continue with Google']],'— or —',['form',['Full name','Email','Password','[]I agree to the Terms and Privacy Policy','!Create account','~Already have an account? Log in']]],
+ notes:['Content owners use AU-07 instead (link at bottom).'],states:['Default','Validation errors','Email already used','Submitting'],trace:'FR-01'},
+
+{id:'AU-02',group:'Auth',title:'Log in',route:'/login',layout:'auth',roles:'All',
+ body:[['head','Welcome back',[]],['btns',['Continue with Google']],['form',['Email','Password','!Log in','~Forgot password? · Create account']]],
+ states:['Default','Wrong credentials','Locked (rate limit)','MFA required → AU-05'],trace:'FR-01'},
+
+{id:'AU-03',group:'Auth',title:'Email verification',route:'/verify-email',layout:'auth',roles:'New users',
+ body:[['empty','Check your inbox','Resend email','We sent a link to ada@… It expires in 24 hours.']],
+ states:['Sent','Resent (cooldown)','Link expired','Verified → onboarding'],trace:'FR-01'},
+
+{id:'AU-04',group:'Auth',title:'Forgot / reset password',route:'/reset-password',layout:'auth',roles:'All',
+ body:[['head','Reset your password',[]],['form',['Email','!Send reset link']],['note','Step 2 (from email link): New password · Confirm · Save']],
+ states:['Request','Sent (same message whether or not account exists)','Set new password','Expired link'],trace:'FR-01'},
+
+{id:'AU-05',group:'Auth',title:'MFA setup & challenge',route:'/mfa',layout:'auth',roles:'All (required for org owners & admins: proposal)',
+ body:[['head','Two-step verification',[]],['video','QR code'],['form',['6-digit code','!Verify','~Use a recovery code']]],
+ states:['Setup (QR + recovery codes)','Challenge','Wrong code','Recovery code'],trace:'FR-01, ARCH §15'},
+
+{id:'AU-06',group:'Auth',title:'Accept invitation',route:'/invite/[token]',layout:'auth',roles:'Invited staff & clients',
+ body:[['head','Join Acme Foods on Nelio',[],'Invited by Bola (BrightReach Agency) as Client approver'],['kv',[['Workspace','Acme Foods'],['Role','Client approver'],['You can','Review and approve content']]],['form',['Full name','Password','!Accept and continue']]],
+ notes:['Client approvers → Client Portal (CP-01); staff → operator app.'],states:['Valid','Expired','Already accepted','Signed in as different email'],trace:'FR-03, J-02'},
+
+{id:'AU-07',group:'Auth',title:'Content-owner sign-up',route:'/creators/join',layout:'auth',roles:'Licensed content owners',
+ body:[['head','Join as a content owner',[],'Free. No subscription needed.'],['form',['Full name','Email','Password','▾Where is your content? (YouTube, Instagram, TikTok, other)','!Create free account']]],
+ states:['Default','Existing Nelio user (adds Creator Portal to account)'],trace:'D-15, J-06'},
+
+/* ===================== ONBOARDING ===================== */
+{id:'ON-01',group:'Onboarding',title:'Account type',route:'/onboarding/account-type',layout:'onb',roles:'New operators',
+ body:[['steps',['Account type','Goals & niche','Connect socials','Automation mode'],0],['head','How will you use Nelio?',[]],['cards',['Creator','Business','Agency'],3],['btns',['Continue']]],
+ notes:['Skip → defaults to Creator.'],states:['Default','Selected'],trace:'FR-02, D-04, C-1'},
+
+{id:'ON-02',group:'Onboarding',title:'Goals & niche',route:'/onboarding/goals',layout:'onb',roles:'New operators',
+ body:[['steps',['Account type','Goals & niche','Connect socials','Automation mode'],1],['head','What do you want to achieve?',[]],['chips',['Grow followers','Repurpose long videos','Post consistently','Drive sales','Manage clients'],1],['form',['Niche (e.g. personal finance)','▾Main audience region','#Anything else? (optional)']],['btns',['Continue','Back']]],
+ states:['Default','Filled'],trace:'FR-02'},
+
+{id:'ON-03',group:'Onboarding',title:'Connect socials (optional)',route:'/onboarding/connect',layout:'onb',roles:'New operators',
+ body:[['steps',['Account type','Goals & niche','Connect socials','Automation mode'],2],['head','Connect accounts',[],'Optional. You can do this later.'],['list',[['YouTube','In development · mock'],['Instagram','In development · mock'],['TikTok','Coming later'],['Facebook','Coming later']]],['btns',['Continue','Back']]],
+ notes:['Trial/Free: limited to 1 account; extra connections show the plan limit.'],states:['Nothing connected','Connected (mock)','Limit reached'],trace:'FR-02, MP1-11, D-06'},
+
+{id:'ON-04',group:'Onboarding',title:'Automation mode',route:'/onboarding/automation',layout:'onb',roles:'New operators',
+ body:[['steps',['Account type','Goals & niche','Connect socials','Automation mode'],3],['head','How much should agents do on their own?',[]],
+  ['list',[['Manual · you start every action',''],['Assisted · agents prepare, you approve','Recommended'],['Autonomous · agents publish within your limits','Needs authorization']]],
+  ['note','Choosing Autonomous opens the authorization dialog (see APP-06). Free plan: locked.'],['btns',['Finish','Back']]],
+ states:['Default (Assisted)','Autonomous locked on Free','Autonomous authorization dialog'],trace:'FR-02, D-05, D-11, PE-01'},
+
+/* ===================== CORE APP ===================== */
+{id:'APP-01',group:'Core app',title:'Command Center',route:'/w/[ws]/home',layout:'app',nav:'home',roles:'All operator roles',
+ body:[['head','Good morning, Ada',['New upload','Ask Strategist']],
+  ['box','Setup checklist · 2 of 5',[['list',[['Add a brand kit','Do it'],['Upload your first video','Done'],['Connect an account','Done'],['Create your first agent','Do it'],['Choose notification settings','Do it']]]]],
+  ['kpis',[['Agents active'],['Awaiting your approval'],['Published this week'],['Credits used / budget']].map(x=>x[0])],
+  ['split',[['box','Agents',[['list',[['Budget Shorts Agent','active','Next run 15:00 · 3 posts/week'],['Podcast Clipper','paused','Paused by Ada'],['Recipe Reels','blocked','Budget limit reached']]]]],['box','Content pipeline',[['chips',['Ideas 6','Drafts 4','Needs approval 4','Scheduled 7','Published 12'],2]]]],
+   [['box','Needs attention',[['list',[['4 approvals waiting','Review'],['Instagram token expires in 2 days','Reconnect'],['License for “Chef Kemi” expires in 5 days','View'],['Recipe Reels blocked: budget','Fix']]]]],['box','Recent activity',[['feed',[['completed','Render finished · Clip 3','2m'],['running','Transcribing podcast_ep12.mp4','now']]]]]],'2:1']],
+ mbody:[['head','Good morning, Ada',[]],['box','Needs attention',[['list',[['4 approvals waiting','Review'],['Instagram token expiring','Reconnect'],['Recipe Reels blocked','Fix']]]]],['kpis',['Agents active','Needs approval','Published','Credits']],['box','Agents',[['list',[['Budget Shorts','active'],['Podcast Clipper','paused'],['Recipe Reels','blocked']]]]]],
+ notes:['“Needs attention” is the single collection point for gates (B §1.4).','Checklist (ON-05) shows until dismissed or complete.','Credits KPI shows estimated vs actual on hover/tap.'],
+ states:['New user (empty, checklist prominent)','Normal','Workspace paused banner','Trial banner','Past-due banner','Loading skeleton'],trace:'FR-04, FR-11, ON-05, PE-05'},
+
+{id:'ON-05',group:'Onboarding',title:'Setup checklist (widget)',route:'/w/[ws]/home (widget)',layout:'app',nav:'home',roles:'Owners',
+ body:[['box','Get set up · 2 of 5',[['meters',[['Progress',40,'2/5']]],['list',[['Add a brand kit','→ ST-06'],['Upload your first video','✓'],['Connect an account','✓'],['Create your first agent','→ APP-06'],['Notification settings','→ ST-04']]],['btns',['Dismiss checklist']]]]],
+ notes:['Holds items moved out of onboarding (C-7): brand kit, first agent, first video.'],states:['Partial','Complete (celebration, then hides)','Dismissed (restorable from Help)'],trace:'D-04, C-7'},
+
+{id:'APP-02',group:'Core app',title:'AI Strategist',route:'/w/[ws]/strategist',layout:'app',nav:'strategist',roles:ALL_OPS,
+ body:[['banner','mock','Demo AI responses: not a live model in the prototype.'],
+  ['split',[['chat',[['u','I want 3 shorts a week on budgeting tips for Nigerian students.'],['a','Here is a plan. I’ll use your uploads and licensed sources only.'],['u','Lower the budget to 300 credits/week.']]],['form',['#Message the Strategist']]],
+   [['box','Proposed plan · draft',[['kv',[['Goal','Grow IG + YT Shorts'],['Cadence','3 posts / week'],['Sources','Your uploads + 2 licensed creators'],['Destinations','Instagram, YouTube'],['Mode','Assisted (you approve)'],['Budget','300 credits / week (est.)']]],['btns',['Approve & create agent','Edit']]]],['box','Research notes',[['list',[['Audience insights'],['Competitor themes'],['Content pillars']]]]]],'3:2']],
+ notes:['Plan activation and any permission expansion need an explicit click (FR-05).','Estimated credits shown before approval.'],
+ states:['Empty (prompt suggestions)','Thinking','Plan proposed','Plan approved → agent created','Error / retry'],trace:'FR-05, J-04, D-07'},
+
+{id:'APP-03',group:'Core app',title:'AI Activity Center',route:'/w/[ws]/activity',layout:'app',nav:'activity',roles:'All operator roles (filtered)',
+ body:[['head','Activity',['Filters','Pause all']],['chips',['All','Running 2','Queued 3','Blocked 1','Needs approval 4','Failed 1','Completed'],0],
+  ['split',[['feed',[['running','Budget Shorts · Transcribing podcast_ep12 (Balanced)','now'],['queued','Budget Shorts · Scene detection','—'],['blocked','Recipe Reels · Render needs 40 cr, 25 left','5m'],['awaiting approval','Clip 3 → Acme client','12m'],['unknown','Instagram publish · confirming with Instagram','14m'],['failed','YouTube upload · quota exceeded','1h'],['completed','Render · Clip 2 (36 cr actual / 40 est.)','1h']]]],
+   [['box','Run detail · Budget Shorts #128',[['kv',[['Status','running'],['Started','14:02'],['Est. cost','52 cr'],['Used so far','18 cr']]],['list',[['Upload & probe','done'],['Transcribe','running'],['Scene detection','queued'],['Rank candidates','queued'],['Render','queued']]],['btns',['Pause run','View logs']]]]],'3:2']],
+ notes:['Progress shown as steps; % only when measurable (ARCH §12).','“unknown” is distinct from failed (J-10).','On reconnect: reload authoritative state, then show “Back online · synced” (AC-08).'],
+ states:['Live','Empty','Reconnecting','Synced after reconnect','Filtered empty','Workspace paused'],trace:'FR-11, AC-05, AC-08, J-10'},
+
+{id:'APP-04',group:'Core app',title:'Agents list',route:'/w/[ws]/agents',layout:'app',nav:'agents',roles:ALL_OPS,
+ body:[['head','Agents',['Create agent']],['table',['Agent','Mode','State','This week','Budget used','Next run'],[['Budget Shorts','Assisted','active','3 drafts','180/300','15:00'],['Podcast Clipper','Manual','paused','—','0/200','—'],['Recipe Reels','Autonomous','blocked: budget','2 posts','300/300','—']]]],
+ states:['Empty (Create first agent / Ask Strategist)','List','Plan limit reached (lock on Create)'],trace:'FR-04, PE-04'},
+
+{id:'APP-05',group:'Core app',title:'Agent detail & configuration',route:'/w/[ws]/agents/[id]',layout:'app',nav:'agents',roles:ALL_OPS+' (edit: owners/managers)',
+ body:[['head','Budget Shorts Agent',['Pause','Run now'],'active · Assisted · created by Ada'],['tabs',['Overview','Policy & permissions','Budget','Destinations','Runs'],1],
+  ['cols',[[['form',['Goal','▾Content types','▾Source pool (licensed only)','▾Schedule (3/week, Mon Wed Fri)','#Brand rules']]],[['box','Permissions',[['form',['[]Publish without approval (Autonomous)','Daily post cap','Weekly post cap','▾Approval policy']]]],['banner','warn','Widening permissions requires re-authorization.']]]]],
+ notes:['Budget tab: per-run and weekly caps, ≤ workspace limit.','Destinations tab: only connected accounts selectable.'],
+ states:['Overview','Editing','Re-authorization dialog','Paused','Blocked with reason + fix','Stopped (read-only)'],trace:'FR-04, PE-02, AC-08'},
+
+{id:'APP-06',group:'Core app',title:'Create-agent wizard',route:'/w/[ws]/agents/new',layout:'app',nav:'agents',roles:ALL_OPS,
+ body:[['steps',['Goal','Sources','Destinations','Budget','Mode & review'],4],
+  ['modal','Authorize autonomous publishing',[['text','This agent may publish without asking you, only within these limits:'],['kv',[['Account','Instagram · @adastudio'],['Content','Short clips from licensed sources'],['Max posts','3 / week'],['Budget','300 credits / week']]],['form',['[]I understand published posts can’t be undone by pausing','!Authorize']]]]],
+ notes:['Trial: max 1 agent. Free: Manual only.','Security email sent on authorization.'],
+ states:['Each step','Authorization dialog','Plan limit reached'],trace:'FR-04, D-05, D-12'},
+
+{id:'APP-07',group:'Core app',title:'Workspace switcher',route:'(top bar menu)',layout:'agency',nav:'agencyhub',roles:'All operator roles',
+ body:[['modal','Switch workspace',[['form',['Search workspaces']],['list',[['BrightReach (agency)','org'],['Acme Foods','client'],['Lagos Fitness','client'],['Kemi’s Kitchen','client']]],['btns',['+ New client workspace']]]]],
+ notes:['Lists only workspaces the user is a member of (isolation rule, B §6).'],states:['Single workspace (switcher hidden)','Many (search)','No access to deep-linked ws → SY-03'],trace:'FR-03, AC-02'},
+
+{id:'NT-01',group:'Core app',title:'Notifications',route:'/w/[ws]/notifications (+ panel)',layout:'app',nav:'home',roles:'All',
+ body:[['head','Notifications',['Mark all read','Preferences']],['tabs',['All','Approvals','Publishing','Licenses','Billing','Security']],
+  ['list',[['Client approved Instagram for “5 budgeting myths”','Approvals','2m · Acme Foods'],['Render complete: Clip 3','Render','10m'],['License for Chef Kemi expires in 5 days','License','1h'],['80% of weekly budget used','Billing','3h'],['New login from Chrome on Windows','Security','1d']]]],
+ states:['Unread','All read','Empty','Push permission prompt (contextual)'],trace:'FR-12, AC-06'},
+
+/* ===================== CLIPPING ===================== */
+{id:'CL-01',group:'Clipping',title:'Media library',route:'/w/[ws]/media',layout:'app',nav:'media',roles:ALL_OPS,
+ body:[['head','Media',['Import licensed','Upload']],['chips',['All','Uploads','Licensed','Clips','Exports'],0],
+  ['cards',[['podcast_ep12.mp4','processing'],['interview_raw.mov','ready'],['Chef Kemi · Ep 4','licensed'],['Clip 3 · 0:42','draft'],['Clip 2 · 0:31','exported'],['old_vlog.mp4','license expired']],3]],
+ states:['Empty (upload CTA)','Grid','Processing items','Rights problem badge','Storage limit'],trace:'FR-06'},
+
+{id:'CL-02',group:'Clipping',title:'Upload / authorized import',route:'/w/[ws]/media/upload',layout:'app',nav:'media',roles:ALL_OPS,
+ body:[['head','Add a video',[]],['split',[['empty','Drop a video file','Choose file','MP4, MOV · up to 2 GB · up to 2 h (provisional)'],['form',['▾Or import from a licensed source']]],
+   [['box','Rights',[['form',['()I own this content','()I have permission from the owner','()It’s from a Nelio license','#Evidence / notes (optional)']]]],['box','Processing',[['form',['▾Transcription: Fast · Balanced · High Quality']]],['kv',[['Estimated cost','~22 credits'],['Balance','1,240']]]]],'3:2'],['btns',['Start processing']]],
+ notes:['Rights declaration required before processing (PE-03).','Mode choice shows cost/quality trade-off (D-08).'],
+ states:['Default','Uploading %','Validation error (type/size)','Insufficient credits','Trial: export limit reminder'],trace:'FR-06, FR-08, D-08, J-01'},
+
+{id:'CL-03',group:'Clipping',title:'Clipping Studio',route:'/w/[ws]/studio/[projectId]',layout:'app',nav:'media',roles:ALL_OPS,
+ body:[['head','podcast_ep12 · Studio',['Versions','Render'],'Source: own upload · rights snapshot #r-881'],
+  ['split',[['box','Clip candidates',[['list',[['“Stop budgeting like this”','score 82*','0:12–0:54'],['“The 50/30/20 myth”','score 74*','3:10–3:51'],['“Why savings fail”','score 61*','7:02–7:40']]],['note','*Estimate, not a prediction of views']]],['transcript']],
+   [['cols',[[['video','9:16 preview · reframed','v']],[['box','Style',[['form',['▾Caption style','▾Brand kit','▾Aspect ratio','▾Hook / title variant']]]],['box','Edit with words',[['form',['#e.g. “cut the first pause, make captions bigger”']]]]]]],['timeline','Timeline · Clip 1',['Video','Captions','Overlay','Audio']]],'2:3']],
+ mbody:[['head','Clip 1',['Render']],['video','9:16 preview','v'],['list',[['Trim start','0:12'],['Trim end','0:54'],['Caption style','Bold']]],['banner','info','Full timeline editing is available on a larger screen.']],
+ notes:['Selecting transcript text sets in/out points.','Source-to-clip lineage visible (rights snapshot).','Mobile = review-and-trim only (AS-B7).'],
+ states:['Processing (steps)','Candidates ready','Editing','Unsaved changes','Render queued','License problem: render blocked','Credit estimate before render'],trace:'FR-06, FR-07, MP1-06a'},
+
+{id:'CL-04',group:'Clipping',title:'Batch variants',route:'/w/[ws]/studio/[projectId]/variants',layout:'app',nav:'media',roles:ALL_OPS,
+ body:[['head','Variants · Clip 1',['Render selected (3)'],'Est. 3 × 18 credits'],['cards',[['Hook A · bold captions','✓'],['Hook B · minimal','✓'],['Hook C · question','✓'],['16:9 version',''],['1:1 version',''],['No captions','']],3]],
+ states:['Generating','Ready','Selected','Insufficient credits'],trace:'FR-07, MP1-06a'},
+
+{id:'CL-05',group:'Clipping',title:'Render & export queue',route:'/w/[ws]/exports',layout:'app',nav:'exports',roles:ALL_OPS,
+ body:[['banner','warn','Trial: 1 of 2 exports used.'],['head','Exports',[]],['table',['Clip','Format','Status','Cost (est → actual)','Action'],[['Clip 1 · Hook A','9:16 MP4','rendering','18 → —','Cancel'],['Clip 2','9:16 MP4','ready','20 → 17','Download'],['Clip 0','9:16 MP4','failed','15 → 0 (refunded)','Retry']]]],
+ states:['Empty','Rendering','Ready','Failed (refunded)','Trial limit reached'],trace:'FR-06, AC-01, D-12'},
+
+/* ===================== CONTENT ===================== */
+{id:'CS-01',group:'Content Studio',title:'Content Studio home',route:'/w/[ws]/content',layout:'app',nav:'content',roles:ALL_OPS,
+ body:[['head','Content Studio',['New post']],['cards',['Write a script','Write posts & captions','Create an image',['Generate an original video','coming later'],'Templates','Remix licensed content'],3],['box','Recent drafts',[['table',['Draft','Type','Updated'],3]]]],
+ states:['Default','Empty drafts'],trace:'MP1-07'},
+
+{id:'CS-02',group:'Content Studio',title:'Post composer',route:'/w/[ws]/content/compose',layout:'app',nav:'content',roles:ALL_OPS,
+ body:[['head','New post',['Save draft','Submit for approval']],
+  ['split',[['form',['▾Media (Clip 1 · Hook A)','#Base caption']],['btns',['✨ Rewrite with AI (demo)']],['box','Destinations',[['list',[['Instagram Reels','selected'],['YouTube Shorts','selected'],['TikTok','coming later'],['Facebook','coming later']]]]],['tabs',['Instagram','YouTube']],['form',['#Instagram caption (2,200 max)','Hashtags']]],
+   [['video','Instagram preview','v'],['banner','ok','License OK · Approval: client required']],'3:2']],
+ states:['Draft','Validation per platform (length, format)','No connected destination','License warning'],trace:'FR-07, FR-09, MP1-07'},
+
+{id:'CS-03',group:'Content Studio',title:'Original AI video generation',route:'/w/[ws]/content/video-generation',layout:'app',nav:'content',roles:ALL_OPS,
+ body:[['empty','Original AI video is coming later','Notify me','This needs a specialist video provider we haven’t integrated yet. Clipping and editing work today.']],
+ notes:['Must never look functional (D-01).'],states:['Gated only'],trace:'MP1-07a, Q-2'},
+
+/* ===================== PUBLISHING ===================== */
+{id:'PB-01',group:'Publishing',title:'Content calendar',route:'/w/[ws]/calendar',layout:'app',nav:'calendar',roles:ALL_OPS+', Viewer',
+ body:[['head','Calendar',['Week','Month','New post']],['chips',['All platforms','Instagram','YouTube'],0],['calendar']],
+ states:['Empty week','Scheduled items','Held items (license/connection)','Drag to reschedule','Timezone note'],trace:'FR-10, PE-06'},
+
+{id:'PB-02',group:'Publishing',title:'Drafts',route:'/w/[ws]/drafts',layout:'app',nav:'drafts',roles:ALL_OPS,
+ body:[['head','Drafts',['New post']],['table',['Draft','Destinations','Approval','Created by','Updated'],[['5 budgeting myths','IG, YT','IG ✓ · YT changes','Editor Tunde','2h'],['Rent hacks','IG','pending','Budget Shorts agent','5h'],['Savings challenge','YT','—','Ada','1d']]]],
+ states:['Empty','List','Filter by agent/person'],trace:'FR-09, FR-10'},
+
+{id:'PB-03',group:'Publishing',title:'Post detail',route:'/w/[ws]/posts/[id]',layout:'app',nav:'drafts',roles:ALL_OPS,
+ body:[['head','5 budgeting myths',['Edit','Schedule approved']],
+  ['table',['Destination','Approval','Publish status','Attempts','Action'],[['Instagram Reels','approved r2','unknown · confirming','1','Wait'],['YouTube Shorts','changes requested','held','0','Revise']]],
+  ['split',[['video','Preview','v']],[['kv',[['Revision','r2'],['License','Own upload ✓'],['Connection','Instagram ✓ · YouTube ✓'],['Scheduled','Fri 18:00 WAT']]],['box','History',[['list',[['Submitted r1','Tunde'],['IG approved, YT changes','Client Chioma'],['r2 (YT title only)','Tunde']]]]]],'1:2']],
+ notes:['Pre-publish re-check: revision, approval, license, connection (ARCH §11).','“unknown” never auto-retries (J-10).'],
+ states:['Draft','Needs approval','Partially approved','Scheduled','Uploading','Published (link)','Failed (error + retry)','Unknown (reconciling)','Blocked: license revoked','Blocked: token expired'],trace:'FR-09, AC-04, PE-06, J-10'},
+
+{id:'PB-04',group:'Publishing',title:'Approvals queue',route:'/w/[ws]/approvals',layout:'app',nav:'approvals',roles:ALL_OPS,
+ body:[['head','Approvals',[]],['tabs',['Waiting on client 3','Waiting on me 1','Changes requested 1','Decided']],['table',['Post','Destinations','Approver','Due','Status'],[['5 budgeting myths','IG ✓ · YT ✎','Chioma (client)','Fri','partial'],['Rent hacks','IG','Chioma (client)','Thu','pending'],['Weekly recap','YT','Ada (internal)','—','pending']]]],
+ states:['Empty','Overdue (never auto-approves)','Filtered'],trace:'FR-10, J-03'},
+
+{id:'PB-05',group:'Publishing',title:'Approval detail',route:'/w/[ws]/approvals/[id]',layout:'app',nav:'approvals',roles:ALL_OPS,
+ body:[['head','5 budgeting myths · r2',['Compare r1 ↔ r2']],
+  ['split',[['tabs',['Instagram','YouTube'],1],['video','YouTube preview','v']],
+   [['table',['Destination','Decision','By','When'],[['Instagram','approved (r2 kept)','Chioma','Tue'],['YouTube','changes requested','Chioma','Tue']]],['box','Comments',[['list',[['Title too long for Shorts','YouTube · Chioma'],['Shortened, please re-check','YouTube · Tunde']]],['form',['Add a comment']]]],['banner','info','Platform-text edit: only YouTube needed re-approval (AS-B1).']],'1:1']],
+ states:['Pending','Partial','All approved','Invalidated by material edit','Read-only history'],trace:'FR-10, AC-03, AS-B1'},
+
+/* ===================== ANALYTICS ===================== */
+{id:'AN-01',group:'Analytics',title:'Analytics overview',route:'/w/[ws]/analytics',layout:'app',nav:'analytics',roles:ALL_OPS+', Viewer',
+ body:[['banner','mock','Sample data. Live metrics appear only from authorized platform APIs.'],['head','Analytics',['Last 28 days']],['kpis',['Views','Engagement','Followers gained','Posts published']],['chart','Views over time'],['table',['Metric','Instagram','YouTube'],[['Views','12.4k','8.1k'],['Watch time','not provided','41h'],['Saves','312','not provided']]],['note','Each metric shows “last updated” time and source.']],
+ states:['No connected accounts','Data delayed','Metric not provided by platform'],trace:'FR-13'},
+
+{id:'AN-02',group:'Analytics',title:'Content performance',route:'/w/[ws]/analytics/content',layout:'app',nav:'analytics',roles:ALL_OPS+', Viewer',
+ body:[['head','Content performance',[]],['table',['Post','Platform','Views','Engagement','Updated'],5]],states:['Default','Empty'],trace:'FR-13'},
+
+{id:'AN-03',group:'Analytics',title:'Agent performance',route:'/w/[ws]/analytics/agents',layout:'app',nav:'analytics',roles:ALL_OPS+', Viewer',
+ body:[['head','Agent performance',[]],['table',['Agent','Posts','Avg views','Credits used','Cost / post'],3],['chart','Credits vs results']],states:['Default','Empty'],trace:'FR-13, MP1-09'},
+
+{id:'AN-04',group:'Analytics',title:'Campaigns & experiments',route:'/w/[ws]/analytics/campaigns',layout:'app',nav:'analytics',roles:ALL_OPS+', Viewer',
+ body:[['head','Campaigns',['New experiment']],['cards',[['Back-to-school push','goal 60%'],['Hook A vs Hook B','running']],2],['banner','info','Attribution is approximate: platforms report different metrics on different delays.']],
+ states:['Default','No campaigns'],trace:'MP1-09'},
+
+/* ===================== LICENSING (user) ===================== */
+{id:'LI-01',group:'Licensing',title:'Marketplace discovery',route:'/w/[ws]/licensing',layout:'app',nav:'licensing',roles:ALL_OPS,
+ body:[['head','Licensing marketplace',['My licenses']],['split',[['form',['Search creators or topics','▾Niche','▾License type (Free, Private, Paid · later)','▾Platforms allowed','[]Commercial use allowed']]],[['cards',[['Chef Kemi','Free · verified'],['Lagos Money Talk','Private'],['FitWithTobi','Free · verified'],['Campus Comedy','Private']],2]],'1:3']],
+ states:['Results','No results','Loading'],trace:'FR-08, J-07'},
+
+{id:'LI-02',group:'Licensing',title:'Source detail & license terms',route:'/w/[ws]/licensing/sources/[id]',layout:'app',nav:'licensing',roles:ALL_OPS,
+ body:[['head','Chef Kemi',['Get license'],'Verified YouTube channel · 120 videos in scope'],['split',[['video','Sample video']],[['kv',[['License','Free'],['Allowed uses','Clips, compilations'],['Platforms','IG, YT, TikTok'],['Commercial','No'],['Attribution','Required: “@chefkemi”'],['Expires','30 Jun 2027']]],['banner','warn','Some videos contain licensed music not covered by this license. They are excluded automatically.']],'1:1']],
+ states:['Free','Private (request)','Paid (coming later)','Already licensed','Owner suspended'],trace:'FR-08, J-07'},
+
+{id:'LI-03',group:'Licensing',title:'Request / accept license',route:'/w/[ws]/licensing/sources/[id]/request',layout:'app',nav:'licensing',roles:'Owners, managers (editors: request only)',
+ body:[['modal','License from Chef Kemi',[['kv',[['Scope','All videos in channel except flagged'],['Your workspace','Ada Studio']]],['form',['[]I’ll follow the attribution and platform rules','[]I understand the owner can revoke this license','#Message to owner (private licenses)','!Accept free license']]]]],
+ states:['Free: accept','Private: request sent','Approved','Declined'],trace:'FR-08, J-07'},
+
+{id:'LI-04',group:'Licensing',title:'My licenses',route:'/w/[ws]/licensing/mine',layout:'app',nav:'licensing',roles:ALL_OPS,
+ body:[['banner','err','License from “Campus Comedy” was revoked. 2 drafts and 1 scheduled post are held.','Review'],['table',['Source','Type','Status','Expires','Affected content'],[['Chef Kemi','Free','expiring soon','in 5 days','4 drafts'],['FitWithTobi','Free','active','2027','—'],['Campus Comedy','Private','revoked','—','3 items']]]],
+ states:['Active','Expiring','Expired','Revoked (impact list)','Empty'],trace:'FR-08, AC-09, J-05'},
+
+/* ===================== CREATOR PORTAL ===================== */
+{id:'LI-05',group:'Creator Portal',title:'Creator portal overview',route:'/creator',layout:'creator',nav:'c-over',roles:'Content owner',
+ body:[['head','Hi Kemi',[]],['kpis',['Active licenses','Clips made','Published uses','Pending requests']],['box','Requests',[['list',[['Lagos Food Agency wants a private license','Review']]]]],['box','Recent uses',[['table',['Licensee','Clip','Platform','Date'],3]]]],
+ states:['Unverified (prompt to verify)','Normal','No licensees yet'],trace:'D-15, J-06'},
+
+{id:'LI-06',group:'Creator Portal',title:'Ownership / channel verification',route:'/creator/verify',layout:'creator',nav:'c-verify',roles:'Content owner',
+ body:[['head','Verify your channels',[]],['list',[['YouTube · Chef Kemi','verified'],['Instagram · @chefkemi','pending'],['TikTok','coming later']]],['btns',['Verify another channel']],['banner','mock','Verification uses official sign-in with each platform (mock in prototype).']],
+ states:['Not started','Pending','Verified','Failed (reason)'],trace:'FR-08, J-06'},
+
+{id:'LI-07',group:'Creator Portal',title:'Licensing terms',route:'/creator/terms',layout:'creator',nav:'c-terms',roles:'Content owner',
+ body:[['head','Your licensing terms',['Save']],['cols',[[['form',['()Free license','()Private agreements only','()Paid · coming later','▾Allowed uses (clips, compilations, remix)','▾Platforms','[]Allow commercial use','Attribution text','▾Expiry']]],[['box','Third-party rights',[['form',['[]Some videos contain music or footage I don’t own','#Which ones?']]]],['box','Excluded videos',[['list',[['Ep 7 (licensed music)'],['Ep 12 (guest footage)']]]]]]]]],
+ states:['Draft','Published','Unverified (can’t publish terms)'],trace:'FR-08, D-15'},
+
+{id:'LI-08',group:'Creator Portal',title:'Usage audit',route:'/creator/usage',layout:'creator',nav:'c-usage',roles:'Content owner',
+ body:[['head','Where your content is used',['Export CSV']],['table',['Licensee','Source video','Clip','Platform','Status'],[['Ada Studio','Ep 4','Clip 3','Instagram','published'],['Ada Studio','Ep 4','Clip 5','YouTube','scheduled'],['Campus Hub','Ep 2','Clip 1','Instagram','held (revoked)']]]],
+ states:['Default','Empty'],trace:'FR-08, J-05'},
+
+{id:'LI-09',group:'Creator Portal',title:'Revoke a license',route:'/creator/revocations',layout:'creator',nav:'c-rev',roles:'Content owner',
+ body:[['head','Revocations',[]],['modal','Revoke license for Campus Hub?',[['kv',[['Stops immediately','New clips, renders, scheduled posts'],['Will be flagged','1 published post (they’ll be asked to review/take down)']]],['form',['#Reason (optional, shared with licensee)','!Revoke license']]]]],
+ states:['List of past revocations','Impact preview','Confirmed'],trace:'J-05, AC-09'},
+
+{id:'LI-10',group:'Creator Portal',title:'Paid licensing & payouts',route:'/creator/payouts',layout:'creator',nav:'c-pay',roles:'Content owner',
+ body:[['empty','Paid licensing and payouts are coming later','Notify me','We’ll open this once legal, tax and payment requirements are met.']],
+ states:['Gated only'],trace:'D-15'},
+
+/* ===================== INTEGRATIONS ===================== */
+{id:'IN-01',group:'Integrations',title:'Social connections hub',route:'/w/[ws]/connections',layout:'app',nav:'connections',roles:OWNERS+', Workspace manager',
+ body:[['banner','mock','Connections in the prototype are simulated. No real accounts are linked.'],['head','Connections',[]],
+  ['cards',[['Instagram · @adastudio','connected'],['YouTube · Ada Studio','permissions needed'],['TikTok','coming later'],['Facebook','coming later'],['Instagram · @adaclips','token expired'],['YouTube · Brand','pending app approval']],3],['note','Each card: status, capabilities (upload, schedule, analytics), one fix action.']],
+ states:['Not connected','Connecting','Connected','Permissions needed','Pending app approval','Capability unsupported','Token expired','Plan limit reached'],trace:'MP1-11, J-11, D-06'},
+
+{id:'IN-02',group:'Integrations',title:'Connection detail',route:'/w/[ws]/connections/[platform]',layout:'app',nav:'connections',roles:OWNERS+', Workspace manager',
+ body:[['head','Instagram · @adastudio',['Reconnect','Disconnect']],['kv',[['Status','connected'],['Account type','Business'],['Token','expires in 2 days']]],['table',['Capability','Available'],[['Publish Reels','Yes (mock)'],['Schedule natively','No: Nelio schedules'],['Analytics','Partial']]],['box','Used by',[['list',[['Budget Shorts agent'],['7 scheduled posts']]]]]],
+ states:['Healthy','Expiring','Expired (posts held)','Disconnect confirmation (lists affected posts/agents)'],trace:'MP1-11, J-11'},
+
+/* ===================== AGENCY ===================== */
+{id:'AG-01',group:'Agency',title:'Agency hub',route:'/org/[org]',layout:'agency',nav:'agencyhub',roles:'Agency owner/admin',ws:'BrightReach (agency)',
+ body:[['head','BrightReach · all clients',['Add client']],['kpis',['Clients','Waiting on clients','Published this week','Credits used']],['table',['Client','Agents','Waiting on client','Issues','Credits (month)'],[['Acme Foods','2','3','token expiring','420 / 800'],['Lagos Fitness','1','0','—','120 / 400'],['Kemi’s Kitchen','3','1','license expiring','610 / 600 ⚠']]]],
+ states:['No clients (Add first client)','Normal','Client over limit'],trace:'MP1-12, FR-03'},
+
+{id:'AG-02',group:'Agency',title:'Client workspaces',route:'/org/[org]/clients',layout:'agency',nav:'clients',roles:'Agency owner/admin',ws:'BrightReach (agency)',
+ body:[['head','Clients',['Add client']],['modal','New client workspace',[['form',['Client name','Logo','▾Timezone','Monthly credit limit','!Create workspace']]]],['note','Plan: 3 of 10 client workspaces used.']],
+ states:['List','Create','Plan limit reached','Archive client'],trace:'FR-03, J-02'},
+
+{id:'AG-03',group:'Agency',title:'Client workspace settings',route:'/org/[org]/clients/[ws]',layout:'agency',nav:'clients',roles:'Agency owner/admin',ws:'Acme Foods',
+ body:[['head','Acme Foods · settings',['Save']],['tabs',['Approval policy','Members','Accounts','Brand kit','Limits'],0],
+  ['form',['[]Client approval required before publishing','[]Approve separately for each platform','[]Internal review before client sees it','▾Approval deadline (optional)','[]Let client see analytics of published posts']],['banner','info','A missed deadline never auto-approves; posts stay held.']],
+ states:['Default','Saved','Policy change re-routes pending approvals'],trace:'FR-03, D-Q4, AS-B6'},
+
+{id:'AG-04',group:'Agency',title:'Team & invitations',route:'/org/[org]/team',layout:'agency',nav:'team',roles:'Owner/admin; managers (assigned ws)',ws:'BrightReach (agency)',
+ body:[['head','Team',['Invite']],['table',['Person','Role','Workspaces','Status'],[['Bola','Agency admin','All','active'],['Tunde','Editor','Acme, Lagos Fitness','active'],['Chioma','Client approver','Acme','active'],['ifeoma@…','Editor','Kemi’s Kitchen','invited · expires 7d']]],
+  ['modal','Invite someone',[['form',['Email','▾Role','▾Workspaces','!Send invite']]]]],
+ states:['List','Invite','Resend / revoke invite','Seat limit'],trace:'FR-03, J-02'},
+
+{id:'AG-05',group:'Agency',title:'Roles & permissions',route:'/org/[org]/roles',layout:'agency',nav:'team',roles:'Agency owner/admin',ws:'BrightReach (agency)',
+ body:[['head','Roles',[],'Read-only reference of what each role can do (B §6).'],['table',['Capability','Owner','Admin','Manager','Editor','Viewer','Client'],[['Approve content','✓','✓','assigned','—','—','per platform'],['Connect accounts','✓','✓','assigned','—','—','—'],['Change billing','✓','✓','—','—','—','—'],['Authorize autonomous','✓','✓','assigned','—','—','—']]]],
+ states:['Default'],trace:'FR-03, B §6'},
+
+{id:'AG-06',group:'Agency',title:'Audit log',route:'/org/[org]/audit',layout:'agency',nav:'audit',roles:'Owners, admins; managers (assigned)',ws:'BrightReach (agency)',
+ body:[['head','Audit log',['Export']],['form',['▾Workspace','▾Actor','▾Action type']],['table',['Time','Actor','Action','Object','Workspace'],[['Tue 14:02','Chioma','approved (Instagram)','5 budgeting myths r2','Acme'],['Tue 13:40','Tunde','edited (YouTube title)','5 budgeting myths','Acme'],['Mon 09:12','Bola','invited client approver','chioma@…','Acme']]]],
+ states:['Default','Filtered','Empty'],trace:'FR-03, AC-03'},
+
+{id:'CP-01',group:'Client Portal',title:'Client portal home',route:'/portal/[ws]',layout:'portal',roles:'Client approver',
+ body:[['tabs',['Waiting for you 3','Approved','Changes requested','Published']],['list',[['5 budgeting myths','Due Fri','Instagram · YouTube'],['Rent hacks for students','Due Thu','Instagram'],['Weekly recap','No deadline','YouTube']]]],
+ states:['Nothing waiting','Waiting items','Overdue'],trace:'MP1-12, FR-10, J-03'},
+
+{id:'CP-02',group:'Client Portal',title:'Client approval detail',route:'/portal/[ws]/approvals/[id]',layout:'portal',roles:'Client approver',
+ body:[['head','5 budgeting myths',[],'From BrightReach · revision 2'],['tabs',['Instagram','YouTube'],0],['split',[['video','Instagram preview','v']],[['box','Instagram caption',[['text','“Myth #1: …”']]],['form',['#Comment (optional)']],['btns',['Approve Instagram','Request changes','Reject']],['note','Switch tab to decide on YouTube separately.']],'1:1']],
+ mbody:[['tabs',['Instagram','YouTube'],0],['video','Preview','v'],['form',['#Comment']],['btns',['Approve','Changes','Reject']]],
+ notes:['Per-platform decisions (D-Q4).','Mobile-first: big buttons, preview first.'],
+ states:['Pending','Decided','Revision replaced (old approval invalidated)','Expired link → login'],trace:'FR-10, AC-03, D-Q4'},
+
+/* ===================== BILLING ===================== */
+{id:'BI-01',group:'Billing',title:'Plan & usage',route:'/org/[org]/billing',layout:'app',nav:'billing',roles:OWNERS+' (managers: view)',
+ body:[['head','Billing & usage',['Change plan','Top up']],['kv',[['Plan','Creator Pro · $49/mo'],['Renews','1 Dec 2026'],['Payment','Paystack · card •• 4417']]],['meters',[['Credits this month',62,'1,240 / 2,000 (provisional)'],['Agents',60,'3 / 5'],['Accounts',33,'2 / 6'],['Storage',20,'20 / 100 GB']]],['table',['Workspace','Est.','Actual'],[['Ada Studio','820','760']]]],
+ states:['Normal','Trial (BI-08)','Past due (BI-07)','Free plan'],trace:'FR-14, D-10'},
+
+{id:'BI-02',group:'Billing',title:'Plans & checkout',route:'/org/[org]/plans',layout:'app',nav:'billing',roles:OWNERS,
+ body:[['cards',[['Starter','$19'],['Creator Pro','$49 · current'],['Business','$99'],['Agency','$249']],4],['modal','Checkout · Business',[['kv',[['Price','$99.00 / month'],['You pay','≈ ₦ — (illustrative rate; final amount at Paystack)'],['Provider','Paystack (mock)']]],['form',['[]I authorize a monthly charge until I cancel','!Continue to Paystack']]]]],
+ notes:['No charge without explicit authorization (D-12).','NGN conversion transparent (D-14).'],
+ states:['Compare','Checkout','Processing','Success','Payment declined'],trace:'FR-14, D-14'},
+
+{id:'BI-03',group:'Billing',title:'Credit ledger',route:'/org/[org]/ledger',layout:'app',nav:'billing',roles:OWNERS+' (managers: view)',
+ body:[['head','Credit ledger',['Export']],['table',['Time','Entry','Workspace / agent','Credits','Balance'],[['14:02','reserve · render Clip 1','Budget Shorts','−40','1,200'],['14:09','settle · actual 36','Budget Shorts','+4','1,204'],['13:00','refund · failed render','Podcast Clipper','+15','1,219'],['1 Nov','monthly allocation','—','+2,000','—']]],['note','Append-only. Entries never edited; corrections are new entries.']],
+ states:['Default','Filtered'],trace:'FR-14, AC-07'},
+
+{id:'BI-04',group:'Billing',title:'Top-ups',route:'/org/[org]/top-up',layout:'app',nav:'billing',roles:OWNERS,
+ body:[['head','Buy more credits',[]],['cards',['500 credits','1,500 credits','5,000 credits'],3],['form',['[]Auto top-up (off by default)','!Buy 1,500 credits']]],
+ states:['Paid plan','Free/trial: locked (upgrade)','Past due: disabled'],trace:'D-13'},
+
+{id:'BI-05',group:'Billing',title:'Spend limits',route:'/org/[org]/limits',layout:'app',nav:'billing',roles:OWNERS+' (managers: request)',
+ body:[['head','Spend limits',['Save']],['table',['Scope','Limit / week','Used','When reached'],[['Organization','1,500','820','pause new work'],['Ada Studio','1,000','760','pause new work'],['Budget Shorts agent','300','180','pause agent'],['Recipe Reels agent','300','300 ⚠','paused']]],['form',['Warn me at (%)']]],
+ states:['Default','Limit reached','Manager request pending'],trace:'FR-14, AC-07, J-08'},
+
+{id:'BI-06',group:'Billing',title:'Invoices',route:'/org/[org]/invoices',layout:'app',nav:'billing',roles:OWNERS,
+ body:[['head','Invoices',[]],['table',['Date','Description','Amount','Status','PDF'],[['1 Nov','Creator Pro','$49.00','paid','↓'],['14 Oct','Top-up 1,500','$15.00','paid','↓']]]],states:['Default','Empty'],trace:'FR-14'},
+
+{id:'BI-07',group:'Billing',title:'Payment failure',route:'/org/[org]/billing (state)',layout:'app',nav:'billing',roles:OWNERS,
+ body:[['banner','err','Your renewal payment failed. Update payment within 6 days to keep Creator Pro. Top-ups are paused.','Update payment'],['kv',[['Grace period','7 days (ends 8 Dec)'],['After that','Downgrade to Free · autonomous agents paused · data kept']]]],
+ states:['Past due','Recovered','Downgraded'],trace:'J-14, AS-B3'},
+
+{id:'BI-08',group:'Billing',title:'Trial status',route:'(banner + /org/[org]/billing)',layout:'app',nav:'billing',roles:OWNERS,
+ body:[['banner','warn','Trial · 2 days left. No card on file. You won’t be charged.','Choose a plan'],['meters',[['Agents',100,'1 / 1'],['Connected accounts',0,'0 / 1'],['Short exports',50,'1 / 2'],['Compute',35,'35%']]]],
+ states:['Active','Limit reached','Ending in 24 h','Ended → Free'],trace:'D-12, J-09'},
+
+/* ===================== SETTINGS ===================== */
+{id:'ST-01',group:'Settings',title:'Profile',route:'/account/profile',layout:'app',nav:'settings',roles:'All',
+ body:[['head','Profile',['Save']],['form',['Photo','Full name','Email (verified)','▾Timezone']]],states:['Default','Email change verification'],trace:'FR-01'},
+
+{id:'ST-02',group:'Settings',title:'Security',route:'/account/security',layout:'app',nav:'settings',roles:'All',
+ body:[['head','Security',[]],['list',[['Password','Change'],['Two-step verification','On'],['Active sessions (3)','Manage']]],['box','Danger zone',[['btns',['Delete account']]]]],
+ states:['MFA off','MFA on','Delete confirmation (shows owned orgs)'],trace:'FR-01'},
+
+{id:'ST-03',group:'Settings',title:'Appearance',route:'/account/appearance',layout:'app',nav:'settings',roles:'All',
+ body:[['head','Appearance',[]],['cards',[['Dark','default'],'Light','System'],3],['form',['[]Reduce motion']]],
+ notes:['Persists per user across devices; works before login via local preference (D-03).'],states:['Dark','Light','System'],trace:'D-03'},
+
+{id:'ST-04',group:'Settings',title:'Notification preferences',route:'/account/notifications',layout:'app',nav:'settings',roles:'All',
+ body:[['head','Notifications',[]],['table',['Event','In-app','Email','Push'],[['Approvals','✓','✓','☐'],['Publishing','✓','failures','☐'],['Licenses','✓','✓','☐'],['Spending','✓','✓','☐'],['Security','✓ (always)','✓ (always)','—']]],['form',['[]Quiet hours 22:00–07:00','!Enable browser push']]],
+ states:['Default','Push permission denied by browser','Push not supported'],trace:'FR-12'},
+
+{id:'ST-05',group:'Settings',title:'Workspace members',route:'/w/[ws]/settings/members',layout:'app',nav:'settings',roles:'Owners, managers',
+ body:[['head','Members · Ada Studio',['Invite']],['table',['Person','Role','Joined'],3]],states:['Solo (invite prompt)','List'],trace:'FR-03'},
+
+{id:'ST-06',group:'Settings',title:'Brand kits',route:'/w/[ws]/settings/brand-kits',layout:'app',nav:'brandkits',roles:ALL_OPS,
+ body:[['head','Brand kits',['New kit']],['split',[['form',['Kit name','Logo','Colours','▾Caption font','▾Caption style','#Voice & tone rules']]],[['video','Caption preview','v']],'1:1']],
+ states:['Empty','Editing','Saved'],trace:'FR-07'},
+
+{id:'ST-07',group:'Settings',title:'AI & processing',route:'/w/[ws]/settings/ai',layout:'app',nav:'settings',roles:'Owners, managers',
+ body:[['head','AI & processing',['Save']],['form',['▾Default transcription mode (Fast / Balanced / High Quality)','▾Default caption language']],['kv',[['Reasoning model','Claude (Anthropic)'],['Transcription','Smart routing between providers']]],['note','No model picker by design (D-07).']],
+ states:['Default'],trace:'D-07, D-08'},
+
+{id:'ST-08',group:'Settings',title:'Integration & API status',route:'/w/[ws]/settings/integrations',layout:'app',nav:'settings',roles:'Owners, managers',
+ body:[['head','Integration status',[]],['table',['Integration','Status','Note'],[['Instagram','in development','mock'],['YouTube','in development','mock'],['Payments (Paystack)','mock',''],['Email','mock','']]]],states:['Default'],trace:'D-01'},
+
+{id:'ST-09',group:'Settings',title:'Privacy & data',route:'/account/privacy',layout:'app',nav:'settings',roles:'All',
+ body:[['head','Privacy & data',[]],['list',[['Export my data','Request'],['Media retention (workspace)','90 days · placeholder'],['Delete my data','Request']]]],
+ states:['Export requested','Export ready','Deletion requested'],trace:'NFR-PRIV, AS-9'},
+
+{id:'ST-10',group:'Settings',title:'Workspace settings',route:'/w/[ws]/settings',layout:'app',nav:'settings',roles:'Owners, managers',
+ body:[['head','Workspace settings',['Save']],['form',['Workspace name','▾Timezone','▾Default approval mode']],['box','Emergency pause',[['text','Stops all agents and new jobs in this workspace. Published posts are not undone.'],['btns',['Pause workspace']]]]],
+ states:['Default','Paused (resume re-checks budgets & licenses)'],trace:'PE-05, J-12'},
+
+/* ===================== ADMIN ===================== */
+{id:'AD-01',group:'Admin',title:'Ops overview',route:'/admin',layout:'admin',nav:'a-ops',roles:'Platform admin',
+ body:[['banner','err','Render queue backlog above threshold (412 jobs).','Inspect'],['kpis',['Queue depth','Failed (1h)','AI spend today','Active workspaces']],['table',['Queue','Waiting','Running','Failed','Oldest'],[['transcribe','12','4','0','1m'],['render','412','8','6','24m'],['publish','3','1','1','2m']]]],
+ states:['Healthy','Alert','Global pause active'],trace:'FR-15, J-13'},
+
+{id:'AD-02',group:'Admin',title:'Jobs & dead-letter',route:'/admin/jobs',layout:'admin',nav:'a-jobs',roles:'Platform admin',
+ body:[['head','Dead-letter · render',['Retry selected','Discard selected']],['table',['Job','Workspace','Error','Attempts'],4],['form',['#Reason (required for discard)']]],states:['Default','Empty'],trace:'FR-15'},
+
+{id:'AD-03',group:'Admin',title:'Audit search',route:'/admin/audit',layout:'admin',nav:'a-audit',roles:'Platform admin',
+ body:[['form',['Search actor, object or workspace']],['table',['Time','Actor','Action','Tenant'],5]],states:['Default'],trace:'FR-15'},
+
+{id:'AD-04',group:'Admin',title:'License review',route:'/admin/licenses',layout:'admin',nav:'a-lic',roles:'Platform admin',
+ body:[['head','License review',[]],['table',['Owner','Channel','Verification','Reports','Action'],[['Chef Kemi','YouTube','verified','0','—'],['FakeCreator','YouTube','disputed','3','Suspend']]]],states:['Queue','Dispute detail','Takedown request'],trace:'FR-15'},
+
+{id:'AD-05',group:'Admin',title:'Support access',route:'/admin/support',layout:'admin',nav:'a-sup',roles:'Platform admin',
+ body:[['modal','Request support access',[['form',['▾Workspace','#Reason (shown to tenant owner)','▾Duration (max 2 h)','!Request access']]]]],
+ notes:['Owner notified; session audited; no token or card visibility.'],states:['Request','Active session banner','Expired'],trace:'FR-15, B §6 note 9'},
+
+{id:'AD-06',group:'Admin',title:'Abuse & moderation',route:'/admin/abuse',layout:'admin',nav:'a-abuse',roles:'Platform admin',
+ body:[['table',['Report','Target','Type','Status'],4]],states:['Default'],trace:'FR-15'},
+
+{id:'AD-07',group:'Admin',title:'Payment & integration diagnostics',route:'/admin/diagnostics',layout:'admin',nav:'a-diag',roles:'Platform admin',
+ body:[['tabs',['Payments','Webhooks','Social APIs','AI providers']],['table',['Event','Provider','Signature','Result'],[['charge.success','Paystack','valid','processed'],['charge.success','Paystack','valid','duplicate · ignored'],['?','unknown','invalid','rejected']]]],states:['Default'],trace:'FR-15, AT-13'},
+
+{id:'AD-08',group:'Admin',title:'Feature flags',route:'/admin/flags',layout:'admin',nav:'a-flags',roles:'Platform admin',
+ body:[['table',['Flag','Scope','State'],[['instagram_publishing','global','off'],['youtube_publishing','beta workspaces','off'],['ai_video_generation','global','off'],['paid_licensing','global','off']]]],states:['Default'],trace:'MP2 §11'},
+
+/* ===================== SYSTEM ===================== */
+{id:'SY-01',group:'System',title:'PWA install prompt',route:'(in-app prompt)',layout:'overlay',roles:'All',
+ body:[['banner','info','Install Nelio on this device for faster approvals and notifications.','Install'],['note','Shown after 2nd visit, dismissible; iOS shows “Add to Home Screen” instructions.']],
+ states:['Prompt','Installed','Unsupported browser'],trace:'MP1-15, D-02'},
+
+{id:'SY-02',group:'System',title:'Offline state',route:'/offline',layout:'overlay',roles:'All',
+ body:[['banner','warn','You’re offline. Showing what was last loaded. Approvals, publishing and edits are paused until you reconnect.'],['note','Never queue publish/approve actions offline (MP2 §10).']],
+ states:['Offline','Reconnecting','Back online · synced'],trace:'MP1-15'},
+
+{id:'SY-03',group:'System',title:'Error & permission pages',route:'not-found · /denied · /maintenance',layout:'system',roles:'All',
+ body:[['cols',[[['empty','Page not found','Go to Command Center']],[['empty','You don’t have access to this workspace','Switch workspace','Ask an admin to invite you.']],[['empty','Something went wrong','Try again','Error ID shown for support']]]]],
+ notes:['Permission-denied never reveals whether the workspace exists (AC-02).'],states:['404','Denied','500','Maintenance'],trace:'AC-02, NFR-SEC'}
+];
+
+</script>
+<script>
+const G=[...new Set(SCREENS.map(s=>s.group))];
+let mode='one', cur=location.hash.slice(1)||SCREENS[0].id;
+function renderList(){
+  const q=document.getElementById('q').value.toLowerCase();
+  document.getElementById('list').innerHTML=G.map(g=>{
+    const items=SCREENS.filter(s=>s.group===g&&(!q||(s.id+' '+s.title+' '+s.route).toLowerCase().includes(q)));
+    if(!items.length) return '';
+    return `<h3>${g}</h3>`+items.map(s=>`<a href="#${s.id}" class="${s.id===cur&&mode==='one'?'on':''}"><b>${s.id}</b>${esc(s.title)}</a>`).join('');
+  }).join('')+`<h3>Count</h3><div class="note" style="padding:0 6px">${SCREENS.length} screens</div>`;
+}
+function renderMain(){
+  const main=document.getElementById('main');
+  if(mode==='all'){ main.innerHTML=SCREENS.map(screenHTML).join(''); if(cur){const el=document.getElementById(cur); el&&el.scrollIntoView();} }
+  else { const s=SCREENS.find(x=>x.id===cur)||SCREENS[0]; main.innerHTML=screenHTML(s); main.scrollTop=0; window.scrollTo(0,0); }
+  renderList();
+}
+window.addEventListener('hashchange',()=>{cur=location.hash.slice(1);renderMain();});
+document.getElementById('q').addEventListener('input',renderList);
+document.getElementById('m1').onclick=()=>{mode='one';m1.className='on';m2.className='';renderMain();};
+document.getElementById('m2').onclick=()=>{mode='all';m2.className='on';m1.className='';renderMain();};
+renderMain();
+</script>
+</body>
+</html>
