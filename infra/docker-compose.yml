@@ -1,0 +1,46 @@
+# Local stack for machines that can run Docker (8 GB of memory or more).
+# Development on smaller machines uses hosted dev services instead: see docs/build/RUNBOOK_LOCAL.md.
+# Every credential below is a local-only default and must never be reused anywhere else.
+name: nelio
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: nelio
+    ports: ["5432:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis: # queues, from Milestone 3
+    image: redis:7-alpine
+    command: ["redis-server", "--maxmemory-policy", "noeviction"] # required for durable job queues
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  storage: # S3-compatible stand-in for object storage, from Milestone 4
+    image: minio/minio:latest
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: nelio-local
+      MINIO_ROOT_PASSWORD: nelio-local-secret
+    ports: ["9000:9000", "9001:9001"]
+    volumes: ["objects:/data"]
+
+  mail: # catches every outgoing email; inbox at http://localhost:8025
+    image: axllent/mailpit:latest
+    ports: ["1025:1025", "8025:8025"]
+
+volumes:
+  pgdata:
+  objects:
