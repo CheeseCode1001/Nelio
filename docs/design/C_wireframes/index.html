@@ -274,7 +274,7 @@ const SCREENS=[
 {id:'M-02',group:'Public site',title:'Product / features',route:'/product',layout:'public',roles:'Everyone',
  body:[['head','How Nelio works',[]],['tabs',['Agents','Clipping','Content Studio','Approvals','Licensing','Analytics']],
   ['split',[['video','Feature visual']],[['text','Feature explanation'],['list',[['Step 1'],['Step 2'],['Step 3']]]],'1:1'],
-  ['box','Under the hood (plain language)',[['list',[['Claude plans and writes'],['Transcription: Fast / Balanced / High Quality'],['Scene detection + rendering on our servers'],['Original AI video: coming later (specialist provider)','gated']]]]],
+  ['box','Under the hood (plain language)',[['list',[['Nelio AI plans and writes'],['Transcription: Fast / Balanced / High Quality'],['Scene detection + rendering on our servers'],['Original AI video: coming later (specialist provider)','gated']]]]],
   ['btns',['Start free']]],
  notes:['Tech names appear only as plain-language capability statements.'],states:['Default'],trace:'MP1-01, D-07–D-09'},
 
@@ -646,8 +646,8 @@ const SCREENS=[
  states:['Empty','Editing','Saved'],trace:'FR-07'},
 
 {id:'ST-07',group:'Settings',title:'AI & processing',route:'/w/[ws]/settings/ai',layout:'app',nav:'settings',roles:'Owners, managers',
- body:[['head','AI & processing',['Save']],['form',['▾Default transcription mode (Fast / Balanced / High Quality)','▾Default caption language']],['kv',[['Reasoning model','Claude (Anthropic)'],['Transcription','Smart routing between providers']]],['note','No model picker by design (D-07).']],
- states:['Default'],trace:'D-07, D-08'},
+ body:[['head','AI & processing',['Save']],['form',['▾Default transcription mode (Fast / Balanced / High Quality)','▾Default caption language']],['kv',[['AI','Nelio AI'],['Transcription','Automatic: picks the best option for each video']]],['note','No model or provider names anywhere in the product (D-18).']],
+ states:['Default'],trace:'D-07, D-08, D-18'},
 
 {id:'ST-08',group:'Settings',title:'Integration & API status',route:'/w/[ws]/settings/integrations',layout:'app',nav:'settings',roles:'Owners, managers',
  body:[['head','Integration status',[]],['table',['Integration','Status','Note'],[['Instagram','in development','mock'],['YouTube','in development','mock'],['Payments (Paystack)','mock',''],['Email','mock','']]]],states:['Default'],trace:'D-01'},

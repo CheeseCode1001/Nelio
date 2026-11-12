@@ -1,0 +1,1430 @@
+{
+ "v": 3,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-11-12T08:20:00Z"
+ },
+ "title": "Nelio \u2014 High-fidelity UI",
+ "launch": {
+  "view": "canvas",
+  "page": "foundations"
+ },
+ "pages": [
+  {
+   "id": "foundations",
+   "name": "0 \u00b7 Foundations"
+  },
+  {
+   "id": "public",
+   "name": "1 \u00b7 Public site"
+  },
+  {
+   "id": "auth",
+   "name": "2 \u00b7 Sign in & onboarding"
+  },
+  {
+   "id": "core",
+   "name": "3 \u00b7 Command Center & AI"
+  },
+  {
+   "id": "clipping",
+   "name": "4 \u00b7 Clipping & Content"
+  },
+  {
+   "id": "publishing",
+   "name": "5 \u00b7 Calendar, approvals & publishing"
+  },
+  {
+   "id": "analytics",
+   "name": "6 \u00b7 Analytics"
+  },
+  {
+   "id": "licensing",
+   "name": "7 \u00b7 Licensing & Creator Portal"
+  },
+  {
+   "id": "agency",
+   "name": "8 \u00b7 Connections, agency & client portal"
+  },
+  {
+   "id": "billing",
+   "name": "9 \u00b7 Billing & credits"
+  },
+  {
+   "id": "settings",
+   "name": "10 \u00b7 Settings"
+  },
+  {
+   "id": "admin",
+   "name": "11 \u00b7 Platform admin"
+  },
+  {
+   "id": "system",
+   "name": "12 \u00b7 System screens"
+  },
+  {
+   "id": "states",
+   "name": "13 \u00b7 States"
+  },
+  {
+   "id": "mobile",
+   "name": "14 \u00b7 Mobile"
+  },
+  {
+   "id": "light",
+   "name": "15 \u00b7 Light theme"
+  }
+ ],
+ "boards": {
+  "Main.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 3000,
+   "title": "Nelio design foundations",
+   "page": "foundations",
+   "expand": "fill"
+  },
+  "Home.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 3300,
+   "title": "M-01 Home",
+   "page": "public",
+   "expand": "fill"
+  },
+  "Product.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 1900,
+   "title": "M-02 Product",
+   "page": "public",
+   "expand": "fill"
+  },
+  "UseCases.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 1600,
+   "title": "M-03 Use cases",
+   "page": "public",
+   "expand": "fill"
+  },
+  "Pricing.dc.html": {
+   "x": 0,
+   "y": 3760,
+   "w": 1440,
+   "h": 1900,
+   "title": "M-04 Pricing",
+   "page": "public",
+   "expand": "fill"
+  },
+  "Licensing.dc.html": {
+   "x": 1520,
+   "y": 3760,
+   "w": 1440,
+   "h": 1700,
+   "title": "M-05 Licensing & Creator Partners",
+   "page": "public",
+   "expand": "fill"
+  },
+  "FAQ.dc.html": {
+   "x": 3040,
+   "y": 3760,
+   "w": 1440,
+   "h": 1400,
+   "title": "M-06 FAQ",
+   "page": "public",
+   "expand": "fill"
+  },
+  "Legal.dc.html": {
+   "x": 0,
+   "y": 5820,
+   "w": 1440,
+   "h": 1300,
+   "title": "M-07 Legal",
+   "page": "public",
+   "expand": "fill"
+  },
+  "Status.dc.html": {
+   "x": 1520,
+   "y": 5820,
+   "w": 1440,
+   "h": 1400,
+   "title": "M-08 Status",
+   "page": "public",
+   "expand": "fill"
+  },
+  "SignUp.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1050,
+   "title": "AU-01 Sign up",
+   "page": "auth",
+   "expand": "fill"
+  },
+  "LogIn.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 900,
+   "title": "AU-02 Log in",
+   "page": "auth",
+   "expand": "fill"
+  },
+  "VerifyEmail.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 700,
+   "title": "AU-03 Verify email",
+   "page": "auth",
+   "expand": "fill"
+  },
+  "ResetPassword.dc.html": {
+   "x": 0,
+   "y": 1510,
+   "w": 1440,
+   "h": 760,
+   "title": "AU-04 Reset password",
+   "page": "auth",
+   "expand": "fill"
+  },
+  "MFA.dc.html": {
+   "x": 1520,
+   "y": 1510,
+   "w": 1440,
+   "h": 720,
+   "title": "AU-05 Two-step verification",
+   "page": "auth",
+   "expand": "fill"
+  },
+  "AcceptInvite.dc.html": {
+   "x": 3040,
+   "y": 1510,
+   "w": 1440,
+   "h": 900,
+   "title": "AU-06 Accept invitation",
+   "page": "auth",
+   "expand": "fill"
+  },
+  "ContentOwnerJoin.dc.html": {
+   "x": 0,
+   "y": 2570,
+   "w": 1440,
+   "h": 1000,
+   "title": "AU-07 Join as content owner",
+   "page": "auth",
+   "expand": "fill"
+  },
+  "OnbAccountType.dc.html": {
+   "x": 1520,
+   "y": 2570,
+   "w": 1440,
+   "h": 900,
+   "title": "ON-01 Account type",
+   "page": "auth",
+   "expand": "fill"
+  },
+  "OnbGoals.dc.html": {
+   "x": 3040,
+   "y": 2570,
+   "w": 1440,
+   "h": 900,
+   "title": "ON-02 Goals & niche",
+   "page": "auth",
+   "expand": "fill"
+  },
+  "OnbConnect.dc.html": {
+   "x": 0,
+   "y": 3730,
+   "w": 1440,
+   "h": 1000,
+   "title": "ON-03 Connect accounts",
+   "page": "auth",
+   "expand": "fill"
+  },
+  "OnbAutomation.dc.html": {
+   "x": 1520,
+   "y": 3730,
+   "w": 1440,
+   "h": 1000,
+   "title": "ON-04 Automation mode",
+   "page": "auth",
+   "expand": "fill"
+  },
+  "Onboarding.dc.html": {
+   "x": 3040,
+   "y": 3730,
+   "w": 1440,
+   "h": 1000,
+   "title": "Onboarding flow (interactive)",
+   "page": "auth",
+   "expand": "fill",
+   "is_interactive": true
+  },
+  "CommandCenter.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1450,
+   "title": "APP-01 Command Center",
+   "page": "core",
+   "expand": "fill"
+  },
+  "SetupChecklist.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 1000,
+   "title": "ON-05 Setup checklist",
+   "page": "core",
+   "expand": "fill"
+  },
+  "Strategist.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 1250,
+   "title": "APP-02 AI Strategist",
+   "page": "core",
+   "expand": "fill"
+  },
+  "Activity.dc.html": {
+   "x": 0,
+   "y": 1910,
+   "w": 1440,
+   "h": 1150,
+   "title": "APP-03 AI Activity Center",
+   "page": "core",
+   "expand": "fill"
+  },
+  "Agents.dc.html": {
+   "x": 1520,
+   "y": 1910,
+   "w": 1440,
+   "h": 1000,
+   "title": "APP-04 Agents",
+   "page": "core",
+   "expand": "fill"
+  },
+  "AgentDetail.dc.html": {
+   "x": 3040,
+   "y": 1910,
+   "w": 1440,
+   "h": 1250,
+   "title": "APP-05 Agent detail",
+   "page": "core",
+   "expand": "fill"
+  },
+  "CreateAgent.dc.html": {
+   "x": 0,
+   "y": 3320,
+   "w": 1440,
+   "h": 1000,
+   "title": "APP-06 Create agent \u00b7 authorize autonomous",
+   "page": "core",
+   "expand": "fill"
+  },
+  "WorkspaceSwitcher.dc.html": {
+   "x": 1520,
+   "y": 3320,
+   "w": 1440,
+   "h": 900,
+   "title": "APP-07 Workspace switcher",
+   "page": "core",
+   "expand": "fill"
+  },
+  "Notifications.dc.html": {
+   "x": 3040,
+   "y": 3320,
+   "w": 1440,
+   "h": 1050,
+   "title": "NT-01 Notifications",
+   "page": "core",
+   "expand": "fill"
+  },
+  "MediaLibrary.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1150,
+   "title": "CL-01 Media library",
+   "page": "clipping",
+   "expand": "fill"
+  },
+  "Upload.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 1100,
+   "title": "CL-02 Upload / authorized import",
+   "page": "clipping",
+   "expand": "fill"
+  },
+  "ClippingStudio.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 1250,
+   "title": "CL-03 Clipping Studio",
+   "page": "clipping",
+   "expand": "fill"
+  },
+  "Variants.dc.html": {
+   "x": 0,
+   "y": 1710,
+   "w": 1440,
+   "h": 1050,
+   "title": "CL-04 Batch variants",
+   "page": "clipping",
+   "expand": "fill"
+  },
+  "Exports.dc.html": {
+   "x": 1520,
+   "y": 1710,
+   "w": 1440,
+   "h": 900,
+   "title": "CL-05 Render & export queue",
+   "page": "clipping",
+   "expand": "fill"
+  },
+  "ContentStudio.dc.html": {
+   "x": 3040,
+   "y": 1710,
+   "w": 1440,
+   "h": 1150,
+   "title": "CS-01 Content Studio",
+   "page": "clipping",
+   "expand": "fill"
+  },
+  "Composer.dc.html": {
+   "x": 0,
+   "y": 3020,
+   "w": 1440,
+   "h": 1250,
+   "title": "CS-02 Post composer",
+   "page": "clipping",
+   "expand": "fill"
+  },
+  "AIVideo.dc.html": {
+   "x": 1520,
+   "y": 3020,
+   "w": 1440,
+   "h": 900,
+   "title": "CS-03 Original AI video (gated)",
+   "page": "clipping",
+   "expand": "fill"
+  },
+  "Calendar.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1000,
+   "title": "PB-01 Content calendar",
+   "page": "publishing",
+   "expand": "fill"
+  },
+  "Drafts.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 900,
+   "title": "PB-02 Drafts",
+   "page": "publishing",
+   "expand": "fill"
+  },
+  "PostDetail.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 1250,
+   "title": "PB-03 Post detail",
+   "page": "publishing",
+   "expand": "fill"
+  },
+  "Approvals.dc.html": {
+   "x": 0,
+   "y": 1710,
+   "w": 1440,
+   "h": 900,
+   "title": "PB-04 Approvals queue",
+   "page": "publishing",
+   "expand": "fill"
+  },
+  "ApprovalDetail.dc.html": {
+   "x": 1520,
+   "y": 1710,
+   "w": 1440,
+   "h": 1200,
+   "title": "PB-05 Approval detail",
+   "page": "publishing",
+   "expand": "fill"
+  },
+  "Analytics.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1150,
+   "title": "AN-01 Analytics overview",
+   "page": "analytics",
+   "expand": "fill"
+  },
+  "ContentPerformance.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 800,
+   "title": "AN-02 Content performance",
+   "page": "analytics",
+   "expand": "fill"
+  },
+  "AgentPerformance.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 950,
+   "title": "AN-03 Agent performance",
+   "page": "analytics",
+   "expand": "fill"
+  },
+  "Campaigns.dc.html": {
+   "x": 0,
+   "y": 1610,
+   "w": 1440,
+   "h": 850,
+   "title": "AN-04 Campaigns & experiments",
+   "page": "analytics",
+   "expand": "fill"
+  },
+  "Marketplace.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1200,
+   "title": "LI-01 Marketplace discovery",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 1150,
+   "title": "LI-02 Source detail & terms",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "RequestLicense.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 900,
+   "title": "LI-03 Request / accept license",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "MyLicenses.dc.html": {
+   "x": 0,
+   "y": 1660,
+   "w": 1440,
+   "h": 1050,
+   "title": "LI-04 My licenses",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "CreatorOverview.dc.html": {
+   "x": 1520,
+   "y": 1660,
+   "w": 1440,
+   "h": 1100,
+   "title": "LI-05 Creator portal overview",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "Verification.dc.html": {
+   "x": 3040,
+   "y": 1660,
+   "w": 1440,
+   "h": 900,
+   "title": "LI-06 Ownership verification",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "LicenseTerms.dc.html": {
+   "x": 0,
+   "y": 2920,
+   "w": 1440,
+   "h": 1150,
+   "title": "LI-07 Licensing terms",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "Usage.dc.html": {
+   "x": 1520,
+   "y": 2920,
+   "w": 1440,
+   "h": 900,
+   "title": "LI-08 Usage audit",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "Revoke.dc.html": {
+   "x": 3040,
+   "y": 2920,
+   "w": 1440,
+   "h": 950,
+   "title": "LI-09 Revoke a license",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "Payouts.dc.html": {
+   "x": 0,
+   "y": 4230,
+   "w": 1440,
+   "h": 750,
+   "title": "LI-10 Paid licensing & payouts (gated)",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "Connections.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1150,
+   "title": "IN-01 Social connections hub",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ConnectionDetail.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 1050,
+   "title": "IN-02 Connection detail",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AgencyHub.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 1150,
+   "title": "AG-01 Agency hub",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Clients.dc.html": {
+   "x": 0,
+   "y": 1610,
+   "w": 1440,
+   "h": 950,
+   "title": "AG-02 Client workspaces",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientSettings.dc.html": {
+   "x": 1520,
+   "y": 1610,
+   "w": 1440,
+   "h": 1000,
+   "title": "AG-03 Client workspace settings",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Team.dc.html": {
+   "x": 3040,
+   "y": 1610,
+   "w": 1440,
+   "h": 950,
+   "title": "AG-04 Team & invitations",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Roles.dc.html": {
+   "x": 0,
+   "y": 2770,
+   "w": 1440,
+   "h": 900,
+   "title": "AG-05 Roles & permissions",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AuditLog.dc.html": {
+   "x": 1520,
+   "y": 2770,
+   "w": 1440,
+   "h": 1000,
+   "title": "AG-06 Audit log",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientPortal.dc.html": {
+   "x": 3040,
+   "y": 2770,
+   "w": 1440,
+   "h": 900,
+   "title": "CP-01 Client portal home",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientApproval.dc.html": {
+   "x": 0,
+   "y": 3930,
+   "w": 1440,
+   "h": 1000,
+   "title": "CP-02 Client approval detail",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Billing.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1050,
+   "title": "BI-01 Plan & usage",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Plans.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 950,
+   "title": "BI-02 Plans & checkout",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Ledger.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 900,
+   "title": "BI-03 Credit ledger",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "TopUp.dc.html": {
+   "x": 0,
+   "y": 1510,
+   "w": 1440,
+   "h": 900,
+   "title": "BI-04 Top-ups",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "SpendLimits.dc.html": {
+   "x": 1520,
+   "y": 1510,
+   "w": 1440,
+   "h": 950,
+   "title": "BI-05 Spend limits",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Invoices.dc.html": {
+   "x": 3040,
+   "y": 1510,
+   "w": 1440,
+   "h": 800,
+   "title": "BI-06 Invoices",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "PaymentFailed.dc.html": {
+   "x": 0,
+   "y": 2620,
+   "w": 1440,
+   "h": 900,
+   "title": "BI-07 Payment failure",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Trial.dc.html": {
+   "x": 1520,
+   "y": 2620,
+   "w": 1440,
+   "h": 1050,
+   "title": "BI-08 Trial status",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Profile.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 850,
+   "title": "ST-01 Profile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Security.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-02 Security",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Appearance.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 900,
+   "title": "ST-03 Appearance",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "NotificationPrefs.dc.html": {
+   "x": 0,
+   "y": 1410,
+   "w": 1440,
+   "h": 1000,
+   "title": "ST-04 Notification preferences",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Members.dc.html": {
+   "x": 1520,
+   "y": 1410,
+   "w": 1440,
+   "h": 750,
+   "title": "ST-05 Workspace members",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "BrandKits.dc.html": {
+   "x": 3040,
+   "y": 1410,
+   "w": 1440,
+   "h": 1000,
+   "title": "ST-06 Brand kits",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "AISettings.dc.html": {
+   "x": 0,
+   "y": 2570,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-07 AI & processing",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "IntegrationStatus.dc.html": {
+   "x": 1520,
+   "y": 2570,
+   "w": 1440,
+   "h": 900,
+   "title": "ST-08 Integration status",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Privacy.dc.html": {
+   "x": 3040,
+   "y": 2570,
+   "w": 1440,
+   "h": 850,
+   "title": "ST-09 Privacy & data",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "WorkspaceSettings.dc.html": {
+   "x": 0,
+   "y": 3680,
+   "w": 1440,
+   "h": 800,
+   "title": "ST-10 Workspace settings",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "AdminOps.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1150,
+   "title": "AD-01 Ops overview",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminJobs.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 900,
+   "title": "AD-02 Jobs & dead-letter",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminAudit.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 800,
+   "title": "AD-03 Audit search",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminLicenses.dc.html": {
+   "x": 0,
+   "y": 1610,
+   "w": 1440,
+   "h": 850,
+   "title": "AD-04 License review",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminSupport.dc.html": {
+   "x": 1520,
+   "y": 1610,
+   "w": 1440,
+   "h": 950,
+   "title": "AD-05 Support access",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminAbuse.dc.html": {
+   "x": 3040,
+   "y": 1610,
+   "w": 1440,
+   "h": 800,
+   "title": "AD-06 Abuse & moderation",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminDiagnostics.dc.html": {
+   "x": 0,
+   "y": 2720,
+   "w": 1440,
+   "h": 800,
+   "title": "AD-07 Diagnostics",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminFlags.dc.html": {
+   "x": 1520,
+   "y": 2720,
+   "w": 1440,
+   "h": 850,
+   "title": "AD-08 Feature flags",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "PWAInstall.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 800,
+   "title": "SY-01 Install prompt (PWA)",
+   "page": "system",
+   "expand": "fill"
+  },
+  "Offline.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 800,
+   "title": "SY-02 Offline state",
+   "page": "system",
+   "expand": "fill"
+  },
+  "ErrorPages.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 900,
+   "title": "SY-03 Error & permission pages",
+   "page": "system",
+   "expand": "fill"
+  },
+  "StatesCore.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 2050,
+   "title": "States \u00b7 Command Center, agents & Nelio AI",
+   "page": "states",
+   "expand": "fill"
+  },
+  "StatesClipping.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 2100,
+   "title": "States \u00b7 Clipping & Content Studio",
+   "page": "states",
+   "expand": "fill"
+  },
+  "StatesPublishing.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 1750,
+   "title": "States \u00b7 Calendar, approvals & publishing",
+   "page": "states",
+   "expand": "fill"
+  },
+  "StatesLicensing.dc.html": {
+   "x": 0,
+   "y": 2560,
+   "w": 1440,
+   "h": 1600,
+   "title": "States \u00b7 Licensing & Creator Portal",
+   "page": "states",
+   "expand": "fill"
+  },
+  "StatesAgency.dc.html": {
+   "x": 1520,
+   "y": 2560,
+   "w": 1440,
+   "h": 1700,
+   "title": "States \u00b7 Connections, agency & client portal",
+   "page": "states",
+   "expand": "fill"
+  },
+  "StatesBilling.dc.html": {
+   "x": 3040,
+   "y": 2560,
+   "w": 1440,
+   "h": 1400,
+   "title": "States \u00b7 Billing, credits & trial",
+   "page": "states",
+   "expand": "fill"
+  },
+  "StatesSystem.dc.html": {
+   "x": 0,
+   "y": 4420,
+   "w": 1440,
+   "h": 1500,
+   "title": "States \u00b7 Sign-in, settings & system",
+   "page": "states",
+   "expand": "fill"
+  },
+  "MobileHome.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 390,
+   "h": 844,
+   "title": "Mobile \u00b7 Command Center",
+   "page": "mobile"
+  },
+  "MobileActivity.dc.html": {
+   "x": 470,
+   "y": 300,
+   "w": 390,
+   "h": 844,
+   "title": "Mobile \u00b7 Activity",
+   "page": "mobile"
+  },
+  "MobileApprovals.dc.html": {
+   "x": 940,
+   "y": 300,
+   "w": 390,
+   "h": 844,
+   "title": "Mobile \u00b7 Approvals",
+   "page": "mobile"
+  },
+  "MobileClientApproval.dc.html": {
+   "x": 1410,
+   "y": 300,
+   "w": 390,
+   "h": 844,
+   "title": "Mobile \u00b7 Client approval",
+   "page": "mobile"
+  },
+  "MobileClipTrim.dc.html": {
+   "x": 1880,
+   "y": 300,
+   "w": 390,
+   "h": 844,
+   "title": "Mobile \u00b7 Clip review & trim",
+   "page": "mobile"
+  },
+  "MobileCalendar.dc.html": {
+   "x": 2350,
+   "y": 300,
+   "w": 390,
+   "h": 844,
+   "title": "Mobile \u00b7 Calendar",
+   "page": "mobile"
+  },
+  "MobileNotifications.dc.html": {
+   "x": 0,
+   "y": 1304,
+   "w": 390,
+   "h": 844,
+   "title": "Mobile \u00b7 Notifications",
+   "page": "mobile"
+  },
+  "MobileOnboarding.dc.html": {
+   "x": 470,
+   "y": 1304,
+   "w": 390,
+   "h": 844,
+   "title": "Mobile \u00b7 Onboarding",
+   "page": "mobile"
+  },
+  "MobileAgent.dc.html": {
+   "x": 940,
+   "y": 1304,
+   "w": 390,
+   "h": 844,
+   "title": "Mobile \u00b7 Agent",
+   "page": "mobile"
+  },
+  "MobileUpload.dc.html": {
+   "x": 1410,
+   "y": 1304,
+   "w": 390,
+   "h": 844,
+   "title": "Mobile \u00b7 Upload",
+   "page": "mobile"
+  },
+  "LightCommandCenter.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1450,
+   "title": "Light \u00b7 APP-01 Command Center",
+   "page": "light",
+   "expand": "fill"
+  },
+  "LightStrategist.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 1250,
+   "title": "Light \u00b7 APP-02 AI Strategist",
+   "page": "light",
+   "expand": "fill"
+  },
+  "LightClippingStudio.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 1250,
+   "title": "Light \u00b7 CL-03 Clipping Studio",
+   "page": "light",
+   "expand": "fill"
+  },
+  "LightPostDetail.dc.html": {
+   "x": 0,
+   "y": 1910,
+   "w": 1440,
+   "h": 1250,
+   "title": "Light \u00b7 PB-03 Post detail",
+   "page": "light",
+   "expand": "fill"
+  },
+  "LightClientApproval.dc.html": {
+   "x": 1520,
+   "y": 1910,
+   "w": 1440,
+   "h": 1000,
+   "title": "Light \u00b7 CP-02 Client approval detail",
+   "page": "light",
+   "expand": "fill"
+  },
+  "LightPricing.dc.html": {
+   "x": 3040,
+   "y": 1910,
+   "w": 1440,
+   "h": 1900,
+   "title": "Light \u00b7 M-04 Pricing",
+   "page": "light",
+   "expand": "fill"
+  },
+  "LightOnboarding.dc.html": {
+   "x": 0,
+   "y": 3970,
+   "w": 1440,
+   "h": 1000,
+   "title": "Light \u00b7 ON-04 Automation mode",
+   "page": "light",
+   "expand": "fill"
+  },
+  "LightMobileHome.dc.html": {
+   "x": 1520,
+   "y": 3970,
+   "w": 390,
+   "h": 844,
+   "title": "Light \u00b7 Mobile \u00b7 Command Center",
+   "page": "light"
+  },
+  "LightMobileClientApproval.dc.html": {
+   "x": 1990,
+   "y": 3970,
+   "w": 390,
+   "h": 844,
+   "title": "Light \u00b7 Mobile \u00b7 Client approval",
+   "page": "light"
+  }
+ },
+ "order": [
+  "Main.dc.html",
+  "Home.dc.html",
+  "Product.dc.html",
+  "UseCases.dc.html",
+  "Pricing.dc.html",
+  "Licensing.dc.html",
+  "FAQ.dc.html",
+  "Legal.dc.html",
+  "Status.dc.html",
+  "SignUp.dc.html",
+  "LogIn.dc.html",
+  "VerifyEmail.dc.html",
+  "ResetPassword.dc.html",
+  "MFA.dc.html",
+  "AcceptInvite.dc.html",
+  "ContentOwnerJoin.dc.html",
+  "OnbAccountType.dc.html",
+  "OnbGoals.dc.html",
+  "OnbConnect.dc.html",
+  "OnbAutomation.dc.html",
+  "Onboarding.dc.html",
+  "CommandCenter.dc.html",
+  "SetupChecklist.dc.html",
+  "Strategist.dc.html",
+  "Activity.dc.html",
+  "Agents.dc.html",
+  "AgentDetail.dc.html",
+  "CreateAgent.dc.html",
+  "WorkspaceSwitcher.dc.html",
+  "Notifications.dc.html",
+  "MediaLibrary.dc.html",
+  "Upload.dc.html",
+  "ClippingStudio.dc.html",
+  "Variants.dc.html",
+  "Exports.dc.html",
+  "ContentStudio.dc.html",
+  "Composer.dc.html",
+  "AIVideo.dc.html",
+  "Calendar.dc.html",
+  "Drafts.dc.html",
+  "PostDetail.dc.html",
+  "Approvals.dc.html",
+  "ApprovalDetail.dc.html",
+  "Analytics.dc.html",
+  "ContentPerformance.dc.html",
+  "AgentPerformance.dc.html",
+  "Campaigns.dc.html",
+  "Marketplace.dc.html",
+  "SourceDetail.dc.html",
+  "RequestLicense.dc.html",
+  "MyLicenses.dc.html",
+  "CreatorOverview.dc.html",
+  "Verification.dc.html",
+  "LicenseTerms.dc.html",
+  "Usage.dc.html",
+  "Revoke.dc.html",
+  "Payouts.dc.html",
+  "Connections.dc.html",
+  "ConnectionDetail.dc.html",
+  "AgencyHub.dc.html",
+  "Clients.dc.html",
+  "ClientSettings.dc.html",
+  "Team.dc.html",
+  "Roles.dc.html",
+  "AuditLog.dc.html",
+  "ClientPortal.dc.html",
+  "ClientApproval.dc.html",
+  "Billing.dc.html",
+  "Plans.dc.html",
+  "Ledger.dc.html",
+  "TopUp.dc.html",
+  "SpendLimits.dc.html",
+  "Invoices.dc.html",
+  "PaymentFailed.dc.html",
+  "Trial.dc.html",
+  "Profile.dc.html",
+  "Security.dc.html",
+  "Appearance.dc.html",
+  "NotificationPrefs.dc.html",
+  "Members.dc.html",
+  "BrandKits.dc.html",
+  "AISettings.dc.html",
+  "IntegrationStatus.dc.html",
+  "Privacy.dc.html",
+  "WorkspaceSettings.dc.html",
+  "AdminOps.dc.html",
+  "AdminJobs.dc.html",
+  "AdminAudit.dc.html",
+  "AdminLicenses.dc.html",
+  "AdminSupport.dc.html",
+  "AdminAbuse.dc.html",
+  "AdminDiagnostics.dc.html",
+  "AdminFlags.dc.html",
+  "PWAInstall.dc.html",
+  "Offline.dc.html",
+  "ErrorPages.dc.html",
+  "StatesCore.dc.html",
+  "StatesClipping.dc.html",
+  "StatesPublishing.dc.html",
+  "StatesLicensing.dc.html",
+  "StatesAgency.dc.html",
+  "StatesBilling.dc.html",
+  "StatesSystem.dc.html",
+  "MobileHome.dc.html",
+  "MobileActivity.dc.html",
+  "MobileApprovals.dc.html",
+  "MobileClientApproval.dc.html",
+  "MobileClipTrim.dc.html",
+  "MobileCalendar.dc.html",
+  "MobileNotifications.dc.html",
+  "MobileOnboarding.dc.html",
+  "MobileAgent.dc.html",
+  "MobileUpload.dc.html",
+  "LightCommandCenter.dc.html",
+  "LightStrategist.dc.html",
+  "LightClippingStudio.dc.html",
+  "LightPostDetail.dc.html",
+  "LightClientApproval.dc.html",
+  "LightPricing.dc.html",
+  "LightOnboarding.dc.html",
+  "LightMobileHome.dc.html",
+  "LightMobileClientApproval.dc.html"
+ ],
+ "notes": {
+  "t_foundations": {
+   "x": 0,
+   "y": 0,
+   "text": "Foundations",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "foundations"
+  },
+  "t_public": {
+   "x": 0,
+   "y": 0,
+   "text": "Public site",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "public"
+  },
+  "t_auth": {
+   "x": 0,
+   "y": 0,
+   "text": "Sign in & onboarding",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "auth"
+  },
+  "t_core": {
+   "x": 0,
+   "y": 0,
+   "text": "Command Center & AI",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "core"
+  },
+  "t_clipping": {
+   "x": 0,
+   "y": 0,
+   "text": "Clipping & Content",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "clipping"
+  },
+  "t_publishing": {
+   "x": 0,
+   "y": 0,
+   "text": "Calendar, approvals & publishing",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "publishing"
+  },
+  "t_analytics": {
+   "x": 0,
+   "y": 0,
+   "text": "Analytics",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "analytics"
+  },
+  "t_licensing": {
+   "x": 0,
+   "y": 0,
+   "text": "Licensing & Creator Portal",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "licensing"
+  },
+  "t_agency": {
+   "x": 0,
+   "y": 0,
+   "text": "Connections, agency & client portal",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "agency"
+  },
+  "t_billing": {
+   "x": 0,
+   "y": 0,
+   "text": "Billing & credits",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "billing"
+  },
+  "t_settings": {
+   "x": 0,
+   "y": 0,
+   "text": "Settings",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "settings"
+  },
+  "t_admin": {
+   "x": 0,
+   "y": 0,
+   "text": "Platform admin",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "admin"
+  },
+  "t_system": {
+   "x": 0,
+   "y": 0,
+   "text": "System screens",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "system"
+  },
+  "t_states": {
+   "x": 0,
+   "y": 0,
+   "text": "States",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "states"
+  },
+  "t_mobile": {
+   "x": 0,
+   "y": 0,
+   "text": "Mobile",
+   "kind": "title1",
+   "maxW": 2740,
+   "page": "mobile"
+  },
+  "t_light": {
+   "x": 0,
+   "y": 0,
+   "text": "Light theme",
+   "kind": "title1",
+   "maxW": 4480,
+   "page": "light"
+  },
+  "sample": {
+   "x": 1520,
+   "y": 300,
+   "text": "All names, numbers and media in these designs are illustrative sample data. Platform availability shows planned honest states: YouTube and Instagram are in development, TikTok and Facebook are coming later.",
+   "w": 520,
+   "fill": "teal",
+   "page": "foundations"
+  }
+ },
+ "designSystems": []
+}

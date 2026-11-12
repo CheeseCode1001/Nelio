@@ -1,0 +1,79 @@
+{
+  "_note": "Illustrative seed data used across the high-fidelity designs. Use it for the prototype and local seed scripts. Not real people or businesses.",
+  "personas": [
+    {"id": "u_ada", "name": "Ada Okafor", "email": "ada@adastudio.ng", "role": "Creator (owner)", "workspace": "ws_ada"},
+    {"id": "u_bola", "name": "Bola Okeke", "email": "bola@brightreach.ng", "role": "Agency admin", "workspace": "org_brightreach"},
+    {"id": "u_tunde", "name": "Tunde Ade", "email": "tunde@brightreach.ng", "role": "Editor", "workspaces": ["ws_acme", "ws_lagosfit"]},
+    {"id": "u_chioma", "name": "Chioma Nwosu", "email": "chioma@acmefoods.ng", "role": "Client approver", "workspace": "ws_acme"},
+    {"id": "u_seun", "name": "Seun Eze", "email": "seun@adastudio.ng", "role": "Editor", "workspace": "ws_ada"},
+    {"id": "u_kemi", "name": "Kemi Adeyemi (Chef Kemi)", "email": "kemi@chefkemi.tv", "role": "Licensed content owner"},
+    {"id": "u_precious", "name": "Precious", "role": "Platform admin"}
+  ],
+  "organizations": [
+    {"id": "org_ada", "name": "Ada Studio", "type": "creator", "plan": "creator_pro"},
+    {"id": "org_brightreach", "name": "BrightReach Agency", "type": "agency", "plan": "agency"}
+  ],
+  "workspaces": [
+    {"id": "ws_ada", "org": "org_ada", "name": "Ada Studio", "timezone": "Africa/Lagos"},
+    {"id": "ws_acme", "org": "org_brightreach", "name": "Acme Foods", "monthly_credit_limit": 800, "approval": {"client_required": true, "per_platform": true, "deadline_days": 2}},
+    {"id": "ws_lagosfit", "org": "org_brightreach", "name": "Lagos Fitness", "monthly_credit_limit": 400},
+    {"id": "ws_kemis", "org": "org_brightreach", "name": "Kemi's Kitchen", "monthly_credit_limit": 600, "state": "over_limit"}
+  ],
+  "agents": [
+    {"id": "ag_budget", "name": "Budget Shorts", "avatar": {"color": "lime", "shape": "circle"}, "mode": "assisted", "state": "active", "weekly_budget": 300, "used": 180, "destinations": ["ig", "yt"], "schedule": "Mon/Wed/Fri 18:00 WAT"},
+    {"id": "ag_podcast", "name": "Podcast Clipper", "avatar": {"color": "blue", "shape": "square"}, "mode": "manual", "state": "paused", "weekly_budget": 200, "used": 0},
+    {"id": "ag_recipe", "name": "Recipe Reels", "avatar": {"color": "grape", "shape": "blob"}, "mode": "autonomous", "state": "paused", "pause_reason": "budget_reached", "weekly_budget": 300, "used": 300, "destinations": ["ig"]}
+  ],
+  "media": [
+    {"id": "m_ep12", "name": "podcast_ep12.mp4", "duration_min": 48, "rights": "own_upload", "state": "processing"},
+    {"id": "m_kemi4", "name": "Chef Kemi · Ep 4", "rights": "license:lic_kemi", "state": "ready"},
+    {"id": "m_oldvlog", "name": "old_vlog_2024.mp4", "rights": "license:expired", "state": "blocked"}
+  ],
+  "clip_candidates": [
+    {"media": "m_ep12", "title": "Stop budgeting like this", "range": "0:12-0:54", "score_estimate": 82},
+    {"media": "m_ep12", "title": "The 50/30/20 myth", "range": "3:10-3:51", "score_estimate": 74},
+    {"media": "m_ep12", "title": "Why savings fail", "range": "7:02-7:40", "score_estimate": 61}
+  ],
+  "posts": [
+    {"id": "p_myths", "title": "5 budgeting myths", "workspace": "ws_acme", "revision": 2,
+     "destinations": [
+       {"platform": "ig", "approval": "approved", "approved_revision": 1, "kept_after_r2": true, "publish": "unknown"},
+       {"platform": "yt", "approval": "changes_requested", "publish": "held"}]},
+    {"id": "p_jollof", "title": "Jollof on a budget", "workspace": "ws_acme", "destinations": [{"platform": "ig", "approval": "pending", "due": "Thu"}]},
+    {"id": "p_rent2", "title": "Rent hacks part 2", "workspace": "ws_acme", "destinations": [{"platform": "ig", "approval": "pending", "overdue": true}]},
+    {"id": "p_campus3", "title": "Campus sketch #3", "workspace": "ws_ada", "destinations": [{"platform": "ig", "publish": "held", "reason": "license_revoked"}]}
+  ],
+  "licenses": [
+    {"id": "lic_kemi", "owner": "u_kemi", "type": "free", "platforms": ["ig", "yt", "tt"], "commercial": false, "attribution": "@chefkemi", "expires": "2026-11-30", "excluded": ["Ep 7 (licensed music)", "Ep 12 (guest footage)"]},
+    {"id": "lic_tobi", "owner": "FitWithTobi", "type": "free", "state": "active"},
+    {"id": "lic_campus", "owner": "Campus Comedy", "type": "private", "state": "revoked", "affected": {"drafts": 2, "scheduled": 1, "published_flagged": 1}}
+  ],
+  "connections": [
+    {"platform": "ig", "handle": "@adastudio", "state": "connected", "token_expires_in_days": 2},
+    {"platform": "ig", "handle": "@adaclips", "state": "token_expired", "held_posts": 7},
+    {"platform": "yt", "handle": "Ada Studio", "state": "permissions_needed"},
+    {"platform": "yt", "handle": "Ada Brand channel", "state": "pending_platform_approval"},
+    {"platform": "tt", "state": "coming_later"},
+    {"platform": "fb", "state": "coming_later"}
+  ],
+  "billing": {
+    "plan": "creator_pro", "price_usd": 49, "renews": "2026-12-01", "provider": "paystack",
+    "credits": {"allocation": 2000, "used": 760, "left": 1240},
+    "ledger": [
+      {"at": "1 Nov", "type": "allocation", "amount": 2000},
+      {"at": "09:30", "type": "charge", "what": "Transcription 48 min Balanced", "amount": -22},
+      {"at": "13:00", "type": "refund", "what": "Render failed", "amount": 15},
+      {"at": "14:02", "type": "reserve", "what": "Render estimate", "amount": -40},
+      {"at": "14:09", "type": "settle", "what": "Render actual 36", "amount": 4}
+    ],
+    "plans": [
+      {"id": "free", "usd": 0, "agents": "1 (manual)", "accounts": 1, "autonomous": false},
+      {"id": "starter", "usd": 19, "agents": 2, "accounts": 3},
+      {"id": "creator_pro", "usd": 49, "agents": 5, "accounts": 6},
+      {"id": "business", "usd": 99, "agents": 10, "accounts": 12},
+      {"id": "agency", "usd": 249, "agents": 25, "accounts": 40, "client_workspaces": 10},
+      {"id": "enterprise", "usd": null}
+    ],
+    "_entitlements_note": "Provisional until cost benchmarking (A AS-1)."
+  }
+}

@@ -163,7 +163,7 @@ Prototype treatment key: **UI** = fully interactive with local state · **SIM** 
 | D-04 | 4 onboarding steps, all skippable, dashboard checklist | ON-01–05 | UI |
 | D-05 | Autonomous publishing requires explicit authorization | ON-04, APP-05, APP-02 | UI (authorization dialog) |
 | D-06 | YouTube + Instagram first, then TikTok + Facebook; availability gated by real app approval | IN-01, ON-03, PB-03, M-04 | UI: YouTube/Instagram "in development"; TikTok/Facebook "coming later"; all labelled mock |
-| D-07 | Claude is the only general reasoning model; no public model picker | ST-07, APP-02 | DOC + UI copy |
+| D-07 | Claude is the only general reasoning model (internal); no public model picker; never named in the product (D-18) | ST-07, APP-02 | DOC only |
 | D-08 | Transcription router (Deepgram/Whisper), Fast / Balanced / High Quality, per-job cost, fallback | ST-07, CL-02, APP-03 | UI (mode selector + cost estimate, SIM) |
 | D-09 | FFmpeg / Remotion / PySceneDetect complement each other | CL-03, CL-05, APP-03 | SIM (job steps named honestly) |
 | D-10 | Pricing: Free $0, Starter $19, Creator Pro $49, Business $99, Agency $249, Enterprise custom; credits provisional | M-04, BI-01, BI-02 | UI, entitlements labelled "provisional" |
@@ -174,6 +174,7 @@ Prototype treatment key: **UI** = fully interactive with local state · **SIM** 
 | D-15 | Content owners join free; free and private licensing first; paid licensing and payouts later | AU-07, LI-05–10, M-05 | UI; LI-10 GATED |
 | D-16 | Agency workspaces, client login and direct approvals from launch | AG-*, CP-* | UI |
 | D-17 | Design first → explicit approval → then implementation | — | Process: ends with "DESIGN PHASE COMPLETE — AWAITING USER APPROVAL" |
+| D-18 | **AI provider confidentiality (user decision, 12 Nov 2026):** the product never names the AI, transcription or media vendors it uses (no "Claude", "Anthropic", "Deepgram", "Whisper", "FFmpeg", "Remotion", etc.) in UI, marketing, emails, notifications, errors or AI-generated text. The AI is presented as **Nelio AI**. Vendor names stay in internal docs and code only. ⚠ Legal review: data-protection law (e.g. Nigeria's NDPA, GDPR) may require a sub-processor list in the privacy policy; legal decides how that is handled. | All | UI copy rule |
 
 ### 4.4 Autonomy & policy engine (PRD §6, ARCH §7)
 
@@ -284,8 +285,8 @@ Empty · Loading (skeleton) · Error (recoverable / fatal) · Success · Permiss
 | **A** | ✅ This document |
 | B | ✅ `B_INFORMATION_ARCHITECTURE.md` |
 | C | ✅ `C_WIREFRAMES.md` + `C_wireframes/index.html` |
-| D | Design tokens, typography, components, accessibility spec, Dark/Light themes, brand direction |
-| E | High-fidelity screens with all states |
-| F | Runnable Next.js prototype with mock data |
-| G | UX audit |
-| H | Handoff package |
+| D | Folded into E: canvas Foundations + `H_handoff/tokens.json` |
+| E | ✅ Canvas + `E_hifi/` |
+| F | Skipped for now (user decision, 12 Nov) |
+| G | ✅ `G_UX_AUDIT.md` |
+| H | ✅ `H_HANDOFF.md` + `H_handoff/` |
