@@ -32,9 +32,23 @@ def pubfoot():
     cs = ''.join(f'<div style="display: flex; flex-direction: column; gap: 10px; min-width: 140px"><span style="font-size: 14px; font-weight: 800; color: {T["tx"]}">{t}</span>' + ''.join(f'<a href="#" style="font-size: 14px; color: {T["mu"]}; text-decoration: none">{l}</a>' for l in ls) + '</div>' for t, ls in cols_)
     wm = f'<div aria-hidden="true" style="font-family: {HF}; font-weight: 800; font-size: 300px; letter-spacing: -0.06em; line-height: 0.8; color: {T["s3"]}; text-align: center; overflow: hidden; white-space: nowrap; margin-top: 24px">nelio</div>'
     return f'<footer style="background: {T["s1"]}; border-top: 1px solid {T["bd"]}; padding: 56px 48px 0; overflow: hidden"><div style="display: flex; flex-wrap: wrap; gap: 48px; max-width: 1200px; margin: 0 auto"><div style="display: flex; flex-direction: column; gap: 12px; flex: 1 1 260px">{logo(26)}{P("Your AI content team, under your control.")}{row(plat("ig",30), plat("yt",30), plat("tt",30), gap=8)}</div>{cs}</div><div style="max-width: 1200px; margin: 32px auto 0; display: flex; justify-content: space-between; font-size: 13px; color: {T["mu"]}"><span>© 2026 Nelio. Made in Lagos.</span><span>Prices in USD · pay in NGN at checkout</span></div>{wm}</footer>'
+def mpubnav():
+    return f'<header style="position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: {T["s1"]}; border-bottom: 1px solid {T["bd"]}"><a href="Home-Mobile.dc.html" style="text-decoration: none">{logo(22)}</a>{grow()}{btn("Start free","cta",href="SignUp.dc.html",size="sm")}{ibtn("menu","Open menu","MobileSiteMenu.dc.html")}</header>'
+def mpubfoot():
+    cols_ = [('Product',['Features','Pricing','Status']),('Use cases',['Creators','Businesses','Agencies']),('Company',['Licensing','FAQ','Contact']),('Legal',['Terms','Privacy','Takedowns'])]
+    cs = ''.join(f'<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-size: 14px; font-weight: 800; color: {T["tx"]}">{t}</span>' + ''.join(f'<a href="#" style="font-size: 14px; color: {T["mu"]}; text-decoration: none; min-height: 28px">{l}</a>' for l in ls) + '</div>' for t, ls in cols_)
+    return f'<footer style="background: {T["s1"]}; border-top: 1px solid {T["bd"]}; padding: 36px 20px 0; overflow: hidden; display: flex; flex-direction: column; gap: 24px">{logo(24)}{P("Your AI content team, under your control.")}<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px">{cs}</div><span style="font-size: 12.5px; color: {T["mu"]}">© 2026 Nelio. Made in Lagos. Prices in USD, pay in NGN.</span><div aria-hidden="true" style="font-family: {HF}; font-weight: 800; font-size: 120px; letter-spacing: -0.06em; line-height: 0.8; color: {T["s3"]}; text-align: center">nelio</div></footer>'
 def pub_page(fname_, title, inner, h=3000, w=1440):
+    if MOB['on']:
+        CUR['hmul'] = 1.7
+        write(fname_, doc(title, mpubnav() + f'<main style="display: flex; flex-direction: column; background: {T["s1"]}">{inner}</main>' + mpubfoot(), w, h)); return
     write(fname_, doc(title, pubnav() + f'<main style="display: flex; flex-direction: column; background: {T["s1"]}">{inner}</main>' + pubfoot(), w, h))
 def center_page(fname_, title, inner, h=920, w=1440, top='', width=480, side=None):
+    if MOB['on']:
+        CUR['hmul'] = 1.0
+        tb = top or f'<header style="display: flex; align-items: center; padding: 16px 20px">{logo(22)}</header>'
+        ph = side[2] if side and len(side) > 2 else ''
+        write(fname_, doc(title, tb + ph + f'<main style="flex-grow: 1; display: flex; justify-content: center; padding: 12px 20px 32px"><div style="width: 100%; display: flex; flex-direction: column; gap: 16px">{inner}</div></main>', w, h)); return
     tb = top or f'<header style="display: flex; align-items: center; padding: 20px 32px">{logo(24)}</header>'
     if side:
         body = f'<div style="display: flex; flex-wrap: wrap; flex-grow: 1"><div style="flex: 1 1 520px; display: flex; flex-direction: column">{tb}<main style="flex-grow: 1; display: flex; justify-content: center; padding: 32px 24px"><div style="width: 100%; max-width: {width}px; display: flex; flex-direction: column; gap: 18px">{inner}</div></main></div><aside style="flex: 1 1 480px; background: {side[0]}; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 48px; gap: 24px; position: relative; overflow: hidden">{side[1]}</aside></div>'
@@ -43,12 +57,18 @@ def center_page(fname_, title, inner, h=920, w=1440, top='', width=480, side=Non
     write(fname_, doc(title, body, w, h))
 def portal_page(fname_, title, inner, h=1000, w=1440, modal=''):
     hd = f'<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 14px 28px; border-bottom: 1px solid {T["bd"]}; background: {T["s1"]}"><span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 14px; background: {T["orange"]}; color: {OL}; border: 2px solid {OL}; box-sizing: border-box; font-family: {HF}; font-weight: 800; font-size: 20px; display: inline-flex; align-items: center; justify-content: center">B</span><div><div style="font-size: 15px; font-weight: 800">BrightReach Agency</div><div style="font-size: 12px; color: {T["mu"]}">Client portal · Acme Foods</div></div>{grow()}<span style="font-size: 12px; color: {T["mu"]}">Powered by</span>{logo(16)}{ibtn("bell","Notifications")}{person("CN","#22C55E",44)}</header>'
+    if MOB['on']:
+        CUR['hmul'] = 1.9
+        hd = hd.replace('padding: 14px 28px', 'padding: 10px 14px').replace('<span style="font-size: 12px; color: ' + T["mu"] + '">Powered by</span>' + logo(16), '')
     write(fname_, doc(title, hd + content_wrap(inner, maxw=1080) + modal, w, h))
 def creator_nav(active):
     items = [('c-over','home','Overview','CreatorOverview'),('c-verify','shield','Verification','Verification'),('c-terms','file','Licensing terms','LicenseTerms'),('c-usage','eye','Usage','Usage'),('c-rev','x','Revocations','Revoke'),('c-pay','wallet','Payouts','Payouts')]
     return f'<nav aria-label="Creator portal" style="flex: 1 1 250px; max-width: 100%; box-sizing: border-box; padding: 18px 14px; background: {T["s1"]}; border-right: 1px solid {T["bd"]}; display: flex; flex-direction: column; gap: 2px">' + ''.join(navitem(ic, l, k == active, f + '.dc.html') for k, ic, l, f in items) + '</nav>'
 def creator_page(fname_, title, active, inner, h=1000, w=1440, modal=''):
     hd = f'<header style="display: flex; align-items: center; gap: 14px; padding: 12px 20px; border-bottom: 1px solid {T["bd"]}; background: {T["s1"]}">{logo(22)}{sticker("Creator Portal","#FF4FB8",-3,"shield",12,False)}{grow()}{ibtn("bell","Notifications")}{person("CK","#FF4FB8",44)}</header>'
+    if MOB['on']:
+        CUR['hmul'] = 1.9
+        write(fname_, doc(title, hd + hnav(creator_nav(active)) + content_wrap(inner) + modal, w, h)); return
     write(fname_, doc(title, hd + f'<div style="display: flex; flex-wrap: wrap; flex-grow: 1">{creator_nav(active)}{content_wrap(inner)}</div>' + modal, w, h))
 def admin_nav(active):
     items = [('a-ops','activity','Ops overview','AdminOps'),('a-jobs','list','Jobs & dead-letter','AdminJobs'),('a-audit','search','Audit search','AdminAudit'),('a-lic','shield','License review','AdminLicenses'),('a-sup','key','Support access','AdminSupport'),('a-abuse','flag','Abuse & moderation','AdminAbuse'),('a-diag','zap','Diagnostics','AdminDiagnostics'),('a-flags','gear','Feature flags','AdminFlags')]
@@ -56,6 +76,10 @@ def admin_nav(active):
 def admin_page(fname_, title, active, inner, h=1000, w=1440, modal=''):
     strip = f'<div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 9px 20px; background: {OL}; color: #FFD43B; font-size: 13px; font-weight: 800"><span>NELIO ADMIN</span><span>Every action here is audited · session A-2291</span></div>'
     hd = f'<header style="display: flex; align-items: center; gap: 14px; padding: 12px 20px; border-bottom: 1px solid {T["bd"]}; background: {T["s1"]}">{logo(22)}{chip("Platform admin","warn","key")}{grow()}{btn("Global pause","danger","pause","AdminPauseConfirm.dc.html","sm")}{person("PA","#59D8FF",44)}</header>'
+    if MOB['on']:
+        CUR['hmul'] = 1.9
+        hd = hd.replace(btn("Global pause","danger","pause","AdminPauseConfirm.dc.html","sm"), ibtn("pause","Global pause","AdminPauseConfirm.dc.html"))
+        write(fname_, doc(title, strip + hd + hnav(admin_nav(active)) + content_wrap(inner) + modal, w, h)); return
     write(fname_, doc(title, strip + hd + f'<div style="display: flex; flex-wrap: wrap; flex-grow: 1">{admin_nav(active)}{content_wrap(inner)}</div>' + modal, w, h))
 
 # ---------- mobile ----------
@@ -96,9 +120,11 @@ def lime_blob(w=520, color=None, style=''):
     c = color or T['lime']
     return f'<svg aria-hidden="true" viewBox="0 0 200 200" style="position: absolute; width: {w}px; height: {w}px; {style}"><path d="M44,-58 C58,-46 70,-28 72,-9 C74,10 66,30 52,44 C38,58 18,66 -3,69 C-24,72 -46,70 -60,57 C-74,44 -80,20 -77,-1 C-74,-22 -62,-40 -46,-52 C-30,-64 -15,-70 3,-73 C21,-76 30,-70 44,-58 Z" transform="translate(100 100)" fill="{c}"></path></svg>'
 def big(t, s=68, color=None, anim=''):
+    s = ms(s, 0.42)
     return f'<h1 style="margin: 0; font-family: {HF}; font-weight: 800; font-size: {s}px; line-height: 1.02; letter-spacing: -0.045em; color: {color or T["tx"]}; {anim}">{t}</h1>'
 def hl(t, bg=None, fg=None): return f'<span style="background: {bg or T["lime"]}; color: {fg or OL}; padding: 0 14px; border-radius: 18px; display: inline-block; line-height: 1.1">{t}</span>'
 def section(inner, pad='88px 48px', bg=None, center=False, style=''):
+    if MOB['on']: pad = '44px 20px'
     al = 'align-items: center; text-align: center;' if center else ''
     return f'<section style="padding: {pad}; position: relative; overflow: hidden; {"background: "+bg+";" if bg else ""} {style}"><div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; position: relative; {al}">{inner}</div></section>'
 def sec_head(eb, title, sub=None, center=True):

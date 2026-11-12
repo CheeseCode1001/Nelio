@@ -108,3 +108,16 @@ As in v1, plus:
 ---
 
 **DESIGN PHASE COMPLETE: AWAITING USER APPROVAL.** No production code will start until you explicitly approve.
+
+## v2.1 addendum: mobile responsive views (12 Nov 2026)
+
+- Every desktop screen and state now has a 390 px mobile board: 307 boards in a second canvas, **Nelio — Mobile responsive UI** (https://claude.ai/artifact/BiuxrSL32XBybSnDD4mmd6). It's a separate canvas because one canvas holds at most 512 files. Source copies: `E_hifi/mobile_canvas/`.
+- Mobile rules, applied by `generator/s13_responsive.py` and the `MOB` mode in `lib2.py` / `frame.py`:
+  - Every centered modal becomes a **bottom sheet**: full width, 28 px top radius, grab handle, slides up, max 88% height, scrolls inside.
+  - App shell: sticky top bar (workspace pill, search, bell, avatar) and sticky bottom tab bar (Home, Activity, Approvals, Calendar, More). The sidebar moves into More.
+  - Creator portal and admin: the side nav becomes a horizontally scrolling pill row.
+  - Public site: compact sticky nav (logo, Start free, menu). The menu opens as a bottom sheet (`MobileSiteMenu`). The footer is a 2-column link grid.
+  - Auth and onboarding: single column, no side panel.
+  - Grids collapse to 1 column (2 for small tiles). Multi-column page layouts stack. Wide tables scroll inside their box. Display type scales down (48 → 35, 68 → 40).
+- Links on mobile boards point to their mobile twins.
+- Real stock photos (landing page; auth/onboarding photo carousel) are **pending**: the build workspace can't download images from Unsplash, Pexels or Pixabay. See G-15.

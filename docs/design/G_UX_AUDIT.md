@@ -117,3 +117,7 @@ The design is ready for review. Before implementation starts on the affected mod
 | G-14 | New, Low | Dark parity is drawn for 16 key boards; the rest rely on tokens. Build must use tokens only. |
 
 **Checks run:** coverage (94/94 original screen IDs present + 7 new overlay/system IDs); every internal board link resolves; no AI/media vendor names on any board; “gradient” appears only in the Foundations rule text.
+
+### v2.1 addendum
+- G-03 (mobile heights): open → **addressed**. Every screen has a mobile board; modals become bottom sheets on mobile.
+- G-15 (new, open): the landing page and auth right-hand panels still use illustrations, not real photos. Stock-image hosts are blocked from the build workspace. Fix by allowing `images.unsplash.com` or uploading photos.

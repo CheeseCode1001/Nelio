@@ -1,5 +1,5 @@
 # Nelio v2 design generator — light-first, flat, sticker-fun. Tokens, components, shells, motion, skeletons.
-import html, json, os
+import html, json, os, re
 exec(open('/tmp/nb2/icons.py').read())
 
 OUT = '/home/claude/nelio-design2/project'
@@ -16,6 +16,8 @@ DARK = dict(bg='#0B0B14', s1='#15151F', s2='#1D1D29', s3='#272735', bd='#2A2A38'
     ok='#22C55E', okT='#0F2A1B', okTx='#4ADE80', warn='#FF9F1C', warnT='#33210E', warnTx='#FDBA74', err='#EF4444', errT='#351515', errTx='#FCA5A5',
     yellow='#FFD43B', cyan='#59D8FF', orange='#FF7A2F', pink='#FF4FB8', shadow='none', name='dark')
 T = dict(LIGHT)
+MOB = {'on': False}
+def ms(s, f=0.55): return s if not MOB['on'] or s <= 20 else round(20 + (s - 20) * f)
 def theme(n): T.clear(); T.update(LIGHT if n == 'light' else DARK)
 OL = '#0B0B14'  # illustration outline, both themes
 
@@ -57,6 +59,7 @@ def TONES():
 
 # ---------- type & layout ----------
 def H(t, size=32, color=None, mb=0, w=800, anim=''):
+    size = ms(size)
     return f'<h2 style="margin: 0 0 {mb}px; font-family: {HF}; font-weight: {w}; font-size: {size}px; line-height: 1.08; letter-spacing: -0.03em; color: {color or T["tx"]}; {anim}">{e(t)}</h2>'
 def h3(t, size=17, color=None): return f'<h3 style="margin: 0; font-family: {HF}; font-weight: 700; font-size: {size}px; line-height: 1.25; color: {color or T["tx"]}">{e(t)}</h3>'
 def P(t, color=None, size=14, mb=0, w=400, anim=''): return f'<p style="margin: 0 0 {mb}px; font-size: {size}px; line-height: 1.55; color: {color or T["mu"]}; font-weight: {w}; {anim}">{e(t)}</p>'
@@ -66,6 +69,10 @@ def row(*items, gap=12, align='center', wrap=True, justify='flex-start', style='
     return f'<div style="display: flex; flex-direction: row; gap: {gap}px; align-items: {align}; justify-content: {justify}; {"flex-wrap: wrap;" if wrap else ""} min-width: 0; {style}">{"".join(items)}</div>'
 def col(*items, gap=12, style=''): return f'<div style="display: flex; flex-direction: column; gap: {gap}px; min-width: 0; {style}">{"".join(items)}</div>'
 def grid(items, cols=3, gap=16, minw=None, style=''):
+    if MOB['on']:
+        if minw: minw = min(minw, 300)
+        else: minw = 150 if cols >= 4 else 400
+        return f'<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, {minw}px), 1fr)); gap: {min(gap, 14)}px; {style}">{"".join(items)}</div>'
     tpl = f'repeat(auto-fit, minmax({minw}px, 1fr))' if minw else f'repeat({cols}, minmax(0, 1fr))'
     return f'<div style="display: grid; grid-template-columns: {tpl}; gap: {gap}px; {style}">{"".join(items)}</div>'
 def grow(): return '<div style="flex-grow: 1"></div>'
@@ -120,7 +127,7 @@ def stat(label, value, sub=None, ic=None, fill=None, fg=None, anim=''):
     i = icon(ic, 16, mc) if ic else ''
     sb = f'<div style="font-size: 13px; color: {mc}; font-weight: 600">{e(sub)}</div>' if sub else ''
     bd = f'border: 1px solid {T["bd"]}; box-shadow: {T["shadow"]};' if not fill else ''
-    return f'<section style="background: {bg}; {bd} border-radius: 24px; padding: 18px 20px; display: flex; flex-direction: column; gap: 4px; min-width: 0; {anim}"><div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: {mc}">{i}{e(label)}</div><div style="font-family: {HF}; font-size: 36px; font-weight: 800; letter-spacing: -0.03em; color: {tc}">{e(value)}</div>{sb}</section>'
+    return f'<section style="background: {bg}; {bd} border-radius: 24px; padding: 18px 20px; display: flex; flex-direction: column; gap: 4px; min-width: 0; {anim}"><div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: {mc}">{i}{e(label)}</div><div style="font-family: {HF}; font-size: {28 if MOB['on'] else 36}px; font-weight: 800; letter-spacing: -0.03em; color: {tc}">{e(value)}</div>{sb}</section>'
 
 def table(cols, rows):
     th = ''.join(f'<th scope="col" style="text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 700; color: {T["mu"]}; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid {T["bd"]}; white-space: nowrap; background: {T["s2"]}">{e(c)}</th>' for c in cols)
@@ -271,15 +278,23 @@ def topbar(ws='Ada Studio', kind='Creator workspace', role='owner'):
     me = f'<a href="AccountMenu.dc.html" aria-label="Account menu" style="text-decoration: none">{person("AO", "#FF7A2F", 44)}</a>'
     return f'<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 20px; background: {T["s1"]}; border-bottom: 1px solid {T["bd"]}"><a href="CommandCenter.dc.html" style="text-decoration: none">{logo(22)}</a><span style="width: 6px"></span>{sw}{search}{grow()}{credits}{pause}{bell}{me}</header>'
 def content_wrap(inner, pad='32px 36px', gap=24, maxw=1260):
+    if MOB['on']: pad, gap = '18px 16px 28px', min(gap, 18)
     return f'<main style="flex: 999 1 560px; min-width: 0; padding: {pad}; box-sizing: border-box"><div style="max-width: {maxw}px; margin: 0 auto; display: flex; flex-direction: column; gap: {gap}px">{inner}</div></main>'
 def overlay(m, top=100, maxw=560):
+    if MOB['on']:
+        CUR['modal'] = True
+        return f'<div style="position: absolute; inset: 0; z-index: 20; background: rgba(11,11,20,0.55); display: flex; flex-direction: column; justify-content: flex-end; box-sizing: border-box; {A("fade",0,.3)}"><div role="dialog" aria-modal="true" style="width: 100%; max-height: 88%; overflow-y: auto; background: {T["s1"]}; border-radius: 28px 28px 0 0; padding: 10px 20px 28px; display: flex; flex-direction: column; gap: 16px; box-sizing: border-box; {A("up",.05,.45)}"><span aria-hidden="true" style="align-self: center; width: 44px; height: 5px; border-radius: 999px; background: {T["s3"]}; margin-bottom: 4px"></span>{m}</div></div>'
     return f'<div style="position: absolute; inset: 0; background: rgba(11,11,20,0.55); display: flex; justify-content: center; align-items: flex-start; padding: {top}px 20px; box-sizing: border-box; {A("fade",0,.3)}"><div role="dialog" aria-modal="true" style="width: 100%; max-width: {maxw}px; background: {T["s1"]}; border-radius: 32px; padding: 28px; display: flex; flex-direction: column; gap: 18px; box-sizing: border-box; {A("pop",.05,.5)}">{m}</div></div>'
 
 # ---------- document & registry ----------
 LAST, REG, ORDER, CUR = {}, {}, [], {'page':'foundations','row':None}
 def doc(title, body, w, h, fixed=False, script=None):
+    if MOB['on']:
+        w = 390
+        if CUR.get('modal'): h, fixed = 844, True
+        else: h = max(844, int(h * CUR.get('hmul', 1.9)))
     LAST.update(title=title, w=w, h=h, fixed=fixed)
-    root = f'width: {w}px; height: {h}px; overflow: hidden;' if fixed else 'min-height: 100vh;'
+    root = f'width: {w}px; height: {h}px; overflow: hidden;' if fixed else ('min-height: 100vh; overflow-x: hidden;' if MOB['on'] else 'min-height: 100vh;')
     sc = script or 'class Component extends DCLogic {\n  renderVals() { return {}; }\n}'
     props = json.dumps({"$preview": {"width": w, "height": h}})
     return f'''<!doctype html>
@@ -309,15 +324,59 @@ a{{color:{T["accTx"]}}}a:hover{{color:{T["tx"]}}}
 </body>
 </html>
 '''
+def msan(c):
+    def w_(m):
+        n = int(m.group(1)); return f'width: 100%; max-width: {n}px' if n >= 340 else m.group(0)
+    c = re.sub(r'(?<![-\w])width: (\d+)px', w_, c)
+    def g_(m):
+        v = m.group(1)
+        if 'auto-fit' in v or 'auto-fill' in v or ('minmax(0' not in v and 'px' not in v): return m.group(0)
+        return 'grid-template-columns: minmax(0, 1fr)'
+    c = re.sub(r'grid-template-columns: ([^;"]+)', g_, c)
+    c = re.sub(r'font-size: (\d+)px', lambda m: f'font-size: {round(int(m.group(1))*0.6)}px' if int(m.group(1)) >= 44 else m.group(0), c)
+    return c
+def mname(f): return f[:-8] + '-Mobile.dc.html'
 def write(fname, content, row_=None):
+    if MOB['on']:
+        desk = fname; fname = mname(fname); content = msan(content)
+        d = REG.get(desk, {})
+        CUR['modal'] = False
+        with open(os.path.join(OUT, fname), 'w') as f: f.write(content)
+        if fname not in REG: ORDER.append(fname)
+        REG[fname] = dict(LAST, page=d.get('page', CUR['page']), row=d.get('row', desk), mobile=True, desk=desk)
+        return
     with open(os.path.join(OUT, fname), 'w') as f: f.write(content)
     if fname not in REG: ORDER.append(fname)
     REG[fname] = dict(LAST, page=CUR['page'], row=row_ or CUR.get('row') or fname)
 
 def app_page(fname, title, active, inner, h=1100, ws='Ada Studio', kind='Creator workspace', agency=False, w=1440, banner_html='', modal='', role='owner', row_=None):
+    if MOB['on']:
+        CUR['hmul'] = 1.9
+        body = mtopbar(ws) + banner_html + content_wrap(inner) + mtabbar(active) + modal
+        write(fname, doc(title, body, w, h), row_); return
     body = topbar(ws, kind, role) + banner_html + f'<div style="display: flex; flex-wrap: wrap; flex-grow: 1; align-items: stretch">{sidebar(active, agency)}{content_wrap(inner)}</div>' + modal
     write(fname, doc(title, body, w, h), row_)
 def topstrip(tone, ic, text, action=None, href='#'):
     bg, fg = TONES()[tone]
     a = f'<a href="{href}" style="margin-left: auto; font-weight: 800; color: {fg}">{e(action)}</a>' if action else ''
     return f'<div style="padding: 10px 20px; background: {bg}; color: {T["tx"]}; font-size: 14px; font-weight: 600; display: flex; gap: 10px; align-items: center">{icon(ic,18,fg)}{e(text)}{a}</div>'
+
+# ---------- mobile shells ----------
+MTABS = [('home','home','Home','CommandCenter'),('activity','activity','Activity','Activity'),('approvals','check','Approvals','Approvals'),('calendar','calendar','Calendar','Calendar'),('more','menu','More','MobileMore')]
+def mtabbar(active):
+    act = active if active in ('home','activity','approvals','calendar') else 'more'
+    out = ''
+    for k, ic, l, f in MTABS:
+        on = k == act
+        pill = f'background: {T["acc"]}; color: {T["onacc"]};' if on else f'color: {T["mu"]};'
+        badge = f'<span style="position: absolute; top: -4px; right: -8px; min-width: 18px; height: 18px; border-radius: 999px; background: {T["ai"]}; color: {OL}; font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center">4</span>' if k == 'approvals' else ''
+        href = f + ('.dc.html' if f == 'MobileMore' else '-Mobile.dc.html')
+        out += f'<a href="{href}"{" aria-current=\"page\"" if on else ""} style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: {T["tx"] if on else T["mu"]}; font-size: 11px; font-weight: 700"><span style="position: relative; width: 54px; height: 32px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; {pill}">{icon(ic,20)}{badge}</span>{l}</a>'
+    return f'<nav aria-label="Main" style="position: sticky; bottom: 0; z-index: 5; margin-top: auto; display: flex; padding: 10px 6px 20px; border-top: 1px solid {T["bd"]}; background: {T["s1"]}">{out}</nav>'
+def mtopbar(ws='Ada Studio'):
+    sw = f'<a href="WorkspaceSwitcher.dc.html" style="display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border-radius: 999px; border: 2px solid {T["bd"]}; background: {T["s1"]}; color: {T["tx"]}; text-decoration: none; font-weight: 700; font-size: 14px; min-height: 44px; box-sizing: border-box; min-width: 0; max-width: 170px"><span style="flex: none">{person(ws[:1], "#FFD43B", 30)}</span><span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{e(ws)}</span>{icon("chevd",14)}</a>'
+    return f'<header style="position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: {T["s1"]}; border-bottom: 1px solid {T["bd"]}">{sw}{grow()}{ibtn("search","Search","CommandPalette.dc.html")}{ibtn("bell","Notifications","Notifications.dc.html")}<a href="AccountMenu.dc.html" aria-label="Account menu" style="text-decoration: none">{person("AO", "#FF7A2F", 40)}</a></header>'
+def hnav(nav):
+    nav = nav.replace('flex: 1 1 250px; max-width: 100%; box-sizing: border-box; padding: 18px 14px;', 'flex: 1 1 100%; max-width: 100%; box-sizing: border-box; padding: 10px 12px; overflow-x: auto; flex-wrap: nowrap;')
+    nav = nav.replace('border-right: 1px solid', 'border-bottom: 1px solid').replace('flex-direction: column; gap: 2px', 'flex-direction: row; gap: 6px')
+    return nav.replace('display: flex; align-items: center; gap: 10px; padding: 10px 14px;', 'display: flex; flex: none; white-space: nowrap; align-items: center; gap: 8px; padding: 10px 14px;')
