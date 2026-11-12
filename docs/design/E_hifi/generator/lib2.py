@@ -263,10 +263,19 @@ NAV = [(None, [('home','home','Command Center'),('activity','activity','Activity
        ('Grow', [('analytics','chart','Analytics'),('licensing','shield','Licensing')]),
        ('Workspace', [('connections','link','Connections'),('brandkits','palette','Brand kits'),('settings','gear','Settings')]),
        ('Agency', [('agencyhub','grid','Agency hub'),('clients','users','Clients'),('team','users','Team'),('audit','list','Audit log')])]
+exec(open('/tmp/nb2/navicons.py').read())
+def navicon(name, on, s=20):
+    shape, detail = NAVIC.get(name, NAVIC['grid'])
+    if on:
+        cut = T['accT']
+        det = detail.replace('<path', f'<path stroke="{cut}" fill="none"').replace('<circle', f'<circle stroke="{cut}" fill="{cut}"') if detail else ''
+        return f'<svg width="{s}" height="{s}" viewBox="0 0 24 24" aria-hidden="true" style="flex: none" fill="{T["acc"]}" stroke="{T["acc"]}" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">{shape}<g stroke-width="2">{det}</g></svg>'
+    return f'<svg width="{s}" height="{s}" viewBox="0 0 24 24" aria-hidden="true" style="flex: none" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">{shape}{detail}</svg>'
 def navitem(ic, label, active, href='#', badge=None):
-    st = f'background: {T["acc"]}; color: {T["onacc"]};' if active else f'background: transparent; color: {T["tx"]};'
-    b = f'<span style="margin-left: auto; min-width: 22px; height: 22px; padding: 0 7px; box-sizing: border-box; border-radius: 999px; background: {T["onacc"] if active else T["ai"]}; color: {T["acc"] if active else OL}; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center">{badge}</span>' if badge else ''
-    return f'<a href="{href}"{" aria-current=\"page\"" if active else ""} style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; text-decoration: none; {st}">{icon(ic,18)}{e(label)}{b}</a>'
+    st = f'background: {T["accT"]}; color: {T["accTx"]}; font-weight: 800;' if active else f'background: transparent; color: {T["mu"]}; font-weight: 600;'
+    b = f'<span style="margin-left: auto; min-width: 22px; height: 22px; padding: 0 7px; box-sizing: border-box; border-radius: 999px; background: {T["ai"]}; color: {OL}; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center">{badge}</span>' if badge else ''
+    bar = f'<span aria-hidden="true" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 20px; border-radius: 0 4px 4px 0; background: {T["acc"]}"></span>' if active else ''
+    return f'<a href="{href}"{" aria-current=\"page\"" if active else ""} style="position: relative; display: flex; align-items: center; gap: 12px; padding: 10px 14px; min-height: 44px; box-sizing: border-box; border-radius: 14px; font-size: 14px; text-decoration: none; {st}">{bar}{navicon(ic, active)}<span style="color: {T["accTx"] if active else T["tx"]}">{e(label)}</span>{b}</a>'
 def sidebar(active, agency=False):
     out = ''
     for g, items in NAV:
@@ -415,4 +424,4 @@ def mtopbar(ws='Ada Studio'):
 def hnav(nav):
     nav = nav.replace('flex: 1 1 250px; max-width: 100%; box-sizing: border-box; padding: 18px 14px;', 'flex: 1 1 100%; max-width: 100%; box-sizing: border-box; padding: 10px 12px; overflow-x: auto; flex-wrap: nowrap;')
     nav = nav.replace('border-right: 1px solid', 'border-bottom: 1px solid').replace('flex-direction: column; gap: 2px', 'flex-direction: row; gap: 6px')
-    return nav.replace('display: flex; align-items: center; gap: 10px; padding: 10px 14px;', 'display: flex; flex: none; white-space: nowrap; align-items: center; gap: 8px; padding: 10px 14px;')
+    return nav.replace('position: relative; display: flex; align-items: center; gap: 12px; padding: 10px 14px;', 'position: relative; display: flex; flex: none; white-space: nowrap; align-items: center; gap: 8px; padding: 10px 14px;')
