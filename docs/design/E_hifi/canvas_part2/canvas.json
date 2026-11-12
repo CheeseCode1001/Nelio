@@ -1,0 +1,4170 @@
+{
+ "v": 3,
+ "attachments": {},
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-11-12T10:00:00Z"
+ },
+ "title": "Nelio \u2014 High-fidelity UI \u00b7 Part 2 of 2",
+ "launch": {
+  "view": "canvas",
+  "page": "licensing"
+ },
+ "pages": [
+  {
+   "id": "licensing",
+   "name": "7 \u00b7 Licensing"
+  },
+  {
+   "id": "creator",
+   "name": "8 \u00b7 Creator Portal"
+  },
+  {
+   "id": "agency",
+   "name": "9 \u00b7 Connections, agency & client portal"
+  },
+  {
+   "id": "billing",
+   "name": "10 \u00b7 Billing & credits"
+  },
+  {
+   "id": "settings",
+   "name": "11 \u00b7 Settings"
+  },
+  {
+   "id": "admin",
+   "name": "12 \u00b7 Platform admin"
+  },
+  {
+   "id": "system",
+   "name": "13 \u00b7 System & overlays"
+  },
+  {
+   "id": "mobile",
+   "name": "14 \u00b7 Mobile"
+  },
+  {
+   "id": "dark",
+   "name": "15 \u00b7 Dark theme"
+  }
+ ],
+ "boards": {
+  "Marketplace.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1300,
+   "title": "LI-01 Marketplace \u00b7 Filled",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "Marketplace-Empty.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 1300,
+   "title": "LI-01 Marketplace \u00b7 Empty",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "Marketplace-Loading.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 1300,
+   "title": "LI-01 Marketplace \u00b7 Loading",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "Marketplace-Mobile.dc.html": {
+   "x": 4560,
+   "y": 300,
+   "w": 390,
+   "h": 2470,
+   "title": "LI-01 Marketplace \u00b7 Filled \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "Marketplace-Empty-Mobile.dc.html": {
+   "x": 5030,
+   "y": 300,
+   "w": 390,
+   "h": 2470,
+   "title": "LI-01 Marketplace \u00b7 Empty \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "Marketplace-Loading-Mobile.dc.html": {
+   "x": 5500,
+   "y": 300,
+   "w": 390,
+   "h": 2470,
+   "title": "LI-01 Marketplace \u00b7 Loading \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail.dc.html": {
+   "x": 0,
+   "y": 3230,
+   "w": 1440,
+   "h": 1300,
+   "title": "LI-02 Source detail & terms \u00b7 Filled",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail-Loading.dc.html": {
+   "x": 1520,
+   "y": 3230,
+   "w": 1440,
+   "h": 1100,
+   "title": "LI-02 Source detail & terms \u00b7 Loading",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail-Private.dc.html": {
+   "x": 3040,
+   "y": 3230,
+   "w": 1440,
+   "h": 1300,
+   "title": "LI-02 Source detail & terms \u00b7 Private license",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail-Paid.dc.html": {
+   "x": 4560,
+   "y": 3230,
+   "w": 1440,
+   "h": 1300,
+   "title": "LI-02 Source detail & terms \u00b7 Paid (coming later)",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail-Suspended.dc.html": {
+   "x": 6080,
+   "y": 3230,
+   "w": 1440,
+   "h": 1300,
+   "title": "LI-02 Source detail & terms \u00b7 Owner suspended",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail-Licensed.dc.html": {
+   "x": 7600,
+   "y": 3230,
+   "w": 1440,
+   "h": 1300,
+   "title": "LI-02 Source detail & terms \u00b7 Already licensed",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail-Mobile.dc.html": {
+   "x": 9120,
+   "y": 3230,
+   "w": 390,
+   "h": 2470,
+   "title": "LI-02 Source detail & terms \u00b7 Filled \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail-Loading-Mobile.dc.html": {
+   "x": 9590,
+   "y": 3230,
+   "w": 390,
+   "h": 2090,
+   "title": "LI-02 Source detail & terms \u00b7 Loading \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail-Private-Mobile.dc.html": {
+   "x": 10060,
+   "y": 3230,
+   "w": 390,
+   "h": 2470,
+   "title": "LI-02 Source detail & terms \u00b7 Private license \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail-Paid-Mobile.dc.html": {
+   "x": 10530,
+   "y": 3230,
+   "w": 390,
+   "h": 2470,
+   "title": "LI-02 Source detail & terms \u00b7 Paid (coming later) \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail-Suspended-Mobile.dc.html": {
+   "x": 11000,
+   "y": 3230,
+   "w": 390,
+   "h": 2470,
+   "title": "LI-02 Source detail & terms \u00b7 Owner suspended \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "SourceDetail-Licensed-Mobile.dc.html": {
+   "x": 11470,
+   "y": 3230,
+   "w": 390,
+   "h": 2470,
+   "title": "LI-02 Source detail & terms \u00b7 Already licensed \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "RequestLicense.dc.html": {
+   "x": 0,
+   "y": 6160,
+   "w": 1440,
+   "h": 1000,
+   "title": "LI-03 Request / accept license \u00b7 Filled",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "RequestLicense-Private.dc.html": {
+   "x": 1520,
+   "y": 6160,
+   "w": 1440,
+   "h": 1000,
+   "title": "LI-03 Request / accept license \u00b7 Private request",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "RequestLicense-Sent.dc.html": {
+   "x": 3040,
+   "y": 6160,
+   "w": 1440,
+   "h": 1000,
+   "title": "LI-03 Request / accept license \u00b7 Request sent",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "RequestLicense-Approved.dc.html": {
+   "x": 4560,
+   "y": 6160,
+   "w": 1440,
+   "h": 1000,
+   "title": "LI-03 Request / accept license \u00b7 Approved",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "RequestLicense-Declined.dc.html": {
+   "x": 6080,
+   "y": 6160,
+   "w": 1440,
+   "h": 1000,
+   "title": "LI-03 Request / accept license \u00b7 Declined",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "RequestLicense-Mobile.dc.html": {
+   "x": 7600,
+   "y": 6160,
+   "w": 390,
+   "h": 844,
+   "title": "LI-03 Request / accept license \u00b7 Filled \u00b7 Mobile",
+   "page": "licensing"
+  },
+  "RequestLicense-Private-Mobile.dc.html": {
+   "x": 8070,
+   "y": 6160,
+   "w": 390,
+   "h": 844,
+   "title": "LI-03 Request / accept license \u00b7 Private request \u00b7 Mobile",
+   "page": "licensing"
+  },
+  "RequestLicense-Sent-Mobile.dc.html": {
+   "x": 8540,
+   "y": 6160,
+   "w": 390,
+   "h": 844,
+   "title": "LI-03 Request / accept license \u00b7 Request sent \u00b7 Mobile",
+   "page": "licensing"
+  },
+  "RequestLicense-Approved-Mobile.dc.html": {
+   "x": 9010,
+   "y": 6160,
+   "w": 390,
+   "h": 844,
+   "title": "LI-03 Request / accept license \u00b7 Approved \u00b7 Mobile",
+   "page": "licensing"
+  },
+  "RequestLicense-Declined-Mobile.dc.html": {
+   "x": 9480,
+   "y": 6160,
+   "w": 390,
+   "h": 844,
+   "title": "LI-03 Request / accept license \u00b7 Declined \u00b7 Mobile",
+   "page": "licensing"
+  },
+  "MyLicenses.dc.html": {
+   "x": 0,
+   "y": 7620,
+   "w": 1440,
+   "h": 1150,
+   "title": "LI-04 My licenses \u00b7 Filled",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "MyLicenses-Empty.dc.html": {
+   "x": 1520,
+   "y": 7620,
+   "w": 1440,
+   "h": 1150,
+   "title": "LI-04 My licenses \u00b7 Empty",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "MyLicenses-Loading.dc.html": {
+   "x": 3040,
+   "y": 7620,
+   "w": 1440,
+   "h": 1150,
+   "title": "LI-04 My licenses \u00b7 Loading",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "MyLicenses-Expired.dc.html": {
+   "x": 4560,
+   "y": 7620,
+   "w": 1440,
+   "h": 1150,
+   "title": "LI-04 My licenses \u00b7 License expired",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "MyLicenses-Mobile.dc.html": {
+   "x": 6080,
+   "y": 7620,
+   "w": 390,
+   "h": 2185,
+   "title": "LI-04 My licenses \u00b7 Filled \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "MyLicenses-Empty-Mobile.dc.html": {
+   "x": 6550,
+   "y": 7620,
+   "w": 390,
+   "h": 2185,
+   "title": "LI-04 My licenses \u00b7 Empty \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "MyLicenses-Loading-Mobile.dc.html": {
+   "x": 7020,
+   "y": 7620,
+   "w": 390,
+   "h": 2185,
+   "title": "LI-04 My licenses \u00b7 Loading \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "MyLicenses-Expired-Mobile.dc.html": {
+   "x": 7490,
+   "y": 7620,
+   "w": 390,
+   "h": 2185,
+   "title": "LI-04 My licenses \u00b7 License expired \u00b7 Mobile",
+   "page": "licensing",
+   "expand": "fill"
+  },
+  "CreatorOverview.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1250,
+   "title": "LI-05 Creator portal overview \u00b7 Filled",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "CreatorOverview-Empty.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 1250,
+   "title": "LI-05 Creator portal overview \u00b7 Empty",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "CreatorOverview-Loading.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 1150,
+   "title": "LI-05 Creator portal overview \u00b7 Loading",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "CreatorOverview-Unverified.dc.html": {
+   "x": 4560,
+   "y": 300,
+   "w": 1440,
+   "h": 1250,
+   "title": "LI-05 Creator portal overview \u00b7 Not verified yet",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "CreatorOverview-Mobile.dc.html": {
+   "x": 6080,
+   "y": 300,
+   "w": 390,
+   "h": 2375,
+   "title": "LI-05 Creator portal overview \u00b7 Filled \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "CreatorOverview-Empty-Mobile.dc.html": {
+   "x": 6550,
+   "y": 300,
+   "w": 390,
+   "h": 2375,
+   "title": "LI-05 Creator portal overview \u00b7 Empty \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "CreatorOverview-Loading-Mobile.dc.html": {
+   "x": 7020,
+   "y": 300,
+   "w": 390,
+   "h": 2185,
+   "title": "LI-05 Creator portal overview \u00b7 Loading \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "CreatorOverview-Unverified-Mobile.dc.html": {
+   "x": 7490,
+   "y": 300,
+   "w": 390,
+   "h": 2375,
+   "title": "LI-05 Creator portal overview \u00b7 Not verified yet \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Verification.dc.html": {
+   "x": 0,
+   "y": 3135,
+   "w": 1440,
+   "h": 950,
+   "title": "LI-06 Verification \u00b7 Filled",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Verification-Pending.dc.html": {
+   "x": 1520,
+   "y": 3135,
+   "w": 1440,
+   "h": 950,
+   "title": "LI-06 Verification \u00b7 Pending",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Verification-Failed.dc.html": {
+   "x": 3040,
+   "y": 3135,
+   "w": 1440,
+   "h": 950,
+   "title": "LI-06 Verification \u00b7 Failed",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Verification-Empty.dc.html": {
+   "x": 4560,
+   "y": 3135,
+   "w": 1440,
+   "h": 950,
+   "title": "LI-06 Verification \u00b7 Empty",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Verification-Mobile.dc.html": {
+   "x": 6080,
+   "y": 3135,
+   "w": 390,
+   "h": 1805,
+   "title": "LI-06 Verification \u00b7 Filled \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Verification-Pending-Mobile.dc.html": {
+   "x": 6550,
+   "y": 3135,
+   "w": 390,
+   "h": 1805,
+   "title": "LI-06 Verification \u00b7 Pending \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Verification-Failed-Mobile.dc.html": {
+   "x": 7020,
+   "y": 3135,
+   "w": 390,
+   "h": 1805,
+   "title": "LI-06 Verification \u00b7 Failed \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Verification-Empty-Mobile.dc.html": {
+   "x": 7490,
+   "y": 3135,
+   "w": 390,
+   "h": 1805,
+   "title": "LI-06 Verification \u00b7 Empty \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "LicenseTerms.dc.html": {
+   "x": 0,
+   "y": 5400,
+   "w": 1440,
+   "h": 1300,
+   "title": "LI-07 Licensing terms \u00b7 Filled",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "LicenseTerms-Unverified.dc.html": {
+   "x": 1520,
+   "y": 5400,
+   "w": 1440,
+   "h": 1300,
+   "title": "LI-07 Licensing terms \u00b7 Can\u2019t publish yet",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "LicenseTerms-Saved.dc.html": {
+   "x": 3040,
+   "y": 5400,
+   "w": 1440,
+   "h": 1300,
+   "title": "LI-07 Licensing terms \u00b7 Published",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "LicenseTerms-Mobile.dc.html": {
+   "x": 4560,
+   "y": 5400,
+   "w": 390,
+   "h": 2470,
+   "title": "LI-07 Licensing terms \u00b7 Filled \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "LicenseTerms-Unverified-Mobile.dc.html": {
+   "x": 5030,
+   "y": 5400,
+   "w": 390,
+   "h": 2470,
+   "title": "LI-07 Licensing terms \u00b7 Can\u2019t publish yet \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "LicenseTerms-Saved-Mobile.dc.html": {
+   "x": 5500,
+   "y": 5400,
+   "w": 390,
+   "h": 2470,
+   "title": "LI-07 Licensing terms \u00b7 Published \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Usage.dc.html": {
+   "x": 0,
+   "y": 8330,
+   "w": 1440,
+   "h": 1000,
+   "title": "LI-08 Usage audit \u00b7 Filled",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Usage-Empty.dc.html": {
+   "x": 1520,
+   "y": 8330,
+   "w": 1440,
+   "h": 1000,
+   "title": "LI-08 Usage audit \u00b7 Empty",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Usage-Loading.dc.html": {
+   "x": 3040,
+   "y": 8330,
+   "w": 1440,
+   "h": 1000,
+   "title": "LI-08 Usage audit \u00b7 Loading",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Usage-Mobile.dc.html": {
+   "x": 4560,
+   "y": 8330,
+   "w": 390,
+   "h": 1900,
+   "title": "LI-08 Usage audit \u00b7 Filled \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Usage-Empty-Mobile.dc.html": {
+   "x": 5030,
+   "y": 8330,
+   "w": 390,
+   "h": 1900,
+   "title": "LI-08 Usage audit \u00b7 Empty \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Usage-Loading-Mobile.dc.html": {
+   "x": 5500,
+   "y": 8330,
+   "w": 390,
+   "h": 1900,
+   "title": "LI-08 Usage audit \u00b7 Loading \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Revoke.dc.html": {
+   "x": 0,
+   "y": 10690,
+   "w": 1440,
+   "h": 1000,
+   "title": "LI-09 Revoke a license \u00b7 Filled",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Revoke-Done.dc.html": {
+   "x": 1520,
+   "y": 10690,
+   "w": 1440,
+   "h": 900,
+   "title": "LI-09 Revoke a license \u00b7 Revoked",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Revoke-Empty.dc.html": {
+   "x": 3040,
+   "y": 10690,
+   "w": 1440,
+   "h": 900,
+   "title": "LI-09 Revoke a license \u00b7 Empty",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Revoke-Mobile.dc.html": {
+   "x": 4560,
+   "y": 10690,
+   "w": 390,
+   "h": 844,
+   "title": "LI-09 Revoke a license \u00b7 Filled \u00b7 Mobile",
+   "page": "creator"
+  },
+  "Revoke-Done-Mobile.dc.html": {
+   "x": 5030,
+   "y": 10690,
+   "w": 390,
+   "h": 1710,
+   "title": "LI-09 Revoke a license \u00b7 Revoked \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Revoke-Empty-Mobile.dc.html": {
+   "x": 5500,
+   "y": 10690,
+   "w": 390,
+   "h": 1710,
+   "title": "LI-09 Revoke a license \u00b7 Empty \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Payouts.dc.html": {
+   "x": 0,
+   "y": 12860,
+   "w": 1440,
+   "h": 900,
+   "title": "LI-10 Payouts \u00b7 Filled",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Payouts-Mobile.dc.html": {
+   "x": 1520,
+   "y": 12860,
+   "w": 390,
+   "h": 1710,
+   "title": "LI-10 Payouts \u00b7 Filled \u00b7 Mobile",
+   "page": "creator",
+   "expand": "fill"
+  },
+  "Connections.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1250,
+   "title": "IN-01 Connections \u00b7 Filled",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Connections-Empty.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 1000,
+   "title": "IN-01 Connections \u00b7 Empty",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Connections-Loading.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 1150,
+   "title": "IN-01 Connections \u00b7 Loading",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Connections-Limit.dc.html": {
+   "x": 4560,
+   "y": 300,
+   "w": 1440,
+   "h": 1250,
+   "title": "IN-01 Connections \u00b7 Account limit",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Connections-Mobile.dc.html": {
+   "x": 6080,
+   "y": 300,
+   "w": 390,
+   "h": 2375,
+   "title": "IN-01 Connections \u00b7 Filled \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Connections-Empty-Mobile.dc.html": {
+   "x": 6550,
+   "y": 300,
+   "w": 390,
+   "h": 1900,
+   "title": "IN-01 Connections \u00b7 Empty \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Connections-Loading-Mobile.dc.html": {
+   "x": 7020,
+   "y": 300,
+   "w": 390,
+   "h": 2185,
+   "title": "IN-01 Connections \u00b7 Loading \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Connections-Limit-Mobile.dc.html": {
+   "x": 7490,
+   "y": 300,
+   "w": 390,
+   "h": 2375,
+   "title": "IN-01 Connections \u00b7 Account limit \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ConnectionDetail.dc.html": {
+   "x": 0,
+   "y": 3135,
+   "w": 1440,
+   "h": 1100,
+   "title": "IN-02 Connection detail \u00b7 Filled",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ConnectionDetail-Expiring.dc.html": {
+   "x": 1520,
+   "y": 3135,
+   "w": 1440,
+   "h": 1100,
+   "title": "IN-02 Connection detail \u00b7 Expiring",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ConnectionDetail-Disconnect.dc.html": {
+   "x": 3040,
+   "y": 3135,
+   "w": 1440,
+   "h": 1100,
+   "title": "IN-02 Connection detail \u00b7 Disconnect confirm",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ConnectionDetail-Mobile.dc.html": {
+   "x": 4560,
+   "y": 3135,
+   "w": 390,
+   "h": 2090,
+   "title": "IN-02 Connection detail \u00b7 Filled \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ConnectionDetail-Expiring-Mobile.dc.html": {
+   "x": 5030,
+   "y": 3135,
+   "w": 390,
+   "h": 2090,
+   "title": "IN-02 Connection detail \u00b7 Expiring \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ConnectionDetail-Disconnect-Mobile.dc.html": {
+   "x": 5500,
+   "y": 3135,
+   "w": 390,
+   "h": 844,
+   "title": "IN-02 Connection detail \u00b7 Disconnect confirm \u00b7 Mobile",
+   "page": "agency"
+  },
+  "AgencyHub.dc.html": {
+   "x": 0,
+   "y": 5685,
+   "w": 1440,
+   "h": 1300,
+   "title": "AG-01 Agency hub \u00b7 Filled",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AgencyHub-Empty.dc.html": {
+   "x": 1520,
+   "y": 5685,
+   "w": 1440,
+   "h": 1300,
+   "title": "AG-01 Agency hub \u00b7 Empty",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AgencyHub-Loading.dc.html": {
+   "x": 3040,
+   "y": 5685,
+   "w": 1440,
+   "h": 1300,
+   "title": "AG-01 Agency hub \u00b7 Loading",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AgencyHub-Overlimit.dc.html": {
+   "x": 4560,
+   "y": 5685,
+   "w": 1440,
+   "h": 1300,
+   "title": "AG-01 Agency hub \u00b7 Client over limit",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AgencyHub-Mobile.dc.html": {
+   "x": 6080,
+   "y": 5685,
+   "w": 390,
+   "h": 2470,
+   "title": "AG-01 Agency hub \u00b7 Filled \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AgencyHub-Empty-Mobile.dc.html": {
+   "x": 6550,
+   "y": 5685,
+   "w": 390,
+   "h": 2470,
+   "title": "AG-01 Agency hub \u00b7 Empty \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AgencyHub-Loading-Mobile.dc.html": {
+   "x": 7020,
+   "y": 5685,
+   "w": 390,
+   "h": 2470,
+   "title": "AG-01 Agency hub \u00b7 Loading \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AgencyHub-Overlimit-Mobile.dc.html": {
+   "x": 7490,
+   "y": 5685,
+   "w": 390,
+   "h": 2470,
+   "title": "AG-01 Agency hub \u00b7 Client over limit \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Clients.dc.html": {
+   "x": 0,
+   "y": 8615,
+   "w": 1440,
+   "h": 1000,
+   "title": "AG-02 Client workspaces \u00b7 Filled",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Clients-Empty.dc.html": {
+   "x": 1520,
+   "y": 8615,
+   "w": 1440,
+   "h": 1000,
+   "title": "AG-02 Client workspaces \u00b7 Empty",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Clients-Create.dc.html": {
+   "x": 3040,
+   "y": 8615,
+   "w": 1440,
+   "h": 1000,
+   "title": "AG-02 Client workspaces \u00b7 New client",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Clients-Limit.dc.html": {
+   "x": 4560,
+   "y": 8615,
+   "w": 1440,
+   "h": 1000,
+   "title": "AG-02 Client workspaces \u00b7 Workspace limit",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Clients-Mobile.dc.html": {
+   "x": 6080,
+   "y": 8615,
+   "w": 390,
+   "h": 1900,
+   "title": "AG-02 Client workspaces \u00b7 Filled \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Clients-Empty-Mobile.dc.html": {
+   "x": 6550,
+   "y": 8615,
+   "w": 390,
+   "h": 1900,
+   "title": "AG-02 Client workspaces \u00b7 Empty \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Clients-Create-Mobile.dc.html": {
+   "x": 7020,
+   "y": 8615,
+   "w": 390,
+   "h": 844,
+   "title": "AG-02 Client workspaces \u00b7 New client \u00b7 Mobile",
+   "page": "agency"
+  },
+  "Clients-Limit-Mobile.dc.html": {
+   "x": 7490,
+   "y": 8615,
+   "w": 390,
+   "h": 1900,
+   "title": "AG-02 Client workspaces \u00b7 Workspace limit \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientSettings.dc.html": {
+   "x": 0,
+   "y": 10975,
+   "w": 1440,
+   "h": 1100,
+   "title": "AG-03 Client workspace settings \u00b7 Filled",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientSettings-Saved.dc.html": {
+   "x": 1520,
+   "y": 10975,
+   "w": 1440,
+   "h": 1100,
+   "title": "AG-03 Client workspace settings \u00b7 Saved",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientSettings-Policy.dc.html": {
+   "x": 3040,
+   "y": 10975,
+   "w": 1440,
+   "h": 1100,
+   "title": "AG-03 Client workspace settings \u00b7 Policy change",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientSettings-Mobile.dc.html": {
+   "x": 4560,
+   "y": 10975,
+   "w": 390,
+   "h": 2090,
+   "title": "AG-03 Client workspace settings \u00b7 Filled \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientSettings-Saved-Mobile.dc.html": {
+   "x": 5030,
+   "y": 10975,
+   "w": 390,
+   "h": 2090,
+   "title": "AG-03 Client workspace settings \u00b7 Saved \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientSettings-Policy-Mobile.dc.html": {
+   "x": 5500,
+   "y": 10975,
+   "w": 390,
+   "h": 2090,
+   "title": "AG-03 Client workspace settings \u00b7 Policy change \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Team.dc.html": {
+   "x": 0,
+   "y": 13525,
+   "w": 1440,
+   "h": 1000,
+   "title": "AG-04 Team & invitations \u00b7 Filled",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Team-Invite.dc.html": {
+   "x": 1520,
+   "y": 13525,
+   "w": 1440,
+   "h": 1000,
+   "title": "AG-04 Team & invitations \u00b7 Invite",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Team-Seats.dc.html": {
+   "x": 3040,
+   "y": 13525,
+   "w": 1440,
+   "h": 1000,
+   "title": "AG-04 Team & invitations \u00b7 Seat limit",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Team-Loading.dc.html": {
+   "x": 4560,
+   "y": 13525,
+   "w": 1440,
+   "h": 950,
+   "title": "AG-04 Team & invitations \u00b7 Loading",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Team-Mobile.dc.html": {
+   "x": 6080,
+   "y": 13525,
+   "w": 390,
+   "h": 1900,
+   "title": "AG-04 Team & invitations \u00b7 Filled \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Team-Invite-Mobile.dc.html": {
+   "x": 6550,
+   "y": 13525,
+   "w": 390,
+   "h": 844,
+   "title": "AG-04 Team & invitations \u00b7 Invite \u00b7 Mobile",
+   "page": "agency"
+  },
+  "Team-Seats-Mobile.dc.html": {
+   "x": 7020,
+   "y": 13525,
+   "w": 390,
+   "h": 1900,
+   "title": "AG-04 Team & invitations \u00b7 Seat limit \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Team-Loading-Mobile.dc.html": {
+   "x": 7490,
+   "y": 13525,
+   "w": 390,
+   "h": 1805,
+   "title": "AG-04 Team & invitations \u00b7 Loading \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Roles.dc.html": {
+   "x": 0,
+   "y": 15885,
+   "w": 1440,
+   "h": 1000,
+   "title": "AG-05 Roles & permissions \u00b7 Filled",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Roles-Mobile.dc.html": {
+   "x": 1520,
+   "y": 15885,
+   "w": 390,
+   "h": 1900,
+   "title": "AG-05 Roles & permissions \u00b7 Filled \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AuditLog.dc.html": {
+   "x": 0,
+   "y": 18245,
+   "w": 1440,
+   "h": 1100,
+   "title": "AG-06 Audit log \u00b7 Filled",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AuditLog-Empty.dc.html": {
+   "x": 1520,
+   "y": 18245,
+   "w": 1440,
+   "h": 1100,
+   "title": "AG-06 Audit log \u00b7 Empty",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AuditLog-Loading.dc.html": {
+   "x": 3040,
+   "y": 18245,
+   "w": 1440,
+   "h": 1100,
+   "title": "AG-06 Audit log \u00b7 Loading",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AuditLog-Mobile.dc.html": {
+   "x": 4560,
+   "y": 18245,
+   "w": 390,
+   "h": 2090,
+   "title": "AG-06 Audit log \u00b7 Filled \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AuditLog-Empty-Mobile.dc.html": {
+   "x": 5030,
+   "y": 18245,
+   "w": 390,
+   "h": 2090,
+   "title": "AG-06 Audit log \u00b7 Empty \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "AuditLog-Loading-Mobile.dc.html": {
+   "x": 5500,
+   "y": 18245,
+   "w": 390,
+   "h": 2090,
+   "title": "AG-06 Audit log \u00b7 Loading \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientPortal.dc.html": {
+   "x": 0,
+   "y": 20795,
+   "w": 1440,
+   "h": 1000,
+   "title": "CP-01 Client portal home \u00b7 Filled",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientPortal-Empty.dc.html": {
+   "x": 1520,
+   "y": 20795,
+   "w": 1440,
+   "h": 1000,
+   "title": "CP-01 Client portal home \u00b7 Empty",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientPortal-Loading.dc.html": {
+   "x": 3040,
+   "y": 20795,
+   "w": 1440,
+   "h": 1000,
+   "title": "CP-01 Client portal home \u00b7 Loading",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientPortal-Approved.dc.html": {
+   "x": 4560,
+   "y": 20795,
+   "w": 1440,
+   "h": 1000,
+   "title": "CP-01 Client portal home \u00b7 Approved tab",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientPortal-Published.dc.html": {
+   "x": 6080,
+   "y": 20795,
+   "w": 1440,
+   "h": 1000,
+   "title": "CP-01 Client portal home \u00b7 Published tab",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientPortal-Mobile.dc.html": {
+   "x": 7600,
+   "y": 20795,
+   "w": 390,
+   "h": 1900,
+   "title": "CP-01 Client portal home \u00b7 Filled \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientPortal-Empty-Mobile.dc.html": {
+   "x": 8070,
+   "y": 20795,
+   "w": 390,
+   "h": 1900,
+   "title": "CP-01 Client portal home \u00b7 Empty \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientPortal-Loading-Mobile.dc.html": {
+   "x": 8540,
+   "y": 20795,
+   "w": 390,
+   "h": 1900,
+   "title": "CP-01 Client portal home \u00b7 Loading \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientPortal-Approved-Mobile.dc.html": {
+   "x": 9010,
+   "y": 20795,
+   "w": 390,
+   "h": 1900,
+   "title": "CP-01 Client portal home \u00b7 Approved tab \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientPortal-Published-Mobile.dc.html": {
+   "x": 9480,
+   "y": 20795,
+   "w": 390,
+   "h": 1900,
+   "title": "CP-01 Client portal home \u00b7 Published tab \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientApproval.dc.html": {
+   "x": 0,
+   "y": 23155,
+   "w": 1440,
+   "h": 1100,
+   "title": "CP-02 Client approval detail \u00b7 Filled",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientApproval-Decided.dc.html": {
+   "x": 1520,
+   "y": 23155,
+   "w": 1440,
+   "h": 1100,
+   "title": "CP-02 Client approval detail \u00b7 Approved",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientApproval-Newer.dc.html": {
+   "x": 3040,
+   "y": 23155,
+   "w": 1440,
+   "h": 1100,
+   "title": "CP-02 Client approval detail \u00b7 Newer revision",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientApproval-Loading.dc.html": {
+   "x": 4560,
+   "y": 23155,
+   "w": 1440,
+   "h": 1100,
+   "title": "CP-02 Client approval detail \u00b7 Loading",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientApproval-Mobile.dc.html": {
+   "x": 6080,
+   "y": 23155,
+   "w": 390,
+   "h": 2090,
+   "title": "CP-02 Client approval detail \u00b7 Filled \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientApproval-Decided-Mobile.dc.html": {
+   "x": 6550,
+   "y": 23155,
+   "w": 390,
+   "h": 2090,
+   "title": "CP-02 Client approval detail \u00b7 Approved \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientApproval-Newer-Mobile.dc.html": {
+   "x": 7020,
+   "y": 23155,
+   "w": 390,
+   "h": 2090,
+   "title": "CP-02 Client approval detail \u00b7 Newer revision \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "ClientApproval-Loading-Mobile.dc.html": {
+   "x": 7490,
+   "y": 23155,
+   "w": 390,
+   "h": 2090,
+   "title": "CP-02 Client approval detail \u00b7 Loading \u00b7 Mobile",
+   "page": "agency",
+   "expand": "fill"
+  },
+  "Billing.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1150,
+   "title": "BI-01 Plan & usage \u00b7 Filled",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Billing-Loading.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 1050,
+   "title": "BI-01 Plan & usage \u00b7 Loading",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Billing-Free.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 1050,
+   "title": "BI-01 Plan & usage \u00b7 Free plan",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Billing-Mobile.dc.html": {
+   "x": 4560,
+   "y": 300,
+   "w": 390,
+   "h": 2185,
+   "title": "BI-01 Plan & usage \u00b7 Filled \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Billing-Loading-Mobile.dc.html": {
+   "x": 5030,
+   "y": 300,
+   "w": 390,
+   "h": 1995,
+   "title": "BI-01 Plan & usage \u00b7 Loading \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Billing-Free-Mobile.dc.html": {
+   "x": 5500,
+   "y": 300,
+   "w": 390,
+   "h": 1995,
+   "title": "BI-01 Plan & usage \u00b7 Free plan \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Plans.dc.html": {
+   "x": 0,
+   "y": 2945,
+   "w": 1440,
+   "h": 1000,
+   "title": "BI-02 Plans & checkout \u00b7 Filled",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Plans-Checkout.dc.html": {
+   "x": 1520,
+   "y": 2945,
+   "w": 1440,
+   "h": 1000,
+   "title": "BI-02 Plans & checkout \u00b7 Checkout",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Plans-Processing.dc.html": {
+   "x": 3040,
+   "y": 2945,
+   "w": 1440,
+   "h": 1000,
+   "title": "BI-02 Plans & checkout \u00b7 Processing",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Plans-Success.dc.html": {
+   "x": 4560,
+   "y": 2945,
+   "w": 1440,
+   "h": 1000,
+   "title": "BI-02 Plans & checkout \u00b7 Success",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Plans-Declined.dc.html": {
+   "x": 6080,
+   "y": 2945,
+   "w": 1440,
+   "h": 1000,
+   "title": "BI-02 Plans & checkout \u00b7 Declined",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Plans-Mobile.dc.html": {
+   "x": 7600,
+   "y": 2945,
+   "w": 390,
+   "h": 1900,
+   "title": "BI-02 Plans & checkout \u00b7 Filled \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Plans-Checkout-Mobile.dc.html": {
+   "x": 8070,
+   "y": 2945,
+   "w": 390,
+   "h": 844,
+   "title": "BI-02 Plans & checkout \u00b7 Checkout \u00b7 Mobile",
+   "page": "billing"
+  },
+  "Plans-Processing-Mobile.dc.html": {
+   "x": 8540,
+   "y": 2945,
+   "w": 390,
+   "h": 844,
+   "title": "BI-02 Plans & checkout \u00b7 Processing \u00b7 Mobile",
+   "page": "billing"
+  },
+  "Plans-Success-Mobile.dc.html": {
+   "x": 9010,
+   "y": 2945,
+   "w": 390,
+   "h": 844,
+   "title": "BI-02 Plans & checkout \u00b7 Success \u00b7 Mobile",
+   "page": "billing"
+  },
+  "Plans-Declined-Mobile.dc.html": {
+   "x": 9480,
+   "y": 2945,
+   "w": 390,
+   "h": 844,
+   "title": "BI-02 Plans & checkout \u00b7 Declined \u00b7 Mobile",
+   "page": "billing"
+  },
+  "Ledger.dc.html": {
+   "x": 0,
+   "y": 5305,
+   "w": 1440,
+   "h": 950,
+   "title": "BI-03 Credit ledger \u00b7 Filled",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Ledger-Loading.dc.html": {
+   "x": 1520,
+   "y": 5305,
+   "w": 1440,
+   "h": 950,
+   "title": "BI-03 Credit ledger \u00b7 Loading",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Ledger-Mobile.dc.html": {
+   "x": 3040,
+   "y": 5305,
+   "w": 390,
+   "h": 1805,
+   "title": "BI-03 Credit ledger \u00b7 Filled \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Ledger-Loading-Mobile.dc.html": {
+   "x": 3510,
+   "y": 5305,
+   "w": 390,
+   "h": 1805,
+   "title": "BI-03 Credit ledger \u00b7 Loading \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "TopUp.dc.html": {
+   "x": 0,
+   "y": 7570,
+   "w": 1440,
+   "h": 1000,
+   "title": "BI-04 Top-ups \u00b7 Filled",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "TopUp-Locked.dc.html": {
+   "x": 1520,
+   "y": 7570,
+   "w": 1440,
+   "h": 1000,
+   "title": "BI-04 Top-ups \u00b7 Locked on Free",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "TopUp-Mobile.dc.html": {
+   "x": 3040,
+   "y": 7570,
+   "w": 390,
+   "h": 1900,
+   "title": "BI-04 Top-ups \u00b7 Filled \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "TopUp-Locked-Mobile.dc.html": {
+   "x": 3510,
+   "y": 7570,
+   "w": 390,
+   "h": 1900,
+   "title": "BI-04 Top-ups \u00b7 Locked on Free \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "SpendLimits.dc.html": {
+   "x": 0,
+   "y": 9930,
+   "w": 1440,
+   "h": 1100,
+   "title": "BI-05 Spend limits \u00b7 Filled",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "SpendLimits-Reached.dc.html": {
+   "x": 1520,
+   "y": 9930,
+   "w": 1440,
+   "h": 1100,
+   "title": "BI-05 Spend limits \u00b7 Limit reached",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "SpendLimits-Request.dc.html": {
+   "x": 3040,
+   "y": 9930,
+   "w": 1440,
+   "h": 1100,
+   "title": "BI-05 Spend limits \u00b7 Manager request",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "SpendLimits-Mobile.dc.html": {
+   "x": 4560,
+   "y": 9930,
+   "w": 390,
+   "h": 2090,
+   "title": "BI-05 Spend limits \u00b7 Filled \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "SpendLimits-Reached-Mobile.dc.html": {
+   "x": 5030,
+   "y": 9930,
+   "w": 390,
+   "h": 2090,
+   "title": "BI-05 Spend limits \u00b7 Limit reached \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "SpendLimits-Request-Mobile.dc.html": {
+   "x": 5500,
+   "y": 9930,
+   "w": 390,
+   "h": 2090,
+   "title": "BI-05 Spend limits \u00b7 Manager request \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Invoices.dc.html": {
+   "x": 0,
+   "y": 12480,
+   "w": 1440,
+   "h": 900,
+   "title": "BI-06 Invoices \u00b7 Filled",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Invoices-Empty.dc.html": {
+   "x": 1520,
+   "y": 12480,
+   "w": 1440,
+   "h": 900,
+   "title": "BI-06 Invoices \u00b7 Empty",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Invoices-Loading.dc.html": {
+   "x": 3040,
+   "y": 12480,
+   "w": 1440,
+   "h": 900,
+   "title": "BI-06 Invoices \u00b7 Loading",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Invoices-Mobile.dc.html": {
+   "x": 4560,
+   "y": 12480,
+   "w": 390,
+   "h": 1710,
+   "title": "BI-06 Invoices \u00b7 Filled \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Invoices-Empty-Mobile.dc.html": {
+   "x": 5030,
+   "y": 12480,
+   "w": 390,
+   "h": 1710,
+   "title": "BI-06 Invoices \u00b7 Empty \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Invoices-Loading-Mobile.dc.html": {
+   "x": 5500,
+   "y": 12480,
+   "w": 390,
+   "h": 1710,
+   "title": "BI-06 Invoices \u00b7 Loading \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "PaymentFailed.dc.html": {
+   "x": 0,
+   "y": 14650,
+   "w": 1440,
+   "h": 1000,
+   "title": "BI-07 Payment failure \u00b7 Filled",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "PaymentFailed-Recovered.dc.html": {
+   "x": 1520,
+   "y": 14650,
+   "w": 1440,
+   "h": 1000,
+   "title": "BI-07 Payment failure \u00b7 Recovered",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "PaymentFailed-Downgraded.dc.html": {
+   "x": 3040,
+   "y": 14650,
+   "w": 1440,
+   "h": 1000,
+   "title": "BI-07 Payment failure \u00b7 Downgraded",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "PaymentFailed-Mobile.dc.html": {
+   "x": 4560,
+   "y": 14650,
+   "w": 390,
+   "h": 1900,
+   "title": "BI-07 Payment failure \u00b7 Filled \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "PaymentFailed-Recovered-Mobile.dc.html": {
+   "x": 5030,
+   "y": 14650,
+   "w": 390,
+   "h": 1900,
+   "title": "BI-07 Payment failure \u00b7 Recovered \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "PaymentFailed-Downgraded-Mobile.dc.html": {
+   "x": 5500,
+   "y": 14650,
+   "w": 390,
+   "h": 1900,
+   "title": "BI-07 Payment failure \u00b7 Downgraded \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Trial.dc.html": {
+   "x": 0,
+   "y": 17010,
+   "w": 1440,
+   "h": 1250,
+   "title": "BI-08 Trial status \u00b7 Filled",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Trial-Limit.dc.html": {
+   "x": 1520,
+   "y": 17010,
+   "w": 1440,
+   "h": 1250,
+   "title": "BI-08 Trial status \u00b7 Limit reached",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Trial-Ending.dc.html": {
+   "x": 3040,
+   "y": 17010,
+   "w": 1440,
+   "h": 1250,
+   "title": "BI-08 Trial status \u00b7 Ends tomorrow",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Trial-Ended.dc.html": {
+   "x": 4560,
+   "y": 17010,
+   "w": 1440,
+   "h": 1250,
+   "title": "BI-08 Trial status \u00b7 Ended",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Trial-Mobile.dc.html": {
+   "x": 6080,
+   "y": 17010,
+   "w": 390,
+   "h": 2375,
+   "title": "BI-08 Trial status \u00b7 Filled \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Trial-Limit-Mobile.dc.html": {
+   "x": 6550,
+   "y": 17010,
+   "w": 390,
+   "h": 2375,
+   "title": "BI-08 Trial status \u00b7 Limit reached \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Trial-Ending-Mobile.dc.html": {
+   "x": 7020,
+   "y": 17010,
+   "w": 390,
+   "h": 2375,
+   "title": "BI-08 Trial status \u00b7 Ends tomorrow \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Trial-Ended-Mobile.dc.html": {
+   "x": 7490,
+   "y": 17010,
+   "w": 390,
+   "h": 2375,
+   "title": "BI-08 Trial status \u00b7 Ended \u00b7 Mobile",
+   "page": "billing",
+   "expand": "fill"
+  },
+  "Profile.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-01 Profile \u00b7 Filled",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Profile-Saved.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-01 Profile \u00b7 Saved",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Profile-Emailchange.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-01 Profile \u00b7 Email change pending",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Profile-Loading.dc.html": {
+   "x": 4560,
+   "y": 300,
+   "w": 1440,
+   "h": 900,
+   "title": "ST-01 Profile \u00b7 Loading",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Profile-Mobile.dc.html": {
+   "x": 6080,
+   "y": 300,
+   "w": 390,
+   "h": 1805,
+   "title": "ST-01 Profile \u00b7 Filled \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Profile-Saved-Mobile.dc.html": {
+   "x": 6550,
+   "y": 300,
+   "w": 390,
+   "h": 1805,
+   "title": "ST-01 Profile \u00b7 Saved \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Profile-Emailchange-Mobile.dc.html": {
+   "x": 7020,
+   "y": 300,
+   "w": 390,
+   "h": 1805,
+   "title": "ST-01 Profile \u00b7 Email change pending \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Profile-Loading-Mobile.dc.html": {
+   "x": 7490,
+   "y": 300,
+   "w": 390,
+   "h": 1710,
+   "title": "ST-01 Profile \u00b7 Loading \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Security.dc.html": {
+   "x": 0,
+   "y": 2565,
+   "w": 1440,
+   "h": 1000,
+   "title": "ST-02 Security \u00b7 Filled",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Security-Deleteblocked.dc.html": {
+   "x": 1520,
+   "y": 2565,
+   "w": 1440,
+   "h": 1000,
+   "title": "ST-02 Security \u00b7 Delete blocked",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Security-Sessions.dc.html": {
+   "x": 3040,
+   "y": 2565,
+   "w": 1440,
+   "h": 1000,
+   "title": "ST-02 Security \u00b7 Sessions",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Security-Mobile.dc.html": {
+   "x": 4560,
+   "y": 2565,
+   "w": 390,
+   "h": 1900,
+   "title": "ST-02 Security \u00b7 Filled \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Security-Deleteblocked-Mobile.dc.html": {
+   "x": 5030,
+   "y": 2565,
+   "w": 390,
+   "h": 1900,
+   "title": "ST-02 Security \u00b7 Delete blocked \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Security-Sessions-Mobile.dc.html": {
+   "x": 5500,
+   "y": 2565,
+   "w": 390,
+   "h": 1900,
+   "title": "ST-02 Security \u00b7 Sessions \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Appearance.dc.html": {
+   "x": 0,
+   "y": 4925,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-03 Appearance \u00b7 Filled",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Appearance-Dark.dc.html": {
+   "x": 1520,
+   "y": 4925,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-03 Appearance \u00b7 Dark selected",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Appearance-Mobile.dc.html": {
+   "x": 3040,
+   "y": 4925,
+   "w": 390,
+   "h": 1805,
+   "title": "ST-03 Appearance \u00b7 Filled \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Appearance-Dark-Mobile.dc.html": {
+   "x": 3510,
+   "y": 4925,
+   "w": 390,
+   "h": 1805,
+   "title": "ST-03 Appearance \u00b7 Dark selected \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "NotificationPrefs.dc.html": {
+   "x": 0,
+   "y": 7190,
+   "w": 1440,
+   "h": 1100,
+   "title": "ST-04 Notification preferences \u00b7 Filled",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "NotificationPrefs-Pushdenied.dc.html": {
+   "x": 1520,
+   "y": 7190,
+   "w": 1440,
+   "h": 1100,
+   "title": "ST-04 Notification preferences \u00b7 Push blocked",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "NotificationPrefs-Unsupported.dc.html": {
+   "x": 3040,
+   "y": 7190,
+   "w": 1440,
+   "h": 1100,
+   "title": "ST-04 Notification preferences \u00b7 Push unsupported",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "NotificationPrefs-Mobile.dc.html": {
+   "x": 4560,
+   "y": 7190,
+   "w": 390,
+   "h": 2090,
+   "title": "ST-04 Notification preferences \u00b7 Filled \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "NotificationPrefs-Pushdenied-Mobile.dc.html": {
+   "x": 5030,
+   "y": 7190,
+   "w": 390,
+   "h": 2090,
+   "title": "ST-04 Notification preferences \u00b7 Push blocked \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "NotificationPrefs-Unsupported-Mobile.dc.html": {
+   "x": 5500,
+   "y": 7190,
+   "w": 390,
+   "h": 2090,
+   "title": "ST-04 Notification preferences \u00b7 Push unsupported \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Members.dc.html": {
+   "x": 0,
+   "y": 9740,
+   "w": 1440,
+   "h": 850,
+   "title": "ST-05 Workspace members \u00b7 Filled",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Members-Empty.dc.html": {
+   "x": 1520,
+   "y": 9740,
+   "w": 1440,
+   "h": 900,
+   "title": "ST-05 Workspace members \u00b7 Empty",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Members-Mobile.dc.html": {
+   "x": 3040,
+   "y": 9740,
+   "w": 390,
+   "h": 1615,
+   "title": "ST-05 Workspace members \u00b7 Filled \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Members-Empty-Mobile.dc.html": {
+   "x": 3510,
+   "y": 9740,
+   "w": 390,
+   "h": 1710,
+   "title": "ST-05 Workspace members \u00b7 Empty \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "BrandKits.dc.html": {
+   "x": 0,
+   "y": 11910,
+   "w": 1440,
+   "h": 1100,
+   "title": "ST-06 Brand kits \u00b7 Filled",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "BrandKits-Empty.dc.html": {
+   "x": 1520,
+   "y": 11910,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-06 Brand kits \u00b7 Empty",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "BrandKits-Editing.dc.html": {
+   "x": 3040,
+   "y": 11910,
+   "w": 1440,
+   "h": 1100,
+   "title": "ST-06 Brand kits \u00b7 Editing",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "BrandKits-Mobile.dc.html": {
+   "x": 4560,
+   "y": 11910,
+   "w": 390,
+   "h": 2090,
+   "title": "ST-06 Brand kits \u00b7 Filled \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "BrandKits-Empty-Mobile.dc.html": {
+   "x": 5030,
+   "y": 11910,
+   "w": 390,
+   "h": 1805,
+   "title": "ST-06 Brand kits \u00b7 Empty \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "BrandKits-Editing-Mobile.dc.html": {
+   "x": 5500,
+   "y": 11910,
+   "w": 390,
+   "h": 2090,
+   "title": "ST-06 Brand kits \u00b7 Editing \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "AISettings.dc.html": {
+   "x": 0,
+   "y": 14460,
+   "w": 1440,
+   "h": 1000,
+   "title": "ST-07 AI & processing \u00b7 Filled",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "AISettings-Mobile.dc.html": {
+   "x": 1520,
+   "y": 14460,
+   "w": 390,
+   "h": 1900,
+   "title": "ST-07 AI & processing \u00b7 Filled \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "IntegrationStatus.dc.html": {
+   "x": 0,
+   "y": 16820,
+   "w": 1440,
+   "h": 900,
+   "title": "ST-08 Integration status \u00b7 Filled",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "IntegrationStatus-Mobile.dc.html": {
+   "x": 1520,
+   "y": 16820,
+   "w": 390,
+   "h": 1710,
+   "title": "ST-08 Integration status \u00b7 Filled \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Privacy.dc.html": {
+   "x": 0,
+   "y": 18990,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-09 Privacy & data \u00b7 Filled",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Privacy-Exportready.dc.html": {
+   "x": 1520,
+   "y": 18990,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-09 Privacy & data \u00b7 Export ready",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Privacy-Deleting.dc.html": {
+   "x": 3040,
+   "y": 18990,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-09 Privacy & data \u00b7 Deletion requested",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Privacy-Mobile.dc.html": {
+   "x": 4560,
+   "y": 18990,
+   "w": 390,
+   "h": 1805,
+   "title": "ST-09 Privacy & data \u00b7 Filled \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Privacy-Exportready-Mobile.dc.html": {
+   "x": 5030,
+   "y": 18990,
+   "w": 390,
+   "h": 1805,
+   "title": "ST-09 Privacy & data \u00b7 Export ready \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "Privacy-Deleting-Mobile.dc.html": {
+   "x": 5500,
+   "y": 18990,
+   "w": 390,
+   "h": 1805,
+   "title": "ST-09 Privacy & data \u00b7 Deletion requested \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "WorkspaceSettings.dc.html": {
+   "x": 0,
+   "y": 21255,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-10 Workspace settings \u00b7 Filled",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "WorkspaceSettings-Paused.dc.html": {
+   "x": 1520,
+   "y": 21255,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-10 Workspace settings \u00b7 Workspace paused",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "WorkspaceSettings-Resumed.dc.html": {
+   "x": 3040,
+   "y": 21255,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-10 Workspace settings \u00b7 Resumed",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "WorkspaceSettings-Mobile.dc.html": {
+   "x": 4560,
+   "y": 21255,
+   "w": 390,
+   "h": 1805,
+   "title": "ST-10 Workspace settings \u00b7 Filled \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "WorkspaceSettings-Paused-Mobile.dc.html": {
+   "x": 5030,
+   "y": 21255,
+   "w": 390,
+   "h": 1805,
+   "title": "ST-10 Workspace settings \u00b7 Workspace paused \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "WorkspaceSettings-Resumed-Mobile.dc.html": {
+   "x": 5500,
+   "y": 21255,
+   "w": 390,
+   "h": 1805,
+   "title": "ST-10 Workspace settings \u00b7 Resumed \u00b7 Mobile",
+   "page": "settings",
+   "expand": "fill"
+  },
+  "AdminOps.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 1100,
+   "title": "AD-01 Ops overview \u00b7 Filled",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminOps-Loading.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 1000,
+   "title": "AD-01 Ops overview \u00b7 Loading",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminOps-Healthy.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 1100,
+   "title": "AD-01 Ops overview \u00b7 All healthy",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminOps-Paused.dc.html": {
+   "x": 4560,
+   "y": 300,
+   "w": 1440,
+   "h": 1100,
+   "title": "AD-01 Ops overview \u00b7 Global pause",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminOps-Mobile.dc.html": {
+   "x": 6080,
+   "y": 300,
+   "w": 390,
+   "h": 2090,
+   "title": "AD-01 Ops overview \u00b7 Filled \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminOps-Loading-Mobile.dc.html": {
+   "x": 6550,
+   "y": 300,
+   "w": 390,
+   "h": 1900,
+   "title": "AD-01 Ops overview \u00b7 Loading \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminOps-Healthy-Mobile.dc.html": {
+   "x": 7020,
+   "y": 300,
+   "w": 390,
+   "h": 2090,
+   "title": "AD-01 Ops overview \u00b7 All healthy \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminOps-Paused-Mobile.dc.html": {
+   "x": 7490,
+   "y": 300,
+   "w": 390,
+   "h": 2090,
+   "title": "AD-01 Ops overview \u00b7 Global pause \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminJobs.dc.html": {
+   "x": 0,
+   "y": 2850,
+   "w": 1440,
+   "h": 1000,
+   "title": "AD-02 Jobs & dead-letter \u00b7 Filled",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminJobs-Empty.dc.html": {
+   "x": 1520,
+   "y": 2850,
+   "w": 1440,
+   "h": 900,
+   "title": "AD-02 Jobs & dead-letter \u00b7 Empty",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminJobs-Loading.dc.html": {
+   "x": 3040,
+   "y": 2850,
+   "w": 1440,
+   "h": 1000,
+   "title": "AD-02 Jobs & dead-letter \u00b7 Loading",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminJobs-Mobile.dc.html": {
+   "x": 4560,
+   "y": 2850,
+   "w": 390,
+   "h": 1900,
+   "title": "AD-02 Jobs & dead-letter \u00b7 Filled \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminJobs-Empty-Mobile.dc.html": {
+   "x": 5030,
+   "y": 2850,
+   "w": 390,
+   "h": 1710,
+   "title": "AD-02 Jobs & dead-letter \u00b7 Empty \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminJobs-Loading-Mobile.dc.html": {
+   "x": 5500,
+   "y": 2850,
+   "w": 390,
+   "h": 1900,
+   "title": "AD-02 Jobs & dead-letter \u00b7 Loading \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminAudit.dc.html": {
+   "x": 0,
+   "y": 5210,
+   "w": 1440,
+   "h": 950,
+   "title": "AD-03 Audit search \u00b7 Filled",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminAudit-Empty.dc.html": {
+   "x": 1520,
+   "y": 5210,
+   "w": 1440,
+   "h": 950,
+   "title": "AD-03 Audit search \u00b7 Empty",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminAudit-Mobile.dc.html": {
+   "x": 3040,
+   "y": 5210,
+   "w": 390,
+   "h": 1805,
+   "title": "AD-03 Audit search \u00b7 Filled \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminAudit-Empty-Mobile.dc.html": {
+   "x": 3510,
+   "y": 5210,
+   "w": 390,
+   "h": 1805,
+   "title": "AD-03 Audit search \u00b7 Empty \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminLicenses.dc.html": {
+   "x": 0,
+   "y": 7475,
+   "w": 1440,
+   "h": 950,
+   "title": "AD-04 License review \u00b7 Filled",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminLicenses-Empty.dc.html": {
+   "x": 1520,
+   "y": 7475,
+   "w": 1440,
+   "h": 950,
+   "title": "AD-04 License review \u00b7 Empty",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminLicenses-Mobile.dc.html": {
+   "x": 3040,
+   "y": 7475,
+   "w": 390,
+   "h": 1805,
+   "title": "AD-04 License review \u00b7 Filled \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminLicenses-Empty-Mobile.dc.html": {
+   "x": 3510,
+   "y": 7475,
+   "w": 390,
+   "h": 1805,
+   "title": "AD-04 License review \u00b7 Empty \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminSupport.dc.html": {
+   "x": 0,
+   "y": 9740,
+   "w": 1440,
+   "h": 1000,
+   "title": "AD-05 Support access \u00b7 Filled",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminSupport-Request.dc.html": {
+   "x": 1520,
+   "y": 9740,
+   "w": 1440,
+   "h": 1000,
+   "title": "AD-05 Support access \u00b7 Request access",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminSupport-Active.dc.html": {
+   "x": 3040,
+   "y": 9740,
+   "w": 1440,
+   "h": 1000,
+   "title": "AD-05 Support access \u00b7 Active session",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminSupport-Mobile.dc.html": {
+   "x": 4560,
+   "y": 9740,
+   "w": 390,
+   "h": 1900,
+   "title": "AD-05 Support access \u00b7 Filled \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminSupport-Request-Mobile.dc.html": {
+   "x": 5030,
+   "y": 9740,
+   "w": 390,
+   "h": 844,
+   "title": "AD-05 Support access \u00b7 Request access \u00b7 Mobile",
+   "page": "admin"
+  },
+  "AdminSupport-Active-Mobile.dc.html": {
+   "x": 5500,
+   "y": 9740,
+   "w": 390,
+   "h": 1900,
+   "title": "AD-05 Support access \u00b7 Active session \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminAbuse.dc.html": {
+   "x": 0,
+   "y": 12100,
+   "w": 1440,
+   "h": 900,
+   "title": "AD-06 Abuse & moderation \u00b7 Filled",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminAbuse-Empty.dc.html": {
+   "x": 1520,
+   "y": 12100,
+   "w": 1440,
+   "h": 900,
+   "title": "AD-06 Abuse & moderation \u00b7 Empty",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminAbuse-Mobile.dc.html": {
+   "x": 3040,
+   "y": 12100,
+   "w": 390,
+   "h": 1710,
+   "title": "AD-06 Abuse & moderation \u00b7 Filled \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminAbuse-Empty-Mobile.dc.html": {
+   "x": 3510,
+   "y": 12100,
+   "w": 390,
+   "h": 1710,
+   "title": "AD-06 Abuse & moderation \u00b7 Empty \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminDiagnostics.dc.html": {
+   "x": 0,
+   "y": 14270,
+   "w": 1440,
+   "h": 900,
+   "title": "AD-07 Diagnostics \u00b7 Filled",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminDiagnostics-Mobile.dc.html": {
+   "x": 1520,
+   "y": 14270,
+   "w": 390,
+   "h": 1710,
+   "title": "AD-07 Diagnostics \u00b7 Filled \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminFlags.dc.html": {
+   "x": 0,
+   "y": 16440,
+   "w": 1440,
+   "h": 950,
+   "title": "AD-08 Feature flags \u00b7 Filled",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminFlags-Mobile.dc.html": {
+   "x": 1520,
+   "y": 16440,
+   "w": 390,
+   "h": 1805,
+   "title": "AD-08 Feature flags \u00b7 Filled \u00b7 Mobile",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminPauseConfirm.dc.html": {
+   "x": 0,
+   "y": 18705,
+   "w": 1440,
+   "h": 950,
+   "title": "AD-09 Global pause confirm \u00b7 Filled",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminPauseConfirm-Mobile.dc.html": {
+   "x": 1520,
+   "y": 18705,
+   "w": 390,
+   "h": 844,
+   "title": "AD-09 Global pause confirm \u00b7 Filled \u00b7 Mobile",
+   "page": "admin"
+  },
+  "PWAInstall.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 1440,
+   "h": 850,
+   "title": "SY-01 Install prompt (PWA) \u00b7 Filled",
+   "page": "system",
+   "expand": "fill"
+  },
+  "PWAInstall-Ios.dc.html": {
+   "x": 1520,
+   "y": 300,
+   "w": 1440,
+   "h": 850,
+   "title": "SY-01 Install prompt (PWA) \u00b7 iPhone instructions",
+   "page": "system",
+   "expand": "fill"
+  },
+  "PWAInstall-Installed.dc.html": {
+   "x": 3040,
+   "y": 300,
+   "w": 1440,
+   "h": 850,
+   "title": "SY-01 Install prompt (PWA) \u00b7 Installed",
+   "page": "system",
+   "expand": "fill"
+  },
+  "PWAInstall-Mobile.dc.html": {
+   "x": 4560,
+   "y": 300,
+   "w": 390,
+   "h": 1615,
+   "title": "SY-01 Install prompt (PWA) \u00b7 Filled \u00b7 Mobile",
+   "page": "system",
+   "expand": "fill"
+  },
+  "PWAInstall-Ios-Mobile.dc.html": {
+   "x": 5030,
+   "y": 300,
+   "w": 390,
+   "h": 1615,
+   "title": "SY-01 Install prompt (PWA) \u00b7 iPhone instructions \u00b7 Mobile",
+   "page": "system",
+   "expand": "fill"
+  },
+  "PWAInstall-Installed-Mobile.dc.html": {
+   "x": 5500,
+   "y": 300,
+   "w": 390,
+   "h": 1615,
+   "title": "SY-01 Install prompt (PWA) \u00b7 Installed \u00b7 Mobile",
+   "page": "system",
+   "expand": "fill"
+  },
+  "Offline.dc.html": {
+   "x": 0,
+   "y": 2375,
+   "w": 1440,
+   "h": 950,
+   "title": "SY-02 Offline \u00b7 Filled",
+   "page": "system",
+   "expand": "fill"
+  },
+  "Offline-Reconnecting.dc.html": {
+   "x": 1520,
+   "y": 2375,
+   "w": 1440,
+   "h": 950,
+   "title": "SY-02 Offline \u00b7 Reconnecting",
+   "page": "system",
+   "expand": "fill"
+  },
+  "Offline-Synced.dc.html": {
+   "x": 3040,
+   "y": 2375,
+   "w": 1440,
+   "h": 950,
+   "title": "SY-02 Offline \u00b7 Back online",
+   "page": "system",
+   "expand": "fill"
+  },
+  "Offline-Mobile.dc.html": {
+   "x": 4560,
+   "y": 2375,
+   "w": 390,
+   "h": 1805,
+   "title": "SY-02 Offline \u00b7 Filled \u00b7 Mobile",
+   "page": "system",
+   "expand": "fill"
+  },
+  "Offline-Reconnecting-Mobile.dc.html": {
+   "x": 5030,
+   "y": 2375,
+   "w": 390,
+   "h": 1805,
+   "title": "SY-02 Offline \u00b7 Reconnecting \u00b7 Mobile",
+   "page": "system",
+   "expand": "fill"
+  },
+  "Offline-Synced-Mobile.dc.html": {
+   "x": 5500,
+   "y": 2375,
+   "w": 390,
+   "h": 1805,
+   "title": "SY-02 Offline \u00b7 Back online \u00b7 Mobile",
+   "page": "system",
+   "expand": "fill"
+  },
+  "NotFound.dc.html": {
+   "x": 0,
+   "y": 4640,
+   "w": 1440,
+   "h": 900,
+   "title": "SY-03 Not found \u00b7 Filled",
+   "page": "system",
+   "expand": "fill"
+  },
+  "NotFound-Mobile.dc.html": {
+   "x": 1520,
+   "y": 4640,
+   "w": 390,
+   "h": 1710,
+   "title": "SY-03 Not found \u00b7 Filled \u00b7 Mobile",
+   "page": "system",
+   "expand": "fill"
+  },
+  "Denied.dc.html": {
+   "x": 0,
+   "y": 6810,
+   "w": 1440,
+   "h": 900,
+   "title": "SY-04 Access denied \u00b7 Filled",
+   "page": "system",
+   "expand": "fill"
+  },
+  "Denied-Mobile.dc.html": {
+   "x": 1520,
+   "y": 6810,
+   "w": 390,
+   "h": 1710,
+   "title": "SY-04 Access denied \u00b7 Filled \u00b7 Mobile",
+   "page": "system",
+   "expand": "fill"
+  },
+  "ServerError.dc.html": {
+   "x": 0,
+   "y": 8980,
+   "w": 1440,
+   "h": 900,
+   "title": "SY-05 Server error \u00b7 Filled",
+   "page": "system",
+   "expand": "fill"
+  },
+  "ServerError-Mobile.dc.html": {
+   "x": 1520,
+   "y": 8980,
+   "w": 390,
+   "h": 1710,
+   "title": "SY-05 Server error \u00b7 Filled \u00b7 Mobile",
+   "page": "system",
+   "expand": "fill"
+  },
+  "Maintenance.dc.html": {
+   "x": 0,
+   "y": 11150,
+   "w": 1440,
+   "h": 900,
+   "title": "SY-06 Maintenance \u00b7 Filled",
+   "page": "system",
+   "expand": "fill"
+  },
+  "Maintenance-Mobile.dc.html": {
+   "x": 1520,
+   "y": 11150,
+   "w": 390,
+   "h": 1710,
+   "title": "SY-06 Maintenance \u00b7 Filled \u00b7 Mobile",
+   "page": "system",
+   "expand": "fill"
+  },
+  "CommandPalette.dc.html": {
+   "x": 0,
+   "y": 13320,
+   "w": 1440,
+   "h": 950,
+   "title": "SY-07 Command palette \u00b7 Filled",
+   "page": "system",
+   "expand": "fill"
+  },
+  "CommandPalette-Results.dc.html": {
+   "x": 1520,
+   "y": 13320,
+   "w": 1440,
+   "h": 950,
+   "title": "SY-07 Command palette \u00b7 Results",
+   "page": "system",
+   "expand": "fill"
+  },
+  "CommandPalette-Empty.dc.html": {
+   "x": 3040,
+   "y": 13320,
+   "w": 1440,
+   "h": 950,
+   "title": "SY-07 Command palette \u00b7 No results",
+   "page": "system",
+   "expand": "fill"
+  },
+  "CommandPalette-Mobile.dc.html": {
+   "x": 4560,
+   "y": 13320,
+   "w": 390,
+   "h": 844,
+   "title": "SY-07 Command palette \u00b7 Filled \u00b7 Mobile",
+   "page": "system"
+  },
+  "CommandPalette-Results-Mobile.dc.html": {
+   "x": 5030,
+   "y": 13320,
+   "w": 390,
+   "h": 844,
+   "title": "SY-07 Command palette \u00b7 Results \u00b7 Mobile",
+   "page": "system"
+  },
+  "CommandPalette-Empty-Mobile.dc.html": {
+   "x": 5500,
+   "y": 13320,
+   "w": 390,
+   "h": 844,
+   "title": "SY-07 Command palette \u00b7 No results \u00b7 Mobile",
+   "page": "system"
+  },
+  "AccountMenu.dc.html": {
+   "x": 0,
+   "y": 14730,
+   "w": 1440,
+   "h": 850,
+   "title": "SY-08 Account menu \u00b7 Filled",
+   "page": "system",
+   "expand": "fill"
+  },
+  "AccountMenu-Mobile.dc.html": {
+   "x": 1520,
+   "y": 14730,
+   "w": 390,
+   "h": 1615,
+   "title": "SY-08 Account menu \u00b7 Filled \u00b7 Mobile",
+   "page": "system",
+   "expand": "fill"
+  },
+  "PauseConfirm.dc.html": {
+   "x": 0,
+   "y": 16805,
+   "w": 1440,
+   "h": 950,
+   "title": "SY-09 Pause all confirm \u00b7 Filled",
+   "page": "system",
+   "expand": "fill"
+  },
+  "PauseConfirm-Resume.dc.html": {
+   "x": 1520,
+   "y": 16805,
+   "w": 1440,
+   "h": 950,
+   "title": "SY-09 Pause all confirm \u00b7 Resume",
+   "page": "system",
+   "expand": "fill"
+  },
+  "PauseConfirm-Mobile.dc.html": {
+   "x": 3040,
+   "y": 16805,
+   "w": 390,
+   "h": 844,
+   "title": "SY-09 Pause all confirm \u00b7 Filled \u00b7 Mobile",
+   "page": "system"
+  },
+  "PauseConfirm-Resume-Mobile.dc.html": {
+   "x": 3510,
+   "y": 16805,
+   "w": 390,
+   "h": 844,
+   "title": "SY-09 Pause all confirm \u00b7 Resume \u00b7 Mobile",
+   "page": "system"
+  },
+  "MobileHome.dc.html": {
+   "x": 0,
+   "y": 300,
+   "w": 390,
+   "h": 844,
+   "title": "MB-01 Mobile \u00b7 Home \u00b7 Filled",
+   "page": "mobile"
+  },
+  "MobileHome-Empty.dc.html": {
+   "x": 470,
+   "y": 300,
+   "w": 390,
+   "h": 844,
+   "title": "MB-01 Mobile \u00b7 Home \u00b7 Empty",
+   "page": "mobile"
+  },
+  "MobileHome-Loading.dc.html": {
+   "x": 940,
+   "y": 300,
+   "w": 390,
+   "h": 844,
+   "title": "MB-01 Mobile \u00b7 Home \u00b7 Loading",
+   "page": "mobile"
+  },
+  "MobileActivity.dc.html": {
+   "x": 0,
+   "y": 1604,
+   "w": 390,
+   "h": 844,
+   "title": "MB-02 Mobile \u00b7 Activity \u00b7 Filled",
+   "page": "mobile"
+  },
+  "MobileActivity-Empty.dc.html": {
+   "x": 470,
+   "y": 1604,
+   "w": 390,
+   "h": 844,
+   "title": "MB-02 Mobile \u00b7 Activity \u00b7 Empty",
+   "page": "mobile"
+  },
+  "MobileActivity-Loading.dc.html": {
+   "x": 940,
+   "y": 1604,
+   "w": 390,
+   "h": 844,
+   "title": "MB-02 Mobile \u00b7 Activity \u00b7 Loading",
+   "page": "mobile"
+  },
+  "MobileApprovals.dc.html": {
+   "x": 0,
+   "y": 2908,
+   "w": 390,
+   "h": 844,
+   "title": "MB-03 Mobile \u00b7 Approvals \u00b7 Filled",
+   "page": "mobile"
+  },
+  "MobileApprovals-Empty.dc.html": {
+   "x": 470,
+   "y": 2908,
+   "w": 390,
+   "h": 844,
+   "title": "MB-03 Mobile \u00b7 Approvals \u00b7 Empty",
+   "page": "mobile"
+  },
+  "MobileApprovals-Loading.dc.html": {
+   "x": 940,
+   "y": 2908,
+   "w": 390,
+   "h": 844,
+   "title": "MB-03 Mobile \u00b7 Approvals \u00b7 Loading",
+   "page": "mobile"
+  },
+  "MobileCalendar.dc.html": {
+   "x": 0,
+   "y": 4212,
+   "w": 390,
+   "h": 844,
+   "title": "MB-04 Mobile \u00b7 Calendar \u00b7 Filled",
+   "page": "mobile"
+  },
+  "MobileCalendar-Empty.dc.html": {
+   "x": 470,
+   "y": 4212,
+   "w": 390,
+   "h": 844,
+   "title": "MB-04 Mobile \u00b7 Calendar \u00b7 Empty",
+   "page": "mobile"
+  },
+  "MobileCalendar-Loading.dc.html": {
+   "x": 940,
+   "y": 4212,
+   "w": 390,
+   "h": 844,
+   "title": "MB-04 Mobile \u00b7 Calendar \u00b7 Loading",
+   "page": "mobile"
+  },
+  "MobileMore.dc.html": {
+   "x": 0,
+   "y": 5216,
+   "w": 390,
+   "h": 844,
+   "title": "MB-05 Mobile \u00b7 More \u00b7 Filled",
+   "page": "mobile"
+  },
+  "MobileNotifications.dc.html": {
+   "x": 0,
+   "y": 6520,
+   "w": 390,
+   "h": 844,
+   "title": "MB-06 Mobile \u00b7 Notifications \u00b7 Filled",
+   "page": "mobile"
+  },
+  "MobileNotifications-Empty.dc.html": {
+   "x": 470,
+   "y": 6520,
+   "w": 390,
+   "h": 844,
+   "title": "MB-06 Mobile \u00b7 Notifications \u00b7 Empty",
+   "page": "mobile"
+  },
+  "MobileClientPortal.dc.html": {
+   "x": 0,
+   "y": 7824,
+   "w": 390,
+   "h": 844,
+   "title": "MB-07 Mobile \u00b7 Client portal \u00b7 Filled",
+   "page": "mobile"
+  },
+  "MobileClientPortal-Empty.dc.html": {
+   "x": 470,
+   "y": 7824,
+   "w": 390,
+   "h": 844,
+   "title": "MB-07 Mobile \u00b7 Client portal \u00b7 Empty",
+   "page": "mobile"
+  },
+  "MobileClientApproval.dc.html": {
+   "x": 0,
+   "y": 9128,
+   "w": 390,
+   "h": 844,
+   "title": "MB-08 Mobile \u00b7 Client approval \u00b7 Filled",
+   "page": "mobile"
+  },
+  "MobileClientApproval-Decided.dc.html": {
+   "x": 470,
+   "y": 9128,
+   "w": 390,
+   "h": 844,
+   "title": "MB-08 Mobile \u00b7 Client approval \u00b7 Approved",
+   "page": "mobile"
+  },
+  "MobileClipTrim.dc.html": {
+   "x": 0,
+   "y": 10432,
+   "w": 390,
+   "h": 844,
+   "title": "MB-09 Mobile \u00b7 Clip review & trim \u00b7 Filled",
+   "page": "mobile"
+  },
+  "MobileClipTrim-Loading.dc.html": {
+   "x": 470,
+   "y": 10432,
+   "w": 390,
+   "h": 844,
+   "title": "MB-09 Mobile \u00b7 Clip review & trim \u00b7 Loading",
+   "page": "mobile"
+  },
+  "MobileOnboarding.dc.html": {
+   "x": 0,
+   "y": 11736,
+   "w": 390,
+   "h": 844,
+   "title": "MB-10 Mobile \u00b7 Onboarding \u00b7 Filled",
+   "page": "mobile"
+  },
+  "MobileOnboarding-Done.dc.html": {
+   "x": 470,
+   "y": 11736,
+   "w": 390,
+   "h": 844,
+   "title": "MB-10 Mobile \u00b7 Onboarding \u00b7 All set",
+   "page": "mobile"
+  },
+  "MobileAgent.dc.html": {
+   "x": 0,
+   "y": 13040,
+   "w": 390,
+   "h": 844,
+   "title": "MB-11 Mobile \u00b7 Agent \u00b7 Filled",
+   "page": "mobile"
+  },
+  "MobileAgent-Paused.dc.html": {
+   "x": 470,
+   "y": 13040,
+   "w": 390,
+   "h": 844,
+   "title": "MB-11 Mobile \u00b7 Agent \u00b7 Paused",
+   "page": "mobile"
+  },
+  "MobileUpload.dc.html": {
+   "x": 0,
+   "y": 14344,
+   "w": 390,
+   "h": 844,
+   "title": "MB-12 Mobile \u00b7 Upload \u00b7 Filled",
+   "page": "mobile"
+  },
+  "MobileUpload-Uploading.dc.html": {
+   "x": 470,
+   "y": 14344,
+   "w": 390,
+   "h": 844,
+   "title": "MB-12 Mobile \u00b7 Upload \u00b7 Uploading",
+   "page": "mobile"
+  },
+  "MobileOffline.dc.html": {
+   "x": 0,
+   "y": 15348,
+   "w": 390,
+   "h": 844,
+   "title": "MB-13 Mobile \u00b7 Offline \u00b7 Filled",
+   "page": "mobile"
+  },
+  "Dark-CommandCenter.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1440,
+   "h": 1650,
+   "title": "Dark \u00b7 APP-01 Command Center \u00b7 Filled",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-CommandCenter-Empty.dc.html": {
+   "x": 1520,
+   "y": 0,
+   "w": 1440,
+   "h": 1500,
+   "title": "Dark \u00b7 APP-01 Command Center \u00b7 Empty",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-CommandCenter-Loading.dc.html": {
+   "x": 3040,
+   "y": 0,
+   "w": 1440,
+   "h": 1300,
+   "title": "Dark \u00b7 APP-01 Command Center \u00b7 Loading",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-Activity.dc.html": {
+   "x": 0,
+   "y": 1810,
+   "w": 1440,
+   "h": 1250,
+   "title": "Dark \u00b7 APP-03 AI Activity Center \u00b7 Filled",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-ClippingStudio.dc.html": {
+   "x": 1520,
+   "y": 1810,
+   "w": 1440,
+   "h": 1350,
+   "title": "Dark \u00b7 CL-03 Clipping Studio \u00b7 Filled",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-PostDetail.dc.html": {
+   "x": 3040,
+   "y": 1810,
+   "w": 1440,
+   "h": 1400,
+   "title": "Dark \u00b7 PB-03 Post detail \u00b7 Filled",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-ApprovalDetail.dc.html": {
+   "x": 0,
+   "y": 3370,
+   "w": 1440,
+   "h": 1300,
+   "title": "Dark \u00b7 PB-05 Approval detail \u00b7 Filled",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-Analytics.dc.html": {
+   "x": 1520,
+   "y": 3370,
+   "w": 1440,
+   "h": 1300,
+   "title": "Dark \u00b7 AN-01 Analytics overview \u00b7 Filled",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-Marketplace.dc.html": {
+   "x": 3040,
+   "y": 3370,
+   "w": 1440,
+   "h": 1300,
+   "title": "Dark \u00b7 LI-01 Marketplace \u00b7 Filled",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-Billing.dc.html": {
+   "x": 0,
+   "y": 4830,
+   "w": 1440,
+   "h": 1150,
+   "title": "Dark \u00b7 BI-01 Plan & usage \u00b7 Filled",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-AgencyHub.dc.html": {
+   "x": 1520,
+   "y": 4830,
+   "w": 1440,
+   "h": 1300,
+   "title": "Dark \u00b7 AG-01 Agency hub \u00b7 Filled",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-OnbAccountType.dc.html": {
+   "x": 3040,
+   "y": 4830,
+   "w": 1440,
+   "h": 980,
+   "title": "Dark \u00b7 ON-01 Account type \u00b7 Filled",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-ClientApproval.dc.html": {
+   "x": 0,
+   "y": 6290,
+   "w": 1440,
+   "h": 1100,
+   "title": "Dark \u00b7 CP-02 Client approval detail \u00b7 Filled",
+   "page": "dark",
+   "expand": "fill"
+  },
+  "Dark-MobileHome.dc.html": {
+   "x": 1520,
+   "y": 6290,
+   "w": 390,
+   "h": 844,
+   "title": "Dark \u00b7 MB-01 Mobile \u00b7 Home \u00b7 Filled",
+   "page": "dark"
+  },
+  "Dark-MobileClientApproval.dc.html": {
+   "x": 1990,
+   "y": 6290,
+   "w": 390,
+   "h": 844,
+   "title": "Dark \u00b7 MB-08 Mobile \u00b7 Client approval \u00b7 Filled",
+   "page": "dark"
+  },
+  "Dark-MobileApprovals-Empty.dc.html": {
+   "x": 2460,
+   "y": 6290,
+   "w": 390,
+   "h": 844,
+   "title": "Dark \u00b7 MB-03 Mobile \u00b7 Approvals \u00b7 Empty",
+   "page": "dark"
+  }
+ },
+ "order": [
+  "Marketplace.dc.html",
+  "Marketplace-Empty.dc.html",
+  "Marketplace-Loading.dc.html",
+  "Marketplace-Mobile.dc.html",
+  "Marketplace-Empty-Mobile.dc.html",
+  "Marketplace-Loading-Mobile.dc.html",
+  "SourceDetail.dc.html",
+  "SourceDetail-Loading.dc.html",
+  "SourceDetail-Private.dc.html",
+  "SourceDetail-Paid.dc.html",
+  "SourceDetail-Suspended.dc.html",
+  "SourceDetail-Licensed.dc.html",
+  "SourceDetail-Mobile.dc.html",
+  "SourceDetail-Loading-Mobile.dc.html",
+  "SourceDetail-Private-Mobile.dc.html",
+  "SourceDetail-Paid-Mobile.dc.html",
+  "SourceDetail-Suspended-Mobile.dc.html",
+  "SourceDetail-Licensed-Mobile.dc.html",
+  "RequestLicense.dc.html",
+  "RequestLicense-Private.dc.html",
+  "RequestLicense-Sent.dc.html",
+  "RequestLicense-Approved.dc.html",
+  "RequestLicense-Declined.dc.html",
+  "RequestLicense-Mobile.dc.html",
+  "RequestLicense-Private-Mobile.dc.html",
+  "RequestLicense-Sent-Mobile.dc.html",
+  "RequestLicense-Approved-Mobile.dc.html",
+  "RequestLicense-Declined-Mobile.dc.html",
+  "MyLicenses.dc.html",
+  "MyLicenses-Empty.dc.html",
+  "MyLicenses-Loading.dc.html",
+  "MyLicenses-Expired.dc.html",
+  "MyLicenses-Mobile.dc.html",
+  "MyLicenses-Empty-Mobile.dc.html",
+  "MyLicenses-Loading-Mobile.dc.html",
+  "MyLicenses-Expired-Mobile.dc.html",
+  "CreatorOverview.dc.html",
+  "CreatorOverview-Empty.dc.html",
+  "CreatorOverview-Loading.dc.html",
+  "CreatorOverview-Unverified.dc.html",
+  "CreatorOverview-Mobile.dc.html",
+  "CreatorOverview-Empty-Mobile.dc.html",
+  "CreatorOverview-Loading-Mobile.dc.html",
+  "CreatorOverview-Unverified-Mobile.dc.html",
+  "Verification.dc.html",
+  "Verification-Pending.dc.html",
+  "Verification-Failed.dc.html",
+  "Verification-Empty.dc.html",
+  "Verification-Mobile.dc.html",
+  "Verification-Pending-Mobile.dc.html",
+  "Verification-Failed-Mobile.dc.html",
+  "Verification-Empty-Mobile.dc.html",
+  "LicenseTerms.dc.html",
+  "LicenseTerms-Unverified.dc.html",
+  "LicenseTerms-Saved.dc.html",
+  "LicenseTerms-Mobile.dc.html",
+  "LicenseTerms-Unverified-Mobile.dc.html",
+  "LicenseTerms-Saved-Mobile.dc.html",
+  "Usage.dc.html",
+  "Usage-Empty.dc.html",
+  "Usage-Loading.dc.html",
+  "Usage-Mobile.dc.html",
+  "Usage-Empty-Mobile.dc.html",
+  "Usage-Loading-Mobile.dc.html",
+  "Revoke.dc.html",
+  "Revoke-Done.dc.html",
+  "Revoke-Empty.dc.html",
+  "Revoke-Mobile.dc.html",
+  "Revoke-Done-Mobile.dc.html",
+  "Revoke-Empty-Mobile.dc.html",
+  "Payouts.dc.html",
+  "Payouts-Mobile.dc.html",
+  "Connections.dc.html",
+  "Connections-Empty.dc.html",
+  "Connections-Loading.dc.html",
+  "Connections-Limit.dc.html",
+  "Connections-Mobile.dc.html",
+  "Connections-Empty-Mobile.dc.html",
+  "Connections-Loading-Mobile.dc.html",
+  "Connections-Limit-Mobile.dc.html",
+  "ConnectionDetail.dc.html",
+  "ConnectionDetail-Expiring.dc.html",
+  "ConnectionDetail-Disconnect.dc.html",
+  "ConnectionDetail-Mobile.dc.html",
+  "ConnectionDetail-Expiring-Mobile.dc.html",
+  "ConnectionDetail-Disconnect-Mobile.dc.html",
+  "AgencyHub.dc.html",
+  "AgencyHub-Empty.dc.html",
+  "AgencyHub-Loading.dc.html",
+  "AgencyHub-Overlimit.dc.html",
+  "AgencyHub-Mobile.dc.html",
+  "AgencyHub-Empty-Mobile.dc.html",
+  "AgencyHub-Loading-Mobile.dc.html",
+  "AgencyHub-Overlimit-Mobile.dc.html",
+  "Clients.dc.html",
+  "Clients-Empty.dc.html",
+  "Clients-Create.dc.html",
+  "Clients-Limit.dc.html",
+  "Clients-Mobile.dc.html",
+  "Clients-Empty-Mobile.dc.html",
+  "Clients-Create-Mobile.dc.html",
+  "Clients-Limit-Mobile.dc.html",
+  "ClientSettings.dc.html",
+  "ClientSettings-Saved.dc.html",
+  "ClientSettings-Policy.dc.html",
+  "ClientSettings-Mobile.dc.html",
+  "ClientSettings-Saved-Mobile.dc.html",
+  "ClientSettings-Policy-Mobile.dc.html",
+  "Team.dc.html",
+  "Team-Invite.dc.html",
+  "Team-Seats.dc.html",
+  "Team-Loading.dc.html",
+  "Team-Mobile.dc.html",
+  "Team-Invite-Mobile.dc.html",
+  "Team-Seats-Mobile.dc.html",
+  "Team-Loading-Mobile.dc.html",
+  "Roles.dc.html",
+  "Roles-Mobile.dc.html",
+  "AuditLog.dc.html",
+  "AuditLog-Empty.dc.html",
+  "AuditLog-Loading.dc.html",
+  "AuditLog-Mobile.dc.html",
+  "AuditLog-Empty-Mobile.dc.html",
+  "AuditLog-Loading-Mobile.dc.html",
+  "ClientPortal.dc.html",
+  "ClientPortal-Empty.dc.html",
+  "ClientPortal-Loading.dc.html",
+  "ClientPortal-Approved.dc.html",
+  "ClientPortal-Published.dc.html",
+  "ClientPortal-Mobile.dc.html",
+  "ClientPortal-Empty-Mobile.dc.html",
+  "ClientPortal-Loading-Mobile.dc.html",
+  "ClientPortal-Approved-Mobile.dc.html",
+  "ClientPortal-Published-Mobile.dc.html",
+  "ClientApproval.dc.html",
+  "ClientApproval-Decided.dc.html",
+  "ClientApproval-Newer.dc.html",
+  "ClientApproval-Loading.dc.html",
+  "ClientApproval-Mobile.dc.html",
+  "ClientApproval-Decided-Mobile.dc.html",
+  "ClientApproval-Newer-Mobile.dc.html",
+  "ClientApproval-Loading-Mobile.dc.html",
+  "Billing.dc.html",
+  "Billing-Loading.dc.html",
+  "Billing-Free.dc.html",
+  "Billing-Mobile.dc.html",
+  "Billing-Loading-Mobile.dc.html",
+  "Billing-Free-Mobile.dc.html",
+  "Plans.dc.html",
+  "Plans-Checkout.dc.html",
+  "Plans-Processing.dc.html",
+  "Plans-Success.dc.html",
+  "Plans-Declined.dc.html",
+  "Plans-Mobile.dc.html",
+  "Plans-Checkout-Mobile.dc.html",
+  "Plans-Processing-Mobile.dc.html",
+  "Plans-Success-Mobile.dc.html",
+  "Plans-Declined-Mobile.dc.html",
+  "Ledger.dc.html",
+  "Ledger-Loading.dc.html",
+  "Ledger-Mobile.dc.html",
+  "Ledger-Loading-Mobile.dc.html",
+  "TopUp.dc.html",
+  "TopUp-Locked.dc.html",
+  "TopUp-Mobile.dc.html",
+  "TopUp-Locked-Mobile.dc.html",
+  "SpendLimits.dc.html",
+  "SpendLimits-Reached.dc.html",
+  "SpendLimits-Request.dc.html",
+  "SpendLimits-Mobile.dc.html",
+  "SpendLimits-Reached-Mobile.dc.html",
+  "SpendLimits-Request-Mobile.dc.html",
+  "Invoices.dc.html",
+  "Invoices-Empty.dc.html",
+  "Invoices-Loading.dc.html",
+  "Invoices-Mobile.dc.html",
+  "Invoices-Empty-Mobile.dc.html",
+  "Invoices-Loading-Mobile.dc.html",
+  "PaymentFailed.dc.html",
+  "PaymentFailed-Recovered.dc.html",
+  "PaymentFailed-Downgraded.dc.html",
+  "PaymentFailed-Mobile.dc.html",
+  "PaymentFailed-Recovered-Mobile.dc.html",
+  "PaymentFailed-Downgraded-Mobile.dc.html",
+  "Trial.dc.html",
+  "Trial-Limit.dc.html",
+  "Trial-Ending.dc.html",
+  "Trial-Ended.dc.html",
+  "Trial-Mobile.dc.html",
+  "Trial-Limit-Mobile.dc.html",
+  "Trial-Ending-Mobile.dc.html",
+  "Trial-Ended-Mobile.dc.html",
+  "Profile.dc.html",
+  "Profile-Saved.dc.html",
+  "Profile-Emailchange.dc.html",
+  "Profile-Loading.dc.html",
+  "Profile-Mobile.dc.html",
+  "Profile-Saved-Mobile.dc.html",
+  "Profile-Emailchange-Mobile.dc.html",
+  "Profile-Loading-Mobile.dc.html",
+  "Security.dc.html",
+  "Security-Deleteblocked.dc.html",
+  "Security-Sessions.dc.html",
+  "Security-Mobile.dc.html",
+  "Security-Deleteblocked-Mobile.dc.html",
+  "Security-Sessions-Mobile.dc.html",
+  "Appearance.dc.html",
+  "Appearance-Dark.dc.html",
+  "Appearance-Mobile.dc.html",
+  "Appearance-Dark-Mobile.dc.html",
+  "NotificationPrefs.dc.html",
+  "NotificationPrefs-Pushdenied.dc.html",
+  "NotificationPrefs-Unsupported.dc.html",
+  "NotificationPrefs-Mobile.dc.html",
+  "NotificationPrefs-Pushdenied-Mobile.dc.html",
+  "NotificationPrefs-Unsupported-Mobile.dc.html",
+  "Members.dc.html",
+  "Members-Empty.dc.html",
+  "Members-Mobile.dc.html",
+  "Members-Empty-Mobile.dc.html",
+  "BrandKits.dc.html",
+  "BrandKits-Empty.dc.html",
+  "BrandKits-Editing.dc.html",
+  "BrandKits-Mobile.dc.html",
+  "BrandKits-Empty-Mobile.dc.html",
+  "BrandKits-Editing-Mobile.dc.html",
+  "AISettings.dc.html",
+  "AISettings-Mobile.dc.html",
+  "IntegrationStatus.dc.html",
+  "IntegrationStatus-Mobile.dc.html",
+  "Privacy.dc.html",
+  "Privacy-Exportready.dc.html",
+  "Privacy-Deleting.dc.html",
+  "Privacy-Mobile.dc.html",
+  "Privacy-Exportready-Mobile.dc.html",
+  "Privacy-Deleting-Mobile.dc.html",
+  "WorkspaceSettings.dc.html",
+  "WorkspaceSettings-Paused.dc.html",
+  "WorkspaceSettings-Resumed.dc.html",
+  "WorkspaceSettings-Mobile.dc.html",
+  "WorkspaceSettings-Paused-Mobile.dc.html",
+  "WorkspaceSettings-Resumed-Mobile.dc.html",
+  "AdminOps.dc.html",
+  "AdminOps-Loading.dc.html",
+  "AdminOps-Healthy.dc.html",
+  "AdminOps-Paused.dc.html",
+  "AdminOps-Mobile.dc.html",
+  "AdminOps-Loading-Mobile.dc.html",
+  "AdminOps-Healthy-Mobile.dc.html",
+  "AdminOps-Paused-Mobile.dc.html",
+  "AdminJobs.dc.html",
+  "AdminJobs-Empty.dc.html",
+  "AdminJobs-Loading.dc.html",
+  "AdminJobs-Mobile.dc.html",
+  "AdminJobs-Empty-Mobile.dc.html",
+  "AdminJobs-Loading-Mobile.dc.html",
+  "AdminAudit.dc.html",
+  "AdminAudit-Empty.dc.html",
+  "AdminAudit-Mobile.dc.html",
+  "AdminAudit-Empty-Mobile.dc.html",
+  "AdminLicenses.dc.html",
+  "AdminLicenses-Empty.dc.html",
+  "AdminLicenses-Mobile.dc.html",
+  "AdminLicenses-Empty-Mobile.dc.html",
+  "AdminSupport.dc.html",
+  "AdminSupport-Request.dc.html",
+  "AdminSupport-Active.dc.html",
+  "AdminSupport-Mobile.dc.html",
+  "AdminSupport-Request-Mobile.dc.html",
+  "AdminSupport-Active-Mobile.dc.html",
+  "AdminAbuse.dc.html",
+  "AdminAbuse-Empty.dc.html",
+  "AdminAbuse-Mobile.dc.html",
+  "AdminAbuse-Empty-Mobile.dc.html",
+  "AdminDiagnostics.dc.html",
+  "AdminDiagnostics-Mobile.dc.html",
+  "AdminFlags.dc.html",
+  "AdminFlags-Mobile.dc.html",
+  "AdminPauseConfirm.dc.html",
+  "AdminPauseConfirm-Mobile.dc.html",
+  "PWAInstall.dc.html",
+  "PWAInstall-Ios.dc.html",
+  "PWAInstall-Installed.dc.html",
+  "PWAInstall-Mobile.dc.html",
+  "PWAInstall-Ios-Mobile.dc.html",
+  "PWAInstall-Installed-Mobile.dc.html",
+  "Offline.dc.html",
+  "Offline-Reconnecting.dc.html",
+  "Offline-Synced.dc.html",
+  "Offline-Mobile.dc.html",
+  "Offline-Reconnecting-Mobile.dc.html",
+  "Offline-Synced-Mobile.dc.html",
+  "NotFound.dc.html",
+  "NotFound-Mobile.dc.html",
+  "Denied.dc.html",
+  "Denied-Mobile.dc.html",
+  "ServerError.dc.html",
+  "ServerError-Mobile.dc.html",
+  "Maintenance.dc.html",
+  "Maintenance-Mobile.dc.html",
+  "CommandPalette.dc.html",
+  "CommandPalette-Results.dc.html",
+  "CommandPalette-Empty.dc.html",
+  "CommandPalette-Mobile.dc.html",
+  "CommandPalette-Results-Mobile.dc.html",
+  "CommandPalette-Empty-Mobile.dc.html",
+  "AccountMenu.dc.html",
+  "AccountMenu-Mobile.dc.html",
+  "PauseConfirm.dc.html",
+  "PauseConfirm-Resume.dc.html",
+  "PauseConfirm-Mobile.dc.html",
+  "PauseConfirm-Resume-Mobile.dc.html",
+  "MobileHome.dc.html",
+  "MobileHome-Empty.dc.html",
+  "MobileHome-Loading.dc.html",
+  "MobileActivity.dc.html",
+  "MobileActivity-Empty.dc.html",
+  "MobileActivity-Loading.dc.html",
+  "MobileApprovals.dc.html",
+  "MobileApprovals-Empty.dc.html",
+  "MobileApprovals-Loading.dc.html",
+  "MobileCalendar.dc.html",
+  "MobileCalendar-Empty.dc.html",
+  "MobileCalendar-Loading.dc.html",
+  "MobileMore.dc.html",
+  "MobileNotifications.dc.html",
+  "MobileNotifications-Empty.dc.html",
+  "MobileClientPortal.dc.html",
+  "MobileClientPortal-Empty.dc.html",
+  "MobileClientApproval.dc.html",
+  "MobileClientApproval-Decided.dc.html",
+  "MobileClipTrim.dc.html",
+  "MobileClipTrim-Loading.dc.html",
+  "MobileOnboarding.dc.html",
+  "MobileOnboarding-Done.dc.html",
+  "MobileAgent.dc.html",
+  "MobileAgent-Paused.dc.html",
+  "MobileUpload.dc.html",
+  "MobileUpload-Uploading.dc.html",
+  "MobileOffline.dc.html",
+  "Dark-CommandCenter.dc.html",
+  "Dark-CommandCenter-Empty.dc.html",
+  "Dark-CommandCenter-Loading.dc.html",
+  "Dark-Activity.dc.html",
+  "Dark-ClippingStudio.dc.html",
+  "Dark-PostDetail.dc.html",
+  "Dark-ApprovalDetail.dc.html",
+  "Dark-Analytics.dc.html",
+  "Dark-Marketplace.dc.html",
+  "Dark-Billing.dc.html",
+  "Dark-AgencyHub.dc.html",
+  "Dark-OnbAccountType.dc.html",
+  "Dark-ClientApproval.dc.html",
+  "Dark-MobileHome.dc.html",
+  "Dark-MobileClientApproval.dc.html",
+  "Dark-MobileApprovals-Empty.dc.html"
+ ],
+ "notes": {
+  "n_LI_01": {
+   "x": 0,
+   "y": 0,
+   "text": "LI-01 Marketplace",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "licensing",
+   "w": 240
+  },
+  "n_LI_02": {
+   "x": 0,
+   "y": 2930,
+   "text": "LI-02 Source detail & terms",
+   "kind": "title1",
+   "maxW": 11860,
+   "page": "licensing",
+   "w": 240
+  },
+  "n_LI_03": {
+   "x": 0,
+   "y": 5860,
+   "text": "LI-03 Request / accept license",
+   "kind": "title1",
+   "maxW": 9870,
+   "page": "licensing",
+   "w": 240
+  },
+  "n_LI_04": {
+   "x": 0,
+   "y": 7320,
+   "text": "LI-04 My licenses",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "licensing",
+   "w": 240
+  },
+  "n_LI_05": {
+   "x": 0,
+   "y": 0,
+   "text": "LI-05 Creator portal overview",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "creator",
+   "w": 240
+  },
+  "n_LI_06": {
+   "x": 0,
+   "y": 2835,
+   "text": "LI-06 Verification",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "creator",
+   "w": 240
+  },
+  "n_LI_07": {
+   "x": 0,
+   "y": 5100,
+   "text": "LI-07 Licensing terms",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "creator",
+   "w": 240
+  },
+  "n_LI_08": {
+   "x": 0,
+   "y": 8030,
+   "text": "LI-08 Usage audit",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "creator",
+   "w": 240
+  },
+  "n_LI_09": {
+   "x": 0,
+   "y": 10390,
+   "text": "LI-09 Revoke a license",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "creator",
+   "w": 240
+  },
+  "n_LI_10": {
+   "x": 0,
+   "y": 12560,
+   "text": "LI-10 Payouts",
+   "kind": "title1",
+   "maxW": 1910,
+   "page": "creator",
+   "w": 240
+  },
+  "n_IN_01": {
+   "x": 0,
+   "y": 0,
+   "text": "IN-01 Connections",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "agency",
+   "w": 240
+  },
+  "n_IN_02": {
+   "x": 0,
+   "y": 2835,
+   "text": "IN-02 Connection detail",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "agency",
+   "w": 240
+  },
+  "n_AG_01": {
+   "x": 0,
+   "y": 5385,
+   "text": "AG-01 Agency hub",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "agency",
+   "w": 240
+  },
+  "n_AG_02": {
+   "x": 0,
+   "y": 8315,
+   "text": "AG-02 Client workspaces",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "agency",
+   "w": 240
+  },
+  "n_AG_03": {
+   "x": 0,
+   "y": 10675,
+   "text": "AG-03 Client workspace settings",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "agency",
+   "w": 240
+  },
+  "n_AG_04": {
+   "x": 0,
+   "y": 13225,
+   "text": "AG-04 Team & invitations",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "agency",
+   "w": 240
+  },
+  "n_AG_05": {
+   "x": 0,
+   "y": 15585,
+   "text": "AG-05 Roles & permissions",
+   "kind": "title1",
+   "maxW": 1910,
+   "page": "agency",
+   "w": 240
+  },
+  "n_AG_06": {
+   "x": 0,
+   "y": 17945,
+   "text": "AG-06 Audit log",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "agency",
+   "w": 240
+  },
+  "n_CP_01": {
+   "x": 0,
+   "y": 20495,
+   "text": "CP-01 Client portal home",
+   "kind": "title1",
+   "maxW": 9870,
+   "page": "agency",
+   "w": 240
+  },
+  "n_CP_02": {
+   "x": 0,
+   "y": 22855,
+   "text": "CP-02 Client approval detail",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "agency",
+   "w": 240
+  },
+  "n_BI_01": {
+   "x": 0,
+   "y": 0,
+   "text": "BI-01 Plan & usage",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "billing",
+   "w": 240
+  },
+  "n_BI_02": {
+   "x": 0,
+   "y": 2645,
+   "text": "BI-02 Plans & checkout",
+   "kind": "title1",
+   "maxW": 9870,
+   "page": "billing",
+   "w": 240
+  },
+  "n_BI_03": {
+   "x": 0,
+   "y": 5005,
+   "text": "BI-03 Credit ledger",
+   "kind": "title1",
+   "maxW": 3900,
+   "page": "billing",
+   "w": 240
+  },
+  "n_BI_04": {
+   "x": 0,
+   "y": 7270,
+   "text": "BI-04 Top-ups",
+   "kind": "title1",
+   "maxW": 3900,
+   "page": "billing",
+   "w": 240
+  },
+  "n_BI_05": {
+   "x": 0,
+   "y": 9630,
+   "text": "BI-05 Spend limits",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "billing",
+   "w": 240
+  },
+  "n_BI_06": {
+   "x": 0,
+   "y": 12180,
+   "text": "BI-06 Invoices",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "billing",
+   "w": 240
+  },
+  "n_BI_07": {
+   "x": 0,
+   "y": 14350,
+   "text": "BI-07 Payment failure",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "billing",
+   "w": 240
+  },
+  "n_BI_08": {
+   "x": 0,
+   "y": 16710,
+   "text": "BI-08 Trial status",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "billing",
+   "w": 240
+  },
+  "n_ST_01": {
+   "x": 0,
+   "y": 0,
+   "text": "ST-01 Profile",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "settings",
+   "w": 240
+  },
+  "n_ST_02": {
+   "x": 0,
+   "y": 2265,
+   "text": "ST-02 Security",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "settings",
+   "w": 240
+  },
+  "n_ST_03": {
+   "x": 0,
+   "y": 4625,
+   "text": "ST-03 Appearance",
+   "kind": "title1",
+   "maxW": 3900,
+   "page": "settings",
+   "w": 240
+  },
+  "n_ST_04": {
+   "x": 0,
+   "y": 6890,
+   "text": "ST-04 Notification preferences",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "settings",
+   "w": 240
+  },
+  "n_ST_05": {
+   "x": 0,
+   "y": 9440,
+   "text": "ST-05 Workspace members",
+   "kind": "title1",
+   "maxW": 3900,
+   "page": "settings",
+   "w": 240
+  },
+  "n_ST_06": {
+   "x": 0,
+   "y": 11610,
+   "text": "ST-06 Brand kits",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "settings",
+   "w": 240
+  },
+  "n_ST_07": {
+   "x": 0,
+   "y": 14160,
+   "text": "ST-07 AI & processing",
+   "kind": "title1",
+   "maxW": 1910,
+   "page": "settings",
+   "w": 240
+  },
+  "n_ST_08": {
+   "x": 0,
+   "y": 16520,
+   "text": "ST-08 Integration status",
+   "kind": "title1",
+   "maxW": 1910,
+   "page": "settings",
+   "w": 240
+  },
+  "n_ST_09": {
+   "x": 0,
+   "y": 18690,
+   "text": "ST-09 Privacy & data",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "settings",
+   "w": 240
+  },
+  "n_ST_10": {
+   "x": 0,
+   "y": 20955,
+   "text": "ST-10 Workspace settings",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "settings",
+   "w": 240
+  },
+  "n_AD_01": {
+   "x": 0,
+   "y": 0,
+   "text": "AD-01 Ops overview",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "admin",
+   "w": 240
+  },
+  "n_AD_02": {
+   "x": 0,
+   "y": 2550,
+   "text": "AD-02 Jobs & dead-letter",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "admin",
+   "w": 240
+  },
+  "n_AD_03": {
+   "x": 0,
+   "y": 4910,
+   "text": "AD-03 Audit search",
+   "kind": "title1",
+   "maxW": 3900,
+   "page": "admin",
+   "w": 240
+  },
+  "n_AD_04": {
+   "x": 0,
+   "y": 7175,
+   "text": "AD-04 License review",
+   "kind": "title1",
+   "maxW": 3900,
+   "page": "admin",
+   "w": 240
+  },
+  "n_AD_05": {
+   "x": 0,
+   "y": 9440,
+   "text": "AD-05 Support access",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "admin",
+   "w": 240
+  },
+  "n_AD_06": {
+   "x": 0,
+   "y": 11800,
+   "text": "AD-06 Abuse & moderation",
+   "kind": "title1",
+   "maxW": 3900,
+   "page": "admin",
+   "w": 240
+  },
+  "n_AD_07": {
+   "x": 0,
+   "y": 13970,
+   "text": "AD-07 Diagnostics",
+   "kind": "title1",
+   "maxW": 1910,
+   "page": "admin",
+   "w": 240
+  },
+  "n_AD_08": {
+   "x": 0,
+   "y": 16140,
+   "text": "AD-08 Feature flags",
+   "kind": "title1",
+   "maxW": 1910,
+   "page": "admin",
+   "w": 240
+  },
+  "n_AD_09": {
+   "x": 0,
+   "y": 18405,
+   "text": "AD-09 Global pause confirm",
+   "kind": "title1",
+   "maxW": 1910,
+   "page": "admin",
+   "w": 240
+  },
+  "n_SY_01": {
+   "x": 0,
+   "y": 0,
+   "text": "SY-01 Install prompt (PWA)",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "system",
+   "w": 240
+  },
+  "n_SY_02": {
+   "x": 0,
+   "y": 2075,
+   "text": "SY-02 Offline",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "system",
+   "w": 240
+  },
+  "n_SY_03": {
+   "x": 0,
+   "y": 4340,
+   "text": "SY-03 Not found",
+   "kind": "title1",
+   "maxW": 1910,
+   "page": "system",
+   "w": 240
+  },
+  "n_SY_04": {
+   "x": 0,
+   "y": 6510,
+   "text": "SY-04 Access denied",
+   "kind": "title1",
+   "maxW": 1910,
+   "page": "system",
+   "w": 240
+  },
+  "n_SY_05": {
+   "x": 0,
+   "y": 8680,
+   "text": "SY-05 Server error",
+   "kind": "title1",
+   "maxW": 1910,
+   "page": "system",
+   "w": 240
+  },
+  "n_SY_06": {
+   "x": 0,
+   "y": 10850,
+   "text": "SY-06 Maintenance",
+   "kind": "title1",
+   "maxW": 1910,
+   "page": "system",
+   "w": 240
+  },
+  "n_SY_07": {
+   "x": 0,
+   "y": 13020,
+   "text": "SY-07 Command palette",
+   "kind": "title1",
+   "maxW": 5890,
+   "page": "system",
+   "w": 240
+  },
+  "n_SY_08": {
+   "x": 0,
+   "y": 14430,
+   "text": "SY-08 Account menu",
+   "kind": "title1",
+   "maxW": 1910,
+   "page": "system",
+   "w": 240
+  },
+  "n_SY_09": {
+   "x": 0,
+   "y": 16505,
+   "text": "SY-09 Pause all confirm",
+   "kind": "title1",
+   "maxW": 3900,
+   "page": "system",
+   "w": 240
+  },
+  "n_MB_01": {
+   "x": 0,
+   "y": 0,
+   "text": "MB-01 Mobile",
+   "kind": "title1",
+   "maxW": 1330,
+   "page": "mobile",
+   "w": 240
+  },
+  "n_MB_02": {
+   "x": 0,
+   "y": 1304,
+   "text": "MB-02 Mobile",
+   "kind": "title1",
+   "maxW": 1330,
+   "page": "mobile",
+   "w": 240
+  },
+  "n_MB_03": {
+   "x": 0,
+   "y": 2608,
+   "text": "MB-03 Mobile",
+   "kind": "title1",
+   "maxW": 1330,
+   "page": "mobile",
+   "w": 240
+  },
+  "n_MB_04": {
+   "x": 0,
+   "y": 3912,
+   "text": "MB-04 Mobile",
+   "kind": "title1",
+   "maxW": 1330,
+   "page": "mobile",
+   "w": 240
+  },
+  "n_MB_06": {
+   "x": 0,
+   "y": 6220,
+   "text": "MB-06 Mobile",
+   "kind": "title1",
+   "maxW": 1200,
+   "page": "mobile",
+   "w": 240
+  },
+  "n_MB_07": {
+   "x": 0,
+   "y": 7524,
+   "text": "MB-07 Mobile",
+   "kind": "title1",
+   "maxW": 1200,
+   "page": "mobile",
+   "w": 240
+  },
+  "n_MB_08": {
+   "x": 0,
+   "y": 8828,
+   "text": "MB-08 Mobile",
+   "kind": "title1",
+   "maxW": 1200,
+   "page": "mobile",
+   "w": 240
+  },
+  "n_MB_09": {
+   "x": 0,
+   "y": 10132,
+   "text": "MB-09 Mobile",
+   "kind": "title1",
+   "maxW": 1200,
+   "page": "mobile",
+   "w": 240
+  },
+  "n_MB_10": {
+   "x": 0,
+   "y": 11436,
+   "text": "MB-10 Mobile",
+   "kind": "title1",
+   "maxW": 1200,
+   "page": "mobile",
+   "w": 240
+  },
+  "n_MB_11": {
+   "x": 0,
+   "y": 12740,
+   "text": "MB-11 Mobile",
+   "kind": "title1",
+   "maxW": 1200,
+   "page": "mobile",
+   "w": 240
+  },
+  "n_MB_12": {
+   "x": 0,
+   "y": 14044,
+   "text": "MB-12 Mobile",
+   "kind": "title1",
+   "maxW": 1200,
+   "page": "mobile",
+   "w": 240
+  }
+ },
+ "designSystems": []
+}

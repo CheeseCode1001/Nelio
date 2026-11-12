@@ -111,7 +111,10 @@ As in v1, plus:
 
 ## v2.1 addendum: mobile responsive views (12 Nov 2026)
 
-- Every desktop screen and state now has a 390 px mobile board: 307 boards in a second canvas, **Nelio — Mobile responsive UI** (https://claude.ai/artifact/BiuxrSL32XBybSnDD4mmd6). It's a separate canvas because one canvas holds at most 512 files. Source copies: `E_hifi/mobile_canvas/`.
+- Every desktop screen and state now has a 390 px mobile board placed **right beside its desktop boards in the same row**. One canvas holds at most 512 files, so the 676 boards are split across two canvases by area:
+  - Part 1 (foundations, flows, public site, auth & onboarding, Command Center & AI, clipping & content, publishing, analytics): https://claude.ai/artifact/5rE8YAdMngxLvgf5GsdPKu. Source: `E_hifi/canvas_part1/`.
+  - Part 2 (licensing, creator portal, agency & client portal, billing, settings, admin, system & overlays, native-style mobile app, dark theme): https://claude.ai/artifact/BiuxrSL32XBybSnDD4mmd6. Source: `E_hifi/canvas_part2/`.
+  - A link to a screen in the other part opens that canvas in a new tab.
 - Mobile rules, applied by `generator/s13_responsive.py` and the `MOB` mode in `lib2.py` / `frame.py`:
   - Every centered modal becomes a **bottom sheet**: full width, 28 px top radius, grab handle, slides up, max 88% height, scrolls inside.
   - App shell: sticky top bar (workspace pill, search, bell, avatar) and sticky bottom tab bar (Home, Activity, Approvals, Calendar, More). The sidebar moves into More.
