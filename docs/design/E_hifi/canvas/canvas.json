@@ -87,7 +87,7 @@
  "boards": {
   "Main.dc.html": {
    "x": 0,
-   "y": 0,
+   "y": 520,
    "w": 1440,
    "h": 3800,
    "title": "Nelio design foundations v2",
@@ -96,7 +96,7 @@
   },
   "Illustrations.dc.html": {
    "x": 1520,
-   "y": 0,
+   "y": 520,
    "w": 1440,
    "h": 3300,
    "title": "Illustration kit",
@@ -105,7 +105,7 @@
   },
   "Motion.dc.html": {
    "x": 0,
-   "y": 0,
+   "y": 520,
    "w": 1440,
    "h": 2700,
    "title": "Motion system (GSAP)",
@@ -114,7 +114,7 @@
   },
   "Flow-J-01.dc.html": {
    "x": 0,
-   "y": 0,
+   "y": 520,
    "w": 2664,
    "h": 620,
    "title": "J-01 Creator first run (flow)",
@@ -124,7 +124,7 @@
   },
   "Flow-J-02.dc.html": {
    "x": 2744,
-   "y": 0,
+   "y": 520,
    "w": 2022,
    "h": 620,
    "title": "J-02 Agency setup (flow)",
@@ -134,7 +134,7 @@
   },
   "Flow-J-03.dc.html": {
    "x": 4846,
-   "y": 0,
+   "y": 520,
    "w": 1808,
    "h": 620,
    "title": "J-03 Per-platform client approval (flow)",
@@ -144,7 +144,7 @@
   },
   "Flow-J-04.dc.html": {
    "x": 0,
-   "y": 780,
+   "y": 1300,
    "w": 1808,
    "h": 620,
    "title": "J-04 Autonomous run (flow)",
@@ -154,7 +154,7 @@
   },
   "Flow-J-05.dc.html": {
    "x": 1888,
-   "y": 780,
+   "y": 1300,
    "w": 1440,
    "h": 620,
    "title": "J-05 License revocation (flow)",
@@ -164,7 +164,7 @@
   },
   "Flow-J-06.dc.html": {
    "x": 3408,
-   "y": 780,
+   "y": 1300,
    "w": 1440,
    "h": 620,
    "title": "J-06 Content-owner onboarding (flow)",
@@ -174,7 +174,7 @@
   },
   "Flow-J-07.dc.html": {
    "x": 0,
-   "y": 1560,
+   "y": 2080,
    "w": 1440,
    "h": 620,
    "title": "J-07 License acquisition (flow)",
@@ -184,7 +184,7 @@
   },
   "Flow-J-08.dc.html": {
    "x": 1520,
-   "y": 1560,
+   "y": 2080,
    "w": 1440,
    "h": 620,
    "title": "J-08 Spend limit hit (flow)",
@@ -194,7 +194,7 @@
   },
   "Flow-J-09.dc.html": {
    "x": 3040,
-   "y": 1560,
+   "y": 2080,
    "w": 1440,
    "h": 620,
    "title": "J-09 Trial (flow)",
@@ -204,7 +204,7 @@
   },
   "Flow-J-10.dc.html": {
    "x": 0,
-   "y": 2340,
+   "y": 2860,
    "w": 1440,
    "h": 620,
    "title": "J-10 Publish confirmation (flow)",
@@ -214,7 +214,7 @@
   },
   "Flow-J-11.dc.html": {
    "x": 1520,
-   "y": 2340,
+   "y": 2860,
    "w": 1440,
    "h": 620,
    "title": "J-11 Connection lifecycle (flow)",
@@ -224,7 +224,7 @@
   },
   "Flow-J-12.dc.html": {
    "x": 3040,
-   "y": 2340,
+   "y": 2860,
    "w": 1440,
    "h": 620,
    "title": "J-12 Emergency pause (flow)",
@@ -234,7 +234,7 @@
   },
   "Flow-J-13.dc.html": {
    "x": 0,
-   "y": 3120,
+   "y": 3640,
    "w": 1440,
    "h": 620,
    "title": "J-13 Platform admin incident (flow)",
@@ -244,7 +244,7 @@
   },
   "Flow-J-14.dc.html": {
    "x": 1520,
-   "y": 3120,
+   "y": 3640,
    "w": 1440,
    "h": 620,
    "title": "J-14 Payment failure (flow)",
@@ -254,7 +254,7 @@
   },
   "Flow-J-15.dc.html": {
    "x": 3040,
-   "y": 3120,
+   "y": 3640,
    "w": 1440,
    "h": 620,
    "title": "J-15 Mobile approvals (flow)",
@@ -264,7 +264,7 @@
   },
   "Flows.dc.html": {
    "x": 0,
-   "y": 3900,
+   "y": 4420,
    "w": 1440,
    "h": 1400,
    "title": "Flow index",
@@ -274,7 +274,7 @@
   },
   "Home.dc.html": {
    "x": 0,
-   "y": 0,
+   "y": 520,
    "w": 1440,
    "h": 6200,
    "title": "M-01 Home",
@@ -283,7 +283,7 @@
   },
   "Product.dc.html": {
    "x": 1520,
-   "y": 0,
+   "y": 520,
    "w": 1440,
    "h": 2700,
    "title": "M-02 Product",
@@ -292,7 +292,7 @@
   },
   "UseCases.dc.html": {
    "x": 3040,
-   "y": 0,
+   "y": 520,
    "w": 1440,
    "h": 2100,
    "title": "M-03 Use cases",
@@ -301,7 +301,7 @@
   },
   "Pricing.dc.html": {
    "x": 0,
-   "y": 6360,
+   "y": 6880,
    "w": 1440,
    "h": 2500,
    "title": "M-04 Pricing",
@@ -310,7 +310,7 @@
   },
   "Licensing.dc.html": {
    "x": 1520,
-   "y": 6360,
+   "y": 6880,
    "w": 1440,
    "h": 2400,
    "title": "M-05 Licensing & Creator Partners",
@@ -319,7 +319,7 @@
   },
   "FAQ.dc.html": {
    "x": 3040,
-   "y": 6360,
+   "y": 6880,
    "w": 1440,
    "h": 1900,
    "title": "M-06 FAQ",
@@ -328,7 +328,7 @@
   },
   "Legal.dc.html": {
    "x": 0,
-   "y": 9020,
+   "y": 9540,
    "w": 1440,
    "h": 1700,
    "title": "M-07 Legal",
@@ -337,7 +337,7 @@
   },
   "Status.dc.html": {
    "x": 0,
-   "y": 11180,
+   "y": 11700,
    "w": 1440,
    "h": 1700,
    "title": "M-08 Status",
@@ -346,7 +346,7 @@
   },
   "Home-Mobile.dc.html": {
    "x": 1520,
-   "y": 11180,
+   "y": 11700,
    "w": 924,
    "h": 10680,
    "title": "M-01 Home \u00b7 Mobile",
@@ -355,7 +355,7 @@
   },
   "Product-Mobile.dc.html": {
    "x": 2524,
-   "y": 11180,
+   "y": 11700,
    "w": 486,
    "h": 4730,
    "title": "M-02 Product \u00b7 Mobile",
@@ -364,7 +364,7 @@
   },
   "UseCases-Mobile.dc.html": {
    "x": 3090,
-   "y": 11180,
+   "y": 11700,
    "w": 486,
    "h": 3710,
    "title": "M-03 Use cases \u00b7 Mobile",
@@ -373,7 +373,7 @@
   },
   "Pricing-Mobile.dc.html": {
    "x": 3656,
-   "y": 11180,
+   "y": 11700,
    "w": 486,
    "h": 4390,
    "title": "M-04 Pricing \u00b7 Mobile",
@@ -382,7 +382,7 @@
   },
   "Licensing-Mobile.dc.html": {
    "x": 4222,
-   "y": 11180,
+   "y": 11700,
    "w": 486,
    "h": 4220,
    "title": "M-05 Licensing & Creator Partners \u00b7 Mobile",
@@ -391,7 +391,7 @@
   },
   "FAQ-Mobile.dc.html": {
    "x": 4788,
-   "y": 11180,
+   "y": 11700,
    "w": 486,
    "h": 3370,
    "title": "M-06 FAQ \u00b7 Mobile",
@@ -400,7 +400,7 @@
   },
   "Legal-Mobile.dc.html": {
    "x": 5354,
-   "y": 11180,
+   "y": 11700,
    "w": 486,
    "h": 3030,
    "title": "M-07 Legal \u00b7 Mobile",
@@ -409,7 +409,7 @@
   },
   "Status-Mobile.dc.html": {
    "x": 5920,
-   "y": 11180,
+   "y": 11700,
    "w": 486,
    "h": 3030,
    "title": "M-08 Status \u00b7 Mobile",
@@ -417,8 +417,8 @@
    "expand": "fill"
   },
   "SignUp.dc.html": {
-   "x": -5,
-   "y": 300,
+   "x": 0,
+   "y": 820,
    "w": 1440,
    "h": 1000,
    "title": "AU-01 Sign up \u00b7 Filled",
@@ -427,7 +427,7 @@
   },
   "SignUp-Error.dc.html": {
    "x": 1520,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1000,
    "title": "AU-01 Sign up \u00b7 Validation errors",
@@ -436,7 +436,7 @@
   },
   "SignUp-Taken.dc.html": {
    "x": 3040,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1000,
    "title": "AU-01 Sign up \u00b7 Email already used",
@@ -445,7 +445,7 @@
   },
   "SignUp-Submitting.dc.html": {
    "x": 4560,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1000,
    "title": "AU-01 Sign up \u00b7 Submitting",
@@ -454,7 +454,7 @@
   },
   "SignUp-Mobile.dc.html": {
    "x": 6080,
-   "y": 300,
+   "y": 820,
    "w": 1800,
    "h": 1140,
    "title": "AU-01 Sign up \u00b7 Mobile",
@@ -463,7 +463,7 @@
   },
   "LogIn.dc.html": {
    "x": 0,
-   "y": 1900,
+   "y": 2420,
    "w": 1440,
    "h": 900,
    "title": "AU-02 Log in \u00b7 Filled",
@@ -472,7 +472,7 @@
   },
   "LogIn-Error.dc.html": {
    "x": 1520,
-   "y": 1900,
+   "y": 2420,
    "w": 1440,
    "h": 900,
    "title": "AU-02 Log in \u00b7 Wrong password",
@@ -481,7 +481,7 @@
   },
   "LogIn-Locked.dc.html": {
    "x": 3040,
-   "y": 1900,
+   "y": 2420,
    "w": 1440,
    "h": 900,
    "title": "AU-02 Log in \u00b7 Too many attempts",
@@ -490,7 +490,7 @@
   },
   "LogIn-Mobile.dc.html": {
    "x": 4560,
-   "y": 1900,
+   "y": 2420,
    "w": 1362,
    "h": 1040,
    "title": "AU-02 Log in \u00b7 Mobile",
@@ -499,7 +499,7 @@
   },
   "VerifyEmail.dc.html": {
    "x": 0,
-   "y": 3400,
+   "y": 3920,
    "w": 1440,
    "h": 900,
    "title": "AU-03 Verify email \u00b7 Filled",
@@ -508,7 +508,7 @@
   },
   "VerifyEmail-Resent.dc.html": {
    "x": 1520,
-   "y": 3400,
+   "y": 3920,
    "w": 1440,
    "h": 900,
    "title": "AU-03 Verify email \u00b7 Resent",
@@ -517,7 +517,7 @@
   },
   "VerifyEmail-Expired.dc.html": {
    "x": 3040,
-   "y": 3400,
+   "y": 3920,
    "w": 1440,
    "h": 900,
    "title": "AU-03 Verify email \u00b7 Link expired",
@@ -526,7 +526,7 @@
   },
   "VerifyEmail-Mobile.dc.html": {
    "x": 4560,
-   "y": 3400,
+   "y": 3920,
    "w": 1362,
    "h": 1040,
    "title": "AU-03 Verify email \u00b7 Mobile",
@@ -535,7 +535,7 @@
   },
   "ResetPassword.dc.html": {
    "x": 0,
-   "y": 4900,
+   "y": 5420,
    "w": 1440,
    "h": 900,
    "title": "AU-04 Reset password \u00b7 Filled",
@@ -544,7 +544,7 @@
   },
   "ResetPassword-Sent.dc.html": {
    "x": 1520,
-   "y": 4900,
+   "y": 5420,
    "w": 1440,
    "h": 900,
    "title": "AU-04 Reset password \u00b7 Link sent",
@@ -553,7 +553,7 @@
   },
   "ResetPassword-Newpass.dc.html": {
    "x": 3040,
-   "y": 4900,
+   "y": 5420,
    "w": 1440,
    "h": 900,
    "title": "AU-04 Reset password \u00b7 Set new password",
@@ -562,7 +562,7 @@
   },
   "ResetPassword-Expired.dc.html": {
    "x": 4560,
-   "y": 4900,
+   "y": 5420,
    "w": 1440,
    "h": 900,
    "title": "AU-04 Reset password \u00b7 Link expired",
@@ -571,7 +571,7 @@
   },
   "ResetPassword-Mobile.dc.html": {
    "x": 6080,
-   "y": 4900,
+   "y": 5420,
    "w": 1800,
    "h": 1040,
    "title": "AU-04 Reset password \u00b7 Mobile",
@@ -580,7 +580,7 @@
   },
   "MFA.dc.html": {
    "x": 0,
-   "y": 6400,
+   "y": 6920,
    "w": 1440,
    "h": 1000,
    "title": "AU-05 Two-step verification \u00b7 Filled",
@@ -589,7 +589,7 @@
   },
   "MFA-Setup.dc.html": {
    "x": 1520,
-   "y": 6400,
+   "y": 6920,
    "w": 1440,
    "h": 1000,
    "title": "AU-05 Two-step verification \u00b7 Setup",
@@ -598,7 +598,7 @@
   },
   "MFA-Wrong.dc.html": {
    "x": 3040,
-   "y": 6400,
+   "y": 6920,
    "w": 1440,
    "h": 1000,
    "title": "AU-05 Two-step verification \u00b7 Wrong code",
@@ -607,7 +607,7 @@
   },
   "MFA-Mobile.dc.html": {
    "x": 4560,
-   "y": 6400,
+   "y": 6920,
    "w": 1362,
    "h": 1140,
    "title": "AU-05 Two-step verification \u00b7 Mobile",
@@ -616,7 +616,7 @@
   },
   "AcceptInvite.dc.html": {
    "x": 0,
-   "y": 8000,
+   "y": 8520,
    "w": 1440,
    "h": 950,
    "title": "AU-06 Accept invitation \u00b7 Filled",
@@ -625,7 +625,7 @@
   },
   "AcceptInvite-Expired.dc.html": {
    "x": 1520,
-   "y": 8000,
+   "y": 8520,
    "w": 1440,
    "h": 950,
    "title": "AU-06 Accept invitation \u00b7 Invite expired",
@@ -634,7 +634,7 @@
   },
   "AcceptInvite-Accepted.dc.html": {
    "x": 3040,
-   "y": 8000,
+   "y": 8520,
    "w": 1440,
    "h": 950,
    "title": "AU-06 Accept invitation \u00b7 Already accepted",
@@ -643,7 +643,7 @@
   },
   "AcceptInvite-Mismatch.dc.html": {
    "x": 4560,
-   "y": 8000,
+   "y": 8520,
    "w": 1440,
    "h": 950,
    "title": "AU-06 Accept invitation \u00b7 Signed in as someone else",
@@ -652,7 +652,7 @@
   },
   "AcceptInvite-Mobile.dc.html": {
    "x": 6080,
-   "y": 8000,
+   "y": 8520,
    "w": 1800,
    "h": 1090,
    "title": "AU-06 Accept invitation \u00b7 Mobile",
@@ -661,7 +661,7 @@
   },
   "ContentOwnerJoin.dc.html": {
    "x": 0,
-   "y": 9550,
+   "y": 10070,
    "w": 1440,
    "h": 1000,
    "title": "AU-07 Join as content owner \u00b7 Filled",
@@ -670,7 +670,7 @@
   },
   "ContentOwnerJoin-Mobile.dc.html": {
    "x": 1520,
-   "y": 9550,
+   "y": 10070,
    "w": 486,
    "h": 1140,
    "title": "AU-07 Join as content owner \u00b7 Mobile",
@@ -679,7 +679,7 @@
   },
   "OnbAccountType.dc.html": {
    "x": 0,
-   "y": 11150,
+   "y": 11670,
    "w": 1440,
    "h": 980,
    "title": "ON-01 Account type \u00b7 Filled",
@@ -688,7 +688,7 @@
   },
   "OnbAccountType-Selected.dc.html": {
    "x": 1520,
-   "y": 11150,
+   "y": 11670,
    "w": 1440,
    "h": 980,
    "title": "ON-01 Account type \u00b7 Agency selected",
@@ -697,7 +697,7 @@
   },
   "OnbAccountType-Mobile.dc.html": {
    "x": 3040,
-   "y": 11150,
+   "y": 11670,
    "w": 924,
    "h": 1120,
    "title": "ON-01 Account type \u00b7 Mobile",
@@ -706,7 +706,7 @@
   },
   "OnbGoals.dc.html": {
    "x": 0,
-   "y": 12730,
+   "y": 13250,
    "w": 1440,
    "h": 980,
    "title": "ON-02 Goals & niche \u00b7 Filled",
@@ -715,7 +715,7 @@
   },
   "OnbGoals-Mobile.dc.html": {
    "x": 1520,
-   "y": 12730,
+   "y": 13250,
    "w": 486,
    "h": 1120,
    "title": "ON-02 Goals & niche \u00b7 Mobile",
@@ -724,7 +724,7 @@
   },
   "OnbConnect.dc.html": {
    "x": 0,
-   "y": 14310,
+   "y": 14830,
    "w": 1440,
    "h": 1050,
    "title": "ON-03 Connect accounts \u00b7 Filled",
@@ -733,7 +733,7 @@
   },
   "OnbConnect-Connected.dc.html": {
    "x": 1520,
-   "y": 14310,
+   "y": 14830,
    "w": 1440,
    "h": 1050,
    "title": "ON-03 Connect accounts \u00b7 One connected",
@@ -742,7 +742,7 @@
   },
   "OnbConnect-Limit.dc.html": {
    "x": 3040,
-   "y": 14310,
+   "y": 14830,
    "w": 1440,
    "h": 1050,
    "title": "ON-03 Connect accounts \u00b7 Plan limit",
@@ -751,7 +751,7 @@
   },
   "OnbConnect-Mobile.dc.html": {
    "x": 4560,
-   "y": 14310,
+   "y": 14830,
    "w": 1362,
    "h": 1190,
    "title": "ON-03 Connect accounts \u00b7 Mobile",
@@ -760,7 +760,7 @@
   },
   "OnbAutomation.dc.html": {
    "x": 0,
-   "y": 15960,
+   "y": 16480,
    "w": 1440,
    "h": 1080,
    "title": "ON-04 Automation mode \u00b7 Filled",
@@ -769,7 +769,7 @@
   },
   "OnbAutomation-Autonomous.dc.html": {
    "x": 1520,
-   "y": 15960,
+   "y": 16480,
    "w": 1440,
    "h": 1080,
    "title": "ON-04 Automation mode \u00b7 Autonomous picked",
@@ -778,7 +778,7 @@
   },
   "OnbAutomation-Free.dc.html": {
    "x": 3040,
-   "y": 15960,
+   "y": 16480,
    "w": 1440,
    "h": 1080,
    "title": "ON-04 Automation mode \u00b7 Free plan (locked)",
@@ -787,7 +787,7 @@
   },
   "OnbAutomation-Mobile.dc.html": {
    "x": 4560,
-   "y": 15960,
+   "y": 16480,
    "w": 1362,
    "h": 1220,
    "title": "ON-04 Automation mode \u00b7 Mobile",
@@ -796,7 +796,7 @@
   },
   "OnbDone.dc.html": {
    "x": 0,
-   "y": 17640,
+   "y": 18160,
    "w": 1440,
    "h": 1150,
    "title": "ON-05 All set \u00b7 Filled",
@@ -805,7 +805,7 @@
   },
   "OnbDone-Mobile.dc.html": {
    "x": 1520,
-   "y": 17640,
+   "y": 18160,
    "w": 486,
    "h": 1290,
    "title": "ON-05 All set \u00b7 Mobile",
@@ -814,7 +814,7 @@
   },
   "Onboarding.dc.html": {
    "x": 0,
-   "y": 19390,
+   "y": 19910,
    "w": 1440,
    "h": 1100,
    "title": "Onboarding flow (interactive)",
@@ -824,7 +824,7 @@
   },
   "Onboarding-Mobile.dc.html": {
    "x": 1520,
-   "y": 19390,
+   "y": 19910,
    "w": 390,
    "h": 1100,
    "title": "Onboarding flow (interactive)",
@@ -833,7 +833,7 @@
   },
   "CommandCenter.dc.html": {
    "x": 0,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1650,
    "title": "APP-01 Command Center \u00b7 Filled",
@@ -842,7 +842,7 @@
   },
   "CommandCenter-Empty.dc.html": {
    "x": 1520,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1500,
    "title": "APP-01 Command Center \u00b7 Empty",
@@ -851,7 +851,7 @@
   },
   "CommandCenter-Loading.dc.html": {
    "x": 3040,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1300,
    "title": "APP-01 Command Center \u00b7 Loading",
@@ -860,7 +860,7 @@
   },
   "CommandCenter-Paused.dc.html": {
    "x": 4560,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1650,
    "title": "APP-01 Command Center \u00b7 Workspace paused",
@@ -869,7 +869,7 @@
   },
   "CommandCenter-Trial.dc.html": {
    "x": 6080,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1650,
    "title": "APP-01 Command Center \u00b7 Trial",
@@ -878,7 +878,7 @@
   },
   "CommandCenter-Pastdue.dc.html": {
    "x": 7600,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1650,
    "title": "APP-01 Command Center \u00b7 Payment failed",
@@ -887,7 +887,7 @@
   },
   "CommandCenter-Mobile.dc.html": {
    "x": 9120,
-   "y": 300,
+   "y": 820,
    "w": 2676,
    "h": 3275,
    "title": "APP-01 Command Center \u00b7 Mobile",
@@ -896,7 +896,7 @@
   },
   "Strategist.dc.html": {
    "x": 0,
-   "y": 4035,
+   "y": 4555,
    "w": 1440,
    "h": 1300,
    "title": "APP-02 AI Strategist \u00b7 Filled",
@@ -905,7 +905,7 @@
   },
   "Strategist-Empty.dc.html": {
    "x": 1520,
-   "y": 4035,
+   "y": 4555,
    "w": 1440,
    "h": 1200,
    "title": "APP-02 AI Strategist \u00b7 Empty",
@@ -914,7 +914,7 @@
   },
   "Strategist-Thinking.dc.html": {
    "x": 3040,
-   "y": 4035,
+   "y": 4555,
    "w": 1440,
    "h": 1300,
    "title": "APP-02 AI Strategist \u00b7 Thinking",
@@ -923,7 +923,7 @@
   },
   "Strategist-Error.dc.html": {
    "x": 4560,
-   "y": 4035,
+   "y": 4555,
    "w": 1440,
    "h": 1300,
    "title": "APP-02 AI Strategist \u00b7 Error",
@@ -932,7 +932,7 @@
   },
   "Strategist-History.dc.html": {
    "x": 6080,
-   "y": 4035,
+   "y": 4555,
    "w": 1440,
    "h": 900,
    "title": "APP-02 AI Strategist \u00b7 History",
@@ -941,7 +941,7 @@
   },
   "Strategist-Mobile.dc.html": {
    "x": 7600,
-   "y": 4035,
+   "y": 4555,
    "w": 2238,
    "h": 2610,
    "title": "APP-02 AI Strategist \u00b7 Mobile",
@@ -950,7 +950,7 @@
   },
   "Activity.dc.html": {
    "x": 0,
-   "y": 7105,
+   "y": 7625,
    "w": 1440,
    "h": 1250,
    "title": "APP-03 AI Activity Center \u00b7 Filled",
@@ -959,7 +959,7 @@
   },
   "Activity-Empty.dc.html": {
    "x": 1520,
-   "y": 7105,
+   "y": 7625,
    "w": 1440,
    "h": 1250,
    "title": "APP-03 AI Activity Center \u00b7 Empty",
@@ -968,7 +968,7 @@
   },
   "Activity-Loading.dc.html": {
    "x": 3040,
-   "y": 7105,
+   "y": 7625,
    "w": 1440,
    "h": 1250,
    "title": "APP-03 AI Activity Center \u00b7 Loading",
@@ -977,7 +977,7 @@
   },
   "Activity-Reconnecting.dc.html": {
    "x": 4560,
-   "y": 7105,
+   "y": 7625,
    "w": 1440,
    "h": 1250,
    "title": "APP-03 AI Activity Center \u00b7 Reconnecting",
@@ -986,7 +986,7 @@
   },
   "Activity-Synced.dc.html": {
    "x": 6080,
-   "y": 7105,
+   "y": 7625,
    "w": 1440,
    "h": 1250,
    "title": "APP-03 AI Activity Center \u00b7 Back online",
@@ -995,7 +995,7 @@
   },
   "Activity-Filtered.dc.html": {
    "x": 7600,
-   "y": 7105,
+   "y": 7625,
    "w": 1440,
    "h": 1250,
    "title": "APP-03 AI Activity Center \u00b7 Filtered: none",
@@ -1004,7 +1004,7 @@
   },
   "Activity-Mobile.dc.html": {
    "x": 9120,
-   "y": 7105,
+   "y": 7625,
    "w": 2676,
    "h": 2515,
    "title": "APP-03 AI Activity Center \u00b7 Mobile",
@@ -1013,7 +1013,7 @@
   },
   "Agents.dc.html": {
    "x": 0,
-   "y": 10080,
+   "y": 10600,
    "w": 1440,
    "h": 1150,
    "title": "APP-04 Agents \u00b7 Filled",
@@ -1022,7 +1022,7 @@
   },
   "Agents-Empty.dc.html": {
    "x": 1520,
-   "y": 10080,
+   "y": 10600,
    "w": 1440,
    "h": 1150,
    "title": "APP-04 Agents \u00b7 Empty",
@@ -1031,7 +1031,7 @@
   },
   "Agents-Loading.dc.html": {
    "x": 3040,
-   "y": 10080,
+   "y": 10600,
    "w": 1440,
    "h": 1150,
    "title": "APP-04 Agents \u00b7 Loading",
@@ -1040,7 +1040,7 @@
   },
   "Agents-Limit.dc.html": {
    "x": 4560,
-   "y": 10080,
+   "y": 10600,
    "w": 1440,
    "h": 1150,
    "title": "APP-04 Agents \u00b7 Plan limit",
@@ -1049,7 +1049,7 @@
   },
   "Agents-Mobile.dc.html": {
    "x": 6080,
-   "y": 10080,
+   "y": 10600,
    "w": 1800,
    "h": 2325,
    "title": "APP-04 Agents \u00b7 Mobile",
@@ -1058,7 +1058,7 @@
   },
   "AgentDetail.dc.html": {
    "x": 0,
-   "y": 12865,
+   "y": 13385,
    "w": 1440,
    "h": 1300,
    "title": "APP-05 Agent detail \u00b7 Filled",
@@ -1067,7 +1067,7 @@
   },
   "AgentDetail-Budget.dc.html": {
    "x": 1520,
-   "y": 12865,
+   "y": 13385,
    "w": 1440,
    "h": 1300,
    "title": "APP-05 Agent detail \u00b7 Budget tab",
@@ -1076,7 +1076,7 @@
   },
   "AgentDetail-Destinations.dc.html": {
    "x": 3040,
-   "y": 12865,
+   "y": 13385,
    "w": 1440,
    "h": 1300,
    "title": "APP-05 Agent detail \u00b7 Destinations tab",
@@ -1085,7 +1085,7 @@
   },
   "AgentDetail-Runs.dc.html": {
    "x": 4560,
-   "y": 12865,
+   "y": 13385,
    "w": 1440,
    "h": 1300,
    "title": "APP-05 Agent detail \u00b7 Runs tab",
@@ -1094,7 +1094,7 @@
   },
   "AgentDetail-Loading.dc.html": {
    "x": 6080,
-   "y": 12865,
+   "y": 13385,
    "w": 1440,
    "h": 1100,
    "title": "APP-05 Agent detail \u00b7 Loading",
@@ -1103,7 +1103,7 @@
   },
   "AgentDetail-Reauth.dc.html": {
    "x": 7600,
-   "y": 12865,
+   "y": 13385,
    "w": 1440,
    "h": 1300,
    "title": "APP-05 Agent detail \u00b7 Re-authorize",
@@ -1112,7 +1112,7 @@
   },
   "AgentDetail-Stopped.dc.html": {
    "x": 9120,
-   "y": 12865,
+   "y": 13385,
    "w": 1440,
    "h": 1000,
    "title": "APP-05 Agent detail \u00b7 Stopped",
@@ -1121,7 +1121,7 @@
   },
   "AgentDetail-Mobile.dc.html": {
    "x": 10640,
-   "y": 12865,
+   "y": 13385,
    "w": 3114,
    "h": 2610,
    "title": "APP-05 Agent detail \u00b7 Mobile",
@@ -1130,7 +1130,7 @@
   },
   "CreateAgent-Goal.dc.html": {
    "x": 0,
-   "y": 15935,
+   "y": 16455,
    "w": 1440,
    "h": 1150,
    "title": "APP-06 Create agent \u00b7 1 \u00b7 Goal",
@@ -1139,7 +1139,7 @@
   },
   "CreateAgent-Sources.dc.html": {
    "x": 1520,
-   "y": 15935,
+   "y": 16455,
    "w": 1440,
    "h": 1150,
    "title": "APP-06 Create agent \u00b7 2 \u00b7 Sources",
@@ -1148,7 +1148,7 @@
   },
   "CreateAgent-Destinations.dc.html": {
    "x": 3040,
-   "y": 15935,
+   "y": 16455,
    "w": 1440,
    "h": 1150,
    "title": "APP-06 Create agent \u00b7 3 \u00b7 Destinations",
@@ -1157,7 +1157,7 @@
   },
   "CreateAgent-Budget.dc.html": {
    "x": 4560,
-   "y": 15935,
+   "y": 16455,
    "w": 1440,
    "h": 1150,
    "title": "APP-06 Create agent \u00b7 4 \u00b7 Budget",
@@ -1166,7 +1166,7 @@
   },
   "CreateAgent.dc.html": {
    "x": 6080,
-   "y": 15935,
+   "y": 16455,
    "w": 1440,
    "h": 1150,
    "title": "APP-06 Create agent \u00b7 Filled",
@@ -1175,7 +1175,7 @@
   },
   "CreateAgent-Authorize.dc.html": {
    "x": 7600,
-   "y": 15935,
+   "y": 16455,
    "w": 1440,
    "h": 1150,
    "title": "APP-06 Create agent \u00b7 Authorize autonomous",
@@ -1184,7 +1184,7 @@
   },
   "CreateAgent-Limit.dc.html": {
    "x": 9120,
-   "y": 15935,
+   "y": 16455,
    "w": 1440,
    "h": 1000,
    "title": "APP-06 Create agent \u00b7 Plan limit",
@@ -1193,7 +1193,7 @@
   },
   "CreateAgent-Goal-Mobile.dc.html": {
    "x": 10640,
-   "y": 15935,
+   "y": 16455,
    "w": 3114,
    "h": 2325,
    "title": "APP-06 Create agent \u00b7 Mobile",
@@ -1202,7 +1202,7 @@
   },
   "WorkspaceSwitcher.dc.html": {
    "x": 0,
-   "y": 18720,
+   "y": 19240,
    "w": 1440,
    "h": 950,
    "title": "APP-07 Workspace switcher \u00b7 Filled",
@@ -1211,7 +1211,7 @@
   },
   "WorkspaceSwitcher-Search.dc.html": {
    "x": 1520,
-   "y": 18720,
+   "y": 19240,
    "w": 1440,
    "h": 950,
    "title": "APP-07 Workspace switcher \u00b7 No match",
@@ -1220,7 +1220,7 @@
   },
   "WorkspaceSwitcher-Mobile.dc.html": {
    "x": 3040,
-   "y": 18720,
+   "y": 19240,
    "w": 924,
    "h": 984,
    "title": "APP-07 Workspace switcher \u00b7 Mobile",
@@ -1229,7 +1229,7 @@
   },
   "Notifications.dc.html": {
    "x": 0,
-   "y": 20164,
+   "y": 20684,
    "w": 1440,
    "h": 1050,
    "title": "NT-01 Notifications \u00b7 Filled",
@@ -1238,7 +1238,7 @@
   },
   "Notifications-Empty.dc.html": {
    "x": 1520,
-   "y": 20164,
+   "y": 20684,
    "w": 1440,
    "h": 1050,
    "title": "NT-01 Notifications \u00b7 Empty",
@@ -1247,7 +1247,7 @@
   },
   "Notifications-Loading.dc.html": {
    "x": 3040,
-   "y": 20164,
+   "y": 20684,
    "w": 1440,
    "h": 1050,
    "title": "NT-01 Notifications \u00b7 Loading",
@@ -1256,7 +1256,7 @@
   },
   "Notifications-Panel.dc.html": {
    "x": 4560,
-   "y": 20164,
+   "y": 20684,
    "w": 1440,
    "h": 950,
    "title": "NT-01 Notifications \u00b7 Dropdown panel",
@@ -1265,7 +1265,7 @@
   },
   "Notifications-Push.dc.html": {
    "x": 6080,
-   "y": 20164,
+   "y": 20684,
    "w": 1440,
    "h": 1050,
    "title": "NT-01 Notifications \u00b7 Push prompt",
@@ -1274,7 +1274,7 @@
   },
   "Notifications-Mobile.dc.html": {
    "x": 7600,
-   "y": 20164,
+   "y": 20684,
    "w": 2238,
    "h": 2135,
    "title": "NT-01 Notifications \u00b7 Mobile",
@@ -1283,7 +1283,7 @@
   },
   "MediaLibrary.dc.html": {
    "x": 0,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1250,
    "title": "CL-01 Media library \u00b7 Filled",
@@ -1292,7 +1292,7 @@
   },
   "MediaLibrary-Empty.dc.html": {
    "x": 1520,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1250,
    "title": "CL-01 Media library \u00b7 Empty",
@@ -1301,7 +1301,7 @@
   },
   "MediaLibrary-Loading.dc.html": {
    "x": 3040,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1250,
    "title": "CL-01 Media library \u00b7 Loading",
@@ -1310,7 +1310,7 @@
   },
   "MediaLibrary-Storage.dc.html": {
    "x": 4560,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1250,
    "title": "CL-01 Media library \u00b7 Storage almost full",
@@ -1319,7 +1319,7 @@
   },
   "MediaLibrary-Mobile.dc.html": {
    "x": 6080,
-   "y": 300,
+   "y": 820,
    "w": 1800,
    "h": 2515,
    "title": "CL-01 Media library \u00b7 Mobile",
@@ -1328,7 +1328,7 @@
   },
   "Upload.dc.html": {
    "x": 0,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 1250,
    "title": "CL-02 Upload \u00b7 Filled",
@@ -1337,7 +1337,7 @@
   },
   "Upload-Uploading.dc.html": {
    "x": 1520,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 1250,
    "title": "CL-02 Upload \u00b7 Uploading",
@@ -1346,7 +1346,7 @@
   },
   "Upload-Wrongtype.dc.html": {
    "x": 3040,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 1250,
    "title": "CL-02 Upload \u00b7 Wrong file type",
@@ -1355,7 +1355,7 @@
   },
   "Upload-Norights.dc.html": {
    "x": 4560,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 1250,
    "title": "CL-02 Upload \u00b7 Rights not chosen",
@@ -1364,7 +1364,7 @@
   },
   "Upload-Lowcredits.dc.html": {
    "x": 6080,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 1250,
    "title": "CL-02 Upload \u00b7 Not enough credits",
@@ -1373,7 +1373,7 @@
   },
   "Upload-Mobile.dc.html": {
    "x": 7600,
-   "y": 3275,
+   "y": 3795,
    "w": 2238,
    "h": 2515,
    "title": "CL-02 Upload \u00b7 Mobile",
@@ -1382,7 +1382,7 @@
   },
   "ClippingStudio.dc.html": {
    "x": 0,
-   "y": 6250,
+   "y": 6770,
    "w": 1440,
    "h": 1350,
    "title": "CL-03 Clipping Studio \u00b7 Filled",
@@ -1391,7 +1391,7 @@
   },
   "ClippingStudio-Processing.dc.html": {
    "x": 1520,
-   "y": 6250,
+   "y": 6770,
    "w": 1440,
    "h": 1050,
    "title": "CL-03 Clipping Studio \u00b7 Processing",
@@ -1400,7 +1400,7 @@
   },
   "ClippingStudio-Loading.dc.html": {
    "x": 3040,
-   "y": 6250,
+   "y": 6770,
    "w": 1440,
    "h": 1250,
    "title": "CL-03 Clipping Studio \u00b7 Loading",
@@ -1409,7 +1409,7 @@
   },
   "ClippingStudio-Blocked.dc.html": {
    "x": 4560,
-   "y": 6250,
+   "y": 6770,
    "w": 1440,
    "h": 1350,
    "title": "CL-03 Clipping Studio \u00b7 Render blocked: license",
@@ -1418,7 +1418,7 @@
   },
   "ClippingStudio-Unsaved.dc.html": {
    "x": 6080,
-   "y": 6250,
+   "y": 6770,
    "w": 1440,
    "h": 1350,
    "title": "CL-03 Clipping Studio \u00b7 Unsaved changes",
@@ -1427,7 +1427,7 @@
   },
   "ClippingStudio-Estimate.dc.html": {
    "x": 7600,
-   "y": 6250,
+   "y": 6770,
    "w": 1440,
    "h": 1350,
    "title": "CL-03 Clipping Studio \u00b7 Render estimate",
@@ -1436,7 +1436,7 @@
   },
   "ClippingStudio-Queued.dc.html": {
    "x": 9120,
-   "y": 6250,
+   "y": 6770,
    "w": 1440,
    "h": 1350,
    "title": "CL-03 Clipping Studio \u00b7 Render queued",
@@ -1445,7 +1445,7 @@
   },
   "ClippingStudio-Mobile.dc.html": {
    "x": 10640,
-   "y": 6250,
+   "y": 6770,
    "w": 3114,
    "h": 2705,
    "title": "CL-03 Clipping Studio \u00b7 Mobile",
@@ -1454,7 +1454,7 @@
   },
   "Variants.dc.html": {
    "x": 0,
-   "y": 9415,
+   "y": 9935,
    "w": 1440,
    "h": 1150,
    "title": "CL-04 Batch variants \u00b7 Filled",
@@ -1463,7 +1463,7 @@
   },
   "Variants-Generating.dc.html": {
    "x": 1520,
-   "y": 9415,
+   "y": 9935,
    "w": 1440,
    "h": 1150,
    "title": "CL-04 Batch variants \u00b7 Generating",
@@ -1472,7 +1472,7 @@
   },
   "Variants-Lowcredits.dc.html": {
    "x": 3040,
-   "y": 9415,
+   "y": 9935,
    "w": 1440,
    "h": 1150,
    "title": "CL-04 Batch variants \u00b7 Not enough credits",
@@ -1481,7 +1481,7 @@
   },
   "Variants-Mobile.dc.html": {
    "x": 4560,
-   "y": 9415,
+   "y": 9935,
    "w": 1362,
    "h": 2325,
    "title": "CL-04 Batch variants \u00b7 Mobile",
@@ -1490,7 +1490,7 @@
   },
   "Exports.dc.html": {
    "x": 0,
-   "y": 12200,
+   "y": 12720,
    "w": 1440,
    "h": 1000,
    "title": "CL-05 Exports \u00b7 Filled",
@@ -1499,7 +1499,7 @@
   },
   "Exports-Empty.dc.html": {
    "x": 1520,
-   "y": 12200,
+   "y": 12720,
    "w": 1440,
    "h": 1000,
    "title": "CL-05 Exports \u00b7 Empty",
@@ -1508,7 +1508,7 @@
   },
   "Exports-Loading.dc.html": {
    "x": 3040,
-   "y": 12200,
+   "y": 12720,
    "w": 1440,
    "h": 1000,
    "title": "CL-05 Exports \u00b7 Loading",
@@ -1517,7 +1517,7 @@
   },
   "Exports-Trial.dc.html": {
    "x": 4560,
-   "y": 12200,
+   "y": 12720,
    "w": 1440,
    "h": 1000,
    "title": "CL-05 Exports \u00b7 Trial limit reached",
@@ -1526,7 +1526,7 @@
   },
   "Exports-Mobile.dc.html": {
    "x": 6080,
-   "y": 12200,
+   "y": 12720,
    "w": 1800,
    "h": 2040,
    "title": "CL-05 Exports \u00b7 Mobile",
@@ -1535,7 +1535,7 @@
   },
   "ContentStudio.dc.html": {
    "x": 0,
-   "y": 14700,
+   "y": 15220,
    "w": 1440,
    "h": 1500,
    "title": "CS-01 Content Studio \u00b7 Filled",
@@ -1544,7 +1544,7 @@
   },
   "ContentStudio-Empty.dc.html": {
    "x": 1520,
-   "y": 14700,
+   "y": 15220,
    "w": 1440,
    "h": 1500,
    "title": "CS-01 Content Studio \u00b7 Empty",
@@ -1553,7 +1553,7 @@
   },
   "ContentStudio-Loading.dc.html": {
    "x": 3040,
-   "y": 14700,
+   "y": 15220,
    "w": 1440,
    "h": 1500,
    "title": "CS-01 Content Studio \u00b7 Loading",
@@ -1562,7 +1562,7 @@
   },
   "ContentStudio-Mobile.dc.html": {
    "x": 4560,
-   "y": 14700,
+   "y": 15220,
    "w": 1362,
    "h": 2990,
    "title": "CS-01 Content Studio \u00b7 Mobile",
@@ -1571,7 +1571,7 @@
   },
   "Composer.dc.html": {
    "x": 0,
-   "y": 18150,
+   "y": 18670,
    "w": 1440,
    "h": 1350,
    "title": "CS-02 Post composer \u00b7 Filled",
@@ -1580,7 +1580,7 @@
   },
   "Composer-Invalid.dc.html": {
    "x": 1520,
-   "y": 18150,
+   "y": 18670,
    "w": 1440,
    "h": 1350,
    "title": "CS-02 Post composer \u00b7 Text too long",
@@ -1589,7 +1589,7 @@
   },
   "Composer-Nodest.dc.html": {
    "x": 3040,
-   "y": 18150,
+   "y": 18670,
    "w": 1440,
    "h": 1350,
    "title": "CS-02 Post composer \u00b7 No account connected",
@@ -1598,7 +1598,7 @@
   },
   "Composer-Licensed.dc.html": {
    "x": 4560,
-   "y": 18150,
+   "y": 18670,
    "w": 1440,
    "h": 1350,
    "title": "CS-02 Post composer \u00b7 Licensed source",
@@ -1607,7 +1607,7 @@
   },
   "Composer-Mobile.dc.html": {
    "x": 6080,
-   "y": 18150,
+   "y": 18670,
    "w": 1800,
    "h": 2705,
    "title": "CS-02 Post composer \u00b7 Mobile",
@@ -1616,7 +1616,7 @@
   },
   "AIVideo.dc.html": {
    "x": 0,
-   "y": 21315,
+   "y": 21835,
    "w": 1440,
    "h": 1000,
    "title": "CS-03 Original AI video \u00b7 Filled",
@@ -1625,7 +1625,7 @@
   },
   "AIVideo-Mobile.dc.html": {
    "x": 1520,
-   "y": 21315,
+   "y": 21835,
    "w": 486,
    "h": 2040,
    "title": "CS-03 Original AI video \u00b7 Mobile",
@@ -1634,7 +1634,7 @@
   },
   "Calendar.dc.html": {
    "x": 0,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1050,
    "title": "PB-01 Content calendar \u00b7 Filled",
@@ -1643,7 +1643,7 @@
   },
   "Calendar-Empty.dc.html": {
    "x": 1520,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1250,
    "title": "PB-01 Content calendar \u00b7 Empty",
@@ -1652,7 +1652,7 @@
   },
   "Calendar-Loading.dc.html": {
    "x": 3040,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1050,
    "title": "PB-01 Content calendar \u00b7 Loading",
@@ -1661,7 +1661,7 @@
   },
   "Calendar-Month.dc.html": {
    "x": 4560,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1050,
    "title": "PB-01 Content calendar \u00b7 Month view",
@@ -1670,7 +1670,7 @@
   },
   "Calendar-Drag.dc.html": {
    "x": 6080,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1050,
    "title": "PB-01 Content calendar \u00b7 Rescheduling",
@@ -1679,7 +1679,7 @@
   },
   "Calendar-Mobile.dc.html": {
    "x": 7600,
-   "y": 300,
+   "y": 820,
    "w": 2238,
    "h": 2515,
    "title": "PB-01 Content calendar \u00b7 Mobile",
@@ -1688,7 +1688,7 @@
   },
   "Drafts.dc.html": {
    "x": 0,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 1000,
    "title": "PB-02 Drafts \u00b7 Filled",
@@ -1697,7 +1697,7 @@
   },
   "Drafts-Empty.dc.html": {
    "x": 1520,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 1000,
    "title": "PB-02 Drafts \u00b7 Empty",
@@ -1706,7 +1706,7 @@
   },
   "Drafts-Loading.dc.html": {
    "x": 3040,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 1000,
    "title": "PB-02 Drafts \u00b7 Loading",
@@ -1715,7 +1715,7 @@
   },
   "Drafts-Mobile.dc.html": {
    "x": 4560,
-   "y": 3275,
+   "y": 3795,
    "w": 1362,
    "h": 2040,
    "title": "PB-02 Drafts \u00b7 Mobile",
@@ -1724,7 +1724,7 @@
   },
   "PostDetail.dc.html": {
    "x": 0,
-   "y": 5775,
+   "y": 6295,
    "w": 1440,
    "h": 1400,
    "title": "PB-03 Post detail \u00b7 Filled",
@@ -1733,7 +1733,7 @@
   },
   "PostDetail-Loading.dc.html": {
    "x": 1520,
-   "y": 5775,
+   "y": 6295,
    "w": 1440,
    "h": 1300,
    "title": "PB-03 Post detail \u00b7 Loading",
@@ -1742,7 +1742,7 @@
   },
   "PostDetail-Published.dc.html": {
    "x": 3040,
-   "y": 5775,
+   "y": 6295,
    "w": 1440,
    "h": 1400,
    "title": "PB-03 Post detail \u00b7 Published",
@@ -1751,7 +1751,7 @@
   },
   "PostDetail-Failed.dc.html": {
    "x": 4560,
-   "y": 5775,
+   "y": 6295,
    "w": 1440,
    "h": 1400,
    "title": "PB-03 Post detail \u00b7 Failed",
@@ -1760,7 +1760,7 @@
   },
   "PostDetail-Uploading.dc.html": {
    "x": 6080,
-   "y": 5775,
+   "y": 6295,
    "w": 1440,
    "h": 1400,
    "title": "PB-03 Post detail \u00b7 Uploading",
@@ -1769,7 +1769,7 @@
   },
   "PostDetail-Held.dc.html": {
    "x": 7600,
-   "y": 5775,
+   "y": 6295,
    "w": 1440,
    "h": 1400,
    "title": "PB-03 Post detail \u00b7 On hold: license",
@@ -1778,7 +1778,7 @@
   },
   "PostDetail-Expired.dc.html": {
    "x": 9120,
-   "y": 5775,
+   "y": 6295,
    "w": 1440,
    "h": 1400,
    "title": "PB-03 Post detail \u00b7 On hold: sign-in",
@@ -1787,7 +1787,7 @@
   },
   "PostDetail-Mobile.dc.html": {
    "x": 10640,
-   "y": 5775,
+   "y": 6295,
    "w": 3114,
    "h": 2800,
    "title": "PB-03 Post detail \u00b7 Mobile",
@@ -1796,7 +1796,7 @@
   },
   "Approvals.dc.html": {
    "x": 0,
-   "y": 9035,
+   "y": 9555,
    "w": 1440,
    "h": 1000,
    "title": "PB-04 Approvals \u00b7 Filled",
@@ -1805,7 +1805,7 @@
   },
   "Approvals-Empty.dc.html": {
    "x": 1520,
-   "y": 9035,
+   "y": 9555,
    "w": 1440,
    "h": 1000,
    "title": "PB-04 Approvals \u00b7 Empty",
@@ -1814,7 +1814,7 @@
   },
   "Approvals-Loading.dc.html": {
    "x": 3040,
-   "y": 9035,
+   "y": 9555,
    "w": 1440,
    "h": 1000,
    "title": "PB-04 Approvals \u00b7 Loading",
@@ -1823,7 +1823,7 @@
   },
   "Approvals-Internal.dc.html": {
    "x": 4560,
-   "y": 9035,
+   "y": 9555,
    "w": 1440,
    "h": 1000,
    "title": "PB-04 Approvals \u00b7 Internal review",
@@ -1832,7 +1832,7 @@
   },
   "Approvals-Mobile.dc.html": {
    "x": 6080,
-   "y": 9035,
+   "y": 9555,
    "w": 1800,
    "h": 2040,
    "title": "PB-04 Approvals \u00b7 Mobile",
@@ -1841,7 +1841,7 @@
   },
   "ApprovalDetail.dc.html": {
    "x": 0,
-   "y": 11535,
+   "y": 12055,
    "w": 1440,
    "h": 1300,
    "title": "PB-05 Approval detail \u00b7 Filled",
@@ -1850,7 +1850,7 @@
   },
   "ApprovalDetail-Loading.dc.html": {
    "x": 1520,
-   "y": 11535,
+   "y": 12055,
    "w": 1440,
    "h": 1200,
    "title": "PB-05 Approval detail \u00b7 Loading",
@@ -1859,7 +1859,7 @@
   },
   "ApprovalDetail-Allapproved.dc.html": {
    "x": 3040,
-   "y": 11535,
+   "y": 12055,
    "w": 1440,
    "h": 1300,
    "title": "PB-05 Approval detail \u00b7 All approved",
@@ -1868,7 +1868,7 @@
   },
   "ApprovalDetail-Invalidated.dc.html": {
    "x": 4560,
-   "y": 11535,
+   "y": 12055,
    "w": 1440,
    "h": 1300,
    "title": "PB-05 Approval detail \u00b7 Re-approval needed",
@@ -1877,7 +1877,7 @@
   },
   "ApprovalDetail-Mobile.dc.html": {
    "x": 6080,
-   "y": 11535,
+   "y": 12055,
    "w": 1800,
    "h": 2610,
    "title": "PB-05 Approval detail \u00b7 Mobile",
@@ -1886,7 +1886,7 @@
   },
   "Analytics.dc.html": {
    "x": 0,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1300,
    "title": "AN-01 Analytics overview \u00b7 Filled",
@@ -1895,7 +1895,7 @@
   },
   "Analytics-Empty.dc.html": {
    "x": 1520,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1300,
    "title": "AN-01 Analytics overview \u00b7 Empty",
@@ -1904,7 +1904,7 @@
   },
   "Analytics-Loading.dc.html": {
    "x": 3040,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1300,
    "title": "AN-01 Analytics overview \u00b7 Loading",
@@ -1913,7 +1913,7 @@
   },
   "Analytics-Delayed.dc.html": {
    "x": 4560,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1300,
    "title": "AN-01 Analytics overview \u00b7 Data delayed",
@@ -1922,7 +1922,7 @@
   },
   "Analytics-Mobile.dc.html": {
    "x": 6080,
-   "y": 300,
+   "y": 820,
    "w": 1800,
    "h": 2610,
    "title": "AN-01 Analytics overview \u00b7 Mobile",
@@ -1931,7 +1931,7 @@
   },
   "ContentPerformance.dc.html": {
    "x": 0,
-   "y": 3370,
+   "y": 3890,
    "w": 1440,
    "h": 950,
    "title": "AN-02 Content performance \u00b7 Filled",
@@ -1940,7 +1940,7 @@
   },
   "ContentPerformance-Empty.dc.html": {
    "x": 1520,
-   "y": 3370,
+   "y": 3890,
    "w": 1440,
    "h": 950,
    "title": "AN-02 Content performance \u00b7 Empty",
@@ -1949,7 +1949,7 @@
   },
   "ContentPerformance-Loading.dc.html": {
    "x": 3040,
-   "y": 3370,
+   "y": 3890,
    "w": 1440,
    "h": 950,
    "title": "AN-02 Content performance \u00b7 Loading",
@@ -1958,7 +1958,7 @@
   },
   "ContentPerformance-Mobile.dc.html": {
    "x": 4560,
-   "y": 3370,
+   "y": 3890,
    "w": 1362,
    "h": 1945,
    "title": "AN-02 Content performance \u00b7 Mobile",
@@ -1967,7 +1967,7 @@
   },
   "AgentPerformance.dc.html": {
    "x": 0,
-   "y": 5775,
+   "y": 6295,
    "w": 1440,
    "h": 1100,
    "title": "AN-03 Agent performance \u00b7 Filled",
@@ -1976,7 +1976,7 @@
   },
   "AgentPerformance-Empty.dc.html": {
    "x": 1520,
-   "y": 5775,
+   "y": 6295,
    "w": 1440,
    "h": 1100,
    "title": "AN-03 Agent performance \u00b7 Empty",
@@ -1985,7 +1985,7 @@
   },
   "AgentPerformance-Loading.dc.html": {
    "x": 3040,
-   "y": 5775,
+   "y": 6295,
    "w": 1440,
    "h": 1100,
    "title": "AN-03 Agent performance \u00b7 Loading",
@@ -1994,7 +1994,7 @@
   },
   "AgentPerformance-Mobile.dc.html": {
    "x": 4560,
-   "y": 5775,
+   "y": 6295,
    "w": 1362,
    "h": 2230,
    "title": "AN-03 Agent performance \u00b7 Mobile",
@@ -2003,7 +2003,7 @@
   },
   "Campaigns.dc.html": {
    "x": 0,
-   "y": 8465,
+   "y": 8985,
    "w": 1440,
    "h": 950,
    "title": "AN-04 Campaigns & experiments \u00b7 Filled",
@@ -2012,7 +2012,7 @@
   },
   "Campaigns-Empty.dc.html": {
    "x": 1520,
-   "y": 8465,
+   "y": 8985,
    "w": 1440,
    "h": 950,
    "title": "AN-04 Campaigns & experiments \u00b7 Empty",
@@ -2021,7 +2021,7 @@
   },
   "Campaigns-Loading.dc.html": {
    "x": 3040,
-   "y": 8465,
+   "y": 8985,
    "w": 1440,
    "h": 950,
    "title": "AN-04 Campaigns & experiments \u00b7 Loading",
@@ -2030,7 +2030,7 @@
   },
   "Campaigns-Mobile.dc.html": {
    "x": 4560,
-   "y": 8465,
+   "y": 8985,
    "w": 1362,
    "h": 1945,
    "title": "AN-04 Campaigns & experiments \u00b7 Mobile",
@@ -2039,7 +2039,7 @@
   },
   "Marketplace.dc.html": {
    "x": 0,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1300,
    "title": "LI-01 Marketplace \u00b7 Filled",
@@ -2048,7 +2048,7 @@
   },
   "Marketplace-Empty.dc.html": {
    "x": 1520,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1300,
    "title": "LI-01 Marketplace \u00b7 Empty",
@@ -2057,7 +2057,7 @@
   },
   "Marketplace-Loading.dc.html": {
    "x": 3040,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1300,
    "title": "LI-01 Marketplace \u00b7 Loading",
@@ -2066,7 +2066,7 @@
   },
   "Marketplace-Mobile.dc.html": {
    "x": 4560,
-   "y": 300,
+   "y": 820,
    "w": 1362,
    "h": 2610,
    "title": "LI-01 Marketplace \u00b7 Mobile",
@@ -2075,7 +2075,7 @@
   },
   "SourceDetail.dc.html": {
    "x": 0,
-   "y": 3370,
+   "y": 3890,
    "w": 1440,
    "h": 1300,
    "title": "LI-02 Source detail & terms \u00b7 Filled",
@@ -2084,7 +2084,7 @@
   },
   "SourceDetail-Loading.dc.html": {
    "x": 1520,
-   "y": 3370,
+   "y": 3890,
    "w": 1440,
    "h": 1100,
    "title": "LI-02 Source detail & terms \u00b7 Loading",
@@ -2093,7 +2093,7 @@
   },
   "SourceDetail-Private.dc.html": {
    "x": 3040,
-   "y": 3370,
+   "y": 3890,
    "w": 1440,
    "h": 1300,
    "title": "LI-02 Source detail & terms \u00b7 Private license",
@@ -2102,7 +2102,7 @@
   },
   "SourceDetail-Paid.dc.html": {
    "x": 4560,
-   "y": 3370,
+   "y": 3890,
    "w": 1440,
    "h": 1300,
    "title": "LI-02 Source detail & terms \u00b7 Paid (coming later)",
@@ -2111,7 +2111,7 @@
   },
   "SourceDetail-Suspended.dc.html": {
    "x": 6080,
-   "y": 3370,
+   "y": 3890,
    "w": 1440,
    "h": 1300,
    "title": "LI-02 Source detail & terms \u00b7 Owner suspended",
@@ -2120,7 +2120,7 @@
   },
   "SourceDetail-Licensed.dc.html": {
    "x": 7600,
-   "y": 3370,
+   "y": 3890,
    "w": 1440,
    "h": 1300,
    "title": "LI-02 Source detail & terms \u00b7 Already licensed",
@@ -2129,7 +2129,7 @@
   },
   "SourceDetail-Mobile.dc.html": {
    "x": 9120,
-   "y": 3370,
+   "y": 3890,
    "w": 2676,
    "h": 2610,
    "title": "LI-02 Source detail & terms \u00b7 Mobile",
@@ -2138,7 +2138,7 @@
   },
   "RequestLicense.dc.html": {
    "x": 0,
-   "y": 6440,
+   "y": 6960,
    "w": 1440,
    "h": 1000,
    "title": "LI-03 Request / accept license \u00b7 Filled",
@@ -2147,7 +2147,7 @@
   },
   "RequestLicense-Private.dc.html": {
    "x": 1520,
-   "y": 6440,
+   "y": 6960,
    "w": 1440,
    "h": 1000,
    "title": "LI-03 Request / accept license \u00b7 Private request",
@@ -2156,7 +2156,7 @@
   },
   "RequestLicense-Sent.dc.html": {
    "x": 3040,
-   "y": 6440,
+   "y": 6960,
    "w": 1440,
    "h": 1000,
    "title": "LI-03 Request / accept license \u00b7 Request sent",
@@ -2165,7 +2165,7 @@
   },
   "RequestLicense-Approved.dc.html": {
    "x": 4560,
-   "y": 6440,
+   "y": 6960,
    "w": 1440,
    "h": 1000,
    "title": "LI-03 Request / accept license \u00b7 Approved",
@@ -2174,7 +2174,7 @@
   },
   "RequestLicense-Declined.dc.html": {
    "x": 6080,
-   "y": 6440,
+   "y": 6960,
    "w": 1440,
    "h": 1000,
    "title": "LI-03 Request / accept license \u00b7 Declined",
@@ -2183,7 +2183,7 @@
   },
   "RequestLicense-Mobile.dc.html": {
    "x": 7600,
-   "y": 6440,
+   "y": 6960,
    "w": 2238,
    "h": 984,
    "title": "LI-03 Request / accept license \u00b7 Mobile",
@@ -2192,7 +2192,7 @@
   },
   "MyLicenses.dc.html": {
    "x": 0,
-   "y": 7900,
+   "y": 8420,
    "w": 1440,
    "h": 1150,
    "title": "LI-04 My licenses \u00b7 Filled",
@@ -2201,7 +2201,7 @@
   },
   "MyLicenses-Empty.dc.html": {
    "x": 1520,
-   "y": 7900,
+   "y": 8420,
    "w": 1440,
    "h": 1150,
    "title": "LI-04 My licenses \u00b7 Empty",
@@ -2210,7 +2210,7 @@
   },
   "MyLicenses-Loading.dc.html": {
    "x": 3040,
-   "y": 7900,
+   "y": 8420,
    "w": 1440,
    "h": 1150,
    "title": "LI-04 My licenses \u00b7 Loading",
@@ -2219,7 +2219,7 @@
   },
   "MyLicenses-Expired.dc.html": {
    "x": 4560,
-   "y": 7900,
+   "y": 8420,
    "w": 1440,
    "h": 1150,
    "title": "LI-04 My licenses \u00b7 License expired",
@@ -2228,7 +2228,7 @@
   },
   "MyLicenses-Mobile.dc.html": {
    "x": 6080,
-   "y": 7900,
+   "y": 8420,
    "w": 1800,
    "h": 2325,
    "title": "LI-04 My licenses \u00b7 Mobile",
@@ -2237,7 +2237,7 @@
   },
   "CreatorOverview.dc.html": {
    "x": 0,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1250,
    "title": "LI-05 Creator portal overview \u00b7 Filled",
@@ -2246,7 +2246,7 @@
   },
   "CreatorOverview-Empty.dc.html": {
    "x": 1520,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1250,
    "title": "LI-05 Creator portal overview \u00b7 Empty",
@@ -2255,7 +2255,7 @@
   },
   "CreatorOverview-Loading.dc.html": {
    "x": 3040,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1150,
    "title": "LI-05 Creator portal overview \u00b7 Loading",
@@ -2264,7 +2264,7 @@
   },
   "CreatorOverview-Unverified.dc.html": {
    "x": 4560,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1250,
    "title": "LI-05 Creator portal overview \u00b7 Not verified yet",
@@ -2273,7 +2273,7 @@
   },
   "CreatorOverview-Mobile.dc.html": {
    "x": 6080,
-   "y": 300,
+   "y": 820,
    "w": 1800,
    "h": 2515,
    "title": "LI-05 Creator portal overview \u00b7 Mobile",
@@ -2282,7 +2282,7 @@
   },
   "Verification.dc.html": {
    "x": 0,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 950,
    "title": "LI-06 Verification \u00b7 Filled",
@@ -2291,7 +2291,7 @@
   },
   "Verification-Pending.dc.html": {
    "x": 1520,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 950,
    "title": "LI-06 Verification \u00b7 Pending",
@@ -2300,7 +2300,7 @@
   },
   "Verification-Failed.dc.html": {
    "x": 3040,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 950,
    "title": "LI-06 Verification \u00b7 Failed",
@@ -2309,7 +2309,7 @@
   },
   "Verification-Empty.dc.html": {
    "x": 4560,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 950,
    "title": "LI-06 Verification \u00b7 Empty",
@@ -2318,7 +2318,7 @@
   },
   "Verification-Mobile.dc.html": {
    "x": 6080,
-   "y": 3275,
+   "y": 3795,
    "w": 1800,
    "h": 1945,
    "title": "LI-06 Verification \u00b7 Mobile",
@@ -2327,7 +2327,7 @@
   },
   "LicenseTerms.dc.html": {
    "x": 0,
-   "y": 5680,
+   "y": 6200,
    "w": 1440,
    "h": 1300,
    "title": "LI-07 Licensing terms \u00b7 Filled",
@@ -2336,7 +2336,7 @@
   },
   "LicenseTerms-Unverified.dc.html": {
    "x": 1520,
-   "y": 5680,
+   "y": 6200,
    "w": 1440,
    "h": 1300,
    "title": "LI-07 Licensing terms \u00b7 Can\u2019t publish yet",
@@ -2345,7 +2345,7 @@
   },
   "LicenseTerms-Saved.dc.html": {
    "x": 3040,
-   "y": 5680,
+   "y": 6200,
    "w": 1440,
    "h": 1300,
    "title": "LI-07 Licensing terms \u00b7 Published",
@@ -2354,7 +2354,7 @@
   },
   "LicenseTerms-Mobile.dc.html": {
    "x": 4560,
-   "y": 5680,
+   "y": 6200,
    "w": 1362,
    "h": 2610,
    "title": "LI-07 Licensing terms \u00b7 Mobile",
@@ -2363,7 +2363,7 @@
   },
   "Usage.dc.html": {
    "x": 0,
-   "y": 8750,
+   "y": 9270,
    "w": 1440,
    "h": 1000,
    "title": "LI-08 Usage audit \u00b7 Filled",
@@ -2372,7 +2372,7 @@
   },
   "Usage-Empty.dc.html": {
    "x": 1520,
-   "y": 8750,
+   "y": 9270,
    "w": 1440,
    "h": 1000,
    "title": "LI-08 Usage audit \u00b7 Empty",
@@ -2381,7 +2381,7 @@
   },
   "Usage-Loading.dc.html": {
    "x": 3040,
-   "y": 8750,
+   "y": 9270,
    "w": 1440,
    "h": 1000,
    "title": "LI-08 Usage audit \u00b7 Loading",
@@ -2390,7 +2390,7 @@
   },
   "Usage-Mobile.dc.html": {
    "x": 4560,
-   "y": 8750,
+   "y": 9270,
    "w": 1362,
    "h": 2040,
    "title": "LI-08 Usage audit \u00b7 Mobile",
@@ -2399,7 +2399,7 @@
   },
   "Revoke.dc.html": {
    "x": 0,
-   "y": 11250,
+   "y": 11770,
    "w": 1440,
    "h": 1000,
    "title": "LI-09 Revoke a license \u00b7 Filled",
@@ -2408,7 +2408,7 @@
   },
   "Revoke-Done.dc.html": {
    "x": 1520,
-   "y": 11250,
+   "y": 11770,
    "w": 1440,
    "h": 900,
    "title": "LI-09 Revoke a license \u00b7 Revoked",
@@ -2417,7 +2417,7 @@
   },
   "Revoke-Empty.dc.html": {
    "x": 3040,
-   "y": 11250,
+   "y": 11770,
    "w": 1440,
    "h": 900,
    "title": "LI-09 Revoke a license \u00b7 Empty",
@@ -2426,7 +2426,7 @@
   },
   "Revoke-Mobile.dc.html": {
    "x": 4560,
-   "y": 11250,
+   "y": 11770,
    "w": 1362,
    "h": 1850,
    "title": "LI-09 Revoke a license \u00b7 Mobile",
@@ -2435,7 +2435,7 @@
   },
   "Payouts.dc.html": {
    "x": 0,
-   "y": 13560,
+   "y": 14080,
    "w": 1440,
    "h": 900,
    "title": "LI-10 Payouts \u00b7 Filled",
@@ -2444,7 +2444,7 @@
   },
   "Payouts-Mobile.dc.html": {
    "x": 1520,
-   "y": 13560,
+   "y": 14080,
    "w": 486,
    "h": 1850,
    "title": "LI-10 Payouts \u00b7 Mobile",
@@ -2453,7 +2453,7 @@
   },
   "Connections.dc.html": {
    "x": 0,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1250,
    "title": "IN-01 Connections \u00b7 Filled",
@@ -2462,7 +2462,7 @@
   },
   "Connections-Empty.dc.html": {
    "x": 1520,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1000,
    "title": "IN-01 Connections \u00b7 Empty",
@@ -2471,7 +2471,7 @@
   },
   "Connections-Loading.dc.html": {
    "x": 3040,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1150,
    "title": "IN-01 Connections \u00b7 Loading",
@@ -2480,7 +2480,7 @@
   },
   "Connections-Limit.dc.html": {
    "x": 4560,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1250,
    "title": "IN-01 Connections \u00b7 Account limit",
@@ -2489,7 +2489,7 @@
   },
   "Connections-Mobile.dc.html": {
    "x": 6080,
-   "y": 300,
+   "y": 820,
    "w": 1800,
    "h": 2515,
    "title": "IN-01 Connections \u00b7 Mobile",
@@ -2498,7 +2498,7 @@
   },
   "ConnectionDetail.dc.html": {
    "x": 0,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 1100,
    "title": "IN-02 Connection detail \u00b7 Filled",
@@ -2507,7 +2507,7 @@
   },
   "ConnectionDetail-Expiring.dc.html": {
    "x": 1520,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 1100,
    "title": "IN-02 Connection detail \u00b7 Expiring",
@@ -2516,7 +2516,7 @@
   },
   "ConnectionDetail-Disconnect.dc.html": {
    "x": 3040,
-   "y": 3275,
+   "y": 3795,
    "w": 1440,
    "h": 1100,
    "title": "IN-02 Connection detail \u00b7 Disconnect confirm",
@@ -2525,7 +2525,7 @@
   },
   "ConnectionDetail-Mobile.dc.html": {
    "x": 4560,
-   "y": 3275,
+   "y": 3795,
    "w": 1362,
    "h": 2230,
    "title": "IN-02 Connection detail \u00b7 Mobile",
@@ -2534,7 +2534,7 @@
   },
   "AgencyHub.dc.html": {
    "x": 0,
-   "y": 5965,
+   "y": 6485,
    "w": 1440,
    "h": 1300,
    "title": "AG-01 Agency hub \u00b7 Filled",
@@ -2543,7 +2543,7 @@
   },
   "AgencyHub-Empty.dc.html": {
    "x": 1520,
-   "y": 5965,
+   "y": 6485,
    "w": 1440,
    "h": 1300,
    "title": "AG-01 Agency hub \u00b7 Empty",
@@ -2552,7 +2552,7 @@
   },
   "AgencyHub-Loading.dc.html": {
    "x": 3040,
-   "y": 5965,
+   "y": 6485,
    "w": 1440,
    "h": 1300,
    "title": "AG-01 Agency hub \u00b7 Loading",
@@ -2561,7 +2561,7 @@
   },
   "AgencyHub-Overlimit.dc.html": {
    "x": 4560,
-   "y": 5965,
+   "y": 6485,
    "w": 1440,
    "h": 1300,
    "title": "AG-01 Agency hub \u00b7 Client over limit",
@@ -2570,7 +2570,7 @@
   },
   "AgencyHub-Mobile.dc.html": {
    "x": 6080,
-   "y": 5965,
+   "y": 6485,
    "w": 1800,
    "h": 2610,
    "title": "AG-01 Agency hub \u00b7 Mobile",
@@ -2579,7 +2579,7 @@
   },
   "Clients.dc.html": {
    "x": 0,
-   "y": 9035,
+   "y": 9555,
    "w": 1440,
    "h": 1000,
    "title": "AG-02 Client workspaces \u00b7 Filled",
@@ -2588,7 +2588,7 @@
   },
   "Clients-Empty.dc.html": {
    "x": 1520,
-   "y": 9035,
+   "y": 9555,
    "w": 1440,
    "h": 1000,
    "title": "AG-02 Client workspaces \u00b7 Empty",
@@ -2597,7 +2597,7 @@
   },
   "Clients-Create.dc.html": {
    "x": 3040,
-   "y": 9035,
+   "y": 9555,
    "w": 1440,
    "h": 1000,
    "title": "AG-02 Client workspaces \u00b7 New client",
@@ -2606,7 +2606,7 @@
   },
   "Clients-Limit.dc.html": {
    "x": 4560,
-   "y": 9035,
+   "y": 9555,
    "w": 1440,
    "h": 1000,
    "title": "AG-02 Client workspaces \u00b7 Workspace limit",
@@ -2615,7 +2615,7 @@
   },
   "Clients-Mobile.dc.html": {
    "x": 6080,
-   "y": 9035,
+   "y": 9555,
    "w": 1800,
    "h": 2040,
    "title": "AG-02 Client workspaces \u00b7 Mobile",
@@ -2624,7 +2624,7 @@
   },
   "ClientSettings.dc.html": {
    "x": 0,
-   "y": 11535,
+   "y": 12055,
    "w": 1440,
    "h": 1100,
    "title": "AG-03 Client workspace settings \u00b7 Filled",
@@ -2633,7 +2633,7 @@
   },
   "ClientSettings-Saved.dc.html": {
    "x": 1520,
-   "y": 11535,
+   "y": 12055,
    "w": 1440,
    "h": 1100,
    "title": "AG-03 Client workspace settings \u00b7 Saved",
@@ -2642,7 +2642,7 @@
   },
   "ClientSettings-Policy.dc.html": {
    "x": 3040,
-   "y": 11535,
+   "y": 12055,
    "w": 1440,
    "h": 1100,
    "title": "AG-03 Client workspace settings \u00b7 Policy change",
@@ -2651,7 +2651,7 @@
   },
   "ClientSettings-Mobile.dc.html": {
    "x": 4560,
-   "y": 11535,
+   "y": 12055,
    "w": 1362,
    "h": 2230,
    "title": "AG-03 Client workspace settings \u00b7 Mobile",
@@ -2660,7 +2660,7 @@
   },
   "Team.dc.html": {
    "x": 0,
-   "y": 14225,
+   "y": 14745,
    "w": 1440,
    "h": 1000,
    "title": "AG-04 Team & invitations \u00b7 Filled",
@@ -2669,7 +2669,7 @@
   },
   "Team-Invite.dc.html": {
    "x": 1520,
-   "y": 14225,
+   "y": 14745,
    "w": 1440,
    "h": 1000,
    "title": "AG-04 Team & invitations \u00b7 Invite",
@@ -2678,7 +2678,7 @@
   },
   "Team-Seats.dc.html": {
    "x": 3040,
-   "y": 14225,
+   "y": 14745,
    "w": 1440,
    "h": 1000,
    "title": "AG-04 Team & invitations \u00b7 Seat limit",
@@ -2687,7 +2687,7 @@
   },
   "Team-Loading.dc.html": {
    "x": 4560,
-   "y": 14225,
+   "y": 14745,
    "w": 1440,
    "h": 950,
    "title": "AG-04 Team & invitations \u00b7 Loading",
@@ -2696,7 +2696,7 @@
   },
   "Team-Mobile.dc.html": {
    "x": 6080,
-   "y": 14225,
+   "y": 14745,
    "w": 1800,
    "h": 2040,
    "title": "AG-04 Team & invitations \u00b7 Mobile",
@@ -2705,7 +2705,7 @@
   },
   "Roles.dc.html": {
    "x": 0,
-   "y": 16725,
+   "y": 17245,
    "w": 1440,
    "h": 1000,
    "title": "AG-05 Roles & permissions \u00b7 Filled",
@@ -2714,7 +2714,7 @@
   },
   "Roles-Mobile.dc.html": {
    "x": 1520,
-   "y": 16725,
+   "y": 17245,
    "w": 486,
    "h": 2040,
    "title": "AG-05 Roles & permissions \u00b7 Mobile",
@@ -2723,7 +2723,7 @@
   },
   "AuditLog.dc.html": {
    "x": 0,
-   "y": 19225,
+   "y": 19745,
    "w": 1440,
    "h": 1100,
    "title": "AG-06 Audit log \u00b7 Filled",
@@ -2732,7 +2732,7 @@
   },
   "AuditLog-Empty.dc.html": {
    "x": 1520,
-   "y": 19225,
+   "y": 19745,
    "w": 1440,
    "h": 1100,
    "title": "AG-06 Audit log \u00b7 Empty",
@@ -2741,7 +2741,7 @@
   },
   "AuditLog-Loading.dc.html": {
    "x": 3040,
-   "y": 19225,
+   "y": 19745,
    "w": 1440,
    "h": 1100,
    "title": "AG-06 Audit log \u00b7 Loading",
@@ -2750,7 +2750,7 @@
   },
   "AuditLog-Mobile.dc.html": {
    "x": 4560,
-   "y": 19225,
+   "y": 19745,
    "w": 1362,
    "h": 2230,
    "title": "AG-06 Audit log \u00b7 Mobile",
@@ -2759,7 +2759,7 @@
   },
   "ClientPortal.dc.html": {
    "x": 0,
-   "y": 21915,
+   "y": 22435,
    "w": 1440,
    "h": 1000,
    "title": "CP-01 Client portal home \u00b7 Filled",
@@ -2768,7 +2768,7 @@
   },
   "ClientPortal-Empty.dc.html": {
    "x": 1520,
-   "y": 21915,
+   "y": 22435,
    "w": 1440,
    "h": 1000,
    "title": "CP-01 Client portal home \u00b7 Empty",
@@ -2777,7 +2777,7 @@
   },
   "ClientPortal-Loading.dc.html": {
    "x": 3040,
-   "y": 21915,
+   "y": 22435,
    "w": 1440,
    "h": 1000,
    "title": "CP-01 Client portal home \u00b7 Loading",
@@ -2786,7 +2786,7 @@
   },
   "ClientPortal-Approved.dc.html": {
    "x": 4560,
-   "y": 21915,
+   "y": 22435,
    "w": 1440,
    "h": 1000,
    "title": "CP-01 Client portal home \u00b7 Approved tab",
@@ -2795,7 +2795,7 @@
   },
   "ClientPortal-Published.dc.html": {
    "x": 6080,
-   "y": 21915,
+   "y": 22435,
    "w": 1440,
    "h": 1000,
    "title": "CP-01 Client portal home \u00b7 Published tab",
@@ -2804,7 +2804,7 @@
   },
   "ClientPortal-Mobile.dc.html": {
    "x": 7600,
-   "y": 21915,
+   "y": 22435,
    "w": 2238,
    "h": 2040,
    "title": "CP-01 Client portal home \u00b7 Mobile",
@@ -2813,7 +2813,7 @@
   },
   "ClientApproval.dc.html": {
    "x": 0,
-   "y": 24415,
+   "y": 24935,
    "w": 1440,
    "h": 1100,
    "title": "CP-02 Client approval detail \u00b7 Filled",
@@ -2822,7 +2822,7 @@
   },
   "ClientApproval-Decided.dc.html": {
    "x": 1520,
-   "y": 24415,
+   "y": 24935,
    "w": 1440,
    "h": 1100,
    "title": "CP-02 Client approval detail \u00b7 Approved",
@@ -2831,7 +2831,7 @@
   },
   "ClientApproval-Newer.dc.html": {
    "x": 3040,
-   "y": 24415,
+   "y": 24935,
    "w": 1440,
    "h": 1100,
    "title": "CP-02 Client approval detail \u00b7 Newer revision",
@@ -2840,7 +2840,7 @@
   },
   "ClientApproval-Loading.dc.html": {
    "x": 4560,
-   "y": 24415,
+   "y": 24935,
    "w": 1440,
    "h": 1100,
    "title": "CP-02 Client approval detail \u00b7 Loading",
@@ -2849,7 +2849,7 @@
   },
   "ClientApproval-Mobile.dc.html": {
    "x": 6080,
-   "y": 24415,
+   "y": 24935,
    "w": 1800,
    "h": 2230,
    "title": "CP-02 Client approval detail \u00b7 Mobile",
@@ -2858,7 +2858,7 @@
   },
   "Billing.dc.html": {
    "x": 0,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1150,
    "title": "BI-01 Plan & usage \u00b7 Filled",
@@ -2867,7 +2867,7 @@
   },
   "Billing-Loading.dc.html": {
    "x": 1520,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1050,
    "title": "BI-01 Plan & usage \u00b7 Loading",
@@ -2876,7 +2876,7 @@
   },
   "Billing-Free.dc.html": {
    "x": 3040,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1050,
    "title": "BI-01 Plan & usage \u00b7 Free plan",
@@ -2885,7 +2885,7 @@
   },
   "Billing-Mobile.dc.html": {
    "x": 4560,
-   "y": 300,
+   "y": 820,
    "w": 1362,
    "h": 2325,
    "title": "BI-01 Plan & usage \u00b7 Mobile",
@@ -2894,7 +2894,7 @@
   },
   "Plans.dc.html": {
    "x": 0,
-   "y": 3085,
+   "y": 3605,
    "w": 1440,
    "h": 1000,
    "title": "BI-02 Plans & checkout \u00b7 Filled",
@@ -2903,7 +2903,7 @@
   },
   "Plans-Checkout.dc.html": {
    "x": 1520,
-   "y": 3085,
+   "y": 3605,
    "w": 1440,
    "h": 1000,
    "title": "BI-02 Plans & checkout \u00b7 Checkout",
@@ -2912,7 +2912,7 @@
   },
   "Plans-Processing.dc.html": {
    "x": 3040,
-   "y": 3085,
+   "y": 3605,
    "w": 1440,
    "h": 1000,
    "title": "BI-02 Plans & checkout \u00b7 Processing",
@@ -2921,7 +2921,7 @@
   },
   "Plans-Success.dc.html": {
    "x": 4560,
-   "y": 3085,
+   "y": 3605,
    "w": 1440,
    "h": 1000,
    "title": "BI-02 Plans & checkout \u00b7 Success",
@@ -2930,7 +2930,7 @@
   },
   "Plans-Declined.dc.html": {
    "x": 6080,
-   "y": 3085,
+   "y": 3605,
    "w": 1440,
    "h": 1000,
    "title": "BI-02 Plans & checkout \u00b7 Declined",
@@ -2939,7 +2939,7 @@
   },
   "Plans-Mobile.dc.html": {
    "x": 7600,
-   "y": 3085,
+   "y": 3605,
    "w": 2238,
    "h": 2040,
    "title": "BI-02 Plans & checkout \u00b7 Mobile",
@@ -2948,7 +2948,7 @@
   },
   "Ledger.dc.html": {
    "x": 0,
-   "y": 5585,
+   "y": 6105,
    "w": 1440,
    "h": 950,
    "title": "BI-03 Credit ledger \u00b7 Filled",
@@ -2957,7 +2957,7 @@
   },
   "Ledger-Loading.dc.html": {
    "x": 1520,
-   "y": 5585,
+   "y": 6105,
    "w": 1440,
    "h": 950,
    "title": "BI-03 Credit ledger \u00b7 Loading",
@@ -2966,7 +2966,7 @@
   },
   "Ledger-Mobile.dc.html": {
    "x": 3040,
-   "y": 5585,
+   "y": 6105,
    "w": 924,
    "h": 1945,
    "title": "BI-03 Credit ledger \u00b7 Mobile",
@@ -2975,7 +2975,7 @@
   },
   "TopUp.dc.html": {
    "x": 0,
-   "y": 7990,
+   "y": 8510,
    "w": 1440,
    "h": 1000,
    "title": "BI-04 Top-ups \u00b7 Filled",
@@ -2984,7 +2984,7 @@
   },
   "TopUp-Locked.dc.html": {
    "x": 1520,
-   "y": 7990,
+   "y": 8510,
    "w": 1440,
    "h": 1000,
    "title": "BI-04 Top-ups \u00b7 Locked on Free",
@@ -2993,7 +2993,7 @@
   },
   "TopUp-Mobile.dc.html": {
    "x": 3040,
-   "y": 7990,
+   "y": 8510,
    "w": 924,
    "h": 2040,
    "title": "BI-04 Top-ups \u00b7 Mobile",
@@ -3002,7 +3002,7 @@
   },
   "SpendLimits.dc.html": {
    "x": 0,
-   "y": 10490,
+   "y": 11010,
    "w": 1440,
    "h": 1100,
    "title": "BI-05 Spend limits \u00b7 Filled",
@@ -3011,7 +3011,7 @@
   },
   "SpendLimits-Reached.dc.html": {
    "x": 1520,
-   "y": 10490,
+   "y": 11010,
    "w": 1440,
    "h": 1100,
    "title": "BI-05 Spend limits \u00b7 Limit reached",
@@ -3020,7 +3020,7 @@
   },
   "SpendLimits-Request.dc.html": {
    "x": 3040,
-   "y": 10490,
+   "y": 11010,
    "w": 1440,
    "h": 1100,
    "title": "BI-05 Spend limits \u00b7 Manager request",
@@ -3029,7 +3029,7 @@
   },
   "SpendLimits-Mobile.dc.html": {
    "x": 4560,
-   "y": 10490,
+   "y": 11010,
    "w": 1362,
    "h": 2230,
    "title": "BI-05 Spend limits \u00b7 Mobile",
@@ -3038,7 +3038,7 @@
   },
   "Invoices.dc.html": {
    "x": 0,
-   "y": 13180,
+   "y": 13700,
    "w": 1440,
    "h": 900,
    "title": "BI-06 Invoices \u00b7 Filled",
@@ -3047,7 +3047,7 @@
   },
   "Invoices-Empty.dc.html": {
    "x": 1520,
-   "y": 13180,
+   "y": 13700,
    "w": 1440,
    "h": 900,
    "title": "BI-06 Invoices \u00b7 Empty",
@@ -3056,7 +3056,7 @@
   },
   "Invoices-Loading.dc.html": {
    "x": 3040,
-   "y": 13180,
+   "y": 13700,
    "w": 1440,
    "h": 900,
    "title": "BI-06 Invoices \u00b7 Loading",
@@ -3065,7 +3065,7 @@
   },
   "Invoices-Mobile.dc.html": {
    "x": 4560,
-   "y": 13180,
+   "y": 13700,
    "w": 1362,
    "h": 1850,
    "title": "BI-06 Invoices \u00b7 Mobile",
@@ -3074,7 +3074,7 @@
   },
   "PaymentFailed.dc.html": {
    "x": 0,
-   "y": 15490,
+   "y": 16010,
    "w": 1440,
    "h": 1000,
    "title": "BI-07 Payment failure \u00b7 Filled",
@@ -3083,7 +3083,7 @@
   },
   "PaymentFailed-Recovered.dc.html": {
    "x": 1520,
-   "y": 15490,
+   "y": 16010,
    "w": 1440,
    "h": 1000,
    "title": "BI-07 Payment failure \u00b7 Recovered",
@@ -3092,7 +3092,7 @@
   },
   "PaymentFailed-Downgraded.dc.html": {
    "x": 3040,
-   "y": 15490,
+   "y": 16010,
    "w": 1440,
    "h": 1000,
    "title": "BI-07 Payment failure \u00b7 Downgraded",
@@ -3101,7 +3101,7 @@
   },
   "PaymentFailed-Mobile.dc.html": {
    "x": 4560,
-   "y": 15490,
+   "y": 16010,
    "w": 1362,
    "h": 2040,
    "title": "BI-07 Payment failure \u00b7 Mobile",
@@ -3110,7 +3110,7 @@
   },
   "Trial.dc.html": {
    "x": 0,
-   "y": 17990,
+   "y": 18510,
    "w": 1440,
    "h": 1250,
    "title": "BI-08 Trial status \u00b7 Filled",
@@ -3119,7 +3119,7 @@
   },
   "Trial-Limit.dc.html": {
    "x": 1520,
-   "y": 17990,
+   "y": 18510,
    "w": 1440,
    "h": 1250,
    "title": "BI-08 Trial status \u00b7 Limit reached",
@@ -3128,7 +3128,7 @@
   },
   "Trial-Ending.dc.html": {
    "x": 3040,
-   "y": 17990,
+   "y": 18510,
    "w": 1440,
    "h": 1250,
    "title": "BI-08 Trial status \u00b7 Ends tomorrow",
@@ -3137,7 +3137,7 @@
   },
   "Trial-Ended.dc.html": {
    "x": 4560,
-   "y": 17990,
+   "y": 18510,
    "w": 1440,
    "h": 1250,
    "title": "BI-08 Trial status \u00b7 Ended",
@@ -3146,7 +3146,7 @@
   },
   "Trial-Mobile.dc.html": {
    "x": 6080,
-   "y": 17990,
+   "y": 18510,
    "w": 1800,
    "h": 2515,
    "title": "BI-08 Trial status \u00b7 Mobile",
@@ -3155,7 +3155,7 @@
   },
   "Profile.dc.html": {
    "x": 0,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 950,
    "title": "ST-01 Profile \u00b7 Filled",
@@ -3164,7 +3164,7 @@
   },
   "Profile-Saved.dc.html": {
    "x": 1520,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 950,
    "title": "ST-01 Profile \u00b7 Saved",
@@ -3173,7 +3173,7 @@
   },
   "Profile-Emailchange.dc.html": {
    "x": 3040,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 950,
    "title": "ST-01 Profile \u00b7 Email change pending",
@@ -3182,7 +3182,7 @@
   },
   "Profile-Loading.dc.html": {
    "x": 4560,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 900,
    "title": "ST-01 Profile \u00b7 Loading",
@@ -3191,7 +3191,7 @@
   },
   "Profile-Mobile.dc.html": {
    "x": 6080,
-   "y": 300,
+   "y": 820,
    "w": 1800,
    "h": 1945,
    "title": "ST-01 Profile \u00b7 Mobile",
@@ -3200,7 +3200,7 @@
   },
   "Security.dc.html": {
    "x": 0,
-   "y": 2705,
+   "y": 3225,
    "w": 1440,
    "h": 1000,
    "title": "ST-02 Security \u00b7 Filled",
@@ -3209,7 +3209,7 @@
   },
   "Security-Deleteblocked.dc.html": {
    "x": 1520,
-   "y": 2705,
+   "y": 3225,
    "w": 1440,
    "h": 1000,
    "title": "ST-02 Security \u00b7 Delete blocked",
@@ -3218,7 +3218,7 @@
   },
   "Security-Sessions.dc.html": {
    "x": 3040,
-   "y": 2705,
+   "y": 3225,
    "w": 1440,
    "h": 1000,
    "title": "ST-02 Security \u00b7 Sessions",
@@ -3227,7 +3227,7 @@
   },
   "Security-Mobile.dc.html": {
    "x": 4560,
-   "y": 2705,
+   "y": 3225,
    "w": 1362,
    "h": 2040,
    "title": "ST-02 Security \u00b7 Mobile",
@@ -3236,7 +3236,7 @@
   },
   "Appearance.dc.html": {
    "x": 0,
-   "y": 5205,
+   "y": 5725,
    "w": 1440,
    "h": 950,
    "title": "ST-03 Appearance \u00b7 Filled",
@@ -3245,7 +3245,7 @@
   },
   "Appearance-Dark.dc.html": {
    "x": 1520,
-   "y": 5205,
+   "y": 5725,
    "w": 1440,
    "h": 950,
    "title": "ST-03 Appearance \u00b7 Dark selected",
@@ -3254,7 +3254,7 @@
   },
   "Appearance-Mobile.dc.html": {
    "x": 3040,
-   "y": 5205,
+   "y": 5725,
    "w": 924,
    "h": 1945,
    "title": "ST-03 Appearance \u00b7 Mobile",
@@ -3263,7 +3263,7 @@
   },
   "NotificationPrefs.dc.html": {
    "x": 0,
-   "y": 7610,
+   "y": 8130,
    "w": 1440,
    "h": 1100,
    "title": "ST-04 Notification preferences \u00b7 Filled",
@@ -3272,7 +3272,7 @@
   },
   "NotificationPrefs-Pushdenied.dc.html": {
    "x": 1520,
-   "y": 7610,
+   "y": 8130,
    "w": 1440,
    "h": 1100,
    "title": "ST-04 Notification preferences \u00b7 Push blocked",
@@ -3281,7 +3281,7 @@
   },
   "NotificationPrefs-Unsupported.dc.html": {
    "x": 3040,
-   "y": 7610,
+   "y": 8130,
    "w": 1440,
    "h": 1100,
    "title": "ST-04 Notification preferences \u00b7 Push unsupported",
@@ -3290,7 +3290,7 @@
   },
   "NotificationPrefs-Mobile.dc.html": {
    "x": 4560,
-   "y": 7610,
+   "y": 8130,
    "w": 1362,
    "h": 2230,
    "title": "ST-04 Notification preferences \u00b7 Mobile",
@@ -3299,7 +3299,7 @@
   },
   "Members.dc.html": {
    "x": 0,
-   "y": 10300,
+   "y": 10820,
    "w": 1440,
    "h": 850,
    "title": "ST-05 Workspace members \u00b7 Filled",
@@ -3308,7 +3308,7 @@
   },
   "Members-Empty.dc.html": {
    "x": 1520,
-   "y": 10300,
+   "y": 10820,
    "w": 1440,
    "h": 900,
    "title": "ST-05 Workspace members \u00b7 Empty",
@@ -3317,7 +3317,7 @@
   },
   "Members-Mobile.dc.html": {
    "x": 3040,
-   "y": 10300,
+   "y": 10820,
    "w": 924,
    "h": 1850,
    "title": "ST-05 Workspace members \u00b7 Mobile",
@@ -3326,7 +3326,7 @@
   },
   "BrandKits.dc.html": {
    "x": 0,
-   "y": 12610,
+   "y": 13130,
    "w": 1440,
    "h": 1100,
    "title": "ST-06 Brand kits \u00b7 Filled",
@@ -3335,7 +3335,7 @@
   },
   "BrandKits-Empty.dc.html": {
    "x": 1520,
-   "y": 12610,
+   "y": 13130,
    "w": 1440,
    "h": 950,
    "title": "ST-06 Brand kits \u00b7 Empty",
@@ -3344,7 +3344,7 @@
   },
   "BrandKits-Editing.dc.html": {
    "x": 3040,
-   "y": 12610,
+   "y": 13130,
    "w": 1440,
    "h": 1100,
    "title": "ST-06 Brand kits \u00b7 Editing",
@@ -3353,7 +3353,7 @@
   },
   "BrandKits-Mobile.dc.html": {
    "x": 4560,
-   "y": 12610,
+   "y": 13130,
    "w": 1362,
    "h": 2230,
    "title": "ST-06 Brand kits \u00b7 Mobile",
@@ -3362,7 +3362,7 @@
   },
   "AISettings.dc.html": {
    "x": 0,
-   "y": 15300,
+   "y": 15820,
    "w": 1440,
    "h": 1000,
    "title": "ST-07 AI & processing \u00b7 Filled",
@@ -3371,7 +3371,7 @@
   },
   "AISettings-Mobile.dc.html": {
    "x": 1520,
-   "y": 15300,
+   "y": 15820,
    "w": 486,
    "h": 2040,
    "title": "ST-07 AI & processing \u00b7 Mobile",
@@ -3380,7 +3380,7 @@
   },
   "IntegrationStatus.dc.html": {
    "x": 0,
-   "y": 17800,
+   "y": 18320,
    "w": 1440,
    "h": 900,
    "title": "ST-08 Integration status \u00b7 Filled",
@@ -3389,7 +3389,7 @@
   },
   "IntegrationStatus-Mobile.dc.html": {
    "x": 1520,
-   "y": 17800,
+   "y": 18320,
    "w": 486,
    "h": 1850,
    "title": "ST-08 Integration status \u00b7 Mobile",
@@ -3398,7 +3398,7 @@
   },
   "Privacy.dc.html": {
    "x": 0,
-   "y": 20110,
+   "y": 20630,
    "w": 1440,
    "h": 950,
    "title": "ST-09 Privacy & data \u00b7 Filled",
@@ -3407,7 +3407,7 @@
   },
   "Privacy-Exportready.dc.html": {
    "x": 1520,
-   "y": 20110,
+   "y": 20630,
    "w": 1440,
    "h": 950,
    "title": "ST-09 Privacy & data \u00b7 Export ready",
@@ -3416,7 +3416,7 @@
   },
   "Privacy-Deleting.dc.html": {
    "x": 3040,
-   "y": 20110,
+   "y": 20630,
    "w": 1440,
    "h": 950,
    "title": "ST-09 Privacy & data \u00b7 Deletion requested",
@@ -3425,7 +3425,7 @@
   },
   "Privacy-Mobile.dc.html": {
    "x": 4560,
-   "y": 20110,
+   "y": 20630,
    "w": 1362,
    "h": 1945,
    "title": "ST-09 Privacy & data \u00b7 Mobile",
@@ -3434,7 +3434,7 @@
   },
   "WorkspaceSettings.dc.html": {
    "x": 0,
-   "y": 22515,
+   "y": 23035,
    "w": 1440,
    "h": 950,
    "title": "ST-10 Workspace settings \u00b7 Filled",
@@ -3443,7 +3443,7 @@
   },
   "WorkspaceSettings-Paused.dc.html": {
    "x": 1520,
-   "y": 22515,
+   "y": 23035,
    "w": 1440,
    "h": 950,
    "title": "ST-10 Workspace settings \u00b7 Workspace paused",
@@ -3452,7 +3452,7 @@
   },
   "WorkspaceSettings-Resumed.dc.html": {
    "x": 3040,
-   "y": 22515,
+   "y": 23035,
    "w": 1440,
    "h": 950,
    "title": "ST-10 Workspace settings \u00b7 Resumed",
@@ -3461,7 +3461,7 @@
   },
   "WorkspaceSettings-Mobile.dc.html": {
    "x": 4560,
-   "y": 22515,
+   "y": 23035,
    "w": 1362,
    "h": 1945,
    "title": "ST-10 Workspace settings \u00b7 Mobile",
@@ -3470,7 +3470,7 @@
   },
   "AdminOps.dc.html": {
    "x": 0,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1100,
    "title": "AD-01 Ops overview \u00b7 Filled",
@@ -3479,7 +3479,7 @@
   },
   "AdminOps-Loading.dc.html": {
    "x": 1520,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1000,
    "title": "AD-01 Ops overview \u00b7 Loading",
@@ -3488,7 +3488,7 @@
   },
   "AdminOps-Healthy.dc.html": {
    "x": 3040,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1100,
    "title": "AD-01 Ops overview \u00b7 All healthy",
@@ -3497,7 +3497,7 @@
   },
   "AdminOps-Paused.dc.html": {
    "x": 4560,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 1100,
    "title": "AD-01 Ops overview \u00b7 Global pause",
@@ -3506,7 +3506,7 @@
   },
   "AdminOps-Mobile.dc.html": {
    "x": 6080,
-   "y": 300,
+   "y": 820,
    "w": 1800,
    "h": 2230,
    "title": "AD-01 Ops overview \u00b7 Mobile",
@@ -3515,7 +3515,7 @@
   },
   "AdminJobs.dc.html": {
    "x": 0,
-   "y": 2990,
+   "y": 3510,
    "w": 1440,
    "h": 1000,
    "title": "AD-02 Jobs & dead-letter \u00b7 Filled",
@@ -3524,7 +3524,7 @@
   },
   "AdminJobs-Empty.dc.html": {
    "x": 1520,
-   "y": 2990,
+   "y": 3510,
    "w": 1440,
    "h": 900,
    "title": "AD-02 Jobs & dead-letter \u00b7 Empty",
@@ -3533,7 +3533,7 @@
   },
   "AdminJobs-Loading.dc.html": {
    "x": 3040,
-   "y": 2990,
+   "y": 3510,
    "w": 1440,
    "h": 1000,
    "title": "AD-02 Jobs & dead-letter \u00b7 Loading",
@@ -3542,7 +3542,7 @@
   },
   "AdminJobs-Mobile.dc.html": {
    "x": 4560,
-   "y": 2990,
+   "y": 3510,
    "w": 1362,
    "h": 2040,
    "title": "AD-02 Jobs & dead-letter \u00b7 Mobile",
@@ -3551,7 +3551,7 @@
   },
   "AdminAudit.dc.html": {
    "x": 0,
-   "y": 5490,
+   "y": 6010,
    "w": 1440,
    "h": 950,
    "title": "AD-03 Audit search \u00b7 Filled",
@@ -3560,7 +3560,7 @@
   },
   "AdminAudit-Empty.dc.html": {
    "x": 1520,
-   "y": 5490,
+   "y": 6010,
    "w": 1440,
    "h": 950,
    "title": "AD-03 Audit search \u00b7 Empty",
@@ -3569,7 +3569,7 @@
   },
   "AdminAudit-Mobile.dc.html": {
    "x": 3040,
-   "y": 5490,
+   "y": 6010,
    "w": 924,
    "h": 1945,
    "title": "AD-03 Audit search \u00b7 Mobile",
@@ -3578,7 +3578,7 @@
   },
   "AdminLicenses.dc.html": {
    "x": 0,
-   "y": 7895,
+   "y": 8415,
    "w": 1440,
    "h": 950,
    "title": "AD-04 License review \u00b7 Filled",
@@ -3587,7 +3587,7 @@
   },
   "AdminLicenses-Empty.dc.html": {
    "x": 1520,
-   "y": 7895,
+   "y": 8415,
    "w": 1440,
    "h": 950,
    "title": "AD-04 License review \u00b7 Empty",
@@ -3596,7 +3596,7 @@
   },
   "AdminLicenses-Mobile.dc.html": {
    "x": 3040,
-   "y": 7895,
+   "y": 8415,
    "w": 924,
    "h": 1945,
    "title": "AD-04 License review \u00b7 Mobile",
@@ -3605,7 +3605,7 @@
   },
   "AdminSupport.dc.html": {
    "x": 0,
-   "y": 10300,
+   "y": 10820,
    "w": 1440,
    "h": 1000,
    "title": "AD-05 Support access \u00b7 Filled",
@@ -3614,7 +3614,7 @@
   },
   "AdminSupport-Request.dc.html": {
    "x": 1520,
-   "y": 10300,
+   "y": 10820,
    "w": 1440,
    "h": 1000,
    "title": "AD-05 Support access \u00b7 Request access",
@@ -3623,7 +3623,7 @@
   },
   "AdminSupport-Active.dc.html": {
    "x": 3040,
-   "y": 10300,
+   "y": 10820,
    "w": 1440,
    "h": 1000,
    "title": "AD-05 Support access \u00b7 Active session",
@@ -3632,7 +3632,7 @@
   },
   "AdminSupport-Mobile.dc.html": {
    "x": 4560,
-   "y": 10300,
+   "y": 10820,
    "w": 1362,
    "h": 2040,
    "title": "AD-05 Support access \u00b7 Mobile",
@@ -3641,7 +3641,7 @@
   },
   "AdminAbuse.dc.html": {
    "x": 0,
-   "y": 12800,
+   "y": 13320,
    "w": 1440,
    "h": 900,
    "title": "AD-06 Abuse & moderation \u00b7 Filled",
@@ -3650,7 +3650,7 @@
   },
   "AdminAbuse-Empty.dc.html": {
    "x": 1520,
-   "y": 12800,
+   "y": 13320,
    "w": 1440,
    "h": 900,
    "title": "AD-06 Abuse & moderation \u00b7 Empty",
@@ -3659,7 +3659,7 @@
   },
   "AdminAbuse-Mobile.dc.html": {
    "x": 3040,
-   "y": 12800,
+   "y": 13320,
    "w": 924,
    "h": 1850,
    "title": "AD-06 Abuse & moderation \u00b7 Mobile",
@@ -3668,7 +3668,7 @@
   },
   "AdminDiagnostics.dc.html": {
    "x": 0,
-   "y": 15110,
+   "y": 15630,
    "w": 1440,
    "h": 900,
    "title": "AD-07 Diagnostics \u00b7 Filled",
@@ -3677,7 +3677,7 @@
   },
   "AdminDiagnostics-Mobile.dc.html": {
    "x": 1520,
-   "y": 15110,
+   "y": 15630,
    "w": 486,
    "h": 1850,
    "title": "AD-07 Diagnostics \u00b7 Mobile",
@@ -3686,7 +3686,7 @@
   },
   "AdminFlags.dc.html": {
    "x": 0,
-   "y": 17420,
+   "y": 17940,
    "w": 1440,
    "h": 950,
    "title": "AD-08 Feature flags \u00b7 Filled",
@@ -3695,7 +3695,7 @@
   },
   "AdminFlags-Mobile.dc.html": {
    "x": 1520,
-   "y": 17420,
+   "y": 17940,
    "w": 486,
    "h": 1945,
    "title": "AD-08 Feature flags \u00b7 Mobile",
@@ -3704,7 +3704,7 @@
   },
   "AdminPauseConfirm.dc.html": {
    "x": 0,
-   "y": 19825,
+   "y": 20345,
    "w": 1440,
    "h": 950,
    "title": "AD-09 Global pause confirm \u00b7 Filled",
@@ -3713,7 +3713,7 @@
   },
   "AdminPauseConfirm-Mobile.dc.html": {
    "x": 1520,
-   "y": 19825,
+   "y": 20345,
    "w": 486,
    "h": 984,
    "title": "AD-09 Global pause confirm \u00b7 Mobile",
@@ -3722,7 +3722,7 @@
   },
   "PWAInstall.dc.html": {
    "x": 0,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 850,
    "title": "SY-01 Install prompt (PWA) \u00b7 Filled",
@@ -3731,7 +3731,7 @@
   },
   "PWAInstall-Ios.dc.html": {
    "x": 1520,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 850,
    "title": "SY-01 Install prompt (PWA) \u00b7 iPhone instructions",
@@ -3740,7 +3740,7 @@
   },
   "PWAInstall-Installed.dc.html": {
    "x": 3040,
-   "y": 300,
+   "y": 820,
    "w": 1440,
    "h": 850,
    "title": "SY-01 Install prompt (PWA) \u00b7 Installed",
@@ -3749,7 +3749,7 @@
   },
   "PWAInstall-Mobile.dc.html": {
    "x": 4560,
-   "y": 300,
+   "y": 820,
    "w": 1362,
    "h": 1755,
    "title": "SY-01 Install prompt (PWA) \u00b7 Mobile",
@@ -3758,7 +3758,7 @@
   },
   "Offline.dc.html": {
    "x": 0,
-   "y": 2515,
+   "y": 3035,
    "w": 1440,
    "h": 950,
    "title": "SY-02 Offline \u00b7 Filled",
@@ -3767,7 +3767,7 @@
   },
   "Offline-Reconnecting.dc.html": {
    "x": 1520,
-   "y": 2515,
+   "y": 3035,
    "w": 1440,
    "h": 950,
    "title": "SY-02 Offline \u00b7 Reconnecting",
@@ -3776,7 +3776,7 @@
   },
   "Offline-Synced.dc.html": {
    "x": 3040,
-   "y": 2515,
+   "y": 3035,
    "w": 1440,
    "h": 950,
    "title": "SY-02 Offline \u00b7 Back online",
@@ -3785,7 +3785,7 @@
   },
   "Offline-Mobile.dc.html": {
    "x": 4560,
-   "y": 2515,
+   "y": 3035,
    "w": 1362,
    "h": 1945,
    "title": "SY-02 Offline \u00b7 Mobile",
@@ -3794,7 +3794,7 @@
   },
   "NotFound.dc.html": {
    "x": 0,
-   "y": 4920,
+   "y": 5440,
    "w": 1440,
    "h": 900,
    "title": "SY-03 Not found \u00b7 Filled",
@@ -3803,7 +3803,7 @@
   },
   "NotFound-Mobile.dc.html": {
    "x": 1520,
-   "y": 4920,
+   "y": 5440,
    "w": 486,
    "h": 1850,
    "title": "SY-03 Not found \u00b7 Mobile",
@@ -3812,7 +3812,7 @@
   },
   "Denied.dc.html": {
    "x": 0,
-   "y": 7230,
+   "y": 7750,
    "w": 1440,
    "h": 900,
    "title": "SY-04 Access denied \u00b7 Filled",
@@ -3821,7 +3821,7 @@
   },
   "Denied-Mobile.dc.html": {
    "x": 1520,
-   "y": 7230,
+   "y": 7750,
    "w": 486,
    "h": 1850,
    "title": "SY-04 Access denied \u00b7 Mobile",
@@ -3830,7 +3830,7 @@
   },
   "ServerError.dc.html": {
    "x": 0,
-   "y": 9540,
+   "y": 10060,
    "w": 1440,
    "h": 900,
    "title": "SY-05 Server error \u00b7 Filled",
@@ -3839,7 +3839,7 @@
   },
   "ServerError-Mobile.dc.html": {
    "x": 1520,
-   "y": 9540,
+   "y": 10060,
    "w": 486,
    "h": 1850,
    "title": "SY-05 Server error \u00b7 Mobile",
@@ -3848,7 +3848,7 @@
   },
   "Maintenance.dc.html": {
    "x": 0,
-   "y": 11850,
+   "y": 12370,
    "w": 1440,
    "h": 900,
    "title": "SY-06 Maintenance \u00b7 Filled",
@@ -3857,7 +3857,7 @@
   },
   "Maintenance-Mobile.dc.html": {
    "x": 1520,
-   "y": 11850,
+   "y": 12370,
    "w": 486,
    "h": 1850,
    "title": "SY-06 Maintenance \u00b7 Mobile",
@@ -3866,7 +3866,7 @@
   },
   "CommandPalette.dc.html": {
    "x": 0,
-   "y": 14160,
+   "y": 14680,
    "w": 1440,
    "h": 950,
    "title": "SY-07 Command palette \u00b7 Filled",
@@ -3875,7 +3875,7 @@
   },
   "CommandPalette-Results.dc.html": {
    "x": 1520,
-   "y": 14160,
+   "y": 14680,
    "w": 1440,
    "h": 950,
    "title": "SY-07 Command palette \u00b7 Results",
@@ -3884,7 +3884,7 @@
   },
   "CommandPalette-Empty.dc.html": {
    "x": 3040,
-   "y": 14160,
+   "y": 14680,
    "w": 1440,
    "h": 950,
    "title": "SY-07 Command palette \u00b7 No results",
@@ -3893,7 +3893,7 @@
   },
   "CommandPalette-Mobile.dc.html": {
    "x": 4560,
-   "y": 14160,
+   "y": 14680,
    "w": 1362,
    "h": 984,
    "title": "SY-07 Command palette \u00b7 Mobile",
@@ -3902,7 +3902,7 @@
   },
   "AccountMenu.dc.html": {
    "x": 0,
-   "y": 15604,
+   "y": 16124,
    "w": 1440,
    "h": 850,
    "title": "SY-08 Account menu \u00b7 Filled",
@@ -3911,7 +3911,7 @@
   },
   "AccountMenu-Mobile.dc.html": {
    "x": 1520,
-   "y": 15604,
+   "y": 16124,
    "w": 486,
    "h": 1755,
    "title": "SY-08 Account menu \u00b7 Mobile",
@@ -3920,7 +3920,7 @@
   },
   "PauseConfirm.dc.html": {
    "x": 0,
-   "y": 17819,
+   "y": 18339,
    "w": 1440,
    "h": 950,
    "title": "SY-09 Pause all confirm \u00b7 Filled",
@@ -3929,7 +3929,7 @@
   },
   "PauseConfirm-Resume.dc.html": {
    "x": 1520,
-   "y": 17819,
+   "y": 18339,
    "w": 1440,
    "h": 950,
    "title": "SY-09 Pause all confirm \u00b7 Resume",
@@ -3938,7 +3938,7 @@
   },
   "PauseConfirm-Mobile.dc.html": {
    "x": 3040,
-   "y": 17819,
+   "y": 18339,
    "w": 924,
    "h": 984,
    "title": "SY-09 Pause all confirm \u00b7 Mobile",
@@ -3947,7 +3947,7 @@
   },
   "MobileHome.dc.html": {
    "x": 0,
-   "y": 300,
+   "y": 820,
    "w": 390,
    "h": 844,
    "title": "MB-01 Mobile \u00b7 Home \u00b7 Filled",
@@ -3955,7 +3955,7 @@
   },
   "MobileHome-Empty.dc.html": {
    "x": 470,
-   "y": 300,
+   "y": 820,
    "w": 390,
    "h": 844,
    "title": "MB-01 Mobile \u00b7 Home \u00b7 Empty",
@@ -3963,7 +3963,7 @@
   },
   "MobileHome-Loading.dc.html": {
    "x": 940,
-   "y": 300,
+   "y": 820,
    "w": 390,
    "h": 844,
    "title": "MB-01 Mobile \u00b7 Home \u00b7 Loading",
@@ -3971,7 +3971,7 @@
   },
   "MobileActivity.dc.html": {
    "x": 0,
-   "y": 1604,
+   "y": 2124,
    "w": 390,
    "h": 844,
    "title": "MB-02 Mobile \u00b7 Activity \u00b7 Filled",
@@ -3979,7 +3979,7 @@
   },
   "MobileActivity-Empty.dc.html": {
    "x": 470,
-   "y": 1604,
+   "y": 2124,
    "w": 390,
    "h": 844,
    "title": "MB-02 Mobile \u00b7 Activity \u00b7 Empty",
@@ -3987,7 +3987,7 @@
   },
   "MobileActivity-Loading.dc.html": {
    "x": 940,
-   "y": 1604,
+   "y": 2124,
    "w": 390,
    "h": 844,
    "title": "MB-02 Mobile \u00b7 Activity \u00b7 Loading",
@@ -3995,7 +3995,7 @@
   },
   "MobileApprovals.dc.html": {
    "x": 0,
-   "y": 2908,
+   "y": 3428,
    "w": 390,
    "h": 844,
    "title": "MB-03 Mobile \u00b7 Approvals \u00b7 Filled",
@@ -4003,7 +4003,7 @@
   },
   "MobileApprovals-Empty.dc.html": {
    "x": 470,
-   "y": 2908,
+   "y": 3428,
    "w": 390,
    "h": 844,
    "title": "MB-03 Mobile \u00b7 Approvals \u00b7 Empty",
@@ -4011,7 +4011,7 @@
   },
   "MobileApprovals-Loading.dc.html": {
    "x": 940,
-   "y": 2908,
+   "y": 3428,
    "w": 390,
    "h": 844,
    "title": "MB-03 Mobile \u00b7 Approvals \u00b7 Loading",
@@ -4019,7 +4019,7 @@
   },
   "MobileCalendar.dc.html": {
    "x": 0,
-   "y": 4212,
+   "y": 4732,
    "w": 390,
    "h": 844,
    "title": "MB-04 Mobile \u00b7 Calendar \u00b7 Filled",
@@ -4027,7 +4027,7 @@
   },
   "MobileCalendar-Empty.dc.html": {
    "x": 470,
-   "y": 4212,
+   "y": 4732,
    "w": 390,
    "h": 844,
    "title": "MB-04 Mobile \u00b7 Calendar \u00b7 Empty",
@@ -4035,7 +4035,7 @@
   },
   "MobileCalendar-Loading.dc.html": {
    "x": 940,
-   "y": 4212,
+   "y": 4732,
    "w": 390,
    "h": 844,
    "title": "MB-04 Mobile \u00b7 Calendar \u00b7 Loading",
@@ -4043,7 +4043,7 @@
   },
   "MobileMore.dc.html": {
    "x": 0,
-   "y": 5216,
+   "y": 5736,
    "w": 390,
    "h": 844,
    "title": "MB-05 Mobile \u00b7 More \u00b7 Filled",
@@ -4051,7 +4051,7 @@
   },
   "MobileNotifications.dc.html": {
    "x": 0,
-   "y": 6520,
+   "y": 7040,
    "w": 390,
    "h": 844,
    "title": "MB-06 Mobile \u00b7 Notifications \u00b7 Filled",
@@ -4059,7 +4059,7 @@
   },
   "MobileNotifications-Empty.dc.html": {
    "x": 470,
-   "y": 6520,
+   "y": 7040,
    "w": 390,
    "h": 844,
    "title": "MB-06 Mobile \u00b7 Notifications \u00b7 Empty",
@@ -4067,7 +4067,7 @@
   },
   "MobileClientPortal.dc.html": {
    "x": 0,
-   "y": 7824,
+   "y": 8344,
    "w": 390,
    "h": 844,
    "title": "MB-07 Mobile \u00b7 Client portal \u00b7 Filled",
@@ -4075,7 +4075,7 @@
   },
   "MobileClientPortal-Empty.dc.html": {
    "x": 470,
-   "y": 7824,
+   "y": 8344,
    "w": 390,
    "h": 844,
    "title": "MB-07 Mobile \u00b7 Client portal \u00b7 Empty",
@@ -4083,7 +4083,7 @@
   },
   "MobileClientApproval.dc.html": {
    "x": 0,
-   "y": 9128,
+   "y": 9648,
    "w": 390,
    "h": 844,
    "title": "MB-08 Mobile \u00b7 Client approval \u00b7 Filled",
@@ -4091,7 +4091,7 @@
   },
   "MobileClientApproval-Decided.dc.html": {
    "x": 470,
-   "y": 9128,
+   "y": 9648,
    "w": 390,
    "h": 844,
    "title": "MB-08 Mobile \u00b7 Client approval \u00b7 Approved",
@@ -4099,7 +4099,7 @@
   },
   "MobileClipTrim.dc.html": {
    "x": 0,
-   "y": 10432,
+   "y": 10952,
    "w": 390,
    "h": 844,
    "title": "MB-09 Mobile \u00b7 Clip review & trim \u00b7 Filled",
@@ -4107,7 +4107,7 @@
   },
   "MobileClipTrim-Loading.dc.html": {
    "x": 470,
-   "y": 10432,
+   "y": 10952,
    "w": 390,
    "h": 844,
    "title": "MB-09 Mobile \u00b7 Clip review & trim \u00b7 Loading",
@@ -4115,7 +4115,7 @@
   },
   "MobileOnboarding.dc.html": {
    "x": 0,
-   "y": 11736,
+   "y": 12256,
    "w": 390,
    "h": 844,
    "title": "MB-10 Mobile \u00b7 Onboarding \u00b7 Filled",
@@ -4123,7 +4123,7 @@
   },
   "MobileOnboarding-Done.dc.html": {
    "x": 470,
-   "y": 11736,
+   "y": 12256,
    "w": 390,
    "h": 844,
    "title": "MB-10 Mobile \u00b7 Onboarding \u00b7 All set",
@@ -4131,7 +4131,7 @@
   },
   "MobileAgent.dc.html": {
    "x": 0,
-   "y": 13040,
+   "y": 13560,
    "w": 390,
    "h": 844,
    "title": "MB-11 Mobile \u00b7 Agent \u00b7 Filled",
@@ -4139,7 +4139,7 @@
   },
   "MobileAgent-Paused.dc.html": {
    "x": 470,
-   "y": 13040,
+   "y": 13560,
    "w": 390,
    "h": 844,
    "title": "MB-11 Mobile \u00b7 Agent \u00b7 Paused",
@@ -4147,7 +4147,7 @@
   },
   "MobileUpload.dc.html": {
    "x": 0,
-   "y": 14344,
+   "y": 14864,
    "w": 390,
    "h": 844,
    "title": "MB-12 Mobile \u00b7 Upload \u00b7 Filled",
@@ -4155,7 +4155,7 @@
   },
   "MobileUpload-Uploading.dc.html": {
    "x": 470,
-   "y": 14344,
+   "y": 14864,
    "w": 390,
    "h": 844,
    "title": "MB-12 Mobile \u00b7 Upload \u00b7 Uploading",
@@ -4163,7 +4163,7 @@
   },
   "MobileOffline.dc.html": {
    "x": 0,
-   "y": 15348,
+   "y": 15868,
    "w": 390,
    "h": 844,
    "title": "MB-13 Mobile \u00b7 Offline \u00b7 Filled",
@@ -4171,7 +4171,7 @@
   },
   "Dark-CommandCenter.dc.html": {
    "x": 0,
-   "y": 0,
+   "y": 520,
    "w": 1440,
    "h": 1650,
    "title": "Dark \u00b7 APP-01 Command Center \u00b7 Filled",
@@ -4180,7 +4180,7 @@
   },
   "Dark-CommandCenter-Empty.dc.html": {
    "x": 1520,
-   "y": 0,
+   "y": 520,
    "w": 1440,
    "h": 1500,
    "title": "Dark \u00b7 APP-01 Command Center \u00b7 Empty",
@@ -4189,7 +4189,7 @@
   },
   "Dark-CommandCenter-Loading.dc.html": {
    "x": 3040,
-   "y": 0,
+   "y": 520,
    "w": 1440,
    "h": 1300,
    "title": "Dark \u00b7 APP-01 Command Center \u00b7 Loading",
@@ -4198,7 +4198,7 @@
   },
   "Dark-Activity.dc.html": {
    "x": 0,
-   "y": 1810,
+   "y": 2330,
    "w": 1440,
    "h": 1250,
    "title": "Dark \u00b7 APP-03 AI Activity Center \u00b7 Filled",
@@ -4207,7 +4207,7 @@
   },
   "Dark-ClippingStudio.dc.html": {
    "x": 1520,
-   "y": 1810,
+   "y": 2330,
    "w": 1440,
    "h": 1350,
    "title": "Dark \u00b7 CL-03 Clipping Studio \u00b7 Filled",
@@ -4216,7 +4216,7 @@
   },
   "Dark-PostDetail.dc.html": {
    "x": 3040,
-   "y": 1810,
+   "y": 2330,
    "w": 1440,
    "h": 1400,
    "title": "Dark \u00b7 PB-03 Post detail \u00b7 Filled",
@@ -4225,7 +4225,7 @@
   },
   "Dark-ApprovalDetail.dc.html": {
    "x": 0,
-   "y": 3370,
+   "y": 3890,
    "w": 1440,
    "h": 1300,
    "title": "Dark \u00b7 PB-05 Approval detail \u00b7 Filled",
@@ -4234,7 +4234,7 @@
   },
   "Dark-Analytics.dc.html": {
    "x": 1520,
-   "y": 3370,
+   "y": 3890,
    "w": 1440,
    "h": 1300,
    "title": "Dark \u00b7 AN-01 Analytics overview \u00b7 Filled",
@@ -4243,7 +4243,7 @@
   },
   "Dark-Marketplace.dc.html": {
    "x": 3040,
-   "y": 3370,
+   "y": 3890,
    "w": 1440,
    "h": 1300,
    "title": "Dark \u00b7 LI-01 Marketplace \u00b7 Filled",
@@ -4252,7 +4252,7 @@
   },
   "Dark-Billing.dc.html": {
    "x": 0,
-   "y": 4830,
+   "y": 5350,
    "w": 1440,
    "h": 1150,
    "title": "Dark \u00b7 BI-01 Plan & usage \u00b7 Filled",
@@ -4261,7 +4261,7 @@
   },
   "Dark-AgencyHub.dc.html": {
    "x": 1520,
-   "y": 4830,
+   "y": 5350,
    "w": 1440,
    "h": 1300,
    "title": "Dark \u00b7 AG-01 Agency hub \u00b7 Filled",
@@ -4270,7 +4270,7 @@
   },
   "Dark-OnbAccountType.dc.html": {
    "x": 3040,
-   "y": 4830,
+   "y": 5350,
    "w": 1440,
    "h": 980,
    "title": "Dark \u00b7 ON-01 Account type \u00b7 Filled",
@@ -4279,7 +4279,7 @@
   },
   "Dark-ClientApproval.dc.html": {
    "x": 0,
-   "y": 6290,
+   "y": 6810,
    "w": 1440,
    "h": 1100,
    "title": "Dark \u00b7 CP-02 Client approval detail \u00b7 Filled",
@@ -4288,7 +4288,7 @@
   },
   "Dark-MobileHome.dc.html": {
    "x": 1520,
-   "y": 6290,
+   "y": 6810,
    "w": 390,
    "h": 844,
    "title": "Dark \u00b7 MB-01 Mobile \u00b7 Home \u00b7 Filled",
@@ -4296,7 +4296,7 @@
   },
   "Dark-MobileClientApproval.dc.html": {
    "x": 1990,
-   "y": 6290,
+   "y": 6810,
    "w": 390,
    "h": 844,
    "title": "Dark \u00b7 MB-08 Mobile \u00b7 Client approval \u00b7 Filled",
@@ -4304,7 +4304,7 @@
   },
   "Dark-MobileApprovals-Empty.dc.html": {
    "x": 2460,
-   "y": 6290,
+   "y": 6810,
    "w": 390,
    "h": 844,
    "title": "Dark \u00b7 MB-03 Mobile \u00b7 Approvals \u00b7 Empty",
@@ -4785,18 +4785,63 @@
   "Flows.dc.html"
  ],
  "notes": {
+  "legend_foundations": {
+   "x": 0,
+   "y": 0,
+   "text": "0 \u00b7 Foundations & illustrations \u2014 Colour, type, components, stickers, skeletons and the 32 illustrations. Everything else on this canvas is built from these parts.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "foundations"
+  },
+  "legend_motion": {
+   "x": 0,
+   "y": 0,
+   "text": "0b \u00b7 Motion (GSAP) \u2014 Motion tokens and patterns. Implement with GSAP (useGSAP); respect prefers-reduced-motion.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "motion"
+  },
+  "legend_flows": {
+   "x": 0,
+   "y": 0,
+   "text": "0c \u00b7 Flows \u2014 User journeys J-01 to J-15. Each card links to the real screens in order.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "flows"
+  },
+  "legend_public": {
+   "x": 0,
+   "y": 0,
+   "text": "1 \u00b7 Public site \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "public"
+  },
   "n_M_08": {
    "x": 0,
-   "y": 10880,
+   "y": 11400,
    "text": "M-08 Status",
    "kind": "title1",
    "maxW": 6406,
    "page": "public",
    "w": 240
   },
-  "n_AU_01": {
+  "legend_auth": {
    "x": 0,
    "y": 0,
+   "text": "2 \u00b7 Sign in & onboarding \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "auth"
+  },
+  "n_AU_01": {
+   "x": 0,
+   "y": 520,
    "text": "AU-01 Sign up",
    "kind": "title1",
    "maxW": 7880,
@@ -4805,7 +4850,7 @@
   },
   "n_AU_02": {
    "x": 0,
-   "y": 1600,
+   "y": 2120,
    "text": "AU-02 Log in",
    "kind": "title1",
    "maxW": 5922,
@@ -4814,7 +4859,7 @@
   },
   "n_AU_03": {
    "x": 0,
-   "y": 3100,
+   "y": 3620,
    "text": "AU-03 Verify email",
    "kind": "title1",
    "maxW": 5922,
@@ -4823,7 +4868,7 @@
   },
   "n_AU_04": {
    "x": 0,
-   "y": 4600,
+   "y": 5120,
    "text": "AU-04 Reset password",
    "kind": "title1",
    "maxW": 7880,
@@ -4832,7 +4877,7 @@
   },
   "n_AU_05": {
    "x": 0,
-   "y": 6100,
+   "y": 6620,
    "text": "AU-05 Two-step verification",
    "kind": "title1",
    "maxW": 5922,
@@ -4841,7 +4886,7 @@
   },
   "n_AU_06": {
    "x": 0,
-   "y": 7700,
+   "y": 8220,
    "text": "AU-06 Accept invitation",
    "kind": "title1",
    "maxW": 7880,
@@ -4850,7 +4895,7 @@
   },
   "n_AU_07": {
    "x": 0,
-   "y": 9250,
+   "y": 9770,
    "text": "AU-07 Join as content owner",
    "kind": "title1",
    "maxW": 2006,
@@ -4859,7 +4904,7 @@
   },
   "n_ON_01": {
    "x": 0,
-   "y": 10850,
+   "y": 11370,
    "text": "ON-01 Account type",
    "kind": "title1",
    "maxW": 3964,
@@ -4868,7 +4913,7 @@
   },
   "n_ON_02": {
    "x": 0,
-   "y": 12430,
+   "y": 12950,
    "text": "ON-02 Goals & niche",
    "kind": "title1",
    "maxW": 2006,
@@ -4877,7 +4922,7 @@
   },
   "n_ON_03": {
    "x": 0,
-   "y": 14010,
+   "y": 14530,
    "text": "ON-03 Connect accounts",
    "kind": "title1",
    "maxW": 5922,
@@ -4886,7 +4931,7 @@
   },
   "n_ON_04": {
    "x": 0,
-   "y": 15660,
+   "y": 16180,
    "text": "ON-04 Automation mode",
    "kind": "title1",
    "maxW": 5922,
@@ -4895,7 +4940,7 @@
   },
   "n_ON_05": {
    "x": 0,
-   "y": 17340,
+   "y": 17860,
    "text": "ON-05 All set",
    "kind": "title1",
    "maxW": 2006,
@@ -4904,16 +4949,25 @@
   },
   "n_ON_FLOW": {
    "x": 0,
-   "y": 19090,
+   "y": 19610,
    "text": "Onboarding flow (interactive)",
    "kind": "title1",
    "maxW": 1910,
    "page": "auth",
    "w": 240
   },
-  "n_APP_01": {
+  "legend_core": {
    "x": 0,
    "y": 0,
+   "text": "3 \u00b7 Command Center & AI \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "core"
+  },
+  "n_APP_01": {
+   "x": 0,
+   "y": 520,
    "text": "APP-01 Command Center",
    "kind": "title1",
    "maxW": 11796,
@@ -4922,7 +4976,7 @@
   },
   "n_APP_02": {
    "x": 0,
-   "y": 3735,
+   "y": 4255,
    "text": "APP-02 AI Strategist",
    "kind": "title1",
    "maxW": 9838,
@@ -4931,7 +4985,7 @@
   },
   "n_APP_03": {
    "x": 0,
-   "y": 6805,
+   "y": 7325,
    "text": "APP-03 AI Activity Center",
    "kind": "title1",
    "maxW": 11796,
@@ -4940,7 +4994,7 @@
   },
   "n_APP_04": {
    "x": 0,
-   "y": 9780,
+   "y": 10300,
    "text": "APP-04 Agents",
    "kind": "title1",
    "maxW": 7880,
@@ -4949,7 +5003,7 @@
   },
   "n_APP_05": {
    "x": 0,
-   "y": 12565,
+   "y": 13085,
    "text": "APP-05 Agent detail",
    "kind": "title1",
    "maxW": 13754,
@@ -4958,7 +5012,7 @@
   },
   "n_APP_06": {
    "x": 0,
-   "y": 15635,
+   "y": 16155,
    "text": "APP-06 Create agent",
    "kind": "title1",
    "maxW": 13754,
@@ -4967,7 +5021,7 @@
   },
   "n_APP_07": {
    "x": 0,
-   "y": 18420,
+   "y": 18940,
    "text": "APP-07 Workspace switcher",
    "kind": "title1",
    "maxW": 3964,
@@ -4976,16 +5030,25 @@
   },
   "n_NT_01": {
    "x": 0,
-   "y": 19864,
+   "y": 20384,
    "text": "NT-01 Notifications",
    "kind": "title1",
    "maxW": 9838,
    "page": "core",
    "w": 240
   },
-  "n_CL_01": {
+  "legend_clipping": {
    "x": 0,
    "y": 0,
+   "text": "4 \u00b7 Clipping & Content \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "clipping"
+  },
+  "n_CL_01": {
+   "x": 0,
+   "y": 520,
    "text": "CL-01 Media library",
    "kind": "title1",
    "maxW": 7880,
@@ -4994,7 +5057,7 @@
   },
   "n_CL_02": {
    "x": 0,
-   "y": 2975,
+   "y": 3495,
    "text": "CL-02 Upload",
    "kind": "title1",
    "maxW": 9838,
@@ -5003,7 +5066,7 @@
   },
   "n_CL_03": {
    "x": 0,
-   "y": 5950,
+   "y": 6470,
    "text": "CL-03 Clipping Studio",
    "kind": "title1",
    "maxW": 13754,
@@ -5012,7 +5075,7 @@
   },
   "n_CL_04": {
    "x": 0,
-   "y": 9115,
+   "y": 9635,
    "text": "CL-04 Batch variants",
    "kind": "title1",
    "maxW": 5922,
@@ -5021,7 +5084,7 @@
   },
   "n_CL_05": {
    "x": 0,
-   "y": 11900,
+   "y": 12420,
    "text": "CL-05 Exports",
    "kind": "title1",
    "maxW": 7880,
@@ -5030,7 +5093,7 @@
   },
   "n_CS_01": {
    "x": 0,
-   "y": 14400,
+   "y": 14920,
    "text": "CS-01 Content Studio",
    "kind": "title1",
    "maxW": 5922,
@@ -5039,7 +5102,7 @@
   },
   "n_CS_02": {
    "x": 0,
-   "y": 17850,
+   "y": 18370,
    "text": "CS-02 Post composer",
    "kind": "title1",
    "maxW": 7880,
@@ -5048,16 +5111,25 @@
   },
   "n_CS_03": {
    "x": 0,
-   "y": 21015,
+   "y": 21535,
    "text": "CS-03 Original AI video",
    "kind": "title1",
    "maxW": 2006,
    "page": "clipping",
    "w": 240
   },
-  "n_PB_01": {
+  "legend_publishing": {
    "x": 0,
    "y": 0,
+   "text": "5 \u00b7 Calendar, approvals & publishing \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "publishing"
+  },
+  "n_PB_01": {
+   "x": 0,
+   "y": 520,
    "text": "PB-01 Content calendar",
    "kind": "title1",
    "maxW": 9838,
@@ -5066,7 +5138,7 @@
   },
   "n_PB_02": {
    "x": 0,
-   "y": 2975,
+   "y": 3495,
    "text": "PB-02 Drafts",
    "kind": "title1",
    "maxW": 5922,
@@ -5075,7 +5147,7 @@
   },
   "n_PB_03": {
    "x": 0,
-   "y": 5475,
+   "y": 5995,
    "text": "PB-03 Post detail",
    "kind": "title1",
    "maxW": 13754,
@@ -5084,7 +5156,7 @@
   },
   "n_PB_04": {
    "x": 0,
-   "y": 8735,
+   "y": 9255,
    "text": "PB-04 Approvals",
    "kind": "title1",
    "maxW": 7880,
@@ -5093,16 +5165,25 @@
   },
   "n_PB_05": {
    "x": 0,
-   "y": 11235,
+   "y": 11755,
    "text": "PB-05 Approval detail",
    "kind": "title1",
    "maxW": 7880,
    "page": "publishing",
    "w": 240
   },
-  "n_AN_01": {
+  "legend_analytics": {
    "x": 0,
    "y": 0,
+   "text": "6 \u00b7 Analytics \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "analytics"
+  },
+  "n_AN_01": {
+   "x": 0,
+   "y": 520,
    "text": "AN-01 Analytics overview",
    "kind": "title1",
    "maxW": 7880,
@@ -5111,7 +5192,7 @@
   },
   "n_AN_02": {
    "x": 0,
-   "y": 3070,
+   "y": 3590,
    "text": "AN-02 Content performance",
    "kind": "title1",
    "maxW": 5922,
@@ -5120,7 +5201,7 @@
   },
   "n_AN_03": {
    "x": 0,
-   "y": 5475,
+   "y": 5995,
    "text": "AN-03 Agent performance",
    "kind": "title1",
    "maxW": 5922,
@@ -5129,16 +5210,25 @@
   },
   "n_AN_04": {
    "x": 0,
-   "y": 8165,
+   "y": 8685,
    "text": "AN-04 Campaigns & experiments",
    "kind": "title1",
    "maxW": 5922,
    "page": "analytics",
    "w": 240
   },
-  "n_LI_01": {
+  "legend_licensing": {
    "x": 0,
    "y": 0,
+   "text": "7 \u00b7 Licensing \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "licensing"
+  },
+  "n_LI_01": {
+   "x": 0,
+   "y": 520,
    "text": "LI-01 Marketplace",
    "kind": "title1",
    "maxW": 5922,
@@ -5147,7 +5237,7 @@
   },
   "n_LI_02": {
    "x": 0,
-   "y": 3070,
+   "y": 3590,
    "text": "LI-02 Source detail & terms",
    "kind": "title1",
    "maxW": 11796,
@@ -5156,7 +5246,7 @@
   },
   "n_LI_03": {
    "x": 0,
-   "y": 6140,
+   "y": 6660,
    "text": "LI-03 Request / accept license",
    "kind": "title1",
    "maxW": 9838,
@@ -5165,16 +5255,25 @@
   },
   "n_LI_04": {
    "x": 0,
-   "y": 7600,
+   "y": 8120,
    "text": "LI-04 My licenses",
    "kind": "title1",
    "maxW": 7880,
    "page": "licensing",
    "w": 240
   },
-  "n_LI_05": {
+  "legend_creator": {
    "x": 0,
    "y": 0,
+   "text": "8 \u00b7 Creator Portal \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "creator"
+  },
+  "n_LI_05": {
+   "x": 0,
+   "y": 520,
    "text": "LI-05 Creator portal overview",
    "kind": "title1",
    "maxW": 7880,
@@ -5183,7 +5282,7 @@
   },
   "n_LI_06": {
    "x": 0,
-   "y": 2975,
+   "y": 3495,
    "text": "LI-06 Verification",
    "kind": "title1",
    "maxW": 7880,
@@ -5192,7 +5291,7 @@
   },
   "n_LI_07": {
    "x": 0,
-   "y": 5380,
+   "y": 5900,
    "text": "LI-07 Licensing terms",
    "kind": "title1",
    "maxW": 5922,
@@ -5201,7 +5300,7 @@
   },
   "n_LI_08": {
    "x": 0,
-   "y": 8450,
+   "y": 8970,
    "text": "LI-08 Usage audit",
    "kind": "title1",
    "maxW": 5922,
@@ -5210,7 +5309,7 @@
   },
   "n_LI_09": {
    "x": 0,
-   "y": 10950,
+   "y": 11470,
    "text": "LI-09 Revoke a license",
    "kind": "title1",
    "maxW": 5922,
@@ -5219,16 +5318,25 @@
   },
   "n_LI_10": {
    "x": 0,
-   "y": 13260,
+   "y": 13780,
    "text": "LI-10 Payouts",
    "kind": "title1",
    "maxW": 2006,
    "page": "creator",
    "w": 240
   },
-  "n_IN_01": {
+  "legend_agency": {
    "x": 0,
    "y": 0,
+   "text": "9 \u00b7 Connections, agency & client portal \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "agency"
+  },
+  "n_IN_01": {
+   "x": 0,
+   "y": 520,
    "text": "IN-01 Connections",
    "kind": "title1",
    "maxW": 7880,
@@ -5237,7 +5345,7 @@
   },
   "n_IN_02": {
    "x": 0,
-   "y": 2975,
+   "y": 3495,
    "text": "IN-02 Connection detail",
    "kind": "title1",
    "maxW": 5922,
@@ -5246,7 +5354,7 @@
   },
   "n_AG_01": {
    "x": 0,
-   "y": 5665,
+   "y": 6185,
    "text": "AG-01 Agency hub",
    "kind": "title1",
    "maxW": 7880,
@@ -5255,7 +5363,7 @@
   },
   "n_AG_02": {
    "x": 0,
-   "y": 8735,
+   "y": 9255,
    "text": "AG-02 Client workspaces",
    "kind": "title1",
    "maxW": 7880,
@@ -5264,7 +5372,7 @@
   },
   "n_AG_03": {
    "x": 0,
-   "y": 11235,
+   "y": 11755,
    "text": "AG-03 Client workspace settings",
    "kind": "title1",
    "maxW": 5922,
@@ -5273,7 +5381,7 @@
   },
   "n_AG_04": {
    "x": 0,
-   "y": 13925,
+   "y": 14445,
    "text": "AG-04 Team & invitations",
    "kind": "title1",
    "maxW": 7880,
@@ -5282,7 +5390,7 @@
   },
   "n_AG_05": {
    "x": 0,
-   "y": 16425,
+   "y": 16945,
    "text": "AG-05 Roles & permissions",
    "kind": "title1",
    "maxW": 2006,
@@ -5291,7 +5399,7 @@
   },
   "n_AG_06": {
    "x": 0,
-   "y": 18925,
+   "y": 19445,
    "text": "AG-06 Audit log",
    "kind": "title1",
    "maxW": 5922,
@@ -5300,7 +5408,7 @@
   },
   "n_CP_01": {
    "x": 0,
-   "y": 21615,
+   "y": 22135,
    "text": "CP-01 Client portal home",
    "kind": "title1",
    "maxW": 9838,
@@ -5309,16 +5417,25 @@
   },
   "n_CP_02": {
    "x": 0,
-   "y": 24115,
+   "y": 24635,
    "text": "CP-02 Client approval detail",
    "kind": "title1",
    "maxW": 7880,
    "page": "agency",
    "w": 240
   },
-  "n_BI_01": {
+  "legend_billing": {
    "x": 0,
    "y": 0,
+   "text": "10 \u00b7 Billing & credits \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "billing"
+  },
+  "n_BI_01": {
+   "x": 0,
+   "y": 520,
    "text": "BI-01 Plan & usage",
    "kind": "title1",
    "maxW": 5922,
@@ -5327,7 +5444,7 @@
   },
   "n_BI_02": {
    "x": 0,
-   "y": 2785,
+   "y": 3305,
    "text": "BI-02 Plans & checkout",
    "kind": "title1",
    "maxW": 9838,
@@ -5336,7 +5453,7 @@
   },
   "n_BI_03": {
    "x": 0,
-   "y": 5285,
+   "y": 5805,
    "text": "BI-03 Credit ledger",
    "kind": "title1",
    "maxW": 3964,
@@ -5345,7 +5462,7 @@
   },
   "n_BI_04": {
    "x": 0,
-   "y": 7690,
+   "y": 8210,
    "text": "BI-04 Top-ups",
    "kind": "title1",
    "maxW": 3964,
@@ -5354,7 +5471,7 @@
   },
   "n_BI_05": {
    "x": 0,
-   "y": 10190,
+   "y": 10710,
    "text": "BI-05 Spend limits",
    "kind": "title1",
    "maxW": 5922,
@@ -5363,7 +5480,7 @@
   },
   "n_BI_06": {
    "x": 0,
-   "y": 12880,
+   "y": 13400,
    "text": "BI-06 Invoices",
    "kind": "title1",
    "maxW": 5922,
@@ -5372,7 +5489,7 @@
   },
   "n_BI_07": {
    "x": 0,
-   "y": 15190,
+   "y": 15710,
    "text": "BI-07 Payment failure",
    "kind": "title1",
    "maxW": 5922,
@@ -5381,16 +5498,25 @@
   },
   "n_BI_08": {
    "x": 0,
-   "y": 17690,
+   "y": 18210,
    "text": "BI-08 Trial status",
    "kind": "title1",
    "maxW": 7880,
    "page": "billing",
    "w": 240
   },
-  "n_ST_01": {
+  "legend_settings": {
    "x": 0,
    "y": 0,
+   "text": "11 \u00b7 Settings \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "settings"
+  },
+  "n_ST_01": {
+   "x": 0,
+   "y": 520,
    "text": "ST-01 Profile",
    "kind": "title1",
    "maxW": 7880,
@@ -5399,7 +5525,7 @@
   },
   "n_ST_02": {
    "x": 0,
-   "y": 2405,
+   "y": 2925,
    "text": "ST-02 Security",
    "kind": "title1",
    "maxW": 5922,
@@ -5408,7 +5534,7 @@
   },
   "n_ST_03": {
    "x": 0,
-   "y": 4905,
+   "y": 5425,
    "text": "ST-03 Appearance",
    "kind": "title1",
    "maxW": 3964,
@@ -5417,7 +5543,7 @@
   },
   "n_ST_04": {
    "x": 0,
-   "y": 7310,
+   "y": 7830,
    "text": "ST-04 Notification preferences",
    "kind": "title1",
    "maxW": 5922,
@@ -5426,7 +5552,7 @@
   },
   "n_ST_05": {
    "x": 0,
-   "y": 10000,
+   "y": 10520,
    "text": "ST-05 Workspace members",
    "kind": "title1",
    "maxW": 3964,
@@ -5435,7 +5561,7 @@
   },
   "n_ST_06": {
    "x": 0,
-   "y": 12310,
+   "y": 12830,
    "text": "ST-06 Brand kits",
    "kind": "title1",
    "maxW": 5922,
@@ -5444,7 +5570,7 @@
   },
   "n_ST_07": {
    "x": 0,
-   "y": 15000,
+   "y": 15520,
    "text": "ST-07 AI & processing",
    "kind": "title1",
    "maxW": 2006,
@@ -5453,7 +5579,7 @@
   },
   "n_ST_08": {
    "x": 0,
-   "y": 17500,
+   "y": 18020,
    "text": "ST-08 Integration status",
    "kind": "title1",
    "maxW": 2006,
@@ -5462,7 +5588,7 @@
   },
   "n_ST_09": {
    "x": 0,
-   "y": 19810,
+   "y": 20330,
    "text": "ST-09 Privacy & data",
    "kind": "title1",
    "maxW": 5922,
@@ -5471,16 +5597,25 @@
   },
   "n_ST_10": {
    "x": 0,
-   "y": 22215,
+   "y": 22735,
    "text": "ST-10 Workspace settings",
    "kind": "title1",
    "maxW": 5922,
    "page": "settings",
    "w": 240
   },
-  "n_AD_01": {
+  "legend_admin": {
    "x": 0,
    "y": 0,
+   "text": "12 \u00b7 Platform admin \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "admin"
+  },
+  "n_AD_01": {
+   "x": 0,
+   "y": 520,
    "text": "AD-01 Ops overview",
    "kind": "title1",
    "maxW": 7880,
@@ -5489,7 +5624,7 @@
   },
   "n_AD_02": {
    "x": 0,
-   "y": 2690,
+   "y": 3210,
    "text": "AD-02 Jobs & dead-letter",
    "kind": "title1",
    "maxW": 5922,
@@ -5498,7 +5633,7 @@
   },
   "n_AD_03": {
    "x": 0,
-   "y": 5190,
+   "y": 5710,
    "text": "AD-03 Audit search",
    "kind": "title1",
    "maxW": 3964,
@@ -5507,7 +5642,7 @@
   },
   "n_AD_04": {
    "x": 0,
-   "y": 7595,
+   "y": 8115,
    "text": "AD-04 License review",
    "kind": "title1",
    "maxW": 3964,
@@ -5516,7 +5651,7 @@
   },
   "n_AD_05": {
    "x": 0,
-   "y": 10000,
+   "y": 10520,
    "text": "AD-05 Support access",
    "kind": "title1",
    "maxW": 5922,
@@ -5525,7 +5660,7 @@
   },
   "n_AD_06": {
    "x": 0,
-   "y": 12500,
+   "y": 13020,
    "text": "AD-06 Abuse & moderation",
    "kind": "title1",
    "maxW": 3964,
@@ -5534,7 +5669,7 @@
   },
   "n_AD_07": {
    "x": 0,
-   "y": 14810,
+   "y": 15330,
    "text": "AD-07 Diagnostics",
    "kind": "title1",
    "maxW": 2006,
@@ -5543,7 +5678,7 @@
   },
   "n_AD_08": {
    "x": 0,
-   "y": 17120,
+   "y": 17640,
    "text": "AD-08 Feature flags",
    "kind": "title1",
    "maxW": 2006,
@@ -5552,16 +5687,25 @@
   },
   "n_AD_09": {
    "x": 0,
-   "y": 19525,
+   "y": 20045,
    "text": "AD-09 Global pause confirm",
    "kind": "title1",
    "maxW": 2006,
    "page": "admin",
    "w": 240
   },
-  "n_SY_01": {
+  "legend_system": {
    "x": 0,
    "y": 0,
+   "text": "13 \u00b7 System & overlays \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "system"
+  },
+  "n_SY_01": {
+   "x": 0,
+   "y": 520,
    "text": "SY-01 Install prompt (PWA)",
    "kind": "title1",
    "maxW": 5922,
@@ -5570,7 +5714,7 @@
   },
   "n_SY_02": {
    "x": 0,
-   "y": 2215,
+   "y": 2735,
    "text": "SY-02 Offline",
    "kind": "title1",
    "maxW": 5922,
@@ -5579,7 +5723,7 @@
   },
   "n_SY_03": {
    "x": 0,
-   "y": 4620,
+   "y": 5140,
    "text": "SY-03 Not found",
    "kind": "title1",
    "maxW": 2006,
@@ -5588,7 +5732,7 @@
   },
   "n_SY_04": {
    "x": 0,
-   "y": 6930,
+   "y": 7450,
    "text": "SY-04 Access denied",
    "kind": "title1",
    "maxW": 2006,
@@ -5597,7 +5741,7 @@
   },
   "n_SY_05": {
    "x": 0,
-   "y": 9240,
+   "y": 9760,
    "text": "SY-05 Server error",
    "kind": "title1",
    "maxW": 2006,
@@ -5606,7 +5750,7 @@
   },
   "n_SY_06": {
    "x": 0,
-   "y": 11550,
+   "y": 12070,
    "text": "SY-06 Maintenance",
    "kind": "title1",
    "maxW": 2006,
@@ -5615,7 +5759,7 @@
   },
   "n_SY_07": {
    "x": 0,
-   "y": 13860,
+   "y": 14380,
    "text": "SY-07 Command palette",
    "kind": "title1",
    "maxW": 5922,
@@ -5624,7 +5768,7 @@
   },
   "n_SY_08": {
    "x": 0,
-   "y": 15304,
+   "y": 15824,
    "text": "SY-08 Account menu",
    "kind": "title1",
    "maxW": 2006,
@@ -5633,16 +5777,25 @@
   },
   "n_SY_09": {
    "x": 0,
-   "y": 17519,
+   "y": 18039,
    "text": "SY-09 Pause all confirm",
    "kind": "title1",
    "maxW": 3964,
    "page": "system",
    "w": 240
   },
-  "n_MB_01": {
+  "legend_mobile": {
    "x": 0,
    "y": 0,
+   "text": "14 \u00b7 Mobile \u2014 Native-style mobile app screens (future Expo app and PWA quick actions). Responsive mobile views of every web screen sit beside their desktop rows on the other pages.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "mobile"
+  },
+  "n_MB_01": {
+   "x": 0,
+   "y": 520,
    "text": "MB-01 Mobile",
    "kind": "title1",
    "maxW": 1330,
@@ -5651,7 +5804,7 @@
   },
   "n_MB_02": {
    "x": 0,
-   "y": 1304,
+   "y": 1824,
    "text": "MB-02 Mobile",
    "kind": "title1",
    "maxW": 1330,
@@ -5660,7 +5813,7 @@
   },
   "n_MB_03": {
    "x": 0,
-   "y": 2608,
+   "y": 3128,
    "text": "MB-03 Mobile",
    "kind": "title1",
    "maxW": 1330,
@@ -5669,7 +5822,7 @@
   },
   "n_MB_04": {
    "x": 0,
-   "y": 3912,
+   "y": 4432,
    "text": "MB-04 Mobile",
    "kind": "title1",
    "maxW": 1330,
@@ -5678,7 +5831,7 @@
   },
   "n_MB_06": {
    "x": 0,
-   "y": 6220,
+   "y": 6740,
    "text": "MB-06 Mobile",
    "kind": "title1",
    "maxW": 1200,
@@ -5687,7 +5840,7 @@
   },
   "n_MB_07": {
    "x": 0,
-   "y": 7524,
+   "y": 8044,
    "text": "MB-07 Mobile",
    "kind": "title1",
    "maxW": 1200,
@@ -5696,7 +5849,7 @@
   },
   "n_MB_08": {
    "x": 0,
-   "y": 8828,
+   "y": 9348,
    "text": "MB-08 Mobile",
    "kind": "title1",
    "maxW": 1200,
@@ -5705,7 +5858,7 @@
   },
   "n_MB_09": {
    "x": 0,
-   "y": 10132,
+   "y": 10652,
    "text": "MB-09 Mobile",
    "kind": "title1",
    "maxW": 1200,
@@ -5714,7 +5867,7 @@
   },
   "n_MB_10": {
    "x": 0,
-   "y": 11436,
+   "y": 11956,
    "text": "MB-10 Mobile",
    "kind": "title1",
    "maxW": 1200,
@@ -5723,7 +5876,7 @@
   },
   "n_MB_11": {
    "x": 0,
-   "y": 12740,
+   "y": 13260,
    "text": "MB-11 Mobile",
    "kind": "title1",
    "maxW": 1200,
@@ -5732,12 +5885,21 @@
   },
   "n_MB_12": {
    "x": 0,
-   "y": 14044,
+   "y": 14564,
    "text": "MB-12 Mobile",
    "kind": "title1",
    "maxW": 1200,
    "page": "mobile",
    "w": 240
+  },
+  "legend_dark": {
+   "x": 0,
+   "y": 0,
+   "text": "15 \u00b7 Dark theme \u2014 Dark theme reference screens. Every screen supports Light (default), Dark and System via tokens.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "dark"
   }
  },
  "designSystems": []
