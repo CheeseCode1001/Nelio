@@ -66,13 +66,13 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 | ID | Screen | Boards (desktop states + mobile) | Route | Web files | API and jobs | MS | Status | Gate |
 |---|---|---|---|---|---|---|---|---|
 | APP-01 | Command Center | `CommandCenter` · 6: Filled, Empty, Loading, Paused, Trial, Pastdue + `CommandCenter-Mobile` | /w/[ws]/home | w/[ws]/home/page.tsx | `GET /api/workspaces/[ws]/summary` · realtime workspace feed (live data arrives with M3–M8) | 2 | in progress | — |
-| APP-02 | AI Strategist | `Strategist` · 5: Filled, Empty, Thinking, Error, History + `Strategist-Mobile` | /w/[ws]/strategist | w/[ws]/strategist/page.tsx | `/api/strategies/*` (chat, proposals, activation) · AI service · `research` queue | 3 | not started | B-03 |
-| APP-03 | AI Activity Center | `Activity` · 6: Filled, Empty, Loading, Reconnecting, Synced, Filtered + `Activity-Mobile` | /w/[ws]/activity · /activity/[runId] | w/[ws]/activity/page.tsx · activity/[runId]/page.tsx | `GET /api/agents/runs` · `GET /api/activity/events` (replay) · Supabase Realtime · outbox dispatcher | 3 | not started | — |
-| APP-04 | Agents | `Agents` · 4: Filled, Empty, Loading, Limit + `Agents-Mobile` | /w/[ws]/agents | w/[ws]/agents/page.tsx | `GET /api/agents` | 3 | not started | — |
-| APP-05 | Agent detail | `AgentDetail` · 7: Filled, Budget, Destinations, Runs, Loading, Reauth, Stopped + `AgentDetail-Mobile` | /w/[ws]/agents/[id] (tabs) | w/[ws]/agents/[id]/page.tsx | `/api/agents/[id]` + `/policy` `/budget` `/destinations` `/runs` `/pause` `/resume` `/authorize` | 3 | not started | — |
-| APP-06 | Create agent | `CreateAgent` · 7: CreateAgent-Goal, CreateAgent-Sources, CreateAgent-Destinations, CreateAgent-Budget, CreateAgent, CreateAgent-Authorize, CreateAgent-Limit + `CreateAgent-Goal-Mobile` | /w/[ws]/agents/new | w/[ws]/agents/new/page.tsx | `POST /api/agents` · `POST /api/agents/[id]/authorize` (D-05) | 3 | not started | — |
+| APP-02 | AI Strategist | `Strategist` · 5: Filled, Empty, Thinking, Error, History + `Strategist-Mobile` | /w/[ws]/strategist | w/[ws]/strategist/page.tsx | `/api/strategies/*` (chat, proposals, activation) · AI service · `research` queue | 3 | gated: needs Nelio AI | B-03 |
+| APP-03 | AI Activity Center | `Activity` · 6: Filled, Empty, Loading, Reconnecting, Synced, Filtered + `Activity-Mobile` | /w/[ws]/activity · /activity/[runId] | w/[ws]/activity/page.tsx · activity/[runId]/page.tsx | `GET /api/agents/runs` · `GET /api/activity/events` (replay) · Supabase Realtime · outbox dispatcher | 3 | built | — |
+| APP-04 | Agents | `Agents` · 4: Filled, Empty, Loading, Limit + `Agents-Mobile` | /w/[ws]/agents | w/[ws]/agents/page.tsx | `GET /api/agents` | 3 | built | — |
+| APP-05 | Agent detail | `AgentDetail` · 7: Filled, Budget, Destinations, Runs, Loading, Reauth, Stopped + `AgentDetail-Mobile` | /w/[ws]/agents/[id] (tabs) | w/[ws]/agents/[id]/page.tsx | `/api/agents/[id]` + `/policy` `/budget` `/destinations` `/runs` `/pause` `/resume` `/authorize` | 3 | built | — |
+| APP-06 | Create agent | `CreateAgent` · 7: CreateAgent-Goal, CreateAgent-Sources, CreateAgent-Destinations, CreateAgent-Budget, CreateAgent, CreateAgent-Authorize, CreateAgent-Limit + `CreateAgent-Goal-Mobile` | /w/[ws]/agents/new | w/[ws]/agents/new/page.tsx | `POST /api/agents` · `POST /api/agents/[id]/authorize` (D-05) | 3 | built | — |
 | APP-07 | Workspace switcher | `WorkspaceSwitcher` · 2: Filled, Search + `WorkspaceSwitcher-Mobile` | overlay in top bar (no route) | `WorkspaceSwitcher` in shell | `GET /api/workspaces` (memberships only) | 1 | in progress | — |
-| NT-01 | Notifications | `Notifications` · 5: Filled, Empty, Loading, Panel, Push + `Notifications-Mobile` | /w/[ws]/notifications + top-bar panel | w/[ws]/notifications/page.tsx · `NotificationsPanel` | `/api/notifications/*` · `/api/notifications/push-subscriptions` · `notify` queue (in-app, email, web push) | 3 | not started | B-03 |
+| NT-01 | Notifications | `Notifications` · 5: Filled, Empty, Loading, Panel, Push + `Notifications-Mobile` | /w/[ws]/notifications + top-bar panel | w/[ws]/notifications/page.tsx · `NotificationsPanel` | `/api/notifications/*` · `/api/notifications/push-subscriptions` · `notify` queue (in-app, email, web push) | 3 | built | B-03 |
 
 ### 4 · Clipping & Content
 
@@ -195,7 +195,7 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 | SY-06 | Maintenance | `Maintenance` · 1: Filled + `Maintenance-Mobile` | /maintenance | maintenance/page.tsx | maintenance flag (edge config) | 9 | not started | — |
 | SY-07 | Command palette | `CommandPalette` · 3: Filled, Results, Empty + `CommandPalette-Mobile` | overlay (Ctrl/⌘ K) | `CommandPalette` in shell | `GET /api/search` | 2 | in progress | — |
 | SY-08 | Account menu | `AccountMenu` · 1: Filled + `AccountMenu-Mobile` | overlay in top bar | `AccountMenu` in shell | `GET /api/account/surfaces` | 1 | in progress | — |
-| SY-09 | Pause all confirm | `PauseConfirm` · 2: Filled, Resume + `PauseConfirm-Mobile` | overlay from top bar | `PauseConfirm` dialog | `POST /api/workspaces/[ws]/pause` · `/resume` | 3 | not started | — |
+| SY-09 | Pause all confirm | `PauseConfirm` · 2: Filled, Resume + `PauseConfirm-Mobile` | overlay from top bar | `PauseConfirm` dialog | `POST /api/workspaces/[ws]/pause` · `/resume` | 3 | built | — |
 
 **102 screen IDs** mapped (public 8, auth and onboarding 13, product and system 81).
 

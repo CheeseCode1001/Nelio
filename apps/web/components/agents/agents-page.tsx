@@ -77,7 +77,7 @@ export function AgentsPage({ d, hrefs, workspaceSlug }: { d: AgentsPageData; hre
               return (
                 <tr key={r.id}>
                   <td className={`${TD} font-semibold`}>
-                    <a href={hrefs.agent(r.id)} className="flex items-center gap-2.5 text-text no-underline hover:text-accent-text">
+                    <a href={hrefs.agent(r.id)} className="tap-target flex items-center gap-2.5 text-text no-underline hover:text-accent-text">
                       <AgentAvatar color={r.color} shape={r.shape} size={34} animated={false} />
                       {r.name}
                     </a>
