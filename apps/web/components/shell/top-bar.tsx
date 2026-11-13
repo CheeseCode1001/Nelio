@@ -137,12 +137,15 @@ export function TopBar(p: ShellProps) {
   };
   const vis = topBarVisibility(p.role);
   const { credits, unreadNotifications, pauseAvailable, paused } = p.extras;
-  const [pauseOpen, setPauseOpen] = useState(false);
+  const [pauseClicked, setPauseClicked] = useState(false);
+  const [resumeDismissed, setResumeDismissed] = useState(false);
   // The paused strip's "Resume all" links here with ?resume=1 so the dialog opens on arrival.
   const search = useSearchParams();
-  useEffect(() => {
-    if (search.get("resume") === "1" && paused) setPauseOpen(true);
-  }, [search, paused]);
+  const pauseOpen = pauseClicked || (Boolean(paused) && search.get("resume") === "1" && !resumeDismissed);
+  const setPauseOpen = (o: boolean) => {
+    setPauseClicked(o);
+    if (!o) setResumeDismissed(true);
+  };
   const settingsHref = p.showUnbuilt ? screenHref(p, "ST-01") : null;
   const appearanceHref = p.preview ? "#ST-03" : "/account/appearance";
 

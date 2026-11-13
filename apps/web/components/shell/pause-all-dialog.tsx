@@ -22,7 +22,6 @@ export function PauseAllDialog({ slug, workspaceName, mode, open, onOpenChange, 
 
   useEffect(() => {
     if (!open || preview) return;
-    setError(null);
     let live = true;
     void (async () => {
       if (mode === "pause") {
@@ -40,6 +39,7 @@ export function PauseAllDialog({ slug, workspaceName, mode, open, onOpenChange, 
     if (preview) { onOpenChange(false); return; }
     const r = mode === "pause" ? await pauseAllAction(slug) : await resumeAllAction(slug);
     if (!r.ok) { setError(r.error); return; }
+    setError(null);
     onOpenChange(false);
     router.refresh();
   });
@@ -53,7 +53,7 @@ export function PauseAllDialog({ slug, workspaceName, mode, open, onOpenChange, 
     : [];
 
   return (
-    <ResponsiveDialog open={open} onOpenChange={onOpenChange} title={mode === "pause" ? `Pause everything in ${workspaceName}?` : `Resume ${workspaceName}?`} hideTitle maxWidth={480}>
+    <ResponsiveDialog open={open} onOpenChange={(o) => { if (!o) setError(null); onOpenChange(o); }} title={mode === "pause" ? `Pause everything in ${workspaceName}?` : `Resume ${workspaceName}?`} hideTitle maxWidth={480}>
       {mode === "pause" ? (
         <div className="flex flex-col gap-3">
           <div className="flex justify-center"><Illustration name="limit" width={130} /></div>
