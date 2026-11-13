@@ -1,0 +1,14 @@
+{
+  "name": "@nelio/worker-node",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "redis:ping": "node --env-file=../../apps/web/.env.local scripts/redis-ping.mjs"
+  },
+  "dependencies": {
+    "bullmq": "^6.7.5",
+    "ioredis": "^6.0.0"
+  }
+}
