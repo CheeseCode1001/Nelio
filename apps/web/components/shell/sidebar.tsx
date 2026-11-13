@@ -49,7 +49,7 @@ export function Sidebar(p: ShellProps) {
           <div role="progressbar" aria-label="Credits used" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} className="h-2 overflow-hidden rounded-full bg-[rgba(11,11,20,0.15)]">
             <div className="h-full bg-outline" style={{ width: `${pct}%` }} />
           </div>
-          <Link href={screenHref(p, "BI-01")} className="text-[13px] font-extrabold text-outline no-underline hover:text-outline">Billing &amp; usage →</Link>
+          <Link href={screenHref(p, "BI-01")} className="tap-target text-[13px] font-extrabold text-outline no-underline hover:text-outline">Billing &amp; usage →</Link>
         </div>
       ) : null}
     </nav>

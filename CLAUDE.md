@@ -10,3 +10,4 @@ Non-negotiables:
 - Every screen ships Filled, Empty, Loading and its edge states, desktop and mobile (modals become bottom sheets on mobile).
 - Never claim an integration, payment provider or feature works until it's verified. Show the honest gated state.
 - Credentials only via secure env setup: never in chat, code or commits.
+- End of every milestone: a full UI and responsiveness check of everything built so far (this milestone and all earlier ones). Pull the live canvas boards and diff them against `docs/design/E_hifi/canvas/` (the owner edits the canvas directly), build any change, then check every screen and state on mobile (375), tablet (768, 1024) and desktop (1440). Report what differs.

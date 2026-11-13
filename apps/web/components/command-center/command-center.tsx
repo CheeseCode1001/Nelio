@@ -15,7 +15,7 @@ const plural = (n: number, one: string, many = `${one}s`) => `${fmt(n)} ${n === 
 
 // ------------------------------------------------------------------ Strip under the top bar
 export function CommandCenterStrip({ strip, href, resumeAvailable }: { strip: StripState; href: HrefFor; resumeAvailable: boolean }) {
-  const action = (label: string, id: ScreenId) => <Link href={href(id)}>{label}</Link>;
+  const action = (label: string, id: ScreenId) => <Link href={href(id)} className="tap-target">{label}</Link>;
   if (strip.kind === "paused") {
     return <TopStrip tone="warn" icon="pause" text={`All agents paused by ${strip.by} at ${strip.at}. Nothing new will start.`} action={resumeAvailable ? action("Resume all", "APP-01") : undefined} />;
   }
@@ -32,9 +32,10 @@ function Hero({ d, href }: { d: CommandCenterData; href: HrefFor }) {
   const phones = h.shorts.slice(0, 3);
   return (
     <section className="flex flex-wrap items-stretch gap-4 md:gap-5">
-      <div className="relative flex flex-[2_1_560px] flex-wrap items-center gap-5 overflow-hidden rounded-feature bg-accent p-5 text-white md:flex-nowrap md:p-[30px]">
+      {/* Phone and tablet (under 1280 px): text above, phones centred below, as on the mobile board. Desktop: side by side. */}
+      <div className="relative flex flex-[2_1_560px] flex-col items-stretch gap-5 overflow-hidden rounded-feature bg-accent p-5 text-white md:p-[30px] xl:flex-row xl:items-center">
         <Blob size={300} fill="#3D63FF" className="-bottom-[120px] -right-[60px]" />
-        <div className="relative flex flex-[1_1_300px] flex-col gap-3.5">
+        <div className="relative flex flex-col gap-3.5 xl:flex-[1_1_300px]">
           <Sticker fill="pink" rotate={-3} icon="spark" size={13}>Nelio AI · this week</Sticker>
           <h1 className="m-0 font-display text-[31px] font-extrabold leading-[1.05] tracking-[-0.035em] md:text-[40px]">
             Good {d.greeting}, {d.firstName}. {plural(h.ready, "short")} {h.ready === 1 ? "is" : "are"} ready for you.
@@ -51,7 +52,7 @@ function Hero({ d, href }: { d: CommandCenterData; href: HrefFor }) {
           </div>
         </div>
         {phones.length ? (
-          <div className="relative flex" aria-hidden="true">
+          <div className="relative flex justify-center pb-2 pt-1 xl:justify-start xl:p-0" aria-hidden="true">
             {phones.map((p, i) => (
               <div key={p.caption} style={{ marginLeft: i ? -30 : 0, marginTop: [16, 0, 22][i] }}>
                 <IPhone width={120} rotate={[-8, 0, 8][i]}>
