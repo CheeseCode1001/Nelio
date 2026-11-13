@@ -25,6 +25,7 @@ Milestone 1 can start. The Supabase dev project exists: `nelio-dev` (ref `dsngph
 | B-13 | **Recovery codes for two-step verification.** Drawn on the AU-05 Setup board. The auth service has none, so they need our own storage and a server-side secret key. | Engineering | MS 9 (with ST-02 Security) | open | The recovery-codes card and the "Use a recovery code" link are left out. |
 | B-14 | **Google sign-in.** Needs a Google OAuth client (ID and secret) added to the auth provider settings. | Product owner | Before private beta | waiting on owner | "Continue with Google" and the "or" divider are left out of AU-01 and AU-02. |
 | B-15 | **Support email address** for "Contact support" on the error pages. | Product owner | Before private beta | waiting on owner | The button is hidden until `NEXT_PUBLIC_SUPPORT_EMAIL` is set. |
+| B-16 | **Marketing copy the boards don't contain.** M-02 Product: five of the six tour tabs (Agents, Content Studio, Approvals, Licensing, Analytics). M-03 Use cases: Creators and Businesses. M-06 FAQ: questions for the Agencies and Privacy topics, and review of four drafted answers (credits, revocation, guarantees, naira). M-03 "Book a demo" and M-04 "Talk to us" need a contact or booking link. | Product owner | Before private beta | waiting on owner | Only drawn content is shown: the extra tabs, segments, topics and buttons are left out. The four FAQ answers are drafted from recorded decisions only. |
 
 ## 2. Closed or accepted
 

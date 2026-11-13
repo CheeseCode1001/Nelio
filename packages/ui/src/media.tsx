@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { PlatformBadge, type Platform } from "./data-display";
 import { cn } from "./primitives";
 import { photoSrc, type PhotoKey } from "./photos";
 
@@ -32,11 +33,12 @@ export function IPhone({ width = 210, rotate = 0, children, float = true }: { wi
 }
 
 /** Content of a 9:16 short: photo, optional score and caption sticker (generator `vid_svg`). */
-export function ShortScreen({ photo, caption, bg, score }: { photo: PhotoKey; caption: string; bg: string; score?: number }) {
+export function ShortScreen({ photo, caption, bg, score, platform }: { photo: PhotoKey; caption: string; bg: string; score?: number; platform?: Platform }) {
   return (
     <div role="img" aria-label={`Short video: ${caption}`} className="absolute inset-0" style={{ background: bg }}>
       {/* eslint-disable-next-line @next/next/no-img-element -- decorative crop inside a drawn device frame */}
       <img src={photoSrc(photo)} alt="" aria-hidden="true" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover object-[center_top]" />
+      {platform ? <div className="absolute left-3 top-12 z-[2]"><PlatformBadge platform={platform} size={30} /></div> : null}
       {score !== undefined ? (
         <div className="absolute right-3 top-12 z-[2] rounded-full border-2 border-outline bg-lime px-2.5 py-1 font-display text-sm font-extrabold text-outline">{score}</div>
       ) : null}

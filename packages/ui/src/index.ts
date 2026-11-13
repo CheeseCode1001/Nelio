@@ -4,6 +4,7 @@ export * from "./tab-icon";
 export * from "./data-display";
 export * from "./choices";
 export * from "./media";
+export * from "./avatar-photo";
 export * from "./motion";
 export * from "./photos";
 export * from "./photo-carousel";

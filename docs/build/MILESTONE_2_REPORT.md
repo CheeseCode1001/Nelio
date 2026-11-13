@@ -1,6 +1,6 @@
 # Milestone 2 report: design-faithful frontend and PWA
 
-Branch: `feat/milestone-2-frontend` · Status: **in progress (3 of 6 slices built)**. Updated 13 Nov 2026.
+Branch: `feat/milestone-2-frontend` · Status: **in progress (4 of 6 slices built)**. Updated 13 Nov 2026.
 
 ## 1. Slices
 
@@ -9,7 +9,7 @@ Branch: `feat/milestone-2-frontend` · Status: **in progress (3 of 6 slices buil
 | 1 | App shell and Command Center | Shell (sidebar, top bar, mobile tabs, More sheet), APP-01 all six states, SY-07 Command palette | Built, checked in the browser |
 | 2 | Onboarding | ON-FLOW welcome, ON-01 to ON-05 | Built, walked end to end |
 | 3 | Appearance | ST-03 (Light, Dark, Match system, Reduce motion) | Built, checked in the browser |
-| 4 | Public site | M-01 to M-08 | Not started |
+| 4 | Public site | M-01 to M-08: header with mobile menu sheet, footer, Home, Product, Use cases (Agencies), Pricing, Licensing, FAQ, Legal, Status | Built, checked in the browser |
 | 5 | PWA | SY-01 install prompt, SY-02 offline, manifest, service worker | Not started |
 | 6 | Foundations reference | `/dev/ui` reproducing the Foundations board, component by component | Not started (APP-01 states are previewable at `/dev/ui/command-center`) |
 
@@ -28,10 +28,11 @@ Branch: `feat/milestone-2-frontend` · Status: **in progress (3 of 6 slices buil
 | Type check, lint | Pass, 0 errors |
 | Unit tests | 26 of 26 (screen registry, audiences, Command Center model, permissions, validation) |
 | Vendor-name check | Pass, 75 files |
-| Production build | Pass, 29 routes |
+| Production build | Pass, 36 routes |
 | APP-01 against boards | Filled, Paused and Empty compared side by side with the boards at 1440 px; Filled at 375 px. Dark Empty compared with the dark-parity board. |
 | Onboarding | Walked as the test owner: welcome, four steps, All set. Every answer saved (account type, goals, niche, audience, automation mode, completion time, audit entry). |
 | Appearance | Dark and Reduce motion apply immediately, carry over to the next page and are saved to the account. |
+| Public site | Home compared with its board at 1440 px; Home and the menu sheet at 375 px (no sideways scroll); Pricing and Status at 1440 px. |
 
 **Found and fixed while checking:** the top-bar pills were not hiding below 768 px; the mobile tab order did not match the board; two server/client boundary errors; the theme cookie was lost if you left the page before the save finished (the browser now writes it at once).
 
@@ -50,6 +51,12 @@ Branch: `feat/milestone-2-frontend` · Status: **in progress (3 of 6 slices buil
 | ON-03 rows | "Connect" buttons | "In development" / "Coming later" chips, subtitle "We’ll tell you when it’s ready." | D-06: no platform is approved yet |
 | SY-07 empty result | "Try a post, agent or client name, or ask Nelio AI." | "Try a page or workspace name." | Posts, agents and clients aren't searchable until Milestones 3 to 7; board copy returns when they are |
 | Top bar, sidebar | Credits, Pause all, bell, approvals badge | Hidden in real workspaces | No data source yet; shown in the `/dev/ui` preview |
+| M-08 Status | "99.94% uptime", 90-day chart, "Rendering is slower than usual" banner, "Live" sticker | Today's true states only: web app Operational, processing In development, platforms per D-06; a banner only when an incident is posted | Nothing is in production or monitored yet; the chart and live health checks come with monitoring in Milestone 9 |
+| M-02 Product | Six tour tabs | Clipping only, no tab bar | Only Clipping is drawn (B-16) |
+| M-03 Use cases | Creators, Businesses, Agencies tabs; "Book a demo" | Agencies only; no demo button | Only Agencies is drawn; no booking link exists (B-16) |
+| M-04 Pricing | Plan buttons | All lead to sign-up | Checkout arrives in Milestone 8 and live charging waits on B-02 |
+| M-06 FAQ | Six topics; four answers blank | General, Licensing, Billing, Platforms; four answers drafted from decisions | B-16 |
+| M-01 Home | Hero upload field | A link styled as the field, leading to sign-up | Uploading needs an account |
 | ON-02 audience | Select showing "Nigeria" | "Global" (default) followed by every country | Product owner decision, 13 Nov 2026: the audience is global |
 
 ## 6. Not verified yet

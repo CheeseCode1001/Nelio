@@ -2,9 +2,10 @@
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, type ReactNode } from "react";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 /** Motion tokens from docs/design/H_handoff/MOTION.md. */
 export const MOTION = {
@@ -74,4 +75,4 @@ export function Motion({ children, className, deps = [] }: { children: ReactNode
   );
 }
 
-export { gsap, useGSAP, NO_PREFERENCE };
+export { gsap, useGSAP, ScrollTrigger, NO_PREFERENCE };

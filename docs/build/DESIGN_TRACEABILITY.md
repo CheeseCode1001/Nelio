@@ -34,14 +34,14 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 
 | ID | Screen | Boards (desktop states + mobile) | Route | Web files | API and jobs | MS | Status | Gate |
 |---|---|---|---|---|---|---|---|---|
-| M-01 | Home | `Home` · 1: Filled + `Home-Mobile` | / | (public)/page.tsx | none (static) | 2 | not started | — |
-| M-02 | Product | `Product` · 1: Filled + `Product-Mobile` | /product | (public)/product/page.tsx | none (static) | 2 | not started | — |
-| M-03 | Use cases | `UseCases` · 1: Filled + `UseCases-Mobile` | /use-cases/creators · /businesses · /agencies | (public)/use-cases/[segment]/page.tsx | none (static) | 2 | not started | — |
-| M-04 | Pricing | `Pricing` · 1: Filled + `Pricing-Mobile` | /pricing | (public)/pricing/page.tsx | plan catalogue from `packages/config/plans.ts` | 2 | not started | B-07 |
-| M-05 | Licensing & Creator Partners | `Licensing` · 1: Filled + `Licensing-Mobile` | /licensing | (public)/licensing/page.tsx | none (static) | 2 | not started | B-08 |
-| M-06 | FAQ | `FAQ` · 1: Filled + `FAQ-Mobile` | /faq | (public)/faq/page.tsx | none (static) | 2 | not started | — |
-| M-07 | Legal | `Legal` · 1: Filled + `Legal-Mobile` | /legal/[doc] | (public)/legal/[doc]/page.tsx | none (static placeholder copy) | 2 | not started | B-06 |
-| M-08 | Status | `Status` · 1: Filled + `Status-Mobile` | /status | (public)/status/page.tsx | `GET /api/status` (provider capability flags) | 2 static · 10 live | not started | B-01 |
+| M-01 | Home | `Home` · 1: Filled + `Home-Mobile` | / | (public)/page.tsx | none (static) | 2 | in progress | — |
+| M-02 | Product | `Product` · 1: Filled + `Product-Mobile` | /product | (public)/product/page.tsx | none (static) | 2 | in progress | — |
+| M-03 | Use cases | `UseCases` · 1: Filled + `UseCases-Mobile` | /use-cases/creators · /businesses · /agencies | (public)/use-cases/[segment]/page.tsx | none (static) | 2 | in progress | — |
+| M-04 | Pricing | `Pricing` · 1: Filled + `Pricing-Mobile` | /pricing | (public)/pricing/page.tsx | plan catalogue from `packages/config/plans.ts` | 2 | in progress | B-07 |
+| M-05 | Licensing & Creator Partners | `Licensing` · 1: Filled + `Licensing-Mobile` | /licensing | (public)/licensing/page.tsx | none (static) | 2 | in progress | B-08 |
+| M-06 | FAQ | `FAQ` · 1: Filled + `FAQ-Mobile` | /faq | (public)/faq/page.tsx | none (static) | 2 | in progress | — |
+| M-07 | Legal | `Legal` · 1: Filled + `Legal-Mobile` | /legal/[doc] | (public)/legal/[doc]/page.tsx | none (static placeholder copy) | 2 | in progress | B-06 |
+| M-08 | Status | `Status` · 1: Filled + `Status-Mobile` | /status | (public)/status/page.tsx | `GET /api/status` (provider capability flags) | 2 static · 10 live | in progress | B-01 |
 
 ### 2 · Sign in & onboarding
 
