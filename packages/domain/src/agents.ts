@@ -12,7 +12,8 @@ export interface AgentSchedule {
   time: string;
 }
 
-export const AGENT_COLORS = ["blue", "lime", "pink", "yellow", "cyan", "orange"] as const;
+/** Agent fills a person can pick ("Pick a look"); names match the UI package's AgentAvatar colours. */
+export const AGENT_COLORS = ["lime", "blue", "pink", "yellow", "orange", "teal"] as const;
 export const AGENT_SHAPES = ["circle", "square", "blob", "pill"] as const;
 
 /** Wall-clock parts of an instant in a time zone. */
