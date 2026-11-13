@@ -187,8 +187,8 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 
 | ID | Screen | Boards (desktop states + mobile) | Route | Web files | API and jobs | MS | Status | Gate |
 |---|---|---|---|---|---|---|---|---|
-| SY-01 | Install prompt (PWA) | `PWAInstall` · 3: Filled, Ios, Installed + `PWAInstall-Mobile` | component (no route) | `PwaInstallPrompt` · manifest.ts · service worker | none | 2 | not started | — |
-| SY-02 | Offline | `Offline` · 3: Filled, Reconnecting, Synced + `Offline-Mobile` | /offline | offline/page.tsx | service-worker fallback; nothing queued offline | 2 | not started | — |
+| SY-01 | Install prompt (PWA) | `PWAInstall` · 3: Filled, Ios, Installed + `PWAInstall-Mobile` | component (no route) | `PwaInstallPrompt` · manifest.ts · service worker | none | 2 | in progress | — |
+| SY-02 | Offline | `Offline` · 3: Filled, Reconnecting, Synced + `Offline-Mobile` | /offline | offline/page.tsx | service-worker fallback; nothing queued offline | 2 | in progress | — |
 | SY-03 | Not found | `NotFound` · 1: Filled + `NotFound-Mobile` | not-found | not-found.tsx | none | 1 | in progress | — |
 | SY-04 | Access denied | `Denied` · 1: Filled + `Denied-Mobile` | /denied | denied/page.tsx | none (never confirms the workspace exists) | 1 | in progress | — |
 | SY-05 | Server error | `ServerError` · 1: Filled + `ServerError-Mobile` | error boundary | error.tsx · global-error.tsx | Sentry capture | 1 | in progress | — |

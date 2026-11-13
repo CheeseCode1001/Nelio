@@ -1,6 +1,6 @@
 # Milestone 2 report: design-faithful frontend and PWA
 
-Branch: `feat/milestone-2-frontend` · Status: **in progress (4 of 6 slices built)**. Updated 13 Nov 2026.
+Branch: `feat/milestone-2-frontend` · Status: **in progress (5 of 6 slices built)**. Updated 13 Nov 2026.
 
 ## 1. Slices
 
@@ -10,7 +10,7 @@ Branch: `feat/milestone-2-frontend` · Status: **in progress (4 of 6 slices buil
 | 2 | Onboarding | ON-FLOW welcome, ON-01 to ON-05 | Built, walked end to end |
 | 3 | Appearance | ST-03 (Light, Dark, Match system, Reduce motion) | Built, checked in the browser |
 | 4 | Public site | M-01 to M-08: header with mobile menu sheet, footer, Home, Product, Use cases (Agencies), Pricing, Licensing, FAQ, Legal, Status | Built, checked in the browser |
-| 5 | PWA | SY-01 install prompt, SY-02 offline, manifest, service worker | Not started |
+| 5 | PWA | SY-01 install prompt (install, iPhone instructions, installed), SY-02 offline strip and offline page, manifest, icons, service worker | Built, checked in dev and production builds |
 | 6 | Foundations reference | `/dev/ui` reproducing the Foundations board, component by component | Not started (APP-01 states are previewable at `/dev/ui/command-center`) |
 
 ## 2. How the unbuilt parts of the product are handled
@@ -32,6 +32,7 @@ Branch: `feat/milestone-2-frontend` · Status: **in progress (4 of 6 slices buil
 | APP-01 against boards | Filled, Paused and Empty compared side by side with the boards at 1440 px; Filled at 375 px. Dark Empty compared with the dark-parity board. |
 | Onboarding | Walked as the test owner: welcome, four steps, All set. Every answer saved (account type, goals, niche, audience, automation mode, completion time, audit entry). |
 | Appearance | Dark and Reduce motion apply immediately, carry over to the next page and are saved to the account. |
+| PWA | Install card and offline strip compared with their boards; offline → reconnecting → back online sequence works; manifest, worker and offline page served. In a production build the worker activates and caches only the offline page and static files (no pages, no data); `/dev/ui` returns 404. |
 | Public site | Home compared with its board at 1440 px; Home and the menu sheet at 375 px (no sideways scroll); Pricing and Status at 1440 px. |
 
 **Found and fixed while checking:** the top-bar pills were not hiding below 768 px; the mobile tab order did not match the board; two server/client boundary errors; the theme cookie was lost if you left the page before the save finished (the browser now writes it at once).
@@ -59,8 +60,16 @@ Branch: `feat/milestone-2-frontend` · Status: **in progress (4 of 6 slices buil
 | M-01 Home | Hero upload field | A link styled as the field, leading to sign-up | Uploading needs an account |
 | ON-02 audience | Select showing "Nigeria" | "Global" (default) followed by every country | Product owner decision, 13 Nov 2026: the audience is global |
 
-## 6. Not verified yet
+## 6. PWA behaviour
+
+- **Cached:** built scripts and styles, fonts, icons, design photos and `/offline`. **Never cached:** signed-in pages, API responses, anything from auth. Safe on shared devices.
+- **Offline:** an open page stays as it was ("Showing what was last loaded") and every form submission is blocked, so nothing is queued to post later. Opening a page with no connection shows `/offline`.
+- **Install prompt:** from the second visit, dismissible (remembered in this browser only). Safari on iPhone gets the "Add to Home Screen" instructions. After installing, the "Nelio is installed" card shows once.
+- **Development:** the worker registers only in production builds (or with `NEXT_PUBLIC_PWA_DEV=true`).
+
+## 7. Not verified yet
 
 - Tablet widths (768 to 1279 px, icon rail), keyboard pass and automated accessibility checks.
 - Visual snapshot tests (Playwright) against the boards.
 - GSAP timing against MOTION.md (audit G-12); the preview pane pauses animation frames.
+- Installing on a real Android phone and iPhone, and real loss of connection (simulated with browser events here).

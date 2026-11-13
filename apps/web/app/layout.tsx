@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import type { ReactNode } from "react";
+import { ServiceWorker } from "@/components/pwa/pwa";
 import { readPreferences } from "@/lib/preferences";
 import "./globals.css";
 
@@ -11,6 +12,8 @@ export const metadata: Metadata = {
   title: { default: "Nelio", template: "%s · Nelio" },
   description: "Nelio is an AI social media operating system for creators, businesses and agencies.",
   applicationName: "Nelio",
+  icons: { icon: [{ url: "/icons/icon.svg", type: "image/svg+xml" }, { url: "/icons/icon-192.png", sizes: "192x192" }], apple: "/icons/apple-touch-icon.png" },
+  appleWebApp: { capable: true, title: "Nelio", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {
@@ -42,6 +45,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: resolveSystemTheme }} />
         <a href="#main" className="sr-only-focusable">Skip to content</a>
         {children}
+        <ServiceWorker />
       </body>
     </html>
   );

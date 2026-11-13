@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { InstallPrompt, OfflineStatus, type ConnectionState, type InstallState } from "@/components/pwa/pwa";
 import { MobileTabBar } from "./mobile-tab-bar";
 import { Sidebar } from "./sidebar";
 import { TopBar } from "./top-bar";
@@ -8,10 +9,11 @@ import type { ShellProps } from "./types";
  * Operator app frame (generator `app_page`): top bar, optional strip, sidebar + content on desktop,
  * content + bottom tabs on mobile. Page padding 32/16 px and section gap 24/16 px (handoff §6.3).
  */
-export function AppShell({ strip, children, ...p }: ShellProps & { strip?: ReactNode; children: ReactNode }) {
+export function AppShell({ strip, children, forceConnection, forceInstall, ...p }: ShellProps & { strip?: ReactNode; children: ReactNode; forceConnection?: ConnectionState; forceInstall?: InstallState }) {
   return (
     <div className="flex min-h-dvh grow flex-col">
       <TopBar {...p} />
+      <OfflineStatus force={forceConnection} />
       {strip}
       <div className="flex grow items-stretch">
         <Sidebar {...p} />
@@ -20,6 +22,7 @@ export function AppShell({ strip, children, ...p }: ShellProps & { strip?: React
         </main>
       </div>
       <MobileTabBar {...p} />
+      <InstallPrompt force={forceInstall} />
     </div>
   );
 }
