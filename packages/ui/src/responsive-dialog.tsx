@@ -1,6 +1,6 @@
 "use client";
 
-import { Dialog, DropdownMenu } from "radix-ui";
+import { Dialog, DropdownMenu, Popover } from "radix-ui";
 import { useEffect, useState, type ReactNode } from "react";
 import { Drawer } from "vaul";
 import { cn } from "./primitives";
@@ -55,4 +55,4 @@ export function ResponsiveDialog({ open, onOpenChange, title, description, maxWi
   );
 }
 
-export { DropdownMenu };
+export { DropdownMenu, Popover };

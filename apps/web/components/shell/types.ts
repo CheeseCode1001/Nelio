@@ -31,6 +31,8 @@ export interface ShellExtras {
   pauseAvailable: boolean;
   /** The workspace is paused (SY-09): the top bar offers Resume instead of Pause all. */
   paused?: boolean;
+  /** Signed-in person, for their private notification channel. Null in previews. */
+  userId?: string | null;
 }
 
 export interface ShellProps {

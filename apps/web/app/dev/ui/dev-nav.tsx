@@ -7,6 +7,7 @@ const DEV_PAGES = [
   { href: "/dev/ui/command-center", label: "APP-01 states" },
   { href: "/dev/ui/activity", label: "APP-03 states" },
   { href: "/dev/ui/agents", label: "APP-04 states" },
+  { href: "/dev/ui/notifications", label: "NT-01 states" },
   { href: "/dev/ui/agent-detail", label: "APP-05 states" },
   { href: "/dev/ui/create-agent", label: "APP-06 steps" },
 ];

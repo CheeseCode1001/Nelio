@@ -10,6 +10,8 @@ import { useEffect, useMemo, useState } from "react";
 import { signOutAction } from "@/lib/actions/auth";
 import { CommandPalette } from "./command-palette";
 import { PauseAllDialog } from "./pause-all-dialog";
+import { NotificationBell } from "@/components/notifications/notification-bell";
+import { PREVIEW_NOTIFICATIONS } from "@/components/notifications/sample";
 import { screenHref } from "./nav-model";
 import type { ShellAccount, ShellProps, ShellWorkspace } from "./types";
 
@@ -165,10 +167,12 @@ export function TopBar(p: ShellProps) {
 
   const bell =
     unreadNotifications !== null ? (
-      <Link href={screenHref(p, "NT-01")} aria-label={unreadNotifications ? `Notifications, ${unreadNotifications} unread` : "Notifications"} className="relative box-border inline-flex size-11 flex-none items-center justify-center rounded-full border-2 border-border bg-surface-1 text-text no-underline hover:text-text">
-        <Icon name="bell" size={18} />
-        {unreadNotifications ? <span aria-hidden="true" className="absolute right-2 top-[7px] size-2.5 rounded-full border-2 border-surface-1 bg-ai" /> : null}
-      </Link>
+      <NotificationBell
+        href={screenHref(p, "NT-01")}
+        initialUnread={unreadNotifications}
+        userId={p.extras.userId ?? null}
+        preview={p.preview ? PREVIEW_NOTIFICATIONS : undefined}
+      />
     ) : null;
 
   return (
