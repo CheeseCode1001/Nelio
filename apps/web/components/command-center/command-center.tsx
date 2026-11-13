@@ -18,7 +18,7 @@ const plural = (n: number, one: string, many = `${one}s`) => `${fmt(n)} ${n === 
 export function CommandCenterStrip({ strip, href, resumeAvailable }: { strip: StripState; href: HrefFor; resumeAvailable: boolean }) {
   const action = (label: string, id: ScreenId) => <Link href={href(id)} className="tap-target">{label}</Link>;
   if (strip.kind === "paused") {
-    return <TopStrip tone="warn" icon="pause" text={`All agents paused by ${strip.by} at ${strip.at}. Nothing new will start.`} action={resumeAvailable ? action("Resume all", "APP-01") : undefined} />;
+    return <TopStrip tone="warn" icon="pause" text={`All agents paused by ${strip.by} at ${strip.at}. Nothing new will start.`} action={resumeAvailable ? <Link href={`${href("APP-01")}?resume=1`} className="tap-target">Resume all</Link> : undefined} />;
   }
   if (strip.kind === "trial") {
     return <TopStrip tone="ai" icon="gift" text={`Trial · ${plural(strip.daysLeft, "day")} left · no card needed, you won’t be charged`} action={action("Choose a plan", "BI-02")} />;

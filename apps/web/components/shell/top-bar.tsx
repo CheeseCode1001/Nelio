@@ -5,9 +5,11 @@ import {
   CardTitle, Chip, DropdownMenu, EmptyState, Icon, IconButton, Logo, NavItemContent, PersonAvatar, ResponsiveDialog, Row, RowList, Small, navItemClass, useIsMobile,
 } from "@nelio/ui";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { signOutAction } from "@/lib/actions/auth";
 import { CommandPalette } from "./command-palette";
+import { PauseAllDialog } from "./pause-all-dialog";
 import { screenHref } from "./nav-model";
 import type { ShellAccount, ShellProps, ShellWorkspace } from "./types";
 
@@ -134,7 +136,13 @@ export function TopBar(p: ShellProps) {
     setPalette(open);
   };
   const vis = topBarVisibility(p.role);
-  const { credits, unreadNotifications, pauseAvailable } = p.extras;
+  const { credits, unreadNotifications, pauseAvailable, paused } = p.extras;
+  const [pauseOpen, setPauseOpen] = useState(false);
+  // The paused strip's "Resume all" links here with ?resume=1 so the dialog opens on arrival.
+  const search = useSearchParams();
+  useEffect(() => {
+    if (search.get("resume") === "1" && paused) setPauseOpen(true);
+  }, [search, paused]);
   const settingsHref = p.showUnbuilt ? screenHref(p, "ST-01") : null;
   const appearanceHref = p.preview ? "#ST-03" : "/account/appearance";
 
@@ -189,14 +197,24 @@ export function TopBar(p: ShellProps) {
           </Link>
         ) : null}
         {pauseAvailable && vis.pause ? (
-          <Link href={p.preview ? "#SY-09" : `/w/${p.current.slug}/home?pause=1`} className={`${PILL} hidden border-2 border-border font-bold text-text hover:text-text md:inline-flex`}>
-            <Icon name="pause" size={16} />
-            Pause all
-          </Link>
+          <button type="button" onClick={() => setPauseOpen(true)} className={`${PILL} hidden cursor-pointer border-2 border-border bg-transparent font-bold text-text md:inline-flex`}>
+            <Icon name={paused ? "play" : "pause"} size={16} />
+            {paused ? "Resume" : "Pause all"}
+          </button>
         ) : null}
         <IconButton icon="search" label="Search" onClick={() => openPalette(true)} className="xl:hidden" />
         {bell}
         <AccountMenu account={p.account} current={p.current} settingsHref={settingsHref} appearanceHref={appearanceHref} />
+        {pauseAvailable && vis.pause ? (
+          <PauseAllDialog
+            slug={p.current.slug}
+            workspaceName={p.current.name}
+            mode={paused ? "resume" : "pause"}
+            open={pauseOpen}
+            onOpenChange={setPauseOpen}
+            preview={p.preview ? { summary: { agents: 3, queuedSteps: 5, runningSteps: 1 }, checks: [{ agentId: "a", name: "Budget Shorts", willResume: true, note: "Budget OK · license OK" }, { agentId: "b", name: "Recipe Reels", willResume: false, note: "Weekly budget reached" }] } : undefined}
+          />
+        ) : null}
       </header>
       <WorkspaceSwitcher open={switcher} onOpenChange={setSwitcher} current={p.current} workspaces={p.workspaces} preview={p.preview} />
       <CommandPalette key={paletteKey} open={palette} onOpenChange={openPalette} current={p.current} workspaces={p.workspaces} showUnbuilt={p.showUnbuilt} preview={p.preview} />
