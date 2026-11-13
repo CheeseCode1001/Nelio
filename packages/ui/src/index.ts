@@ -2,6 +2,7 @@ export * from "./primitives";
 export * from "./nav";
 export * from "./tab-icon";
 export * from "./data-display";
+export * from "./choices";
 export * from "./media";
 export * from "./motion";
 export * from "./photos";

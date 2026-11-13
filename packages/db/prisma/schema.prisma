@@ -163,6 +163,10 @@ model Workspace {
   pausedByUserId String?       @map("paused_by_user_id") @db.Uuid
   /// Set when someone dismisses the setup checklist on the Command Center (ON-05).
   setupChecklistDismissedAt DateTime? @map("setup_checklist_dismissed_at") @db.Timestamptz(6)
+  /// Onboarding step 2 (ON-02): what the workspace is going for. Used by Nelio AI to plan.
+  goals     String[] @default([])
+  niche     String?
+  audience  String?
   createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt      DateTime?     @map("deleted_at") @db.Timestamptz(6)

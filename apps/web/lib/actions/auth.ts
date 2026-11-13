@@ -53,7 +53,7 @@ export async function signUpAction(_prev: FormState, form: FormData): Promise<Fo
     password: parsed.data.password,
     options: {
       data: { full_name: parsed.data.fullName, signup_kind: "operator" },
-      emailRedirectTo: `${await origin()}/auth/callback?next=/onboarding/account-type`,
+      emailRedirectTo: `${await origin()}/auth/callback?next=/onboarding`,
     },
   });
   if (error) {
@@ -64,7 +64,7 @@ export async function signUpAction(_prev: FormState, form: FormData): Promise<Fo
   }
   // With email confirmation on, an existing address comes back as a user with no identities.
   if (data.user && data.user.identities?.length === 0) return { banner: "taken", values };
-  if (data.session) redirect("/onboarding/account-type");
+  if (data.session) redirect("/onboarding");
   redirect(`/verify-email?email=${encodeURIComponent(parsed.data.email)}`);
 }
 
@@ -92,7 +92,7 @@ export async function resendVerificationAction(_prev: FormState, form: FormData)
   const parsed = resetRequestSchema.safeParse({ email: form.get("email") });
   if (!parsed.success) return { banner: "error" };
   const supabase = await supabaseServer();
-  const { error } = await supabase.auth.resend({ type: "signup", email: parsed.data.email, options: { emailRedirectTo: `${await origin()}/auth/callback?next=/onboarding/account-type` } });
+  const { error } = await supabase.auth.resend({ type: "signup", email: parsed.data.email, options: { emailRedirectTo: `${await origin()}/auth/callback?next=/onboarding` } });
   if (error && isRateLimited(error)) return { banner: "locked" };
   // Same answer whether or not the address has an account.
   return { banner: "resent" };
