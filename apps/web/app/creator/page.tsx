@@ -9,5 +9,9 @@ export const metadata: Metadata = { title: "Creator Portal" };
 export default async function CreatorPage() {
   const session = await requireSession("/creator");
   if (!session.actor.isContentOwner) redirect("/denied");
-  return <NotBuiltYet title="Creator Portal" screen="LI-05 Creator Portal" milestone={5} />;
+  return (
+    <main id="main" className="flex grow flex-col p-4 md:p-8">
+      <NotBuiltYet title="Creator Portal" screen="LI-05 Creator Portal" milestone={5} />
+    </main>
+  );
 }

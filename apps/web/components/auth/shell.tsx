@@ -33,13 +33,19 @@ export const inviteSide = (orgName: string): AuthSide => ({
   stickers: [{ label: "Approve from your phone", fill: "white", rotate: -4, position: "top-[70px] left-[60px]" }],
 });
 
-function Header() {
+function Header({ right }: { right?: ReactNode }) {
   return (
-    <header className="flex items-center px-4 py-3 md:px-8 md:py-5">
-      <Link href="/" aria-label="Nelio home" className="no-underline">
+    <header className="flex items-center gap-4 px-4 py-3 md:px-8 md:py-5">
+      <Link href="/" aria-label="Nelio home" className="tap-target no-underline">
         <Logo size={22} className="md:hidden" />
         <Logo size={24} className="hidden md:inline-flex" />
       </Link>
+      {right ? (
+        <>
+          <span className="grow" />
+          {right}
+        </>
+      ) : null}
     </header>
   );
 }
@@ -48,7 +54,7 @@ function Header() {
  * Sign-in and onboarding page shell (generator `center_page`).
  * Desktop with `side`: form column beside the photo carousel. Mobile: single column with a photo strip.
  */
-export function AuthShell({ side, width = 480, children }: { side?: AuthSide; width?: number; children: ReactNode }) {
+export function AuthShell({ side, width = 480, header, children }: { side?: AuthSide; width?: number; header?: ReactNode; children: ReactNode }) {
   const column = (
     <div className="flex w-full flex-col gap-4 md:gap-[18px]" style={{ maxWidth: width }} data-enter="">
       {children}
@@ -57,7 +63,7 @@ export function AuthShell({ side, width = 480, children }: { side?: AuthSide; wi
   if (!side) {
     return (
       <Motion className="flex grow flex-col">
-        <Header />
+        <Header right={header} />
         <main id="main" className="flex grow items-start justify-center p-4 md:px-5 md:py-10">{column}</main>
       </Motion>
     );
@@ -65,7 +71,7 @@ export function AuthShell({ side, width = 480, children }: { side?: AuthSide; wi
   return (
     <Motion className="flex grow flex-wrap">
       <div className="flex flex-[1_1_520px] flex-col">
-        <Header />
+        <Header right={header} />
         <PhotoStrip photos={side.photos} />
         <main id="main" className={cn("flex grow justify-center p-4 md:px-6 md:py-8")}>{column}</main>
       </div>

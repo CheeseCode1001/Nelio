@@ -22,6 +22,8 @@ const csp = [
   "base-uri 'self'",
   "form-action 'self'",
   "object-src 'none'",
+  "worker-src 'self'",
+  "manifest-src 'self'",
 ].join("; ");
 
 const config: NextConfig = {

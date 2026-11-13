@@ -33,6 +33,7 @@ export interface WorkspaceSummary extends WorkspaceRef {
   name: string;
   kind: "primary" | "client";
   orgName: string;
+  orgSlug: string;
   accountType: AccountType;
 }
 
@@ -46,10 +47,10 @@ export async function listWorkspacesFor(client: Client, actor: Actor): Promise<W
   if (orgIds.length === 0 && wsIds.length === 0) return [];
   const rows = await client.workspace.findMany({
     where: { deletedAt: null, OR: [{ orgId: { in: orgIds } }, { id: { in: wsIds } }] },
-    select: { id: true, orgId: true, slug: true, name: true, kind: true, org: { select: { name: true, accountType: true } } },
+    select: { id: true, orgId: true, slug: true, name: true, kind: true, org: { select: { name: true, slug: true, accountType: true } } },
     orderBy: [{ kind: "asc" }, { name: "asc" }],
   });
-  return rows.map((r) => ({ workspaceId: r.id, orgId: r.orgId, slug: r.slug, name: r.name, kind: r.kind, orgName: r.org.name, accountType: r.org.accountType }));
+  return rows.map((r) => ({ workspaceId: r.id, orgId: r.orgId, slug: r.slug, name: r.name, kind: r.kind, orgName: r.org.name, orgSlug: r.org.slug, accountType: r.org.accountType }));
 }
 
 /**
@@ -59,12 +60,12 @@ export async function listWorkspacesFor(client: Client, actor: Actor): Promise<W
 export async function findWorkspaceFor(client: Client, actor: Actor, slug: string): Promise<WorkspaceSummary | null> {
   const r = await client.workspace.findFirst({
     where: { slug, deletedAt: null },
-    select: { id: true, orgId: true, slug: true, name: true, kind: true, org: { select: { name: true, accountType: true } } },
+    select: { id: true, orgId: true, slug: true, name: true, kind: true, org: { select: { name: true, slug: true, accountType: true } } },
   });
   if (!r) return null;
   const ref = { workspaceId: r.id, orgId: r.orgId };
   if (!canSeeWorkspace(actor, ref)) return null;
-  return { ...ref, slug: r.slug, name: r.name, kind: r.kind, orgName: r.org.name, accountType: r.org.accountType };
+  return { ...ref, slug: r.slug, name: r.name, kind: r.kind, orgName: r.org.name, orgSlug: r.org.slug, accountType: r.org.accountType };
 }
 
 async function uniqueSlug(client: Client, table: "organization" | "workspace", name: string): Promise<string> {

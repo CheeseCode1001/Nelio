@@ -21,6 +21,9 @@ export function Icon({ name, size = 18, strokeWidth = 2, className }: { name: Ic
 }
 
 // ------------------------------------------------------------------ Illustration
+export const ILLUSTRATION_NAMES = Object.keys(ILLUSTRATIONS) as IllustrationName[];
+export const illustrationLabel = (name: IllustrationName) => ILLUSTRATIONS[name].label;
+
 /** One of the 32 flat illustrations exported from the design generator. Markup is static and trusted. */
 export function Illustration({ name, width = 240, className }: { name: IllustrationName; width?: number; className?: string }) {
   const ill = ILLUSTRATIONS[name];
@@ -174,7 +177,7 @@ export function Chip({ tone = "neutral", icon, className, children }: { tone?: T
 
 const STICKER_FILLS = { yellow: "bg-yellow", cyan: "bg-cyan", pink: "bg-pink", lime: "bg-lime", orange: "bg-orange", white: "bg-white" } as const;
 
-export function Sticker({ fill = "yellow", rotate = -4, icon, size = 14, className, children }: { fill?: keyof typeof STICKER_FILLS; rotate?: number; icon?: IconName; size?: 13 | 14; className?: string; children: ReactNode }) {
+export function Sticker({ fill = "yellow", rotate = -4, icon, size = 14, className, children }: { fill?: keyof typeof STICKER_FILLS; rotate?: number; icon?: IconName; size?: 11 | 12 | 13 | 14 | 15 | 16; className?: string; children: ReactNode }) {
   return (
     <span
       data-pop=""
@@ -235,7 +238,9 @@ export function PersonAvatar({ initials, color = "#59D8FF", size = 32, className
 }
 
 const AGENT_RADIUS = { circle: "50%", square: "30%", blob: "42% 58% 55% 45%", pill: "999px" } as const;
-const AGENT_COLORS = { lime: "#B6F24A", pink: "#FF4FB8", cyan: "#59D8FF", orange: "#FF7A2F", yellow: "#FFD43B" } as const;
+// Agent fills from the generator (AVC). "blue" is the light cyan fill, "grape" is pink, "teal" is the success green.
+const AGENT_COLORS = { lime: "#B6F24A", pink: "#FF4FB8", grape: "#FF4FB8", blue: "#59D8FF", cyan: "#59D8FF", orange: "#FF7A2F", yellow: "#FFD43B", teal: "#22C55E" } as const;
+export type AgentColor = keyof typeof AGENT_COLORS;
 
 /** Nelio AI agent: a flat shape with two eyes. Eyes blink when `animated` (motion pattern 10). */
 export function AgentAvatar({ color = "lime", shape = "circle", size = 40, animated = true }: { color?: keyof typeof AGENT_COLORS; shape?: keyof typeof AGENT_RADIUS; size?: number; animated?: boolean }) {

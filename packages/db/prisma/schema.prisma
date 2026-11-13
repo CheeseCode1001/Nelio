@@ -98,6 +98,8 @@ model User {
   fullName              String          @map("full_name")
   isPlatformAdmin       Boolean         @default(false) @map("is_platform_admin")
   theme                 ThemePreference @default(light)
+  /// ST-03: turns off animations for this person regardless of the OS setting.
+  reduceMotion          Boolean         @default(false) @map("reduce_motion")
   timezone              String          @default("Africa/Lagos")
   onboardingStep        Int             @default(0) @map("onboarding_step")
   onboardingCompletedAt DateTime?       @map("onboarding_completed_at") @db.Timestamptz(6)
@@ -161,6 +163,12 @@ model Workspace {
   timezone       String        @default("Africa/Lagos")
   pausedAt       DateTime?     @map("paused_at") @db.Timestamptz(6)
   pausedByUserId String?       @map("paused_by_user_id") @db.Uuid
+  /// Set when someone dismisses the setup checklist on the Command Center (ON-05).
+  setupChecklistDismissedAt DateTime? @map("setup_checklist_dismissed_at") @db.Timestamptz(6)
+  /// Onboarding step 2 (ON-02): what the workspace is going for. Used by Nelio AI to plan.
+  goals     String[] @default([])
+  niche     String?
+  audience  String?
   createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt      DateTime?     @map("deleted_at") @db.Timestamptz(6)

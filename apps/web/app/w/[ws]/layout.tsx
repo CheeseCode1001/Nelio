@@ -1,22 +1,44 @@
-import { surfacesFor } from "@nelio/domain";
+import { showUnbuiltInNav } from "@nelio/config";
+import { db } from "@nelio/db";
+import { roleInWorkspace, surfacesFor } from "@nelio/domain";
 import type { ReactNode } from "react";
-import { TopBar } from "@/components/shell/top-bar";
+import { CommandCenterStrip } from "@/components/command-center/command-center";
+import { AppShell } from "@/components/shell/app-shell";
+import { hrefForWorkspace } from "@/lib/hrefs";
 import { requireWorkspace } from "@/lib/auth";
 
 /** Operator app shell. Every page under /w/[ws] is resolved against the signed-in person's memberships first. */
 export default async function WorkspaceLayout({ children, params }: { children: ReactNode; params: Promise<{ ws: string }> }) {
   const { ws } = await params;
   const { session, workspace, workspaces } = await requireWorkspace(ws);
-  const agency = workspaces.find((w) => w.accountType === "agency" && session.actor.orgs.some((o) => o.orgId === w.orgId));
-  const portal = workspaces.find((w) => session.actor.workspaces.some((m) => m.workspaceId === w.workspaceId && m.role === "client_approver"));
+  const actor = session.actor;
+  const isApprover = (id: string) => actor.workspaces.some((m) => m.workspaceId === id && m.role === "client_approver") && !actor.orgs.some((o) => workspaces.find((w) => w.workspaceId === id)?.orgId === o.orgId);
+  const agency = workspaces.find((w) => w.accountType === "agency" && actor.orgs.some((o) => o.orgId === w.orgId));
+  const portal = workspaces.find((w) => isApprover(w.workspaceId));
+
+  // Workspace-wide pause (J-12) is shown on every page of the workspace.
+  const client = db();
+  const pause = await client.workspace.findUniqueOrThrow({ where: { id: workspace.workspaceId }, select: { pausedAt: true, pausedByUserId: true, timezone: true } });
+  const pausedBy = pause.pausedAt && pause.pausedByUserId ? await client.user.findUnique({ where: { id: pause.pausedByUserId }, select: { fullName: true } }) : null;
+  const strip = pause.pausedAt ? (
+    <CommandCenterStrip
+      strip={{ kind: "paused", by: pausedBy?.fullName.split(" ")[0] ?? "an admin", at: new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: pause.timezone }).format(pause.pausedAt) }}
+      href={hrefForWorkspace(workspace)}
+      resumeAvailable={false}
+    />
+  ) : null;
+
   return (
-    <div className="flex grow flex-col">
-      <TopBar
-        current={workspace}
-        workspaces={workspaces.filter((w) => !session.actor.workspaces.some((m) => m.workspaceId === w.workspaceId && m.role === "client_approver"))}
-        account={{ fullName: session.user.fullName, email: session.user.email, surfaces: surfacesFor(session.actor), agencySlug: agency?.slug ?? null, portalSlug: portal?.slug ?? null }}
-      />
+    <AppShell
+      current={workspace}
+      workspaces={workspaces.filter((w) => !isApprover(w.workspaceId))}
+      account={{ fullName: session.user.fullName, email: session.user.email, surfaces: surfacesFor(actor), agencySlug: agency?.orgSlug ?? null, portalSlug: portal?.slug ?? null }}
+      role={roleInWorkspace(actor, workspace) ?? "AV"}
+      extras={{ credits: null, approvalsWaiting: null, unreadNotifications: null, pauseAvailable: false }}
+      showUnbuilt={showUnbuiltInNav()}
+      strip={strip}
+    >
       {children}
-    </div>
+    </AppShell>
   );
 }

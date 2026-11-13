@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "web", "runtimeExecutable": "pnpm", "runtimeArgs": ["--filter", "@nelio/web", "dev"], "port": 3000 }
+    { "name": "web", "runtimeExecutable": "pnpm", "runtimeArgs": ["--dir", "C:/Users/PROBOOK 430 G2/Desktop/Nelio", "--filter", "@nelio/web", "dev"], "port": 3000 },
+    { "name": "web-prod", "runtimeExecutable": "pnpm", "runtimeArgs": ["--dir", "C:/Users/PROBOOK 430 G2/Desktop/Nelio", "--filter", "@nelio/web", "start"], "port": 3000 }
   ]
 }

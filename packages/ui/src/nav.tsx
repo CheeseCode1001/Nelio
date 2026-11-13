@@ -31,20 +31,21 @@ export function navItemClass(active: boolean) {
   );
 }
 
-export function NavItemContent({ icon, label, active }: { icon: NavIconName; label: string; active: boolean }) {
+export function NavItemContent({ icon, label, active, labelClassName }: { icon: NavIconName; label: string; active: boolean; labelClassName?: string }) {
   return (
     <>
       {active ? <span aria-hidden="true" className="absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r bg-accent" /> : null}
       <NavIcon name={icon} active={active} />
-      <span className={active ? "text-accent-text" : "text-text"}>{label}</span>
+      <span className={cn(active ? "text-accent-text" : "text-text", labelClassName)}>{label}</span>
     </>
   );
 }
 
-export function PageHead({ title, sub, actions }: { title: string; sub?: string; actions?: ReactNode }) {
+export function PageHead({ title, sub, actions, eyebrow }: { title: string; sub?: string; actions?: ReactNode; eyebrow?: string }) {
   return (
     <header className="flex flex-wrap items-end justify-between gap-4">
       <div className="min-w-0">
+        {eyebrow ? <div className="mb-2 text-xs font-extrabold uppercase tracking-[0.08em] text-accent-text">{eyebrow}</div> : null}
         <h1 className="m-0 font-display text-[29px] font-extrabold leading-[1.08] tracking-[-0.03em] text-text md:text-[36px]">{title}</h1>
         {sub ? <p className="m-0 mt-1.5 text-[15px] leading-[1.55] text-muted">{sub}</p> : null}
       </div>

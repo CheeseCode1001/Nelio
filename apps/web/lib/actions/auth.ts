@@ -8,6 +8,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import type { z } from "zod";
 import { getSession, getSessionUser, homePathFor } from "../auth";
+import { writePreferenceCookies } from "../preferences";
 import { supabaseServer } from "../supabase/server";
 
 /** Shape returned to forms. `banner` values map one-to-one to the states drawn on the boards. */
@@ -53,7 +54,7 @@ export async function signUpAction(_prev: FormState, form: FormData): Promise<Fo
     password: parsed.data.password,
     options: {
       data: { full_name: parsed.data.fullName, signup_kind: "operator" },
-      emailRedirectTo: `${await origin()}/auth/callback?next=/onboarding/account-type`,
+      emailRedirectTo: `${await origin()}/auth/callback?next=/onboarding`,
     },
   });
   if (error) {
@@ -64,7 +65,7 @@ export async function signUpAction(_prev: FormState, form: FormData): Promise<Fo
   }
   // With email confirmation on, an existing address comes back as a user with no identities.
   if (data.user && data.user.identities?.length === 0) return { banner: "taken", values };
-  if (data.session) redirect("/onboarding/account-type");
+  if (data.session) redirect("/onboarding");
   redirect(`/verify-email?email=${encodeURIComponent(parsed.data.email)}`);
 }
 
@@ -76,7 +77,12 @@ export async function logInAction(_prev: FormState, form: FormData): Promise<For
   if (!parsed.success) return { fieldErrors: fieldErrors(parsed.error), values };
 
   const supabase = await supabaseServer();
-  const { error } = await supabase.auth.signInWithPassword(parsed.data);
+  const { data: signedIn, error } = await supabase.auth.signInWithPassword(parsed.data);
+  if (!error && signedIn.user) {
+    // Bring this browser in line with the theme and motion saved on the account (ST-03).
+    const prefs = await db().user.findUnique({ where: { id: signedIn.user.id }, select: { theme: true, reduceMotion: true } });
+    if (prefs) await writePreferenceCookies(prefs);
+  }
   if (error) {
     if (error.code === "email_not_confirmed") redirect(`/verify-email?email=${encodeURIComponent(parsed.data.email)}`);
     if (isRateLimited(error)) return { banner: "locked", values };
@@ -92,7 +98,7 @@ export async function resendVerificationAction(_prev: FormState, form: FormData)
   const parsed = resetRequestSchema.safeParse({ email: form.get("email") });
   if (!parsed.success) return { banner: "error" };
   const supabase = await supabaseServer();
-  const { error } = await supabase.auth.resend({ type: "signup", email: parsed.data.email, options: { emailRedirectTo: `${await origin()}/auth/callback?next=/onboarding/account-type` } });
+  const { error } = await supabase.auth.resend({ type: "signup", email: parsed.data.email, options: { emailRedirectTo: `${await origin()}/auth/callback?next=/onboarding` } });
   if (error && isRateLimited(error)) return { banner: "locked" };
   // Same answer whether or not the address has an account.
   return { banner: "resent" };
