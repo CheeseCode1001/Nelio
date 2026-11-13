@@ -4,7 +4,8 @@ import { db } from "@nelio/db";
 import { accountTypeSchema } from "@nelio/domain";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { AUDIENCES, GOALS, homeFor, requireOnboarding } from "../onboarding";
+import { isAudience } from "@nelio/config";
+import { GOALS, homeFor, requireOnboarding } from "../onboarding";
 
 /** ON-01: account type. An organization that already has client workspaces stays an agency. */
 export async function saveAccountTypeAction(form: FormData): Promise<void> {
@@ -24,7 +25,7 @@ export async function saveAccountTypeAction(form: FormData): Promise<void> {
 const goalsSchema = z.object({
   goals: z.array(z.enum(GOALS)).max(GOALS.length),
   niche: z.string().trim().max(120).transform((v) => v || null),
-  audience: z.enum(AUDIENCES).nullable(),
+  audience: z.string().refine(isAudience).nullable(),
 });
 
 /** ON-02: goals, niche and main audience for the workspace. */

@@ -2,7 +2,7 @@ import { Field, FieldGrid, PillCheckbox, SelectField } from "@nelio/ui";
 import type { Metadata } from "next";
 import { OnboardingFoot, OnboardingStep } from "@/components/onboarding/step";
 import { saveGoalsAction } from "@/lib/actions/onboarding";
-import { AUDIENCES, GOALS, homeFor, requireOnboarding } from "@/lib/onboarding";
+import { AUDIENCES, GLOBAL_AUDIENCE, GOALS, homeFor, requireOnboarding } from "@/lib/onboarding";
 
 export const metadata: Metadata = { title: "What are you going for?" };
 
@@ -18,7 +18,7 @@ export default async function GoalsStep() {
         </fieldset>
         <FieldGrid>
           <Field label="Your niche" name="niche" defaultValue={ctx.workspace.niche ?? ""} placeholder="e.g. personal finance for students" maxLength={120} />
-          <SelectField label="Main audience" name="audience" defaultValue={ctx.workspace.audience ?? "Nigeria"} options={AUDIENCES.map((a) => ({ value: a, label: a }))} />
+          <SelectField label="Main audience" name="audience" defaultValue={ctx.workspace.audience ?? GLOBAL_AUDIENCE} options={AUDIENCES.map((a) => ({ value: a, label: a }))} />
         </FieldGrid>
         <OnboardingFoot backHref="/onboarding/account-type" />
       </form>

@@ -6,8 +6,8 @@ import { homePathFor, requireSession, type Session } from "./auth";
 
 export const GOALS = ["Grow followers", "Repurpose long videos", "Post consistently", "Drive sales", "Build a community", "Manage clients"] as const;
 
-/** Main audience options. Nigeria first (the operator's home market); "Global" for everyone else. */
-export const AUDIENCES = ["Nigeria", "Ghana", "Kenya", "South Africa", "United Kingdom", "United States", "Global"] as const;
+/** Main audience: "Global" (the default) or any country. */
+export { AUDIENCES, GLOBAL_AUDIENCE } from "@nelio/config";
 
 export interface OnboardingContext {
   session: Session;

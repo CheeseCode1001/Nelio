@@ -26,7 +26,7 @@ Branch: `feat/milestone-2-frontend` · Status: **in progress (3 of 6 slices buil
 | Check | Result |
 |---|---|
 | Type check, lint | Pass, 0 errors |
-| Unit tests | 25 of 25 (screen registry, Command Center model, permissions, validation) |
+| Unit tests | 26 of 26 (screen registry, audiences, Command Center model, permissions, validation) |
 | Vendor-name check | Pass, 75 files |
 | Production build | Pass, 29 routes |
 | APP-01 against boards | Filled, Paused and Empty compared side by side with the boards at 1440 px; Filled at 375 px. Dark Empty compared with the dark-parity board. |
@@ -50,7 +50,7 @@ Branch: `feat/milestone-2-frontend` · Status: **in progress (3 of 6 slices buil
 | ON-03 rows | "Connect" buttons | "In development" / "Coming later" chips, subtitle "We’ll tell you when it’s ready." | D-06: no platform is approved yet |
 | SY-07 empty result | "Try a post, agent or client name, or ask Nelio AI." | "Try a page or workspace name." | Posts, agents and clients aren't searchable until Milestones 3 to 7; board copy returns when they are |
 | Top bar, sidebar | Credits, Pause all, bell, approvals badge | Hidden in real workspaces | No data source yet; shown in the `/dev/ui` preview |
-| ON-02 audience | Select showing "Nigeria" | Nigeria, Ghana, Kenya, South Africa, United Kingdom, United States, Global | The board shows only the selected value; the list is a proposal for the product owner |
+| ON-02 audience | Select showing "Nigeria" | "Global" (default) followed by every country | Product owner decision, 13 Nov 2026: the audience is global |
 
 ## 6. Not verified yet
 

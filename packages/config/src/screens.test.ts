@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { AUDIENCES, GLOBAL_AUDIENCE, isAudience } from "./countries";
 import { CURRENT_MILESTONE, NAV_GROUPS, SCREENS, hrefFor, isBuilt, screen, screenForPath } from "./screens";
 
 describe("screen registry", () => {
@@ -28,5 +29,15 @@ describe("screen registry", () => {
     expect(isBuilt(screen("ST-03"))).toBe(true);
     expect(isBuilt(screen("PB-04"))).toBe(false);
     expect(SCREENS.filter(isBuilt).every((s) => s.milestone <= CURRENT_MILESTONE)).toBe(true);
+  });
+});
+
+describe("audiences", () => {
+  it("starts with Global and covers every country once", () => {
+    expect(AUDIENCES[0]).toBe(GLOBAL_AUDIENCE);
+    expect(AUDIENCES.length).toBeGreaterThan(240);
+    expect(new Set(AUDIENCES).size).toBe(AUDIENCES.length);
+    for (const c of ["Nigeria", "Ghana", "Kenya", "United Kingdom", "United States", "India", "Brazil"]) expect(isAudience(c)).toBe(true);
+    expect(isAudience("Atlantis")).toBe(false);
   });
 });
