@@ -5,6 +5,7 @@ import {
 } from "@nelio/ui";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { AgentCard } from "@/components/agents/agent-card";
 import { ChecklistCard } from "./checklist";
 import { CHECKLIST, isFirstRun, type AgentCardData, type CommandCenterData, type StripState } from "./model";
 
@@ -17,7 +18,7 @@ const plural = (n: number, one: string, many = `${one}s`) => `${fmt(n)} ${n === 
 export function CommandCenterStrip({ strip, href, resumeAvailable }: { strip: StripState; href: HrefFor; resumeAvailable: boolean }) {
   const action = (label: string, id: ScreenId) => <Link href={href(id)} className="tap-target">{label}</Link>;
   if (strip.kind === "paused") {
-    return <TopStrip tone="warn" icon="pause" text={`All agents paused by ${strip.by} at ${strip.at}. Nothing new will start.`} action={resumeAvailable ? action("Resume all", "APP-01") : undefined} />;
+    return <TopStrip tone="warn" icon="pause" text={`All agents paused by ${strip.by} at ${strip.at}. Nothing new will start.`} action={resumeAvailable ? <Link href={`${href("APP-01")}?resume=1`} className="tap-target">Resume all</Link> : undefined} />;
   }
   if (strip.kind === "trial") {
     return <TopStrip tone="ai" icon="gift" text={`Trial · ${plural(strip.daysLeft, "day")} left · no card needed, you won’t be charged`} action={action("Choose a plan", "BI-02")} />;
@@ -75,31 +76,7 @@ function Hero({ d, href }: { d: CommandCenterData; href: HrefFor }) {
   );
 }
 
-function AgentCard({ a, href }: { a: AgentCardData; href: HrefFor }) {
-  const pct = (a.budget.used / Math.max(1, a.budget.limit)) * 100;
-  return (
-    <Card>
-      <div className="flex items-center gap-3">
-        <AgentAvatar color={a.color} shape={a.shape} size={52} />
-        <div className="flex min-w-0 flex-col gap-[3px]">
-          <CardTitle size={17}>{a.name}</CardTitle>
-          <Small>{a.line}</Small>
-        </div>
-        <span className="grow" />
-        <Chip tone={a.state.tone} icon={a.state.icon}>{a.state.label}</Chip>
-      </div>
-      <Meter label="Weekly budget" right={`${fmt(a.budget.used)} / ${fmt(a.budget.limit)} cr`} pct={pct} tone={pct >= 100 ? "warn" : "acc"} />
-      <div className="flex flex-wrap items-center gap-2">
-        <Small>{a.meta}</Small>
-        <span className="grow" />
-        <IconButton icon={a.running ? "pause" : "play"} label={a.running ? `Pause ${a.name}` : `Resume ${a.name}`} />
-        <ButtonLink href={href("APP-04")} variant="secondary" size="sm">Open</ButtonLink>
-      </div>
-    </Card>
-  );
-}
-
-function Filled({ d, href }: { d: CommandCenterData; href: HrefFor }) {
+function Filled({ d, href, workspaceSlug }: { d: CommandCenterData; href: HrefFor; workspaceSlug?: string }) {
   const p = d.pipeline;
   return (
     <>
@@ -110,7 +87,7 @@ function Filled({ d, href }: { d: CommandCenterData; href: HrefFor }) {
           <SectionTitle title="Your agents" right={<ButtonLink href={href("APP-06")} variant="secondary" size="sm" icon="plus">New agent</ButtonLink>} />
           {d.agents.length ? (
             <div className="grid gap-3 md:gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))]">
-              {d.agents.map((a) => <AgentCard key={a.id} a={a} href={href} />)}
+              {d.agents.map((a) => <AgentCard key={a.id} a={a} openHref={`${href("APP-04")}/${a.id}`} workspaceSlug={workspaceSlug} />)}
             </div>
           ) : (
             <EmptyState illustration="agents" width={220} title="No agents yet" text="Agents research, clip and schedule for you. Start with one, or let Nelio AI suggest a plan." actions={<ButtonLink href={href("APP-06")} variant="cta" arrow>Create your first agent</ButtonLink>} />
@@ -229,11 +206,12 @@ export function CommandCenterLoading() {
 }
 
 /** APP-01 Command Center body. The state comes from the data (Filled or Empty); Loading is its own component. */
-export function CommandCenter({ data, href }: { data: CommandCenterData; href: HrefFor }): ReactNode {
+/** `workspaceSlug` turns on the agent buttons; design previews leave it out. */
+export function CommandCenter({ data, href, workspaceSlug }: { data: CommandCenterData; href: HrefFor; workspaceSlug?: string }): ReactNode {
   return (
     <Motion className="flex flex-col gap-4 md:gap-6">
       <div data-enter="" className="flex flex-col gap-4 md:gap-6">
-        {isFirstRun(data) ? <Empty d={data} href={href} /> : <Filled d={data} href={href} />}
+        {isFirstRun(data) ? <Empty d={data} href={href} /> : <Filled d={data} href={href} workspaceSlug={workspaceSlug} />}
       </div>
     </Motion>
   );

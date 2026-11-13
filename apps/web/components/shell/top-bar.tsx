@@ -5,9 +5,13 @@ import {
   CardTitle, Chip, DropdownMenu, EmptyState, Icon, IconButton, Logo, NavItemContent, PersonAvatar, ResponsiveDialog, Row, RowList, Small, navItemClass, useIsMobile,
 } from "@nelio/ui";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { signOutAction } from "@/lib/actions/auth";
 import { CommandPalette } from "./command-palette";
+import { PauseAllDialog } from "./pause-all-dialog";
+import { NotificationBell } from "@/components/notifications/notification-bell";
+import { PREVIEW_NOTIFICATIONS } from "@/components/notifications/sample";
 import { screenHref } from "./nav-model";
 import type { ShellAccount, ShellProps, ShellWorkspace } from "./types";
 
@@ -134,7 +138,16 @@ export function TopBar(p: ShellProps) {
     setPalette(open);
   };
   const vis = topBarVisibility(p.role);
-  const { credits, unreadNotifications, pauseAvailable } = p.extras;
+  const { credits, unreadNotifications, pauseAvailable, paused } = p.extras;
+  const [pauseClicked, setPauseClicked] = useState(false);
+  const [resumeDismissed, setResumeDismissed] = useState(false);
+  // The paused strip's "Resume all" links here with ?resume=1 so the dialog opens on arrival.
+  const search = useSearchParams();
+  const pauseOpen = pauseClicked || (Boolean(paused) && search.get("resume") === "1" && !resumeDismissed);
+  const setPauseOpen = (o: boolean) => {
+    setPauseClicked(o);
+    if (!o) setResumeDismissed(true);
+  };
   const settingsHref = p.showUnbuilt ? screenHref(p, "ST-01") : null;
   const appearanceHref = p.preview ? "#ST-03" : "/account/appearance";
 
@@ -154,10 +167,12 @@ export function TopBar(p: ShellProps) {
 
   const bell =
     unreadNotifications !== null ? (
-      <Link href={screenHref(p, "NT-01")} aria-label={unreadNotifications ? `Notifications, ${unreadNotifications} unread` : "Notifications"} className="relative box-border inline-flex size-11 flex-none items-center justify-center rounded-full border-2 border-border bg-surface-1 text-text no-underline hover:text-text">
-        <Icon name="bell" size={18} />
-        {unreadNotifications ? <span aria-hidden="true" className="absolute right-2 top-[7px] size-2.5 rounded-full border-2 border-surface-1 bg-ai" /> : null}
-      </Link>
+      <NotificationBell
+        href={screenHref(p, "NT-01")}
+        initialUnread={unreadNotifications}
+        userId={p.extras.userId ?? null}
+        preview={p.preview ? PREVIEW_NOTIFICATIONS : undefined}
+      />
     ) : null;
 
   return (
@@ -189,14 +204,24 @@ export function TopBar(p: ShellProps) {
           </Link>
         ) : null}
         {pauseAvailable && vis.pause ? (
-          <Link href={p.preview ? "#SY-09" : `/w/${p.current.slug}/home?pause=1`} className={`${PILL} hidden border-2 border-border font-bold text-text hover:text-text md:inline-flex`}>
-            <Icon name="pause" size={16} />
-            Pause all
-          </Link>
+          <button type="button" onClick={() => setPauseOpen(true)} className={`${PILL} hidden cursor-pointer border-2 border-border bg-transparent font-bold text-text md:inline-flex`}>
+            <Icon name={paused ? "play" : "pause"} size={16} />
+            {paused ? "Resume" : "Pause all"}
+          </button>
         ) : null}
         <IconButton icon="search" label="Search" onClick={() => openPalette(true)} className="xl:hidden" />
         {bell}
         <AccountMenu account={p.account} current={p.current} settingsHref={settingsHref} appearanceHref={appearanceHref} />
+        {pauseAvailable && vis.pause ? (
+          <PauseAllDialog
+            slug={p.current.slug}
+            workspaceName={p.current.name}
+            mode={paused ? "resume" : "pause"}
+            open={pauseOpen}
+            onOpenChange={setPauseOpen}
+            preview={p.preview ? { summary: { agents: 3, queuedSteps: 5, runningSteps: 1 }, checks: [{ agentId: "a", name: "Budget Shorts", willResume: true, note: "Budget OK · license OK" }, { agentId: "b", name: "Recipe Reels", willResume: false, note: "Weekly budget reached" }] } : undefined}
+          />
+        ) : null}
       </header>
       <WorkspaceSwitcher open={switcher} onOpenChange={setSwitcher} current={p.current} workspaces={p.workspaces} preview={p.preview} />
       <CommandPalette key={paletteKey} open={palette} onOpenChange={openPalette} current={p.current} workspaces={p.workspaces} showUnbuilt={p.showUnbuilt} preview={p.preview} />

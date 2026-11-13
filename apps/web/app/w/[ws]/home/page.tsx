@@ -11,5 +11,5 @@ export default async function HomePage({ params }: { params: Promise<{ ws: strin
   const { ws } = await params;
   const { session, workspace } = await requireWorkspace(ws);
   const data = await loadCommandCenter(session, workspace.workspaceId);
-  return <CommandCenter data={data} href={hrefForWorkspace(workspace)} />;
+  return <CommandCenter data={data} href={hrefForWorkspace(workspace)} workspaceSlug={workspace.slug} />;
 }

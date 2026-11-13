@@ -20,7 +20,7 @@ export function FaqList({ items }: { items: Faq[] }) {
   const shown = tab === "General" ? items : items.filter((i) => i.category === tab);
   return (
     <div className="flex flex-col gap-3">
-      <div role="tablist" aria-label="Topics" className="flex w-fit max-w-full flex-wrap gap-0.5 self-start rounded-full border border-border bg-surface-1 p-1">
+      <div role="tablist" aria-label="Topics" className="tab-scroll w-fit gap-0.5 self-start rounded-full border border-border bg-surface-1 p-1">
         {TABS.map((t) => (
           <button key={t} type="button" role="tab" aria-selected={t === tab} aria-controls="faq-panel" onClick={() => setTab(t)} className={cn("tap-target min-h-10 cursor-pointer whitespace-nowrap rounded-full border-0 px-4 py-[9px] text-sm font-bold", t === tab ? "bg-ink text-on-ink" : "bg-transparent text-muted")}>
             {t}

@@ -123,6 +123,24 @@
   }
 }
 
+/* Pill tab bars stay on one row and scroll sideways on narrow screens, snapping to each tab (boards, 13 Nov 2026). */
+@utility tab-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  max-width: 100%;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  & > * {
+    flex: none;
+    scroll-snap-align: start;
+  }
+}
+
 /* Screen-reader-only text (audit G-10). */
 @utility sr-only-focusable {
   position: absolute;

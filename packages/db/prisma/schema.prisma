@@ -1,5 +1,6 @@
 // Nelio database schema.
 // Milestone 1 covers identity, tenancy, invitations, creator profiles, audit and idempotency.
+// Milestone 3 adds agents, runs and steps, the activity feed, agent spend, notifications and the outbox.
 // Later milestones add their own tables through new migrations (architecture document §5).
 //
 // Access model: the application connects with a privileged role through Prisma, server-side only,
@@ -113,6 +114,11 @@ model User {
   invitationsSent      Invitation[]             @relation("InvitedBy")
   invitationsAccepted  Invitation[]             @relation("AcceptedBy")
   auditEvents          AuditEvent[]
+  agentsCreated        Agent[]                  @relation("AgentCreatedBy")
+  agentAuthorizations  AgentAuthorization[]
+  notifications        Notification[]
+  notificationPrefs    NotificationPreference[]
+  pushSubscriptions    PushSubscription[]
 
   @@map("users")
 }
@@ -155,28 +161,31 @@ model OrganizationMembership {
 
 /// Unit of work (B §1). Agents, content, accounts and approvals always belong to one workspace.
 model Workspace {
-  id             String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  orgId          String        @map("org_id") @db.Uuid
-  name           String
-  slug           String        @unique
-  kind           WorkspaceKind @default(primary)
-  timezone       String        @default("Africa/Lagos")
-  pausedAt       DateTime?     @map("paused_at") @db.Timestamptz(6)
-  pausedByUserId String?       @map("paused_by_user_id") @db.Uuid
+  id                        String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId                     String        @map("org_id") @db.Uuid
+  name                      String
+  slug                      String        @unique
+  kind                      WorkspaceKind @default(primary)
+  timezone                  String        @default("Africa/Lagos")
+  pausedAt                  DateTime?     @map("paused_at") @db.Timestamptz(6)
+  pausedByUserId            String?       @map("paused_by_user_id") @db.Uuid
   /// Set when someone dismisses the setup checklist on the Command Center (ON-05).
-  setupChecklistDismissedAt DateTime? @map("setup_checklist_dismissed_at") @db.Timestamptz(6)
+  setupChecklistDismissedAt DateTime?     @map("setup_checklist_dismissed_at") @db.Timestamptz(6)
   /// Onboarding step 2 (ON-02): what the workspace is going for. Used by Nelio AI to plan.
-  goals     String[] @default([])
-  niche     String?
-  audience  String?
-  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
-  deletedAt      DateTime?     @map("deleted_at") @db.Timestamptz(6)
+  goals                     String[]      @default([])
+  niche                     String?
+  audience                  String?
+  createdAt                 DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt                 DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt                 DateTime?     @map("deleted_at") @db.Timestamptz(6)
 
   org         Organization          @relation(fields: [orgId], references: [id], onDelete: Cascade)
   memberships WorkspaceMembership[]
   invitations Invitation[]
   auditEvents AuditEvent[]
+  agents      Agent[]
+  runs        AgentRun[]
+  activity    ActivityEvent[]
 
   // Lets child tables carry (workspace_id, org_id) with a foreign key that proves they match.
   @@unique([id, orgId])
@@ -279,4 +288,327 @@ model IdempotencyKey {
 
   @@unique([scope, key])
   @@map("idempotency_keys")
+}
+
+// ---------------------------------------------------------------- Milestone 3: agents, jobs, activity, notifications
+
+enum AgentState {
+  active
+  paused
+  budget_reached
+  stopped
+
+  @@map("agent_state")
+}
+
+enum RunTrigger {
+  schedule
+  manual
+  strategist
+
+  @@map("run_trigger")
+}
+
+/// One status set for runs and steps, matching the Activity Center chips (APP-03).
+enum RunStatus {
+  queued
+  running
+  blocked
+  needs_approval
+  confirming
+  paused
+  failed
+  done
+  canceled
+
+  @@map("run_status")
+}
+
+enum SpendKind {
+  reserve
+  settle
+  release
+
+  @@map("spend_kind")
+}
+
+enum NotificationCategory {
+  approvals
+  publishing
+  licenses
+  billing
+  security
+  agents
+
+  @@map("notification_category")
+}
+
+enum NotificationChannel {
+  in_app
+  email
+  push
+
+  @@map("notification_channel")
+}
+
+enum DeliveryStatus {
+  pending
+  sent
+  skipped
+  failed
+
+  @@map("delivery_status")
+}
+
+/// An AI agent (APP-04 to APP-06). Sources and destinations become their own tables when uploads (MS 4),
+/// licenses (MS 5) and social connections (MS 6) exist; until then they are id lists checked at run time.
+model Agent {
+  id              String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId           String         @map("org_id") @db.Uuid
+  workspaceId     String         @map("workspace_id") @db.Uuid
+  name            String
+  goal            String
+  color           String
+  shape           String
+  mode            AutomationMode @default(assisted)
+  state           AgentState     @default(active)
+  pausedAt        DateTime?      @map("paused_at") @db.Timestamptz(6)
+  pausedReason    String?        @map("paused_reason")
+  stoppedAt       DateTime?      @map("stopped_at") @db.Timestamptz(6)
+  /// { days: ("mon".."sun")[], time: "HH:MM" } in the workspace time zone. Null = runs only when started.
+  schedule        Json?
+  brandRules      String?        @map("brand_rules")
+  sourceRefs      Json           @default("[]") @map("source_refs")
+  destinationRefs Json           @default("[]") @map("destination_refs")
+  weeklyBudget    Int            @map("weekly_budget")
+  perRunLimit     Int            @map("per_run_limit")
+  maxPostsPerDay  Int            @default(1) @map("max_posts_per_day")
+  maxPostsPerWeek Int            @default(3) @map("max_posts_per_week")
+  nextRunAt       DateTime?      @map("next_run_at") @db.Timestamptz(6)
+  runCount        Int            @default(0) @map("run_count")
+  createdByUserId String         @map("created_by_user_id") @db.Uuid
+  createdAt       DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  workspace      Workspace            @relation(fields: [workspaceId, orgId], references: [id, orgId], onDelete: Cascade)
+  createdBy      User                 @relation("AgentCreatedBy", fields: [createdByUserId], references: [id])
+  runs           AgentRun[]
+  authorizations AgentAuthorization[]
+  spend          AgentSpend[]
+
+  @@unique([id, workspaceId])
+  @@index([workspaceId, state])
+  @@index([nextRunAt])
+  @@map("agents")
+}
+
+/// Explicit authorization for autonomous publishing (CreateAgent-Authorize). Immutable: widening the
+/// limits needs a new row; revoking sets revokedAt. The exact limits the person saw are stored as `scope`.
+model AgentAuthorization {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  agentId      String    @map("agent_id") @db.Uuid
+  workspaceId  String    @map("workspace_id") @db.Uuid
+  userId       String    @map("user_id") @db.Uuid
+  scope        Json
+  acknowledged Boolean
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  revokedAt    DateTime? @map("revoked_at") @db.Timestamptz(6)
+
+  agent Agent @relation(fields: [agentId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id])
+
+  @@index([agentId])
+  @@map("agent_authorizations")
+}
+
+/// One run of an agent. Each step runs as a queued job.
+model AgentRun {
+  id               String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId            String     @map("org_id") @db.Uuid
+  workspaceId      String     @map("workspace_id") @db.Uuid
+  agentId          String     @map("agent_id") @db.Uuid
+  number           Int
+  trigger          RunTrigger
+  status           RunStatus  @default(queued)
+  /// Short machine reason for blocked / failed (budget, license, permission, timeout, needs_ms4 ...).
+  reason           String?
+  reasonText       String?    @map("reason_text")
+  estimatedCredits Int        @default(0) @map("estimated_credits")
+  actualCredits    Int        @default(0) @map("actual_credits")
+  refundedCredits  Int        @default(0) @map("refunded_credits")
+  idempotencyKey   String     @unique @map("idempotency_key")
+  startedByUserId  String?    @map("started_by_user_id") @db.Uuid
+  deadlineAt       DateTime   @map("deadline_at") @db.Timestamptz(6)
+  startedAt        DateTime?  @map("started_at") @db.Timestamptz(6)
+  finishedAt       DateTime?  @map("finished_at") @db.Timestamptz(6)
+  createdAt        DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  workspace Workspace    @relation(fields: [workspaceId, orgId], references: [id, orgId], onDelete: Cascade)
+  agent     Agent        @relation(fields: [agentId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  steps     RunStep[]
+  spend     AgentSpend[]
+
+  @@unique([id, workspaceId])
+  @@unique([agentId, number])
+  @@index([workspaceId, status, createdAt])
+  @@map("agent_runs")
+}
+
+/// One step of a run (Upload & check, Transcribe, Detect scenes, Rank moments, Render ...).
+model RunStep {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  runId            String    @map("run_id") @db.Uuid
+  workspaceId      String    @map("workspace_id") @db.Uuid
+  ordinal          Int
+  kind             String
+  title            String
+  detail           String?
+  status           RunStatus @default(queued)
+  reason           String?
+  reasonText       String?   @map("reason_text")
+  estimatedCredits Int       @default(0) @map("estimated_credits")
+  actualCredits    Int       @default(0) @map("actual_credits")
+  attempts         Int       @default(0)
+  maxAttempts      Int       @default(3) @map("max_attempts")
+  /// When a failed step may be retried (provider limits such as "Retry after 00:00 UTC").
+  retryAfter       DateTime? @map("retry_after") @db.Timestamptz(6)
+  startedAt        DateTime? @map("started_at") @db.Timestamptz(6)
+  finishedAt       DateTime? @map("finished_at") @db.Timestamptz(6)
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  run AgentRun @relation(fields: [runId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@unique([runId, ordinal])
+  @@map("run_steps")
+}
+
+/// Append-only feed behind the Activity Center (APP-03) and the Command Center "Live" list.
+/// A trigger broadcasts each row to the workspace's private realtime channel.
+model ActivityEvent {
+  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId       String     @map("org_id") @db.Uuid
+  workspaceId String     @map("workspace_id") @db.Uuid
+  agentId     String?    @map("agent_id") @db.Uuid
+  runId       String?    @map("run_id") @db.Uuid
+  stepId      String?    @map("step_id") @db.Uuid
+  type        String
+  status      RunStatus?
+  title       String
+  detail      String?
+  createdAt   DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  workspace Workspace @relation(fields: [workspaceId, orgId], references: [id, orgId], onDelete: Cascade)
+
+  @@index([workspaceId, createdAt])
+  @@index([runId, createdAt])
+  @@map("activity_events")
+}
+
+/// Append-only agent spend: reserve before a step, then settle (actual) and release (the unused part).
+/// Hard budgets are read from here. The billing credit ledger (MS 8) builds on the same entries.
+model AgentSpend {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  agentId   String    @map("agent_id") @db.Uuid
+  runId     String    @map("run_id") @db.Uuid
+  stepId    String    @map("step_id") @db.Uuid
+  /// Which attempt of the step this belongs to: a retried step reserves again.
+  attempt   Int       @default(1)
+  kind      SpendKind
+  credits   Int
+  weekStart DateTime  @map("week_start") @db.Date
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  agent Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  run   AgentRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@unique([stepId, attempt, kind])
+  @@index([agentId, weekStart])
+  @@map("agent_spend")
+}
+
+/// A notification for one person (NT-01). `dedupeKey` stops the same event notifying twice.
+model Notification {
+  id          String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String               @map("user_id") @db.Uuid
+  orgId       String?              @map("org_id") @db.Uuid
+  workspaceId String?              @map("workspace_id") @db.Uuid
+  category    NotificationCategory
+  title       String
+  body        String?
+  href        String?
+  dedupeKey   String               @map("dedupe_key")
+  readAt      DateTime?            @map("read_at") @db.Timestamptz(6)
+  createdAt   DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user       User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deliveries NotificationDelivery[]
+
+  @@unique([userId, dedupeKey])
+  @@index([userId, createdAt])
+  @@map("notifications")
+}
+
+model NotificationDelivery {
+  id             String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  notificationId String              @map("notification_id") @db.Uuid
+  channel        NotificationChannel
+  status         DeliveryStatus      @default(pending)
+  attempts       Int                 @default(0)
+  lastError      String?             @map("last_error")
+  sentAt         DateTime?           @map("sent_at") @db.Timestamptz(6)
+
+  notification Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@unique([notificationId, channel])
+  @@map("notification_deliveries")
+}
+
+/// Per person and category; a missing row means the default for that category.
+model NotificationPreference {
+  id       String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId   String               @map("user_id") @db.Uuid
+  category NotificationCategory
+  inApp    Boolean              @default(true) @map("in_app")
+  email    Boolean              @default(true)
+  push     Boolean              @default(true)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, category])
+  @@map("notification_preferences")
+}
+
+/// A browser push subscription (web push / VAPID). Removed when the push service reports it gone.
+model PushSubscription {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String    @map("user_id") @db.Uuid
+  endpoint      String    @unique
+  p256dh        String
+  auth          String
+  userAgent     String?   @map("user_agent")
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  lastSuccessAt DateTime? @map("last_success_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("push_subscriptions")
+}
+
+/// Transactional outbox: written in the same transaction as the change it announces, then moved to the
+/// job queue by the dispatcher. Nothing is lost if Redis or the worker is down.
+model OutboxEvent {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  topic        String
+  payload      Json
+  dedupeKey    String    @unique @map("dedupe_key")
+  availableAt  DateTime  @default(now()) @map("available_at") @db.Timestamptz(6)
+  dispatchedAt DateTime? @map("dispatched_at") @db.Timestamptz(6)
+  attempts     Int       @default(0)
+  lastError    String?   @map("last_error")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([dispatchedAt, availableAt])
+  @@map("outbox_events")
 }
