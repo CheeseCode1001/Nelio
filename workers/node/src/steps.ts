@@ -76,6 +76,11 @@ export async function processStep(stepId: string, handlers: Record<string, StepH
     const s = await lockStep(tx, stepId);
     if (!s) return { go: false as const, note: "missing" };
     if (s.status !== "queued") return { go: false as const, note: `already ${s.status}` };
+    // Steps run strictly in order: a step whose predecessor is not done waits for it to finish.
+    if (s.ordinal > 1) {
+      const prev = await tx.runStep.findFirst({ where: { runId: s.runId, ordinal: s.ordinal - 1 }, select: { status: true } });
+      if (prev && prev.status !== "done") return { go: false as const, note: `waiting for step ${s.ordinal - 1}` };
+    }
     const { run } = s;
     const ws = run.workspace;
     const agent = run.agent;

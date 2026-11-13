@@ -132,7 +132,8 @@ export async function pauseWorkspace(tx: Tx, args: { workspaceId: string; userId
   await tx.workspace.update({ where: { id: ws.id }, data: { pausedAt: now, pausedByUserId: args.userId } });
   await tx.agent.updateMany({ where: { workspaceId: ws.id }, data: { nextRunAt: null } });
   await tx.runStep.updateMany({ where: { workspaceId: ws.id, status: "queued" }, data: { status: "paused" } });
-  await tx.agentRun.updateMany({ where: { workspaceId: ws.id, status: { in: ["queued", "running", "blocked"] } }, data: { status: "paused" } });
+  // Blocked runs keep their reason (budget, no videos...); only runs that would make progress are held.
+  await tx.agentRun.updateMany({ where: { workspaceId: ws.id, status: { in: ["queued", "running"] } }, data: { status: "paused" } });
   await recordActivity(tx, { orgId: ws.orgId, workspaceId: ws.id, type: "workspace.paused", status: "paused", title: "Everything paused", detail: "Nothing new will start until you resume." });
   await tx.auditEvent.create({ data: { orgId: ws.orgId, workspaceId: ws.id, actorUserId: args.userId, action: "workspace.pause_all" } });
   return { changed: true };
@@ -184,6 +185,20 @@ export async function resetBudgetWeeks(client: Db, now = new Date()): Promise<nu
   return reset;
 }
 
+/**
+ * Puts held (paused) steps back on the queue. Steps run in order, so only the first held step of each run is
+ * queued as a job; the rest wait as "queued" and start when the step before them finishes.
+ */
+export async function requeueHeld(tx: Tx, held: { id: string; runId: string }[], now = new Date()): Promise<void> {
+  const firstByRun = new Map<string, string>();
+  for (const s of held) if (!firstByRun.has(s.runId)) firstByRun.set(s.runId, s.id);
+  for (const s of held) await tx.runStep.update({ where: { id: s.id }, data: { status: "queued" } });
+  for (const [runId, stepId] of firstByRun) {
+    await tx.agentRun.update({ where: { id: runId }, data: { status: "queued" } });
+    await enqueue(tx, TOPICS.stepRun, { stepId }, `step:${stepId}:resume:${now.getTime()}`);
+  }
+}
+
 /** Resumes a paused workspace. Agents over budget stay paused; held work is re-queued. */
 export async function resumeWorkspace(tx: Tx, args: { workspaceId: string; userId: string; now?: Date }): Promise<{ changed: boolean; checks: ResumeCheck[] }> {
   const now = args.now ?? new Date();
@@ -194,14 +209,9 @@ export async function resumeWorkspace(tx: Tx, args: { workspaceId: string; userI
   for (const c of checks) {
     if (!c.willResume) await tx.agent.update({ where: { id: c.agentId }, data: { state: "budget_reached" } });
   }
-  const held = await tx.runStep.findMany({ where: { workspaceId: ws.id, status: "paused" }, select: { id: true, runId: true, attempts: true, run: { select: { agentId: true } } } });
   const stoppedAgents = new Set(checks.filter((c) => !c.willResume).map((c) => c.agentId));
-  for (const s of held) {
-    if (stoppedAgents.has(s.run.agentId)) continue;
-    await tx.runStep.update({ where: { id: s.id }, data: { status: "queued" } });
-    await tx.agentRun.update({ where: { id: s.runId }, data: { status: "queued" } });
-    await enqueue(tx, TOPICS.stepRun, { stepId: s.id }, `step:${s.id}:resume:${now.getTime()}`);
-  }
+  const held = await tx.runStep.findMany({ where: { workspaceId: ws.id, status: "paused" }, orderBy: { ordinal: "asc" }, select: { id: true, runId: true, run: { select: { agentId: true } } } });
+  await requeueHeld(tx, held.filter((s) => !stoppedAgents.has(s.run.agentId)), now);
   const agents = await tx.agent.findMany({ where: { workspaceId: ws.id, state: "active" }, select: { id: true } });
   for (const a of agents) await refreshNextRun(tx, a.id, now);
   await recordActivity(tx, { orgId: ws.orgId, workspaceId: ws.id, type: "workspace.resumed", status: "running", title: "Resumed", detail: `${checks.filter((c) => c.willResume).length} of ${checks.length} agents resumed` });

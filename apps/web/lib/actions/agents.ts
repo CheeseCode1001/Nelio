@@ -1,6 +1,6 @@
 "use server";
 
-import { DbNull, db, findWorkspaceFor, pauseSummary, pauseWorkspace, recordActivity, refreshNextRun, resumeChecks, resumeWorkspace, startRun, weekCommitted, type PauseSummary, type ResumeCheck, type WorkspaceSummary } from "@nelio/db";
+import { DbNull, db, findWorkspaceFor, requeueHeld, pauseSummary, pauseWorkspace, recordActivity, refreshNextRun, resumeChecks, resumeWorkspace, startRun, weekCommitted, type PauseSummary, type ResumeCheck, type WorkspaceSummary } from "@nelio/db";
 import { COUNTS_TOWARD_AGENT_LIMIT, PLANS, SCHEDULE_PRESETS, agentBudgetSchema, agentCreateSchema, agentPolicySchema, can, type Capability } from "@nelio/domain";
 import { revalidatePath } from "next/cache";
 import { getSession, type Session } from "../auth";
@@ -70,13 +70,8 @@ export async function resumeAgentAction(slug: string, agentId: string): Promise<
     }
     await tx.agent.update({ where: { id: agent.id }, data: { state: "active", pausedAt: null, pausedReason: null } });
     await refreshNextRun(tx, agent.id);
-    const held = await tx.runStep.findMany({ where: { status: "paused", run: { agentId: agent.id } }, select: { id: true, runId: true } });
-    const { enqueue, TOPICS } = await import("@nelio/db");
-    for (const s of held) {
-      await tx.runStep.update({ where: { id: s.id }, data: { status: "queued" } });
-      await tx.agentRun.update({ where: { id: s.runId }, data: { status: "queued" } });
-      await enqueue(tx, TOPICS.stepRun, { stepId: s.id }, `step:${s.id}:resume:${Date.now()}`);
-    }
+    const held = await tx.runStep.findMany({ where: { status: "paused", run: { agentId: agent.id } }, orderBy: { ordinal: "asc" }, select: { id: true, runId: true } });
+    await requeueHeld(tx, held);
     await recordActivity(tx, { orgId: a.ws.orgId, workspaceId: a.ws.workspaceId, agentId: agent.id, type: "agent.resumed", status: "running", title: `${agent.name} resumed`, detail: "Budget OK" });
     await tx.auditEvent.create({ data: { orgId: a.ws.orgId, workspaceId: a.ws.workspaceId, actorUserId: a.session.user.id, action: "agent.resume", targetType: "agent", targetId: agent.id } });
     return "ok" as const;

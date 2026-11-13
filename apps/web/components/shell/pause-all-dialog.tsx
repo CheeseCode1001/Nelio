@@ -9,6 +9,17 @@ type Summary = { agents: number; queuedSteps: number; runningSteps: number };
 type Check = { agentId: string; name: string; willResume: boolean; note: string };
 const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 
+/** A "Pause all" / "Resume" button with its own dialog, for page headers (Activity board). */
+export function PauseAllButton({ slug, workspaceName, paused }: { slug: string; workspaceName: string; paused: boolean }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button variant="secondary" icon={paused ? "play" : "pause"} onClick={() => setOpen(true)}>{paused ? "Resume" : "Pause all"}</Button>
+      <PauseAllDialog slug={slug} workspaceName={workspaceName} mode={paused ? "resume" : "pause"} open={open} onOpenChange={setOpen} />
+    </>
+  );
+}
+
 /**
  * SY-09 Pause all (journey J-12). "pause" shows what stops now and what is not affected; "resume" re-checks
  * every agent's budget first and says which stay paused. Both act on the server with permission checks.
