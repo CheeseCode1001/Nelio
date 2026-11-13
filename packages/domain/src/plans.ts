@@ -25,5 +25,8 @@ export function nextPlanForAgents(plan: PlanId): { id: PlanId; label: string; ag
   return null;
 }
 
-/** Agents that count toward the limit: everything except stopped agents. */
-export const COUNTS_TOWARD_AGENT_LIMIT = ["active", "paused", "budget_reached"] as const;
+/**
+ * Agents that count toward the plan limit. Paused and stopped agents do not ("Pause one, or move to Business",
+ * Agents-Limit board); resuming checks the limit again, so pausing cannot be used to exceed it.
+ */
+export const COUNTS_TOWARD_AGENT_LIMIT = ["active", "budget_reached"] as const;

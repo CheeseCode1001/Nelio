@@ -56,6 +56,13 @@ export async function resumeAgentAction(slug: string, agentId: string): Promise<
     if (!agent) return "missing" as const;
     if (agent.workspace.pausedAt) return "ws_paused" as const;
     if (agent.state === "stopped") return "stopped" as const;
+    if (agent.state === "paused") {
+      await tx.$queryRaw`SELECT id FROM organizations WHERE id = ${a.ws.orgId}::uuid FOR UPDATE`;
+      const org = await tx.organization.findUniqueOrThrow({ where: { id: a.ws.orgId }, select: { plan: true } });
+      const limit = PLANS[org.plan].agents;
+      const count = await tx.agent.count({ where: { orgId: a.ws.orgId, state: { in: [...COUNTS_TOWARD_AGENT_LIMIT] } } });
+      if (limit !== null && count >= limit) return "limit" as const;
+    }
     const used = await weekCommitted(tx, agent.id, new Date(), agent.workspace.timezone);
     if (agent.state === "budget_reached" || used >= agent.weeklyBudget) {
       await tx.agent.update({ where: { id: agent.id }, data: { state: "budget_reached" } });
@@ -76,7 +83,7 @@ export async function resumeAgentAction(slug: string, agentId: string): Promise<
   });
   refresh(slug, agentId);
   if (result === "ok") return { ok: true };
-  const errors = { missing: "This agent doesn’t exist.", ws_paused: "Everything in this workspace is paused. Resume the workspace first.", stopped: "Stopped agents can’t be restarted.", budget: "This week’s budget is used up. It resets on Monday." } as const;
+  const errors = { limit: "You’re using every agent your plan includes. Pause another agent first.", missing: "This agent doesn’t exist.", ws_paused: "Everything in this workspace is paused. Resume the workspace first.", stopped: "Stopped agents can’t be restarted.", budget: "This week’s budget is used up. It resets on Monday." } as const;
   return { ok: false, error: errors[result] };
 }
 

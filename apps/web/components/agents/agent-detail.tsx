@@ -11,7 +11,7 @@ export interface AgentDetailHrefs { agents: string; tab: (t: DetailTab) => strin
 
 function Tabs({ active, hrefs }: { active: DetailTab; hrefs: AgentDetailHrefs }) {
   return (
-    <nav aria-label="Agent sections" className="flex w-fit max-w-full flex-wrap gap-0.5 self-start rounded-full border border-border bg-surface-1 p-1">
+    <nav aria-label="Agent sections" className="flex w-fit max-w-full flex-wrap gap-0.5 self-start rounded-[26px] border md:rounded-full border-border bg-surface-1 p-1">
       {(Object.keys(TAB_LABEL) as DetailTab[]).map((t) => (
         <Link
           key={t}
@@ -133,7 +133,7 @@ export function AgentDetail({ d, tab, hrefs, workspaceSlug }: { d: AgentDetailDa
           </div>
           <DetailActions slug={workspaceSlug} d={d} canSave={tab === "policy" || tab === "budget"} />
         </header>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-start gap-3 md:flex-row md:items-center md:gap-4">
           <AgentAvatar color={d.color} shape={d.shape} size={72} />
           <div className="min-w-0">
             <div className="font-display text-[22px] font-extrabold tracking-[-0.02em] text-text">Hi, I’m {d.name}.</div>
