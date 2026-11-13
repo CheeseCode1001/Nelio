@@ -68,9 +68,17 @@ Branch: `feat/milestone-2-frontend` · Status: **all 6 slices built; open items 
 - **Install prompt:** from the second visit, dismissible (remembered in this browser only). Safari on iPhone gets the "Add to Home Screen" instructions. After installing, the "Nelio is installed" card shows once.
 - **Development:** the worker registers only in production builds (or with `NEXT_PUBLIC_PWA_DEV=true`).
 
-## 7. Not verified yet
+## 7. Responsive pass (13 Nov 2026)
 
-- Tablet widths (768 to 1279 px, icon rail), keyboard pass and automated accessibility checks.
+- **Home on mobile** now follows its board section by section: features, steps, trust, love wall, pricing teaser and closing call to action match the board's heights exactly; hero, people and convert are within 10 px. Type follows the board's mobile scale. The hero headline is 26 px on mobile, which is what the board draws.
+- **Site menu** sheet rows are 73 px with the board's header row; the footer drops desktop-only links and uses the mobile copyright line.
+- **Tablet (768 to 1279 px):** the app top bar stays on one row; full search appears from 1280 px, with a search button below that.
+- **Tap targets:** small links and switches drawn under 44 px (logos, account tabs, Reduce motion, "See all") get an invisible 44 px tap area, so their size on screen is unchanged.
+- **Checked at 375, 768 and 1024 px** on public pages, sign-in, onboarding, Command Center (all preview states), Appearance, `/offline` and `/dev/ui`: no sideways scrolling and nothing past the screen edge. Left as drawn: footer links (28 px, above the 24 px WCAG 2.2 minimum) and 11 px tab-bar labels.
+
+## 8. Not verified yet
+
+- Keyboard pass and automated accessibility checks.
 - Visual snapshot tests (Playwright) against the boards.
 - GSAP timing against MOTION.md (audit G-12); the preview pane pauses animation frames.
 - Installing on a real Android phone and iPhone, and real loss of connection (simulated with browser events here).

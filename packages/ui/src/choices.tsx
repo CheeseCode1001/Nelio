@@ -72,7 +72,7 @@ export function Switch({ label, sub, checked, onChange, disabled, id }: { label:
         aria-labelledby={`${id}-label`}
         disabled={disabled}
         onClick={() => onChange?.(!checked)}
-        className={cn("flex h-[30px] w-[52px] flex-none cursor-pointer rounded-full border-0 p-1 disabled:cursor-not-allowed", checked ? "justify-end bg-accent" : "justify-start bg-surface-3")}
+        className={cn("tap-target flex h-[30px] w-[52px] flex-none cursor-pointer rounded-full border-0 p-1 disabled:cursor-not-allowed", checked ? "justify-end bg-accent" : "justify-start bg-surface-3")}
       >
         <span className="block size-[22px] rounded-full bg-white" />
       </button>

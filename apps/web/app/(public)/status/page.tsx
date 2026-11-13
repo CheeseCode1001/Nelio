@@ -36,7 +36,7 @@ const SERVICES: [string, State][] = [
 export default function StatusPage() {
   const noticeTitle = process.env.STATUS_NOTICE_TITLE;
   return (
-    <Section pad="md:py-14">
+    <Section>
       <div data-enter="" className="flex flex-col gap-7">
         <Big size={56}>System status</Big>
         {noticeTitle ? <Banner tone="warn" title={noticeTitle} text={process.env.STATUS_NOTICE_TEXT} /> : null}

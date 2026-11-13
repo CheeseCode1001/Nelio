@@ -20,7 +20,7 @@ export function AccountTabs({ active }: { active: ScreenId }) {
           key={t.id}
           href={t.href}
           aria-current={t.id === active ? "page" : undefined}
-          className={cn("inline-flex min-h-10 items-center whitespace-nowrap rounded-full px-4 py-[9px] text-sm font-bold no-underline", t.id === active ? "bg-ink text-on-ink hover:text-on-ink" : "text-muted hover:text-text")}
+          className={cn("tap-target inline-flex min-h-10 items-center whitespace-nowrap rounded-full px-4 py-[9px] text-sm font-bold no-underline", t.id === active ? "bg-ink text-on-ink hover:text-on-ink" : "text-muted hover:text-text")}
         >
           {t.label}
         </Link>

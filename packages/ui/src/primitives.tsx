@@ -177,7 +177,7 @@ export function Chip({ tone = "neutral", icon, className, children }: { tone?: T
 
 const STICKER_FILLS = { yellow: "bg-yellow", cyan: "bg-cyan", pink: "bg-pink", lime: "bg-lime", orange: "bg-orange", white: "bg-white" } as const;
 
-export function Sticker({ fill = "yellow", rotate = -4, icon, size = 14, className, children }: { fill?: keyof typeof STICKER_FILLS; rotate?: number; icon?: IconName; size?: 13 | 14; className?: string; children: ReactNode }) {
+export function Sticker({ fill = "yellow", rotate = -4, icon, size = 14, className, children }: { fill?: keyof typeof STICKER_FILLS; rotate?: number; icon?: IconName; size?: 11 | 12 | 13 | 14 | 15 | 16; className?: string; children: ReactNode }) {
   return (
     <span
       data-pop=""

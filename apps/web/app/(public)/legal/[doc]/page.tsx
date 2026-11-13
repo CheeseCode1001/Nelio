@@ -31,13 +31,13 @@ export default async function LegalPage({ params }: { params: Promise<{ doc: str
   if (!(doc in DOCS)) notFound();
   const current = DOCS[doc as DocKey];
   return (
-    <Section pad="md:py-14">
+    <Section>
       <div className="flex flex-wrap items-start gap-8">
         <nav aria-label="Legal documents" className="flex-[1_1_260px]">
           <ul className="m-0 list-none overflow-hidden rounded-row border border-border bg-surface-1 p-0 shadow-card">
             {(Object.keys(DOCS) as DocKey[]).map((k) => (
               <li key={k} className="border-b border-border last:border-b-0">
-                <Link href={`/legal/${k}`} aria-current={k === doc ? "page" : undefined} className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-text no-underline hover:text-text">
+                <Link href={`/legal/${k}`} aria-current={k === doc ? "page" : undefined} className="flex min-h-11 items-center gap-3 px-4 py-3 text-sm font-semibold text-text no-underline hover:text-text">
                   <span className="grow">{DOCS[k].title}</span>
                   {k === doc ? <Chip tone="blue">Viewing</Chip> : null}
                 </Link>

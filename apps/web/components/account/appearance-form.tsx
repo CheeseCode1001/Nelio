@@ -73,7 +73,7 @@ export function AppearanceForm({ initialTheme, initialReduceMotion }: { initialT
           aria-checked={reduce}
           aria-labelledby="reduce-label"
           onClick={() => save(theme, !reduce)}
-          className={cn("flex h-[30px] w-[52px] flex-none cursor-pointer rounded-full border-0 p-1", reduce ? "justify-end bg-accent" : "justify-start bg-surface-3")}
+          className={cn("tap-target flex h-[30px] w-[52px] flex-none cursor-pointer rounded-full border-0 p-1", reduce ? "justify-end bg-accent" : "justify-start bg-surface-3")}
         >
           <span className="block size-[22px] rounded-full bg-white" />
         </button>

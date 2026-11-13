@@ -10,7 +10,7 @@ export function ErrorPage({ illustration, title, text, actions }: { illustration
   return (
     <Motion className="flex grow flex-col">
       <header className="flex items-center px-4 py-3 md:px-8 md:py-5">
-        <Link href="/" aria-label="Nelio home" className="no-underline">
+        <Link href="/" aria-label="Nelio home" className="tap-target no-underline">
           <Logo size={22} className="md:hidden" />
           <Logo size={24} className="hidden md:inline-flex" />
         </Link>

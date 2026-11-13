@@ -93,7 +93,7 @@ function AccountMenu({ account, current, settingsHref, appearanceHref }: { accou
   const [open, setOpen] = useState(false);
   const mobile = useIsMobile();
   const trigger = (
-    <button type="button" aria-label="Account menu" aria-haspopup="menu" aria-expanded={open} onClick={mobile ? () => setOpen(true) : undefined} className="cursor-pointer rounded-full border-0 bg-transparent p-0">
+    <button type="button" aria-label="Account menu" aria-haspopup="menu" aria-expanded={open} onClick={mobile ? () => setOpen(true) : undefined} className="tap-target cursor-pointer rounded-full border-0 bg-transparent p-0">
       <PersonAvatar initials={initials(account.fullName)} color="#FF7A2F" size={mobile ? 40 : 44} />
     </button>
   );
@@ -118,7 +118,7 @@ function AccountMenu({ account, current, settingsHref, appearanceHref }: { accou
 
 // ------------------------------------------------------------------ Top bar
 // No display class here: each pill is hidden below 768 px and shown with md:flex / md:inline-flex.
-const PILL = "box-border min-h-11 items-center gap-2 rounded-full px-4 py-2.5 text-sm no-underline";
+const PILL = "box-border min-h-11 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm no-underline";
 
 /**
  * Operator top bar (generator `topbar` on desktop, `mtopbar` below 768 px).
@@ -162,21 +162,21 @@ export function TopBar(p: ShellProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-[5] flex items-center gap-2 border-b border-border bg-surface-1 px-4 py-3 md:static md:flex-wrap md:gap-3 md:px-5">
-        <Link href={screenHref(p, "APP-01")} aria-label="Command Center" className="hidden no-underline md:inline-flex">
+      <header className="sticky top-0 z-[5] flex items-center gap-2 border-b border-border bg-surface-1 px-4 py-3 md:static md:gap-3 md:px-5 xl:flex-wrap">
+        <Link href={screenHref(p, "APP-01")} aria-label="Command Center" className="tap-target hidden no-underline md:inline-flex">
           <Logo size={22} />
         </Link>
         <span className="hidden w-1.5 md:inline" />
         <button type="button" onClick={() => setSwitcher(true)} aria-haspopup="dialog" className="box-border flex min-h-11 min-w-0 max-w-[170px] cursor-pointer items-center gap-2 rounded-full border-2 border-border bg-surface-1 py-1 pl-1 pr-3 text-text md:max-w-none md:gap-2.5 md:py-[5px] md:pl-[5px] md:pr-3.5">
           <PersonAvatar initials={p.current.name.slice(0, 1).toUpperCase()} color="#FFD43B" size={30} className="flex-none md:size-8" />
           <span className="flex min-w-0 flex-col text-left">
-            <span className="truncate text-sm font-bold">{p.current.name}</span>
-            <span className="hidden text-[11px] text-muted md:block">{workspaceKindLabel(p.current)}</span>
+            <span className="truncate whitespace-nowrap text-sm font-bold">{p.current.name}</span>
+            <span className="hidden whitespace-nowrap text-[11px] text-muted lg:block">{workspaceKindLabel(p.current)}</span>
           </span>
           <Icon name="chevd" size={16} />
           <span className="sr-only">Switch workspace</span>
         </button>
-        <button type="button" onClick={() => openPalette(true)} className={`${PILL} hidden flex-[0_1_380px] cursor-pointer border-2 border-border bg-surface-2 text-left text-muted md:flex`}>
+        <button type="button" onClick={() => openPalette(true)} className={`${PILL} hidden flex-[0_1_380px] cursor-pointer border-2 border-border bg-surface-2 text-left text-muted xl:flex`}>
           <Icon name="search" size={16} />
           <span className="grow">Search or ask Nelio AI</span>
           <kbd className="rounded-lg border border-border bg-surface-1 px-2 py-0.5 font-body text-xs text-muted">Ctrl K</kbd>
@@ -194,7 +194,7 @@ export function TopBar(p: ShellProps) {
             Pause all
           </Link>
         ) : null}
-        <IconButton icon="search" label="Search" onClick={() => openPalette(true)} className="md:hidden" />
+        <IconButton icon="search" label="Search" onClick={() => openPalette(true)} className="xl:hidden" />
         {bell}
         <AccountMenu account={p.account} current={p.current} settingsHref={settingsHref} appearanceHref={appearanceHref} />
       </header>

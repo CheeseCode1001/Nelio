@@ -7,11 +7,12 @@ import type { CSSProperties, ReactNode } from "react";
  *   heading (section titles): 20 + (size - 20) × 0.55
  */
 const mobileSize = (size: number, f: number) => Math.round(20 + (size - 20) * f);
+// Line height is set inline: a font-size utility with a variable would otherwise reset it to the page default.
 const sizeVars = (size: number, f: number) => ({ "--fs-m": `${mobileSize(size, f)}px`, "--fs-d": `${size}px` }) as CSSProperties;
 
-export function Big({ size, as: Tag = "h1", className, style, children }: { size: number; as?: "h1" | "h2" | "p"; className?: string; style?: CSSProperties; children: ReactNode }) {
+export function Big({ size, mobile, as: Tag = "h1", className, style, children }: { size: number; mobile?: number; as?: "h1" | "h2" | "p"; className?: string; style?: CSSProperties; children: ReactNode }) {
   return (
-    <Tag className={cn("m-0 font-display font-extrabold leading-[1.02] tracking-[-0.045em] text-text text-[length:var(--fs-m)] md:text-[length:var(--fs-d)]", className)} style={{ ...sizeVars(size, 0.42), ...style }}>
+    <Tag className={cn("m-0 font-display font-extrabold leading-[1.02] tracking-[-0.045em] text-text text-[length:var(--fs-m)] md:text-[length:var(--fs-d)]", className)} style={{ lineHeight: 1.02, ...sizeVars(size, 0.42), ...(mobile ? ({ "--fs-m": `${mobile}px` } as CSSProperties) : {}), ...style }}>
       {children}
     </Tag>
   );
@@ -19,7 +20,7 @@ export function Big({ size, as: Tag = "h1", className, style, children }: { size
 
 export function SectionHeading({ size, as: Tag = "h2", className, children }: { size: number; as?: "h2" | "h3"; className?: string; children: ReactNode }) {
   return (
-    <Tag className={cn("m-0 font-display font-extrabold leading-[1.08] tracking-[-0.03em] text-text text-[length:var(--fs-m)] md:text-[length:var(--fs-d)]", className)} style={sizeVars(size, 0.55)}>
+    <Tag className={cn("m-0 font-display font-extrabold leading-[1.08] tracking-[-0.03em] text-text text-[length:var(--fs-m)] md:text-[length:var(--fs-d)]", className)} style={{ lineHeight: 1.08, ...sizeVars(size, 0.55) }}>
       {children}
     </Tag>
   );
@@ -34,7 +35,10 @@ export function Eyebrow({ children }: { children: ReactNode }) {
   return <span className="inline-flex w-fit max-w-full items-center gap-1.5 text-xs font-extrabold uppercase tracking-[0.08em] text-accent-text">{children}</span>;
 }
 
-/** Marketing section: 72 × 48 px padding on desktop, 40 × 16 on mobile, 1200 px content (handoff §6.3). */
+/**
+ * Marketing section: 72 × 48 px padding on desktop, 40 × 16 on mobile, 1200 px content (handoff §6.3).
+ * The generator's `section` always uses these values, so pages pass no padding of their own.
+ */
 export function Section({ children, tone, center, className, inner, pad }: { children: ReactNode; tone?: "s2"; center?: boolean; className?: string; inner?: string; pad?: string }) {
   return (
     <section className={cn("relative overflow-hidden px-4 py-10 md:px-12 md:py-[72px]", tone === "s2" && "bg-surface-2", pad, className)}>

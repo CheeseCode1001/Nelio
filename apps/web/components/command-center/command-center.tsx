@@ -143,7 +143,7 @@ function Filled({ d, href }: { d: CommandCenterData; href: HrefFor }) {
             )}
           </Card>
           <Card>
-            <CardHead title="Live activity" right={<Link href={href("APP-03")} className="text-[13.5px] font-bold text-accent-text no-underline hover:text-text">See all →</Link>} />
+            <CardHead title="Live activity" right={<Link href={href("APP-03")} className="tap-target text-[13.5px] font-bold text-accent-text no-underline hover:text-text">See all →</Link>} />
             {d.live.length ? (
               <RowList>
                 {d.live.map((l) => (

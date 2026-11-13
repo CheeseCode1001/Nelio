@@ -31,7 +31,7 @@ const PLANS = [
 export default function PricingPage() {
   return (
     <>
-      <Section center pad="md:pt-16 md:pb-6">
+      <Section center>
         <div data-enter="" className="flex flex-col items-center gap-4">
           <Eyebrow>Flexible plans</Eyebrow>
           <Big size={68}>Simple plans. Hard limits.</Big>
@@ -42,14 +42,14 @@ export default function PricingPage() {
           </div>
         </div>
       </Section>
-      <Section pad="md:pt-6 md:pb-20">
+      <Section>
         <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))] md:gap-[18px]">
           {PLANS.map((p) => {
             const hot = "hot" in p && p.hot;
             return (
               <section key={p.name} data-reveal="" className={`relative flex flex-col gap-3.5 rounded-[30px] bg-surface-1 p-3.5 shadow-card ${hot ? "border-[3px] border-accent" : "border border-border"}`}>
                 {hot ? <div className="absolute -top-3.5 right-3.5 z-[1]"><Sticker fill="yellow" rotate={4} icon="star" size={13}>Most popular</Sticker></div> : null}
-                <div className="relative h-[120px] overflow-hidden rounded-[22px] border-2 border-outline" style={{ background: p.bg }}>
+                <div className="relative h-[124px] overflow-hidden rounded-[22px] border-2 border-outline" style={{ background: p.bg }}>
                   <Shapes c1={p.c[0]} c2={p.c[1]} />
                   <h2 className="absolute left-3.5 top-3.5 m-0 inline-flex items-center gap-1.5 rounded-full border-2 border-outline bg-white px-3 py-1 text-[13px] font-extrabold text-outline">{p.name}</h2>
                 </div>

@@ -55,10 +55,20 @@
   --shadow-sticker-card: 6px 6px 0 var(--n-ol);
   --shadow-photo: 8px 8px 0 var(--n-ol);
   --shadow-menu: 0 20px 60px rgba(11, 11, 20, 0.18);
+
+  /* The boards use the browser's normal line height unless they set one (P 1.55, titles 1.02/1.08).
+     Tailwind's size utilities would otherwise bring their own line heights. */
+  --text-xs--line-height: normal;
+  --text-sm--line-height: normal;
+  --text-base--line-height: normal;
+  --text-lg--line-height: normal;
+  --text-xl--line-height: normal;
+  --text-2xl--line-height: normal;
 }
 
 @layer base {
   html {
+    line-height: normal;
     background: var(--n-bg);
     color: var(--n-tx);
     font-family: var(--font-body);
@@ -96,6 +106,20 @@
   :focus-visible {
     outline: 3px solid var(--n-focus);
     outline-offset: 2px;
+  }
+}
+
+/* Invisible 44 px tap area around a small link or control, without changing its size or layout (handoff §6.3). */
+@utility tap-target {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
   }
 }
 

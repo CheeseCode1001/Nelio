@@ -11,7 +11,7 @@ export const metadata: Metadata = { title: "How Nelio works" };
 export default function ProductPage() {
   return (
     <>
-      <Section center pad="md:pt-16 md:pb-6">
+      <Section center>
         <div data-enter="" className="flex flex-col items-center gap-[18px]">
           <Sticker fill="lime" rotate={-3}>Product tour</Sticker>
           <Big size={72}>How Nelio works</Big>

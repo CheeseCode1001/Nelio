@@ -46,24 +46,24 @@ function PhoneFan() {
   return (
     <div className="relative flex items-start justify-center py-[30px]" aria-hidden="true">
       <Blob size={560} className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
-      <div className="relative hidden items-start md:flex">{phones(200, 36)}</div>
-      <div className="relative flex items-start md:hidden">{phones(92, 26)}</div>
-      <div className="absolute left-[8%] top-2.5"><Sticker fill="pink" rotate={-6} icon="spark" size={14}>Nelio AI picked this</Sticker></div>
-      <div className="absolute bottom-[30px] right-[6%]"><Sticker fill="cyan" rotate={5} size={14}>Licensed ✓</Sticker></div>
+      {/* Same 200 px phones at every width, as on both boards: on phones the fan runs off both edges. */}
+      <div className="relative flex items-start">{phones(200, 36)}</div>
+      <div className="absolute left-[8%] top-2.5"><Sticker fill="pink" rotate={-6} icon="spark" size={15}>Nelio AI picked this</Sticker></div>
+      <div className="absolute bottom-[30px] right-[6%]"><Sticker fill="cyan" rotate={5} size={15}>Licensed ✓</Sticker></div>
     </div>
   );
 }
 
 function FeatureRow({ eyebrow, title, text, visual, fill, flip }: { eyebrow: string; title: string; text: string; visual: ReactNode; fill: string; flip?: boolean }) {
   return (
-    <div className={`flex flex-wrap items-center gap-8 md:gap-12 ${flip ? "md:flex-row-reverse" : ""}`}>
+    <div className={`flex flex-wrap items-center gap-12 ${flip ? "md:flex-row-reverse" : ""}`}>
       <div data-reveal="" className="flex flex-[1_1_380px] flex-col gap-3.5">
         <Eyebrow>{eyebrow}</Eyebrow>
         <SectionHeading size={40}>{title}</SectionHeading>
         <p className="m-0 text-base leading-[1.55] text-muted">{text}</p>
         <ButtonLink href="/product" variant="secondary">See how</ButtonLink>
       </div>
-      <div data-reveal="" className="relative flex min-h-[340px] flex-[1_1_480px] items-center justify-center overflow-hidden rounded-feature p-5 md:p-8" style={{ background: fill }}>{visual}</div>
+      <div data-reveal="" className="relative flex min-h-[404px] flex-[1_1_480px] items-center justify-center overflow-hidden rounded-feature p-8" style={{ background: fill }}>{visual}</div>
     </div>
   );
 }
@@ -84,11 +84,11 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <Section pad="md:pt-16 md:pb-6">
+      <Section>
         <div data-enter="" className="flex flex-col items-center gap-[22px] text-center">
           <Sticker fill="yellow" rotate={-3} icon="spark">Your AI content team</Sticker>
-          <Big size={76}>Turn one long video into <Highlight>a week of shorts.</Highlight></Big>
-          <p className="m-0 max-w-[1000px] text-[17px] leading-[1.55] text-muted md:text-[19px]">
+          <Big size={76} mobile={26}>Turn one long video into <Highlight>a week of shorts.</Highlight></Big>
+          <p className="m-0 text-[19px] leading-[1.55] text-muted">
             Nelio’s agents find the best moments, cut, caption and schedule them, only from content you own or have licensed, and only with the approvals and budgets you set.
           </p>
           <UploadPill />
@@ -98,14 +98,14 @@ export default function HomePage() {
       </Section>
 
       {/* People */}
-      <Section pad="md:py-10">
+      <Section>
         <div data-reveal="" className="flex flex-col items-center gap-[18px] text-center">
           <h2 className="m-0 font-display text-xl font-bold text-text">Built for the people who post every day</h2>
           <p className="m-0 text-sm text-muted">Podcasters, streamers, small businesses and agencies across Nigeria and beyond.</p>
           <div className="flex flex-wrap justify-center gap-3.5" aria-hidden="true">
             {AVATARS.map((a) => (
               <div key={a.photo} className="relative">
-                <AvatarPhoto photo={a.photo} size={76} ring={a.ring} />
+                <AvatarPhoto photo={a.photo} size={82} ring={a.ring} />
                 <span className="absolute -bottom-0.5 -right-1"><PlatformBadge platform={a.platform} size={24} /></span>
               </div>
             ))}
@@ -125,7 +125,7 @@ export default function HomePage() {
             <div className="flex" aria-hidden="true">
               {([["#FFD43B", "THE TRUTH", 98, "tt", -6, "p7"], ["#59D8FF", "WAIT…", 99, "yt", 0, "p4"], ["#FF4FB8", "NO WAY", 100, "ig", 6, "p3"]] as const).map(([bg, cap, sc, pl, r, ph], i) => (
                 <div key={cap} style={{ marginLeft: i ? -20 : 0 }}>
-                  <IPhone width={150} rotate={r}><ShortScreen photo={ph} caption={cap} bg={bg} score={sc} platform={pl} /></IPhone>
+                  <IPhone width={170} rotate={r}><ShortScreen photo={ph} caption={cap} bg={bg} score={sc} platform={pl} /></IPhone>
                 </div>
               ))}
             </div>
@@ -151,7 +151,7 @@ export default function HomePage() {
           text="Animated captions in your fonts and colours, saved as a brand kit so every agent uses them."
           fill="#FF4FB8"
           visual={
-            <div className="flex flex-wrap justify-center gap-2.5" aria-hidden="true">
+            <div className="flex justify-center gap-2.5" aria-hidden="true">
               {([["BOLD POP", "#FFD43B", 18], ["minimal", "#FFFFFF", 16], ["KARAOKE", "#B6F24A", 18]] as const).map(([t, b, fs]) => (
                 <span key={t} data-pop="" className="rounded-[14px] border-2 border-outline px-3.5 py-2.5 font-display font-extrabold text-outline" style={{ background: b, fontSize: fs }}>{t}</span>
               ))}
@@ -169,7 +169,7 @@ export default function HomePage() {
               <Illustration name={c.ill} width={220} />
               <span className="font-display text-[22px] font-extrabold">{c.title}</span>
               <span className="text-sm leading-normal">{c.text}</span>
-              <span className="inline-flex items-center gap-2 text-sm font-extrabold">
+              <span className="inline-flex w-fit items-center gap-2 text-sm font-extrabold">
                 Explore
                 <span aria-hidden="true" className="inline-flex size-7 items-center justify-center rounded-full bg-outline text-white"><Icon name="arrowr" size={15} strokeWidth={2.6} /></span>
               </span>
@@ -205,7 +205,7 @@ export default function HomePage() {
             },
           ].map((st) => (
             <div key={st.n} data-reveal="" className="flex flex-[1_1_320px] flex-col gap-3.5">
-              <div className="flex h-[200px] items-center justify-center rounded-[28px] border border-border bg-surface-2 p-5">{st.mock}</div>
+              <div className="flex h-[242px] items-center justify-center rounded-[28px] border border-border bg-surface-2 p-5">{st.mock}</div>
               <Eyebrow>Step {st.n}</Eyebrow>
               <h3 className="m-0 font-display text-[22px] font-bold leading-tight text-text">{st.title}</h3>
               <p className="m-0 text-sm leading-[1.55] text-muted">{st.text}</p>
@@ -215,10 +215,10 @@ export default function HomePage() {
       </Section>
 
       {/* Trust strip */}
-      <Section pad="md:py-6">
-        <div data-reveal="" className="grid overflow-hidden rounded-feature bg-lime p-5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))] md:p-10">
+      <Section>
+        <div data-reveal="" className="grid overflow-hidden rounded-feature bg-lime p-10 [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))]">
           {([["check", "Every post approved", "Nothing publishes without the OK you set."], ["shield", "Every source licensed", "Your uploads or verified licenses only."], ["wallet", "Every credit shown", "Estimate before, actual after, hard limits."]] as const).map(([ic, t, s], i) => (
-            <div key={t} className={`flex flex-col gap-1.5 px-6 py-2.5 text-outline ${i ? "border-[rgba(11,11,20,0.2)] max-md:border-t-2 md:border-l-2" : ""}`}>
+            <div key={t} className={`flex flex-col gap-1.5 px-6 py-2.5 text-outline ${i ? "border-l-2 border-[rgba(11,11,20,0.2)]" : ""}`}>
               <Icon name={ic} size={30} strokeWidth={2.4} />
               <span className="font-display text-[28px] font-extrabold tracking-[-0.03em]">{t}</span>
               <span className="text-[15px]">{s}</span>
@@ -232,7 +232,7 @@ export default function HomePage() {
         <SectionHead eyebrow="Wall of love" title="Creators say it best." sub="Real quotes from our private beta will live here." />
         <div className="flex flex-wrap justify-center gap-4">
           {(["p6", "p1", "p10", "p7", "p8"] as PhotoKey[]).map((ph, i) => (
-            <div key={ph} data-reveal="" className="relative h-[300px] flex-[0_1_220px] overflow-hidden rounded-[28px] border-2 border-outline" style={{ background: ["#59D8FF", "#FFD43B", "#FF4FB8", "#B6F24A", "#FF7A2F"][i] }}>
+            <div key={ph} data-reveal="" className="relative h-[304px] flex-[0_1_220px] overflow-hidden rounded-[28px] border-2 border-outline" style={{ background: ["#59D8FF", "#FFD43B", "#FF4FB8", "#B6F24A", "#FF7A2F"][i] }}>
               {/* eslint-disable-next-line @next/next/no-img-element -- decorative photo */}
               <img src={photoSrc(ph)} alt="" aria-hidden="true" loading="lazy" className="absolute inset-0 size-full object-cover object-[center_top]" />
               <div className="absolute inset-x-3 bottom-3 rounded-2xl border-2 border-outline bg-white px-3 py-2.5 text-[13px] font-semibold text-outline">
@@ -252,8 +252,8 @@ export default function HomePage() {
       </Section>
 
       {/* Final call to action */}
-      <Section pad="md:pt-10 md:pb-20">
-        <div data-reveal="" className="relative flex flex-col items-center gap-5 overflow-hidden rounded-[40px] bg-accent px-5 py-10 text-center md:px-12 md:py-16">
+      <Section>
+        <div data-reveal="" className="relative flex flex-col items-center gap-5 overflow-hidden rounded-[40px] bg-accent px-12 py-16 text-center">
           <Blob size={300} fill="#3D63FF" className="-left-[60px] -top-20" />
           <Blob size={260} fill="#3D63FF" className="-bottom-[90px] -right-10" />
           <div className="relative flex flex-col items-center gap-[18px]">
