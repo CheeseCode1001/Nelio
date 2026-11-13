@@ -7,9 +7,9 @@ import { Banner, PageHead } from "@nelio/ui";
  */
 export function NotBuiltYet({ title, screen, milestone }: { title: string; screen: string; milestone: number }) {
   return (
-    <main id="main" className="flex grow flex-col gap-4 p-4 md:gap-6 md:p-8">
+    <div className="flex flex-col gap-4 md:gap-6">
       <PageHead title={title} />
       <Banner tone="blue" title={`${screen} is built in Milestone ${milestone}`} text="You’re signed in and your access was checked. This screen’s design is approved; its build hasn’t started." />
-    </main>
+    </div>
   );
 }

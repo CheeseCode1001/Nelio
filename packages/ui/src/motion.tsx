@@ -22,6 +22,9 @@ const NO_PREFERENCE = "(prefers-reduced-motion: no-preference)";
  *   [data-pop]           patterns 3 and 4, sticker and illustration pop
  *   [data-spin]          pattern 11, running spinner
  *   [data-blink]         pattern 10, agent eyes
+ *   [data-float]         pattern 2, floating phones
+ *   [data-meter]         pattern 6, meter fill
+ *   [data-count]         pattern 8, number count-up
  * Rule zero: nothing runs under prefers-reduced-motion, and content never depends on an animation finishing.
  */
 export function Motion({ children, className, deps = [] }: { children: ReactNode; className?: string; deps?: unknown[] }) {
@@ -39,6 +42,18 @@ export function Motion({ children, className, deps = [] }: { children: ReactNode
         q("[data-pop]").forEach((el, i) => gsap.from(el, { scale: 0.6, rotation: "-=8", opacity: 0, duration: 0.7, delay: 0.1 + i * 0.1, ease: "back.out(2)", clearProps: "opacity" }));
         const spin = q("[data-spin]");
         if (spin.length) gsap.to(spin, { rotation: 360, repeat: -1, duration: 1.2, ease: "none" });
+        // Pattern 2: floating phones. Pattern 6: meter fill. Pattern 8: number count-up (integers, formatted).
+        const floats = q("[data-float]");
+        if (floats.length) gsap.to(floats, { y: -10, yoyo: true, repeat: -1, duration: 2.5, ease: MOTION.ease.loop, stagger: 0.3 });
+        const meters = q("[data-meter]");
+        if (meters.length) gsap.from(meters, { scaleX: 0, transformOrigin: "left", duration: 0.9, ease: MOTION.ease.out, delay: 0.2 });
+        q("[data-count]").forEach((el) => {
+          const text = el.textContent ?? "";
+          const target = Number(text.replace(/,/g, ""));
+          if (!/^[0-9,]+$/.test(text) || !Number.isFinite(target)) return;
+          const counter = { v: 0 };
+          gsap.to(counter, { v: target, duration: 1.2, ease: "power2.out", onUpdate: () => { el.textContent = Math.round(counter.v).toLocaleString("en-US"); }, onComplete: () => { el.textContent = text; } });
+        });
         const eyes = q("[data-blink]");
         if (eyes.length) gsap.to(eyes, { scaleY: 0.1, duration: 0.08, repeat: -1, yoyo: true, repeatDelay: 4, ease: "power1.inOut" });
       });

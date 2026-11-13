@@ -12,5 +12,9 @@ export default async function PortalPage({ params }: { params: Promise<{ ws: str
   const session = await requireSession(`/portal/${ws}`);
   const workspace = await findWorkspaceFor(db(), session.actor, ws);
   if (!workspace) redirect("/denied");
-  return <NotBuiltYet title={workspace.name} screen="CP-01 Client Portal" milestone={7} />;
+  return (
+    <main id="main" className="flex grow flex-col p-4 md:p-8">
+      <NotBuiltYet title={workspace.name} screen="CP-01 Client Portal" milestone={7} />
+    </main>
+  );
 }

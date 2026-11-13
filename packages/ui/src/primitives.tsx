@@ -235,7 +235,9 @@ export function PersonAvatar({ initials, color = "#59D8FF", size = 32, className
 }
 
 const AGENT_RADIUS = { circle: "50%", square: "30%", blob: "42% 58% 55% 45%", pill: "999px" } as const;
-const AGENT_COLORS = { lime: "#B6F24A", pink: "#FF4FB8", cyan: "#59D8FF", orange: "#FF7A2F", yellow: "#FFD43B" } as const;
+// Agent fills from the generator (AVC). "blue" is the light cyan fill, "grape" is pink, "teal" is the success green.
+const AGENT_COLORS = { lime: "#B6F24A", pink: "#FF4FB8", grape: "#FF4FB8", blue: "#59D8FF", cyan: "#59D8FF", orange: "#FF7A2F", yellow: "#FFD43B", teal: "#22C55E" } as const;
+export type AgentColor = keyof typeof AGENT_COLORS;
 
 /** Nelio AI agent: a flat shape with two eyes. Eyes blink when `animated` (motion pattern 10). */
 export function AgentAvatar({ color = "lime", shape = "circle", size = 40, animated = true }: { color?: keyof typeof AGENT_COLORS; shape?: keyof typeof AGENT_RADIUS; size?: number; animated?: boolean }) {

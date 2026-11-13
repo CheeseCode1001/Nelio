@@ -122,3 +122,22 @@
     font-weight: 700;
   }
 }
+
+/* Skeleton pulse (MOTION.md token `skeleton`): opacity only, no shimmer. Off under reduced motion. */
+@theme {
+  --animate-n-pulse: n-pulse 1.6s ease-in-out infinite;
+  @keyframes n-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.45;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-n-pulse {
+    animation: none;
+  }
+}

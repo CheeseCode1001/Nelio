@@ -31,12 +31,12 @@ export function navItemClass(active: boolean) {
   );
 }
 
-export function NavItemContent({ icon, label, active }: { icon: NavIconName; label: string; active: boolean }) {
+export function NavItemContent({ icon, label, active, labelClassName }: { icon: NavIconName; label: string; active: boolean; labelClassName?: string }) {
   return (
     <>
       {active ? <span aria-hidden="true" className="absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r bg-accent" /> : null}
       <NavIcon name={icon} active={active} />
-      <span className={active ? "text-accent-text" : "text-text"}>{label}</span>
+      <span className={cn(active ? "text-accent-text" : "text-text", labelClassName)}>{label}</span>
     </>
   );
 }
