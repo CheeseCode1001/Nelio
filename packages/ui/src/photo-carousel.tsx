@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { BigTitle, Blob, AgentAvatar, Sticker, cn } from "./primitives";
-import { gsap, useGSAP, NO_PREFERENCE } from "./motion";
+import { gsap, useGSAP, motionAllowed } from "./motion";
 import { photoSrc, type PhotoKey } from "./photos";
 
 export type { PhotoKey };
@@ -35,7 +35,7 @@ export function PhotoCarouselPanel({ color, title, photos, stickers = [], captio
   const n = photos.length;
 
   useEffect(() => {
-    if (paused || n < 2 || !window.matchMedia(NO_PREFERENCE).matches) return;
+    if (paused || n < 2 || !motionAllowed()) return;
     const t = window.setInterval(() => setActive((i) => (i + 1) % n), 3000);
     return () => window.clearInterval(t);
   }, [paused, n]);
@@ -43,7 +43,7 @@ export function PhotoCarouselPanel({ color, title, photos, stickers = [], captio
   useGSAP(
     () => {
       const imgs = gsap.utils.toArray<HTMLElement>("[data-slide]", stack.current);
-      const reduce = !window.matchMedia(NO_PREFERENCE).matches;
+      const reduce = !motionAllowed();
       imgs.forEach((el, i) => gsap.to(el, { opacity: i === active ? 1 : 0, duration: reduce ? 0 : 0.6, ease: "power1.out" }));
     },
     { dependencies: [active], scope: stack },

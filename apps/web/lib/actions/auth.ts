@@ -8,6 +8,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import type { z } from "zod";
 import { getSession, getSessionUser, homePathFor } from "../auth";
+import { writePreferenceCookies } from "../preferences";
 import { supabaseServer } from "../supabase/server";
 
 /** Shape returned to forms. `banner` values map one-to-one to the states drawn on the boards. */
@@ -76,7 +77,12 @@ export async function logInAction(_prev: FormState, form: FormData): Promise<For
   if (!parsed.success) return { fieldErrors: fieldErrors(parsed.error), values };
 
   const supabase = await supabaseServer();
-  const { error } = await supabase.auth.signInWithPassword(parsed.data);
+  const { data: signedIn, error } = await supabase.auth.signInWithPassword(parsed.data);
+  if (!error && signedIn.user) {
+    // Bring this browser in line with the theme and motion saved on the account (ST-03).
+    const prefs = await db().user.findUnique({ where: { id: signedIn.user.id }, select: { theme: true, reduceMotion: true } });
+    if (prefs) await writePreferenceCookies(prefs);
+  }
   if (error) {
     if (error.code === "email_not_confirmed") redirect(`/verify-email?email=${encodeURIComponent(parsed.data.email)}`);
     if (isRateLimited(error)) return { banner: "locked", values };

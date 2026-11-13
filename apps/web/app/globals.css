@@ -141,3 +141,6 @@
     animation: none;
   }
 }
+html[data-motion="reduce"] .animate-n-pulse {
+  animation: none;
+}

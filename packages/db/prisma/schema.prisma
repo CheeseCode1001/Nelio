@@ -98,6 +98,8 @@ model User {
   fullName              String          @map("full_name")
   isPlatformAdmin       Boolean         @default(false) @map("is_platform_admin")
   theme                 ThemePreference @default(light)
+  /// ST-03: turns off animations for this person regardless of the OS setting.
+  reduceMotion          Boolean         @default(false) @map("reduce_motion")
   timezone              String          @default("Africa/Lagos")
   onboardingStep        Int             @default(0) @map("onboarding_step")
   onboardingCompletedAt DateTime?       @map("onboarding_completed_at") @db.Timestamptz(6)

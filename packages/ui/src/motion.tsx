@@ -15,6 +15,12 @@ export const MOTION = {
 
 const NO_PREFERENCE = "(prefers-reduced-motion: no-preference)";
 
+/** False when the OS asks for reduced motion or the person turned on "Reduce motion" (ST-03). */
+export function motionAllowed(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia(NO_PREFERENCE).matches && document.documentElement.dataset.motion !== "reduce";
+}
+
 /**
  * Wraps a page region and plays the entrance patterns from MOTION.md on its descendants:
  *   [data-enter] > *     pattern 1, page enter (children rise in, staggered)
@@ -33,6 +39,7 @@ export function Motion({ children, className, deps = [] }: { children: ReactNode
     () => {
       const mm = gsap.matchMedia();
       mm.add(NO_PREFERENCE, () => {
+        if (document.documentElement.dataset.motion === "reduce") return;
         const q = gsap.utils.selector(ref);
         const enter = q("[data-enter] > *");
         if (enter.length) gsap.from(enter, { y: 18, opacity: 0, duration: 0.7, ease: MOTION.ease.out, stagger: MOTION.stagger, clearProps: "transform,opacity" });

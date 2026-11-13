@@ -3,7 +3,7 @@
 Maps every screen ID in `docs/design/H_handoff/SCREEN_INVENTORY.md` to its route, files, API and jobs, milestone and status.
 Generated 12 Nov 2026 from the inventory (v2.3) and checked against the 471 board files in `docs/design/E_hifi/canvas/`: every inventory board exists on disk and every board on disk is in the inventory.
 
-**Status values:** `not started` · `in progress` · `done` · `gated` · `blocked`. Milestone 1 screens are `in progress`: built and type-checked, not yet walked end to end (see `MILESTONE_1_REPORT.md` §4). Everything else is `not started`. The **Gate** column names the entry in `BLOCKERS.md` that will hold a screen in its honest gated state, or block it, when its milestone arrives.
+**Status values:** `not started` · `in progress` · `done` · `gated` · `blocked`. Milestone 1 screens and the Milestone 2 screens built so far are `in progress`: built and type-checked, not yet walked end to end (see `MILESTONE_1_REPORT.md` §4). Everything else is `not started`. The **Gate** column names the entry in `BLOCKERS.md` that will hold a screen in its honest gated state, or block it, when its milestone arrives.
 
 Update this file at the end of every milestone.
 
@@ -54,18 +54,18 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 | AU-05 | Two-step verification | `MFA` · 3: Filled, Setup, Wrong + `MFA-Mobile` | /mfa | (auth)/mfa/page.tsx | Supabase Auth MFA (TOTP) enroll / challenge | 1 | in progress | B-03 |
 | AU-06 | Accept invitation | `AcceptInvite` · 4: Filled, Expired, Accepted, Mismatch + `AcceptInvite-Mobile` | /invite/[token] | (auth)/invite/[token]/page.tsx | `POST /api/workspaces/invitations` · server actions on `/invite/[token]` | 1 | in progress | — |
 | AU-07 | Join as content owner | `ContentOwnerJoin` · 1: Filled + `ContentOwnerJoin-Mobile` | /creators/join | (auth)/creators/join/page.tsx | Supabase Auth sign-up · `POST /api/creator/profile` | 1 | in progress | — |
-| ON-01 | Account type | `OnbAccountType` · 2: Filled, Selected + `OnbAccountType-Mobile` | /onboarding/account-type | onboarding/account-type/page.tsx | `PATCH /api/onboarding` | 2 | not started | — |
-| ON-02 | Goals & niche | `OnbGoals` · 1: Filled + `OnbGoals-Mobile` | /onboarding/goals | onboarding/goals/page.tsx | `PATCH /api/onboarding` | 2 | not started | — |
-| ON-03 | Connect accounts | `OnbConnect` · 3: Filled, Connected, Limit + `OnbConnect-Mobile` | /onboarding/connect | onboarding/connect/page.tsx | `GET /api/social-connections` (capability states only until M6) | 2 | not started | B-01 |
-| ON-04 | Automation mode | `OnbAutomation` · 3: Filled, Autonomous, Free + `OnbAutomation-Mobile` | /onboarding/automation | onboarding/automation/page.tsx | `PATCH /api/onboarding` · plan entitlement check | 2 | not started | — |
-| ON-05 | All set | `OnbDone` · 1: Filled + `OnbDone-Mobile` | /onboarding/done ⚠ proposed (not in B §5) + checklist widget on `/w/[ws]/home` | onboarding/done/page.tsx · `SetupChecklist` | `GET /api/workspaces/[ws]/checklist` | 2 | not started | — |
-| ON-FLOW | Onboarding (interactive) | `Onboarding` · 1: Filled + `Onboarding-Mobile` | the four `/onboarding/*` routes (interaction reference) | onboarding/layout.tsx | as ON-01–ON-04 | 2 | not started | — |
+| ON-01 | Account type | `OnbAccountType` · 2: Filled, Selected + `OnbAccountType-Mobile` | /onboarding/account-type | onboarding/account-type/page.tsx | `PATCH /api/onboarding` | 2 | in progress | — |
+| ON-02 | Goals & niche | `OnbGoals` · 1: Filled + `OnbGoals-Mobile` | /onboarding/goals | onboarding/goals/page.tsx | `PATCH /api/onboarding` | 2 | in progress | — |
+| ON-03 | Connect accounts | `OnbConnect` · 3: Filled, Connected, Limit + `OnbConnect-Mobile` | /onboarding/connect | onboarding/connect/page.tsx | `GET /api/social-connections` (capability states only until M6) | 2 | in progress | B-01 |
+| ON-04 | Automation mode | `OnbAutomation` · 3: Filled, Autonomous, Free + `OnbAutomation-Mobile` | /onboarding/automation | onboarding/automation/page.tsx | `PATCH /api/onboarding` · plan entitlement check | 2 | in progress | — |
+| ON-05 | All set | `OnbDone` · 1: Filled + `OnbDone-Mobile` | /onboarding/done ⚠ proposed (not in B §5) + checklist widget on `/w/[ws]/home` | onboarding/done/page.tsx · `SetupChecklist` | `GET /api/workspaces/[ws]/checklist` | 2 | in progress | — |
+| ON-FLOW | Onboarding (interactive) | `Onboarding` · 1: Filled + `Onboarding-Mobile` | /onboarding (welcome) ⚠ proposed, then the four `/onboarding/*` steps | onboarding/layout.tsx | as ON-01–ON-04 | 2 | in progress | — |
 
 ### 3 · Command Center & AI
 
 | ID | Screen | Boards (desktop states + mobile) | Route | Web files | API and jobs | MS | Status | Gate |
 |---|---|---|---|---|---|---|---|---|
-| APP-01 | Command Center | `CommandCenter` · 6: Filled, Empty, Loading, Paused, Trial, Pastdue + `CommandCenter-Mobile` | /w/[ws]/home | w/[ws]/home/page.tsx | `GET /api/workspaces/[ws]/summary` · realtime workspace feed (live data arrives with M3–M8) | 2 | not started | — |
+| APP-01 | Command Center | `CommandCenter` · 6: Filled, Empty, Loading, Paused, Trial, Pastdue + `CommandCenter-Mobile` | /w/[ws]/home | w/[ws]/home/page.tsx | `GET /api/workspaces/[ws]/summary` · realtime workspace feed (live data arrives with M3–M8) | 2 | in progress | — |
 | APP-02 | AI Strategist | `Strategist` · 5: Filled, Empty, Thinking, Error, History + `Strategist-Mobile` | /w/[ws]/strategist | w/[ws]/strategist/page.tsx | `/api/strategies/*` (chat, proposals, activation) · AI service · `research` queue | 3 | not started | B-03 |
 | APP-03 | AI Activity Center | `Activity` · 6: Filled, Empty, Loading, Reconnecting, Synced, Filtered + `Activity-Mobile` | /w/[ws]/activity · /activity/[runId] | w/[ws]/activity/page.tsx · activity/[runId]/page.tsx | `GET /api/agents/runs` · `GET /api/activity/events` (replay) · Supabase Realtime · outbox dispatcher | 3 | not started | — |
 | APP-04 | Agents | `Agents` · 4: Filled, Empty, Loading, Limit + `Agents-Mobile` | /w/[ws]/agents | w/[ws]/agents/page.tsx | `GET /api/agents` | 3 | not started | — |
@@ -160,7 +160,7 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 |---|---|---|---|---|---|---|---|---|
 | ST-01 | Profile | `Profile` · 4: Filled, Saved, Emailchange, Loading + `Profile-Mobile` | /account/profile | account/profile/page.tsx | `GET/PATCH /api/account/profile` | 9 | not started | — |
 | ST-02 | Security | `Security` · 3: Filled, Deleteblocked, Sessions + `Security-Mobile` | /account/security | account/security/page.tsx | Supabase Auth MFA + sessions · `DELETE /api/account` | 9 | not started | — |
-| ST-03 | Appearance | `Appearance` · 2: Filled, Dark + `Appearance-Mobile` | /account/appearance | account/appearance/page.tsx | theme persisted (cookie + `PATCH /api/account/preferences`) | 2 | not started | — |
+| ST-03 | Appearance | `Appearance` · 2: Filled, Dark + `Appearance-Mobile` | /account/appearance | account/appearance/page.tsx | theme persisted (cookie + `PATCH /api/account/preferences`) | 2 | in progress | — |
 | ST-04 | Notification preferences | `NotificationPrefs` · 3: Filled, Pushdenied, Unsupported + `NotificationPrefs-Mobile` | /account/notifications | account/notifications/page.tsx | `GET/PUT /api/notifications/preferences` · push subscription | 9 | not started | — |
 | ST-05 | Workspace members | `Members` · 2: Filled, Empty + `Members-Mobile` | /w/[ws]/settings/members | w/[ws]/settings/members/page.tsx | `/api/workspaces/[ws]/members` | 7 | not started | — |
 | ST-06 | Brand kits | `BrandKits` · 3: Filled, Empty, Editing + `BrandKits-Mobile` | /w/[ws]/settings/brand-kits | w/[ws]/settings/brand-kits/page.tsx | `/api/brand-kits` | 4 | not started | — |
@@ -193,7 +193,7 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 | SY-04 | Access denied | `Denied` · 1: Filled + `Denied-Mobile` | /denied | denied/page.tsx | none (never confirms the workspace exists) | 1 | in progress | — |
 | SY-05 | Server error | `ServerError` · 1: Filled + `ServerError-Mobile` | error boundary | error.tsx · global-error.tsx | Sentry capture | 1 | in progress | — |
 | SY-06 | Maintenance | `Maintenance` · 1: Filled + `Maintenance-Mobile` | /maintenance | maintenance/page.tsx | maintenance flag (edge config) | 9 | not started | — |
-| SY-07 | Command palette | `CommandPalette` · 3: Filled, Results, Empty + `CommandPalette-Mobile` | overlay (Ctrl/⌘ K) | `CommandPalette` in shell | `GET /api/search` | 2 | not started | — |
+| SY-07 | Command palette | `CommandPalette` · 3: Filled, Results, Empty + `CommandPalette-Mobile` | overlay (Ctrl/⌘ K) | `CommandPalette` in shell | `GET /api/search` | 2 | in progress | — |
 | SY-08 | Account menu | `AccountMenu` · 1: Filled + `AccountMenu-Mobile` | overlay in top bar | `AccountMenu` in shell | `GET /api/account/surfaces` | 1 | in progress | — |
 | SY-09 | Pause all confirm | `PauseConfirm` · 2: Filled, Resume + `PauseConfirm-Mobile` | overlay from top bar | `PauseConfirm` dialog | `POST /api/workspaces/[ws]/pause` · `/resume` | 3 | not started | — |
 

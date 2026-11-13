@@ -12,9 +12,5 @@ export default async function UnbuiltAccountScreen({ params }: { params: Promise
   await requireSession(`/account/${rest.join("/")}`);
   const def = screenForPath("account", `/${rest.join("/")}`);
   if (!def) notFound();
-  return (
-    <main id="main" className="flex grow flex-col p-4 md:p-8">
-      <NotBuiltYet title={def.title} screen={`${def.id} ${def.title}`} milestone={def.milestone} />
-    </main>
-  );
+  return <NotBuiltYet title={def.title} screen={`${def.id} ${def.title}`} milestone={def.milestone} />;
 }
