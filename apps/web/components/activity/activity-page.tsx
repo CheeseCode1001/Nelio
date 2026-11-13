@@ -8,7 +8,7 @@ export interface ActivityHrefs { filter: (f: ActivityFilter, run?: string) => st
 
 function Filters({ d, active, hrefs }: { d: ActivityData; active: ActivityFilter; hrefs: ActivityHrefs }) {
   return (
-    <nav aria-label="Filter activity" className="flex w-fit max-w-full flex-wrap gap-0.5 self-start rounded-[26px] border border-border bg-surface-1 p-1 md:rounded-full">
+    <nav aria-label="Filter activity" className="tab-scroll w-fit gap-0.5 self-start rounded-full border border-border bg-surface-1 p-1">
       {ACTIVITY_FILTERS.map((f) => (
         <Link
           key={f}

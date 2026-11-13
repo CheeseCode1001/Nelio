@@ -36,7 +36,7 @@ export default function PricingPage() {
           <Eyebrow>Flexible plans</Eyebrow>
           <Big size={68}>Simple plans. Hard limits.</Big>
           <p className="m-0 text-[17px] leading-[1.55] text-muted md:text-lg">Prices in USD. Pay in naira at checkout where supported. You’ll see the exact amount before you confirm.</p>
-          <div role="group" aria-label="Billing period" className="flex flex-wrap gap-0.5 rounded-full border border-border bg-surface-1 p-1">
+          <div role="group" aria-label="Billing period" className="tab-scroll gap-0.5 rounded-full border border-border bg-surface-1 p-1">
             <span aria-current="true" className="inline-flex min-h-10 items-center rounded-full bg-ink px-4 py-[9px] text-sm font-bold text-on-ink">Monthly</span>
             <span aria-disabled="true" className="inline-flex min-h-10 items-center rounded-full px-4 py-[9px] text-sm font-bold text-muted">Yearly · coming later</span>
           </div>

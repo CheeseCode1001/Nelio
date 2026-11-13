@@ -14,7 +14,7 @@ const TABS: { id: ScreenId; label: string; href: string }[] = [
 export function AccountTabs({ active }: { active: ScreenId }) {
   const show = showUnbuiltInNav();
   return (
-    <nav aria-label="Account settings" className="flex w-fit max-w-full flex-wrap gap-0.5 self-start rounded-full border border-border bg-surface-1 p-1">
+    <nav aria-label="Account settings" className="tab-scroll w-fit gap-0.5 self-start rounded-full border border-border bg-surface-1 p-1">
       {TABS.filter((t) => show || isBuilt(screen(t.id))).map((t) => (
         <Link
           key={t.id}

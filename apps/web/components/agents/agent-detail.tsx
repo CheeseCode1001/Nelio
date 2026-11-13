@@ -11,7 +11,7 @@ export interface AgentDetailHrefs { agents: string; tab: (t: DetailTab) => strin
 
 function Tabs({ active, hrefs }: { active: DetailTab; hrefs: AgentDetailHrefs }) {
   return (
-    <nav aria-label="Agent sections" className="flex w-fit max-w-full flex-wrap gap-0.5 self-start rounded-[26px] border md:rounded-full border-border bg-surface-1 p-1">
+    <nav aria-label="Agent sections" className="tab-scroll w-fit gap-0.5 self-start rounded-full border border-border bg-surface-1 p-1">
       {(Object.keys(TAB_LABEL) as DetailTab[]).map((t) => (
         <Link
           key={t}

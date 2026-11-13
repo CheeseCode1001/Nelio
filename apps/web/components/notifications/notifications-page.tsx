@@ -21,7 +21,7 @@ export function NotificationsPage({ d, filter, hrefs, preview }: { d: Notificati
             </>
           }
         />
-        <nav aria-label="Filter notifications" className="flex w-fit max-w-full flex-wrap gap-0.5 self-start rounded-[26px] border border-border bg-surface-1 p-1 md:rounded-full">
+        <nav aria-label="Filter notifications" className="tab-scroll w-fit gap-0.5 self-start rounded-full border border-border bg-surface-1 p-1">
           {NOTIFICATION_FILTERS.map((f) => (
             <Link key={f} href={hrefs.filter(f)} scroll={false} aria-current={f === filter ? "page" : undefined} className={cn("tap-target inline-flex min-h-10 items-center whitespace-nowrap rounded-full px-4 py-[9px] text-sm font-bold no-underline", f === filter ? "bg-ink text-on-ink hover:text-on-ink" : "text-muted hover:text-text")}>
               {NOTIFICATION_FILTER_LABEL[f]}
