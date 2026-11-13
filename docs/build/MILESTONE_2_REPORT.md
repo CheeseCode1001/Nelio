@@ -1,6 +1,6 @@
 # Milestone 2 report: design-faithful frontend and PWA
 
-Branch: `feat/milestone-2-frontend` · Status: **in progress (5 of 6 slices built)**. Updated 13 Nov 2026.
+Branch: `feat/milestone-2-frontend` · Status: **all 6 slices built; open items in §7**. Updated 13 Nov 2026.
 
 ## 1. Slices
 
@@ -11,7 +11,7 @@ Branch: `feat/milestone-2-frontend` · Status: **in progress (5 of 6 slices buil
 | 3 | Appearance | ST-03 (Light, Dark, Match system, Reduce motion) | Built, checked in the browser |
 | 4 | Public site | M-01 to M-08: header with mobile menu sheet, footer, Home, Product, Use cases (Agencies), Pricing, Licensing, FAQ, Legal, Status | Built, checked in the browser |
 | 5 | PWA | SY-01 install prompt (install, iPhone instructions, installed), SY-02 offline strip and offline page, manifest, icons, service worker | Built, checked in dev and production builds |
-| 6 | Foundations reference | `/dev/ui` reproducing the Foundations board, component by component | Not started (APP-01 states are previewable at `/dev/ui/command-center`) |
+| 6 | Foundations reference | `/dev/ui` (Foundations board from real components), `/dev/ui/illustrations` (all 32), `/dev/ui/command-center` (APP-01, SY-01, SY-02 states) | Built, compared with the boards; off in production builds |
 
 ## 2. How the unbuilt parts of the product are handled
 
@@ -33,6 +33,7 @@ Branch: `feat/milestone-2-frontend` · Status: **in progress (5 of 6 slices buil
 | Onboarding | Walked as the test owner: welcome, four steps, All set. Every answer saved (account type, goals, niche, audience, automation mode, completion time, audit entry). |
 | Appearance | Dark and Reduce motion apply immediately, carry over to the next page and are saved to the account. |
 | PWA | Install card and offline strip compared with their boards; offline → reconnecting → back online sequence works; manifest, worker and offline page served. In a production build the worker activates and caches only the offline page and static files (no pages, no data); `/dev/ui` returns 404. |
+| Foundations | Buttons, chips, stickers, forms, switches, choice cards, banners and skeletons compared with the Foundations board at 1440 px; 32 of 32 illustrations render with labels; no sideways scroll at 375 px. |
 | Public site | Home compared with its board at 1440 px; Home and the menu sheet at 375 px (no sideways scroll); Pricing and Status at 1440 px. |
 
 **Found and fixed while checking:** the top-bar pills were not hiding below 768 px; the mobile tab order did not match the board; two server/client boundary errors; the theme cookie was lost if you left the page before the save finished (the browser now writes it at once).

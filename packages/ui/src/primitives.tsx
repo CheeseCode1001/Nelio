@@ -21,6 +21,9 @@ export function Icon({ name, size = 18, strokeWidth = 2, className }: { name: Ic
 }
 
 // ------------------------------------------------------------------ Illustration
+export const ILLUSTRATION_NAMES = Object.keys(ILLUSTRATIONS) as IllustrationName[];
+export const illustrationLabel = (name: IllustrationName) => ILLUSTRATIONS[name].label;
+
 /** One of the 32 flat illustrations exported from the design generator. Markup is static and trusted. */
 export function Illustration({ name, width = 240, className }: { name: IllustrationName; width?: number; className?: string }) {
   const ill = ILLUSTRATIONS[name];

@@ -203,7 +203,7 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 
 | Boards | Use in the build | MS |
 |---|---|---|
-| Foundations `Main`, `Illustrations` | Source for `packages/ui`. Reproduced at the dev-only route `/dev/ui` so each component can be compared with the board. | 2 |
+| Foundations `Main`, `Illustrations` | Source for `packages/ui`. Reproduced at the dev-only routes `/dev/ui` and `/dev/ui/illustrations` (built in Milestone 2). | 2 |
 | Motion `Motion` | `packages/ui/motion` implements the 14 patterns in `MOTION.md` with GSAP; all off under reduced motion. | 2 |
 | MB-01 to MB-13 (26 boards) | Reference for the later Expo app. Not built now. The PWA uses the mobile board beside each desktop screen. | later |
 | Dark (16 boards) | Dark-parity baselines for visual snapshots. All other screens get dark from tokens only. | 2, checked at 10 |

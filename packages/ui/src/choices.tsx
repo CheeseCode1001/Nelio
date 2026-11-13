@@ -56,3 +56,26 @@ export function StepProgress({ total, current }: { total: number; current: numbe
 export function FieldGrid({ children }: { children: ReactNode }) {
   return <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">{children}</div>;
 }
+
+/** On/off switch (generator `toggle`): label and optional note on the left, the switch on the right. */
+export function Switch({ label, sub, checked, onChange, disabled, id }: { label: string; sub?: string; checked: boolean; onChange?: (next: boolean) => void; disabled?: boolean; id: string }) {
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <div>
+        <div id={`${id}-label`} className="text-sm font-bold text-text">{label}</div>
+        {sub ? <div className="text-[13px] text-muted">{sub}</div> : null}
+      </div>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={checked}
+        aria-labelledby={`${id}-label`}
+        disabled={disabled}
+        onClick={() => onChange?.(!checked)}
+        className={cn("flex h-[30px] w-[52px] flex-none cursor-pointer rounded-full border-0 p-1 disabled:cursor-not-allowed", checked ? "justify-end bg-accent" : "justify-start bg-surface-3")}
+      >
+        <span className="block size-[22px] rounded-full bg-white" />
+      </button>
+    </div>
+  );
+}
