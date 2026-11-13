@@ -183,8 +183,8 @@ def tabs(items, active=0):
     out = ''
     for i, t in enumerate(items):
         st = f'background: {T["ink"]}; color: {T["onink"]};' if i == active else f'background: transparent; color: {T["mu"]};'
-        out += f'<button type="button" role="tab" aria-selected="{"true" if i==active else "false"}" style="padding: 9px 16px; border-radius: 999px; border: none; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; font-family: {BF}; min-height: 40px; {st}">{e(t)}</button>'
-    return f'<div role="tablist" style="display: flex; gap: 2px; padding: 4px; border-radius: 999px; background: {T["s1"]}; border: 1px solid {T["bd"]}; flex-wrap: wrap; align-self: flex-start">{out}</div>'
+        out += f'<button type="button" role="tab" aria-selected="{"true" if i==active else "false"}" style="padding: 9px 16px; border-radius: 999px; border: none; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; font-family: {BF}; min-height: 40px; flex: none; scroll-snap-align: start; {st}">{e(t)}</button>'
+    return f'<div role="tablist" style="display: flex; gap: 2px; padding: 4px; border-radius: 999px; background: {T["s1"]}; border: 1px solid {T["bd"]}; flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity; max-width: 100%; box-sizing: border-box; align-self: flex-start">{out}</div>'
 
 _fid = [0]
 def field(label, value='', kind='input', placeholder='', hint=None, err=None):

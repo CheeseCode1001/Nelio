@@ -191,7 +191,7 @@ Touch targets are at least 44 px. Focus ring: `3px solid #2F5BFF`, offset 2.
    - an edge arrow;
    - a partly visible last item.
 
-   See LI-02 "Popular with licensees" (`shorts_scroller` in `frame.py`). Use scroll-snap.
+   See LI-02 "Popular with licensees" (`shorts_scroller` in `frame.py`). Use scroll-snap. **Pill tab bars never wrap:** they stay on one line and scroll sideways (`tabs()` in `lib2.py`). Multi-select tag groups, like the onboarding goals, may wrap.
 3. **Modals become bottom sheets under 768 px.** Full width, 28 px top radius, grab handle, slide up, max 88% height, scroll inside. On desktop they're centred dialogs (radius 32). Use the shadcn `Dialog` on desktop and `Drawer` (vaul) on mobile behind one `ResponsiveDialog` component.
 4. **Navigation icons have outline and filled states.**
    - Sidebar: the inactive item shows a muted outline icon. The active item shows a filled icon in accent blue on an accent-tint pill, bold blue label, and a 4 px accent bar on the left.
