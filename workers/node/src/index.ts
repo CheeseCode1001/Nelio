@@ -2,6 +2,7 @@ import { Queue, Worker, type Job } from "bullmq";
 import IORedis from "ioredis";
 import { dispatchOutbox } from "./dispatcher";
 import { deliverNotification } from "./notify";
+import { db, resetBudgetWeeks } from "@nelio/db";
 import { processStep, startDueRuns, sweepTimeouts } from "./steps";
 
 /**
@@ -43,7 +44,8 @@ async function loop(name: string, everyMs: number, fn: () => Promise<number>) {
 void loop("outbox", 1000, () => dispatchOutbox(queues));
 void loop("schedule", 30_000, () => startDueRuns());
 void loop("timeouts", 60_000, () => sweepTimeouts());
-console.log("Nelio worker started: queues agent-steps, notify; outbox, schedule and timeout loops running.");
+void loop("budget-week", 5 * 60_000, () => resetBudgetWeeks(db()));
+console.log("Nelio worker started: queues agent-steps, notify; outbox, schedule, timeout and budget-week loops running.");
 
 async function shutdown() {
   if (stopping) return;

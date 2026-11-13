@@ -57,7 +57,7 @@ export async function resumeAgentAction(slug: string, agentId: string): Promise<
     if (agent.workspace.pausedAt) return "ws_paused" as const;
     if (agent.state === "stopped") return "stopped" as const;
     const used = await weekCommitted(tx, agent.id, new Date(), agent.workspace.timezone);
-    if (used >= agent.weeklyBudget) {
+    if (agent.state === "budget_reached" || used >= agent.weeklyBudget) {
       await tx.agent.update({ where: { id: agent.id }, data: { state: "budget_reached" } });
       return "budget" as const;
     }

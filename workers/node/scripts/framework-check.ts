@@ -74,7 +74,8 @@ try {
   check("budget message matches the board's wording", run1.reasonText === "Needs 20 credits, 10 left in this agent’s budget", run1.reasonText);
   check("transcribe settled 18 of 20, refunding 2", (await client.runStep.findFirstOrThrow({ where: { runId: r1.runId, kind: "transcribe" } })).actualCredits === 18);
   check("week committed is 30 credits", (await weekCommitted(client, a1.id, new Date(), TZ)) === 30, await weekCommitted(client, a1.id, new Date(), TZ));
-  check("run totals: 30 used, 2 refunded", run1.actualCredits === 30 && run1.refundedCredits === 2, { a: run1.actualCredits, r: run1.refundedCredits });
+  // Refunded: 2 unused from transcribe, plus the 4 reserved by the failed first attempt of detect_scenes.
+  check("run totals: 30 used, 6 refunded", run1.actualCredits === 30 && run1.refundedCredits === 6, { a: run1.actualCredits, r: run1.refundedCredits });
   check("agent marked 'budget reached'", (await client.agent.findUniqueOrThrow({ where: { id: a1.id } })).state === "budget_reached");
   const n = await client.notification.findMany({ where: { userId } });
   check("owner notified once about the budget", n.length === 1 && n[0]!.category === "agents", n.map((x) => x.title));
@@ -111,12 +112,14 @@ try {
   check("a run past its deadline is stopped", (await client.agentRun.findUniqueOrThrow({ where: { id: r3.runId } })).status === "failed");
 
   // ---- 5. Outbox → queue, on a throwaway queue prefix.
-  const conn = new IORedis(process.env.NELIO_REDIS_URL!, { maxRetriesPerRequest: null });
+  const conn = new IORedis(process.env.NELIO_REDIS_URL!, { maxRetriesPerRequest: null, retryStrategy: (n) => (n > 3 ? null : 1000) });
+  conn.on("error", () => {});
   const prefix = `${tag}-q`;
   const queues = { "agent-steps": new Queue("agent-steps", { connection: conn, prefix }), notify: new Queue("notify", { connection: conn, prefix }) };
   const pending = await client.outboxEvent.count({ where: { dispatchedAt: null } });
   const moved = await dispatchOutbox(queues, 500);
   const waiting = await queues["agent-steps"].getJobCounts("waiting", "delayed");
+  check("budget week does not reset mid-week", (await (await import("@nelio/db")).resetBudgetWeeks(client)) === 0);
   check("dispatcher moves outbox rows onto the queue", moved === pending && moved > 0 && (waiting.waiting ?? 0) + (waiting.delayed ?? 0) >= 1, { pending, moved, waiting });
   const movedAgain = await dispatchOutbox(queues, 500);
   check("a dispatched row is never sent twice", movedAgain === 0, movedAgain);

@@ -144,15 +144,44 @@ export interface ResumeCheck { agentId: string; name: string; budgetOk: boolean;
 export async function resumeChecks(client: Client, workspaceId: string, now = new Date()): Promise<ResumeCheck[]> {
   const ws = await client.workspace.findUnique({ where: { id: workspaceId }, select: { timezone: true } });
   if (!ws) return [];
-  const agents = await client.agent.findMany({ where: { workspaceId, state: { in: ["active", "budget_reached"] } }, select: { id: true, name: true, weeklyBudget: true }, orderBy: { name: "asc" } });
+  const agents = await client.agent.findMany({ where: { workspaceId, state: { in: ["active", "budget_reached"] } }, select: { id: true, name: true, state: true, weeklyBudget: true }, orderBy: { name: "asc" } });
   const out: ResumeCheck[] = [];
   for (const a of agents) {
     const used = await weekCommitted(client, a.id, now, ws.timezone);
-    const budgetOk = used < a.weeklyBudget;
+    // "Budget reached" holds until the week resets (resetBudgetWeeks), even if a little budget is left:
+    // the step that stopped it did not fit.
+    const budgetOk = a.state !== "budget_reached" && used < a.weeklyBudget;
     // Licence checks join here when licensing ships (MS 5); until then there are no licensed sources to check.
     out.push({ agentId: a.id, name: a.name, budgetOk, willResume: budgetOk, note: budgetOk ? "Budget OK · license OK" : "Weekly budget reached" });
   }
   return out;
+}
+
+/**
+ * Monday 00:00 in each workspace's time zone: agents stopped for "budget reached" in an earlier week become
+ * active again and get their next run time. Safe to call often.
+ */
+export async function resetBudgetWeeks(client: Db, now = new Date()): Promise<number> {
+  const held = await client.agent.findMany({
+    where: { state: "budget_reached", workspace: { deletedAt: null } },
+    select: { id: true, name: true, orgId: true, workspaceId: true, workspace: { select: { timezone: true, pausedAt: true } } },
+    take: 200,
+  });
+  let reset = 0;
+  for (const a of held) {
+    const thisWeek = new Date(`${weekStartFor(now, a.workspace.timezone)}T00:00:00Z`);
+    const spentThisWeek = await client.agentSpend.count({ where: { agentId: a.id, weekStart: thisWeek } });
+    if (spentThisWeek > 0) continue;
+    const lastBlock = await client.activityEvent.findFirst({ where: { agentId: a.id, type: "step.blocked" }, orderBy: { createdAt: "desc" }, select: { createdAt: true } });
+    if (lastBlock && weekStartFor(lastBlock.createdAt, a.workspace.timezone) === weekStartFor(now, a.workspace.timezone)) continue;
+    await client.$transaction(async (tx) => {
+      await tx.agent.update({ where: { id: a.id }, data: { state: "active" } });
+      if (!a.workspace.pausedAt) await refreshNextRun(tx, a.id, now);
+      await recordActivity(tx, { orgId: a.orgId, workspaceId: a.workspaceId, agentId: a.id, type: "agent.budget_reset", status: "running", title: `${a.name} is active again`, detail: "A new budget week started." });
+    });
+    reset++;
+  }
+  return reset;
 }
 
 /** Resumes a paused workspace. Agents over budget stay paused; held work is re-queued. */
