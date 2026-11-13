@@ -2,7 +2,7 @@
  * Screen registry: every operator-app screen with its route (B §5) and the milestone that builds it
  * (DESIGN_TRACEABILITY.md §5). Navigation, the command palette and the "not built yet" stand-in all read this.
  */
-export const CURRENT_MILESTONE = 2;
+export const CURRENT_MILESTONE = 3;
 
 // Read from the host app's environment (Next.js inlines NEXT_PUBLIC_* values at build time).
 declare const process: { env: Record<string, string | undefined> };
