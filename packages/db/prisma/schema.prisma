@@ -512,6 +512,8 @@ model AgentSpend {
   agentId   String    @map("agent_id") @db.Uuid
   runId     String    @map("run_id") @db.Uuid
   stepId    String    @map("step_id") @db.Uuid
+  /// Which attempt of the step this belongs to: a retried step reserves again.
+  attempt   Int       @default(1)
   kind      SpendKind
   credits   Int
   weekStart DateTime  @map("week_start") @db.Date
@@ -520,7 +522,7 @@ model AgentSpend {
   agent Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
   run   AgentRun @relation(fields: [runId], references: [id], onDelete: Cascade)
 
-  @@unique([stepId, kind])
+  @@unique([stepId, attempt, kind])
   @@index([agentId, weekStart])
   @@map("agent_spend")
 }

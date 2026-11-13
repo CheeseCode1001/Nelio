@@ -5,10 +5,21 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
-    "redis:ping": "node --env-file=../../apps/web/.env.local scripts/redis-ping.mjs"
+    "redis:ping": "node --env-file=../../apps/web/.env.local scripts/redis-ping.mjs",
+    "dev": "tsx --env-file=../../apps/web/.env.local src/index.ts",
+    "start": "tsx src/index.ts",
+    "check:framework": "tsx --env-file=../../apps/web/.env.local scripts/framework-check.ts"
   },
   "dependencies": {
+    "@nelio/db": "workspace:*",
+    "@nelio/domain": "workspace:*",
     "bullmq": "^6.7.5",
-    "ioredis": "^6.0.0"
+    "ioredis": "^6.0.0",
+    "web-push": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "@types/web-push": "^3.6.4",
+    "tsx": "^4.23.15"
   }
 }

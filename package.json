@@ -2,7 +2,9 @@
   "name": "nelio",
   "private": true,
   "packageManager": "pnpm@11.1.1",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "pnpm --filter @nelio/web dev",
     "build": "pnpm --filter @nelio/web build",
@@ -12,7 +14,8 @@
     "check:vendors": "node scripts/check-vendor-names.mjs",
     "db:generate": "pnpm --filter @nelio/db generate",
     "db:migrate:sql": "pnpm --filter @nelio/db migrate:sql",
-    "tokens": "node packages/ui/scripts/build-tokens.mjs"
+    "tokens": "node packages/ui/scripts/build-tokens.mjs",
+    "worker:dev": "pnpm --filter @nelio/worker-node dev"
   },
   "devDependencies": {
     "typescript": "~5.9.3",
