@@ -144,3 +144,24 @@ export function settle(reserved: number, actual: number): { settled: number; rel
   const settled = Math.max(0, Math.min(reserved, Math.round(actual)));
   return { settled, released: reserved - settled };
 }
+
+// ------------------------------------------------------------------ Schedules people can pick
+
+/** Schedule choices on the agent forms. "manual" means the agent only runs when someone starts it. */
+export const SCHEDULE_PRESETS = {
+  mwf_1800: { label: "Mon, Wed, Fri at 18:00", schedule: { days: ["mon", "wed", "fri"], time: "18:00" } },
+  daily_1800: { label: "Every day at 18:00", schedule: { days: ["mon", "tue", "wed", "thu", "fri", "sat", "sun"], time: "18:00" } },
+  weekdays_0900: { label: "Weekdays at 09:00", schedule: { days: ["mon", "tue", "wed", "thu", "fri"], time: "09:00" } },
+  tue_thu_1200: { label: "Tue and Thu at 12:00", schedule: { days: ["tue", "thu"], time: "12:00" } },
+  manual: { label: "Only when I start it", schedule: null },
+} as const satisfies Record<string, { label: string; schedule: AgentSchedule | null }>;
+export type SchedulePresetId = keyof typeof SCHEDULE_PRESETS;
+
+/** Finds the preset matching a stored schedule, so the form shows it selected. */
+export function presetFor(schedule: AgentSchedule | null): SchedulePresetId {
+  if (!schedule) return "manual";
+  for (const [id, p] of Object.entries(SCHEDULE_PRESETS)) {
+    if (p.schedule && p.schedule.time === schedule.time && p.schedule.days.join() === schedule.days.join()) return id as SchedulePresetId;
+  }
+  return "mwf_1800";
+}

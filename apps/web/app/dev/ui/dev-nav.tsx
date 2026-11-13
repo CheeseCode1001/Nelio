@@ -6,6 +6,7 @@ const DEV_PAGES = [
   { href: "/dev/ui/illustrations", label: "Illustrations" },
   { href: "/dev/ui/command-center", label: "APP-01 states" },
   { href: "/dev/ui/agents", label: "APP-04 states" },
+  { href: "/dev/ui/agent-detail", label: "APP-05 states" },
 ];
 
 export function DevNav({ current }: { current: string }) {

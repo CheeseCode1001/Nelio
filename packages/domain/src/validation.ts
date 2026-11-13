@@ -49,3 +49,39 @@ export function safeNextPath(next: string | null | undefined, fallback = "/"): s
   if (!next || !next.startsWith("/") || next.startsWith("//") || next.includes("\\") || next.includes("://")) return fallback;
   return next;
 }
+
+// ------------------------------------------------------------------ Agents (APP-05, APP-06)
+
+const int = (min: number, max: number, what: string) =>
+  z.coerce.number({ error: `Enter a number for ${what}` }).int(`Use a whole number for ${what}`).min(min, `${what} must be at least ${min}`).max(max, `${what} can be at most ${max}`);
+
+export const agentPolicySchema = z
+  .object({
+    goal: z.string().trim().min(5, "Describe what the agent should do").max(300, "At most 300 characters"),
+    schedule: z.enum(["mwf_1800", "daily_1800", "weekdays_0900", "tue_thu_1200", "manual"]),
+    brandRules: z.string().trim().max(600, "At most 600 characters").optional().default(""),
+    maxPostsPerDay: int(1, 20, "Max posts per day"),
+    maxPostsPerWeek: int(1, 100, "Max posts per week"),
+  })
+  .refine((v) => v.maxPostsPerWeek >= v.maxPostsPerDay, { path: ["maxPostsPerWeek"], message: "Posts per week can’t be fewer than posts per day" });
+
+export const agentBudgetSchema = z
+  .object({
+    weeklyBudget: int(10, 100_000, "Weekly limit"),
+    perRunLimit: int(1, 100_000, "Per-run limit"),
+  })
+  .refine((v) => v.perRunLimit <= v.weeklyBudget, { path: ["perRunLimit"], message: "Per-run limit can’t be more than the weekly limit" });
+
+export const agentCreateSchema = z
+  .object({
+    name: z.string().trim().min(2, "Give your agent a name").max(40, "At most 40 characters"),
+    goal: z.string().trim().min(5, "Describe what the agent should do").max(300, "At most 300 characters"),
+    color: z.enum(["lime", "blue", "pink", "yellow", "orange", "teal"]),
+    shape: z.enum(["circle", "square", "blob", "pill"]),
+    schedule: z.enum(["mwf_1800", "daily_1800", "weekdays_0900", "tue_thu_1200", "manual"]),
+    weeklyBudget: int(10, 100_000, "Weekly budget"),
+    perRunLimit: int(1, 100_000, "Per-run limit"),
+    maxPostsPerWeek: int(1, 100, "Max posts per week"),
+    mode: z.enum(["manual", "assisted"]),
+  })
+  .refine((v) => v.perRunLimit <= v.weeklyBudget, { path: ["perRunLimit"], message: "Per-run limit can’t be more than the weekly budget" });
