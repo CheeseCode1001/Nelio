@@ -76,6 +76,8 @@ export const CAPTION_STYLES = {
   bold_pop: { label: "Bold pop", words: 3, upper: true },
   clean: { label: "Clean", words: 6, upper: false },
   boxed: { label: "Boxed", words: 4, upper: false },
+  minimal: { label: "Minimal", words: 4, upper: false, lower: true },
+  none: { label: "No captions", words: 0, upper: false },
 } as const;
 export type CaptionStyle = keyof typeof CAPTION_STYLES;
 export const isCaptionStyle = (v: string): v is CaptionStyle => v in CAPTION_STYLES;
@@ -91,13 +93,15 @@ export interface Chunk { start: number; end: number; text: string }
 /** Caption chunks inside a clip, timed relative to the clip start. */
 export function captionChunks(words: Word[], startMs: number, endMs: number, style: CaptionStyle): Chunk[] {
   const per = CAPTION_STYLES[style].words;
+  if (!per) return [];
+  const lower = "lower" in CAPTION_STYLES[style];
   const inside = words.filter((w) => w.e > startMs && w.s < endMs);
   const chunks: Chunk[] = [];
   let cur: Word[] = [];
   const flush = () => {
     if (!cur.length) return;
     const text = cur.map((w) => w.w).join(" ");
-    chunks.push({ start: Math.max(0, cur[0]!.s - startMs), end: Math.min(endMs, cur[cur.length - 1]!.e) - startMs, text: CAPTION_STYLES[style].upper ? text.toUpperCase() : text });
+    chunks.push({ start: Math.max(0, cur[0]!.s - startMs), end: Math.min(endMs, cur[cur.length - 1]!.e) - startMs, text: CAPTION_STYLES[style].upper ? text.toUpperCase() : lower ? text.toLowerCase().replace(/[.,!?]+$/, "") : text });
     cur = [];
   };
   for (const w of inside) {
@@ -157,6 +161,8 @@ export function buildAss(chunks: Chunk[], o: AssOptions): string {
     bold_pop: `Style: Caption,${o.font},${base},${assColour(white)},${assColour(white)},${assColour(ink)},${assColour(ink, 0x40)},0,0,0,0,100,100,0,0,1,${Math.round(base / 10)},2,2,60,60,${capMargin},1`,
     clean: `Style: Caption,${o.font},${Math.round(base * 0.82)},${assColour(white)},${assColour(white)},${assColour(ink, 0x60)},${assColour(ink, 0x80)},0,0,0,0,100,100,0,0,1,2,3,2,80,80,${capMargin},1`,
     boxed: `Style: Caption,${o.font},${Math.round(base * 0.86)},${assColour(white)},${assColour(white)},${assColour(ink, 0x20)},${assColour(ink, 0x20)},0,0,0,0,100,100,0,0,3,${Math.round(base / 5)},0,2,80,80,${capMargin},1`,
+    minimal: `Style: Caption,${o.font},${Math.round(base * 0.7)},${assColour(ink)},${assColour(ink)},${assColour(accent)},${assColour(accent)},0,0,0,0,100,100,0,0,3,${Math.round(base / 6)},0,2,80,80,${capMargin},1`,
+    none: `Style: Caption,${o.font},${base},${assColour(white)},${assColour(white)},${assColour(ink)},${assColour(ink)},0,0,0,0,100,100,0,0,1,0,0,2,60,60,${capMargin},1`,
   }[o.style];
   const lines = [
     "[Script Info]",
@@ -220,4 +226,29 @@ export function describeChanges(a: ClipSnapshot, b: ClipSnapshot): string {
   if (!parts.length) return "";
   const list = parts.length === 1 ? parts[0]! : `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`;
   return `${list[0]!.toUpperCase()}${list.slice(1)} changed since your last save.`;
+}
+
+// ------------------------------------------------------------------ batch variants (CL-04)
+
+export interface Variant { key: string; label: string; settings: ClipSnapshot; selected: boolean }
+
+/** The first words of a hook, for formats with less room ("Stop budgeting like this" → "Stop budgeting"). */
+export function shortHook(hook: string, words = 2): string {
+  return hook.split(/\s+/).slice(0, words).join(" ");
+}
+
+/**
+ * The six variants of a clip: three hooks (the clip's own, a question and a number), no captions, a square
+ * cut and minimal captions. The first three are picked by default. Previews are free; only renders cost.
+ */
+export function buildVariants(base: ClipSnapshot, hooks: { question: string; number: string }): Variant[] {
+  const v = (key: string, label: string, patch: Partial<ClipSnapshot>, selected = false): Variant => ({ key, label, settings: { ...base, captionStyle: "bold_pop", format: "9:16", ...patch }, selected });
+  return [
+    v("hook_a", "Hook A · bold pop", { hook: base.hook }, true),
+    v("hook_b", "Hook B · question", { hook: hooks.question }, true),
+    v("hook_c", "Hook C · number", { hook: hooks.number }, true),
+    v("no_captions", "No captions", { hook: "", captionStyle: "none" }),
+    v("square", "1:1 square", { hook: shortHook(base.hook), format: "1:1" }),
+    v("minimal", "Minimal captions", { hook: base.hook.toLowerCase(), captionStyle: "minimal" }),
+  ];
 }

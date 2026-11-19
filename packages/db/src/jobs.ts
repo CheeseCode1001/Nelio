@@ -307,16 +307,17 @@ export async function startProcessingRun(tx: Tx, args: { assetId: string; userId
  * Queues a render of one saved clip version: a Render row plus a one-step run (kind "render"), queued through
  * the outbox. Safe to retry: one render per project version.
  */
-export async function startRenderRun(tx: Tx, args: { projectId: string; userId: string; estimate: number; resolution?: string; label?: string | null; now?: Date }): Promise<{ renderId: string; runId: string; existing: boolean }> {
+export async function startRenderRun(tx: Tx, args: { projectId: string; userId: string; estimate: number; resolution?: string; label?: string | null; settings?: object | null; key?: string; now?: Date }): Promise<{ renderId: string; runId: string; existing: boolean }> {
   const now = args.now ?? new Date();
   const project = await tx.clipProject.findUniqueOrThrow({ where: { id: args.projectId }, select: { id: true, orgId: true, workspaceId: true, name: true, version: true, hook: true, captionStyle: true, format: true } });
-  const key = `render:${project.id}:${project.version}:${args.label ?? ""}`;
+  const key = args.key ?? `render:${project.id}:${project.version}:${args.label ?? ""}`;
   const existing = await tx.agentRun.findUnique({ where: { idempotencyKey: key }, select: { id: true, renderId: true } });
   if (existing?.renderId) return { renderId: existing.renderId, runId: existing.id, existing: true };
   const number = (await tx.render.count({ where: { workspaceId: project.workspaceId } })) + 1;
   const render = await tx.render.create({
     data: {
       orgId: project.orgId, workspaceId: project.workspaceId, projectId: project.id, revision: project.version, label: args.label ?? null,
+      settings: args.settings ?? undefined,
       hook: project.hook, captionStyle: project.captionStyle, format: project.format, resolution: args.resolution ?? "1080p",
       estimatedCredits: args.estimate, createdById: args.userId,
     },
@@ -336,4 +337,30 @@ export async function startRenderRun(tx: Tx, args: { projectId: string; userId: 
   const first = run.steps[0];
   if (first) await enqueue(tx, TOPICS.stepRun, { stepId: first.id }, `step:${first.id}:1`);
   return { renderId: render.id, runId: run.id, existing: false };
+}
+
+/**
+ * Cancels a queued or running render. Nothing is charged: a reservation already made is released in full.
+ * A render that is already finishing keeps running in the worker but its result is discarded.
+ */
+export async function cancelRenderRun(tx: Tx, args: { renderId: string; workspaceId: string; byUserName: string; now?: Date }): Promise<boolean> {
+  const now = args.now ?? new Date();
+  const render = await tx.render.findFirst({ where: { id: args.renderId, workspaceId: args.workspaceId, status: { in: ["queued", "rendering"] } }, select: { id: true, orgId: true, runId: true, project: { select: { name: true } } } });
+  if (!render) return false;
+  await tx.render.update({ where: { id: render.id }, data: { status: "canceled", statusText: `Canceled by ${args.byUserName}` } });
+  if (!render.runId) return true;
+  const steps = await tx.runStep.findMany({ where: { runId: render.runId, status: { in: ["queued", "running", "paused"] } }, select: { id: true, attempts: true } });
+  for (const st of steps) {
+    const reserve = await tx.agentSpend.findUnique({ where: { stepId_attempt_kind: { stepId: st.id, attempt: st.attempts, kind: "reserve" } } });
+    const closed = reserve ? await tx.agentSpend.findFirst({ where: { stepId: st.id, attempt: st.attempts, kind: "release" }, select: { id: true } }) : null;
+    if (reserve && !closed) {
+      await tx.agentSpend.create({ data: { agentId: null, runId: render.runId, stepId: st.id, attempt: st.attempts, kind: "settle", credits: 0, weekStart: reserve.weekStart } });
+      await tx.agentSpend.create({ data: { agentId: null, runId: render.runId, stepId: st.id, attempt: st.attempts, kind: "release", credits: reserve.credits, weekStart: reserve.weekStart } });
+    }
+  }
+  await tx.runStep.updateMany({ where: { runId: render.runId, status: { in: ["queued", "running", "paused"] } }, data: { status: "canceled", finishedAt: now } });
+  const released = await tx.agentSpend.findMany({ where: { runId: render.runId, kind: "release" }, select: { credits: true } });
+  const run = await tx.agentRun.update({ where: { id: render.runId }, data: { status: "canceled", finishedAt: now, actualCredits: 0, refundedCredits: released.reduce((n, e) => n + e.credits, 0) }, select: { id: true, number: true } });
+  await recordActivity(tx, { orgId: render.orgId, workspaceId: args.workspaceId, runId: run.id, type: "run.canceled", status: "canceled", title: `Render #${run.number} canceled`, detail: `${render.project.name} · by ${args.byUserName}` });
+  return true;
 }

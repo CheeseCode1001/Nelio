@@ -38,6 +38,8 @@ describe("clips", () => {
     expect(c[1]!.text).toBe("STOP BUDGETING LIKE");
     expect(c.every((x) => x.end <= 10000)).toBe(true);
     expect(captionChunks(words, 12000, 22000, "clean")[1]!.text).toBe("stop budgeting like this.");
+    expect(captionChunks(words, 12000, 22000, "minimal")[1]!.text).toBe("stop budgeting like this");
+    expect(captionChunks(words, 12000, 22000, "none")).toEqual([]);
   });
 
   it("builds a captions file with the hook, captions and end card", () => {
@@ -60,5 +62,19 @@ describe("clips", () => {
     expect(describeChanges(a, a)).toBe("");
     expect(describeChanges(a, { ...a, endMs: 9500, captionSize: 120 })).toBe("Trim and caption size changed since your last save.");
     expect(describeChanges(a, { ...a, hook: "x", format: "1:1", brandKitId: "k" })).toBe("Hook, format and brand kit changed since your last save.");
+  });
+});
+
+describe("variants", () => {
+  it("makes six variants with the first three picked", async () => {
+    const { buildVariants } = await import("./clips");
+    const base = { startMs: 0, endMs: 42000, hook: "Stop budgeting like this", captionStyle: "clean" as const, captionSize: 100, format: "9:16" as const, brandKitId: null };
+    const v = buildVariants(base, { question: "Are you budgeting wrong?", number: "3 budget mistakes" });
+    expect(v.map((x) => x.label)).toEqual(["Hook A · bold pop", "Hook B · question", "Hook C · number", "No captions", "1:1 square", "Minimal captions"]);
+    expect(v.filter((x) => x.selected).map((x) => x.key)).toEqual(["hook_a", "hook_b", "hook_c"]);
+    expect(v[4]!.settings).toMatchObject({ hook: "Stop budgeting", format: "1:1" });
+    expect(v[3]!.settings).toMatchObject({ hook: "", captionStyle: "none" });
+    expect(v[5]!.settings.hook).toBe("stop budgeting like this");
+    expect(v.every((x) => x.settings.endMs === 42000)).toBe(true);
   });
 });

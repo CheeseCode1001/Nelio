@@ -6,8 +6,8 @@
  */
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { db, deleteObject, headObject, putObject, signedGetUrl, startProcessingRun, startRenderRun, storageKeys } from "@nelio/db";
-import { processingEstimate, processingSplit, renderEstimate } from "@nelio/domain";
+import { cancelRenderRun, db, deleteObject, headObject, putObject, signedGetUrl, startProcessingRun, startRenderRun, storageKeys } from "@nelio/db";
+import { buildVariants, processingEstimate, processingSplit, renderEstimate, type ClipSnapshot } from "@nelio/domain";
 import { ffmpeg, withTempDir } from "../src/ffmpeg";
 import { probe } from "../src/ffmpeg";
 import { processStep } from "../src/steps";
@@ -113,6 +113,29 @@ try {
     }
     const rn = await client.notification.findFirst({ where: { userId, title: { contains: "is rendered" } } });
     check("creator told the clip is rendered", Boolean(rn), rn?.title);
+
+    // Variants (CL-04): a square cut without captions renders at 1080×1080; a queued variant cancels with nothing charged.
+    const variants = buildVariants(snap as ClipSnapshot, { question: "Are you budgeting wrong?", number: "3 budget mistakes" });
+    const square = { ...variants.find((v) => v.key === "square")!, settings: { ...variants.find((v) => v.key === "square")!.settings, captionStyle: "none" as const } };
+    const minimal = variants.find((v) => v.key === "minimal")!;
+    const started = await client.$transaction(async (tx) => [
+      await startRenderRun(tx, { projectId: project.id, userId, estimate: est, label: square.label, settings: square.settings, key: `variant:${project.id}:check:square` }),
+      await startRenderRun(tx, { projectId: project.id, userId, estimate: est, label: minimal.label, settings: minimal.settings, key: `variant:${project.id}:check:minimal` }),
+    ]);
+    keys.push(...started.map((x) => storageKeys.render(ws.id, x.renderId)));
+    const canceled = await client.$transaction((tx) => cancelRenderRun(tx, { renderId: started[1]!.renderId, workspaceId: ws.id, byUserName: "Pipeline Check" }));
+    const minimalStep = await client.runStep.findFirstOrThrow({ where: { runId: started[1]!.runId } });
+    check("queued variant cancels", canceled && (await processStep(minimalStep.id)) !== "done", minimalStep.status);
+    const cr = await client.agentRun.findUniqueOrThrow({ where: { id: started[1]!.runId } });
+    check("canceled variant charged nothing", cr.status === "canceled" && cr.actualCredits === 0, { status: cr.status, actual: cr.actualCredits });
+    const sqStep = await client.runStep.findFirstOrThrow({ where: { runId: started[0]!.runId } });
+    await processStep(sqStep.id);
+    const sq = await client.render.findUniqueOrThrow({ where: { id: started[0]!.renderId } });
+    check("square variant rendered", sq.status === "ready" && Boolean(sq.storageKey), { status: sq.status, text: sq.statusText });
+    if (sq.storageKey) {
+      const p2 = await probe(await signedGetUrl(sq.storageKey));
+      check("square variant is 1080×1080", p2.width === 1080 && p2.height === 1080, [p2.width, p2.height]);
+    }
   }
 } catch (e) {
   failures++;

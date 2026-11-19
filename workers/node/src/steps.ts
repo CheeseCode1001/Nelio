@@ -59,8 +59,8 @@ async function afterProcessRun(tx: Tx, s: Loaded, status: "done" | "failed" | "b
 
 async function afterRenderRun(tx: Tx, s: Loaded, status: "done" | "failed" | "blocked", reasonText: string | null) {
   if (s.run.kind !== "render" || !s.run.renderId) return;
-  const render = await tx.render.findUnique({ where: { id: s.run.renderId }, select: { id: true, createdById: true, actualCredits: true, project: { select: { name: true, assetId: true } } } });
-  if (!render) return;
+  const render = await tx.render.findUnique({ where: { id: s.run.renderId }, select: { id: true, status: true, label: true, createdById: true, actualCredits: true, project: { select: { name: true, assetId: true } } } });
+  if (!render || render.status === "canceled") return;
   const ws = s.run.workspace;
   const spent = await tx.agentSpend.findMany({ where: { runId: s.runId, kind: "settle" }, select: { credits: true } });
   await tx.render.update({

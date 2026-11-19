@@ -12,6 +12,8 @@ const DEV_PAGES = [
   { href: "/dev/ui/media", label: "CL-01 states" },
   { href: "/dev/ui/upload", label: "CL-02 states" },
   { href: "/dev/ui/studio", label: "CL-03 states" },
+  { href: "/dev/ui/variants", label: "CL-04 states" },
+  { href: "/dev/ui/exports", label: "CL-05 states" },
   { href: "/dev/ui/agent-detail", label: "APP-05 states" },
   { href: "/dev/ui/create-agent", label: "APP-06 steps" },
 ];

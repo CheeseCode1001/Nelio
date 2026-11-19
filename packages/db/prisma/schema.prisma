@@ -776,6 +776,8 @@ model ClipProject {
   format       String   @default("9:16")
   brandKitId   String?  @map("brand_kit_id") @db.Uuid
   version      Int      @default(1)
+  /// CL-04: the generated variants (hooks, formats, caption styles) and which are picked.
+  variants     Json?
   createdById  String   @map("created_by_id") @db.Uuid
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
@@ -812,6 +814,8 @@ model Render {
   projectId        String       @map("project_id") @db.Uuid
   revision         Int
   label            String?
+  /// The exact clip settings rendered (a variant, or the saved version).
+  settings         Json?
   hook             String
   captionStyle     String       @map("caption_style")
   format           String

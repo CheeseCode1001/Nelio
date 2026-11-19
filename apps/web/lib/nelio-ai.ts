@@ -78,3 +78,36 @@ export async function editWithWords(args: { request: string; snapshot: ClipSnaps
     snapshot: { ...s, startMs: Math.round(r.start_s * 1000), endMs: Math.round(r.end_s * 1000), hook: r.hook.trim(), captionStyle: r.caption_style, captionSize: r.caption_size, format: r.format },
   };
 }
+
+const HooksSchema = z.object({ question: z.string().min(2).max(48), number: z.string().min(2).max(48) });
+
+/** CL-04: two alternative hooks for a clip, a question and one built around a number, grounded in what's said. */
+export async function writeVariantHooks(args: { hook: string; clipText: string }): Promise<{ question: string; number: string }> {
+  const response = await ai().beta.messages.create({
+    model: MODEL,
+    max_tokens: 2000,
+    betas: ["server-side-fallback-2026-07-01"],
+    fallbacks: "default",
+    output_config: {
+      effort: "low",
+      format: {
+        type: "json_schema",
+        schema: {
+          type: "object",
+          additionalProperties: false,
+          required: ["question", "number"],
+          properties: {
+            question: { type: "string", description: "The hook rewritten as a short question, 2 to 6 words, e.g. 'Are you budgeting wrong?'" },
+            number: { type: "string", description: "A hook built around a number from or implied by the clip, 2 to 6 words, e.g. '3 budget mistakes'" },
+          },
+        },
+      },
+    },
+    system: "You are Nelio AI. You write on-screen hooks for short vertical videos: 2 to 6 words, plain language, true to what the speaker says, no clickbait claims, no emoji.",
+    messages: [{ role: "user", content: `Current hook: "${args.hook}"\n\nWhat is said in the clip:\n${args.clipText.slice(0, 6000)}\n\nWrite a question hook and a number hook.` }],
+  });
+  const out = response.content.find((b) => b.type === "text");
+  if (response.stop_reason === "refusal" || !out || out.type !== "text") throw new Error("no hooks");
+  const r = HooksSchema.parse(JSON.parse(out.text));
+  return { question: r.question.trim(), number: r.number.trim() };
+}

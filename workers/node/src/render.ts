@@ -24,8 +24,10 @@ const renderClip: StepHandler = async (ctx) => {
   if (!render) return { status: "blocked", reason: "missing", text: "This render was deleted." };
   const asset = render.project.asset;
   if (asset.deletedAt || asset.status !== "ready") return { status: "blocked", reason: "source", text: `${asset.filename} can’t be used any more. Pick another source.` };
-  const revision = await client.projectRevision.findUnique({ where: { projectId_number: { projectId: render.projectId, number: render.revision } } });
-  const snap = (revision?.snapshot as unknown as ClipSnapshot | undefined) ?? {
+  if (render.status === "canceled") return { status: "blocked", reason: "canceled", text: "This render was canceled." };
+  // A variant carries its own settings; otherwise the saved version that was rendered.
+  const revision = render.settings ? null : await client.projectRevision.findUnique({ where: { projectId_number: { projectId: render.projectId, number: render.revision } } });
+  const snap = (render.settings as unknown as ClipSnapshot | null) ?? (revision?.snapshot as unknown as ClipSnapshot | undefined) ?? {
     startMs: render.project.startMs, endMs: render.project.endMs, hook: render.hook, captionStyle: render.captionStyle, captionSize: render.project.captionSize, format: render.format, brandKitId: render.project.brandKitId,
   } as ClipSnapshot;
   const format = isClipFormat(snap.format) ? snap.format : "9:16";
@@ -45,6 +47,13 @@ const renderClip: StepHandler = async (ctx) => {
     format, style, sizePct: clampCaptionSize(snap.captionSize ?? 100), font: CAPTION_FONT, accent: kit?.accent, hook: snap.hook, endCard: kit?.name, clipMs,
   });
 
+  // Cancelling from Exports stops FFmpeg within a few seconds.
+  const stop = new AbortController();
+  ctx.signal.addEventListener("abort", () => stop.abort(), { once: true });
+  const poll = setInterval(() => {
+    void client.render.findUnique({ where: { id: render.id }, select: { status: true } }).then((r) => { if (r?.status === "canceled") stop.abort(); }).catch(() => {});
+  }, 3000);
+
   const key = storageKeys.render(render.workspaceId, render.id);
   const size = await withTempDir(async (dir) => {
     await mkdir(join(dir, "fonts"));
@@ -57,7 +66,7 @@ const renderClip: StepHandler = async (ctx) => {
     try {
       await ffmpeg(
         ["-ss", (snap.startMs / 1000).toFixed(3), "-i", src, "-t", (clipMs / 1000).toFixed(3), "-vf", vf, "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-movflags", "+faststart", "clip.mp4"],
-        ctx.signal,
+        stop.signal,
         (chunk) => {
           const t = progressSeconds(chunk);
           if (t === null) return;
@@ -70,14 +79,17 @@ const renderClip: StepHandler = async (ctx) => {
         { cwd: dir },
       );
     } catch (e) {
+      if (stop.signal.aborted && !ctx.signal.aborted) return null; // canceled from Exports
       const msg = e instanceof Error ? e.message : "render failed";
       if (/stopped/.test(msg)) throw e;
       throw new RetryableStepError(msg);
     }
+    if (stop.signal.aborted) return null;
     const bytes = await readFile(out);
     await putObject(key, bytes, "video/mp4");
     return (await stat(out)).size;
-  });
+  }).finally(() => clearInterval(poll));
+  if (size === null) return { status: "blocked", reason: "canceled", text: "This render was canceled." };
   await client.render.update({ where: { id: render.id }, data: { storageKey: key, sizeBytes: BigInt(size) } });
   return { status: "done", actualCredits: Math.min(render.estimatedCredits, renderEstimate(clipMs / 1000)), detail: `${format} · ${render.resolution}` };
 };
