@@ -137,7 +137,7 @@ export function SkLines({ n = 3 }: { n?: number }) {
 
 export function SkCard({ lines = 2 }: { lines?: number }) {
   return (
-    <section className="flex flex-col gap-3.5 rounded-card border border-border bg-surface-1 p-4 shadow-card md:p-5">
+    <section className="flex flex-col gap-3.5 rounded-card border border-border bg-surface-1 p-3.5 shadow-card md:p-[18px]">
       <div className="flex items-center gap-3">
         <Sk w={44} h={44} r={14} />
         <div className="flex flex-1 flex-col gap-2">
@@ -152,7 +152,7 @@ export function SkCard({ lines = 2 }: { lines?: number }) {
 
 export function SkStat() {
   return (
-    <section className="flex flex-col gap-2.5 rounded-card border border-border bg-surface-1 p-4 shadow-card md:p-5">
+    <section className="flex flex-col gap-2.5 rounded-card border border-border bg-surface-1 p-3.5 shadow-card md:p-[18px]">
       <Sk w="40%" h={12} />
       <Sk w="55%" h={30} r={10} />
       <Sk w="30%" h={10} />
@@ -182,6 +182,59 @@ export function LoadingNote({ text = "Loading…" }: { text?: string }) {
     <div role="status" className="flex items-center gap-2 text-[12.5px] font-bold text-accent-text">
       <span data-spin="" className="inline-flex"><Icon name="refresh" size={16} /></span>
       {text}
+    </div>
+  );
+}
+
+// ------------------------------------------------------------------ Row cards (Delight refresh: tables became rows)
+export interface RowField { label: string; value: ReactNode; /** spans the full width on mobile (status with a progress bar) */ wide?: boolean }
+
+/**
+ * A list of row cards: each row is its own card with a primary cell, labelled fields and an optional action.
+ * Desktop: one line (primary 2.2fr, fields 1fr, action 168 px). Below 1024 px: primary on top, fields two
+ * to a row, then the action.
+ */
+export function RowCardList({ label, children, className }: { label: string; children: ReactNode; className?: string }) {
+  return <div role="list" aria-label={label} className={cn("flex min-w-0 flex-col gap-2.5", className)}>{children}</div>;
+}
+
+export function RowCard({ primary, fields, action, actionWidth = 168, dim, className }: { primary: ReactNode; fields: RowField[]; action?: ReactNode; actionWidth?: number; dim?: boolean; className?: string }) {
+  const cols = `minmax(200px,2.2fr) ${fields.map(() => "minmax(88px,1fr)").join(" ")}${action ? ` ${actionWidth}px` : ""}`;
+  return (
+    <div
+      role="listitem"
+      data-enter-item=""
+      className={cn("grid min-w-0 grid-cols-2 items-center gap-3 rounded-[20px] border border-border bg-surface-1 p-3.5 shadow-card lg:gap-4 lg:px-[18px] lg:[grid-template-columns:var(--row-cols)]", className)}
+      style={{ ["--row-cols" as string]: cols }}
+    >
+      <div className={cn("col-span-2 min-w-0 text-[15px] font-bold text-text lg:col-span-1", dim && "text-muted")}>{primary}</div>
+      {fields.map((f) => (
+        <div key={f.label} className={cn("flex min-w-0 flex-col gap-[3px]", f.wide && "col-span-2 lg:col-span-1")}>
+          <span className="text-[11.5px] font-bold tracking-[0.02em] text-muted">{f.label}</span>
+          <span className={cn("min-w-0 text-sm text-text", dim && "text-muted")}>{f.value}</span>
+        </div>
+      ))}
+      {action ? <div className="col-span-2 flex min-w-0 justify-start lg:col-span-1 lg:justify-end">{action}</div> : null}
+    </div>
+  );
+}
+
+/** Loading rows shaped like the row cards they become (skeletons follow the real content; pulse, no shimmer). */
+export function RowCardSkeleton({ rows = 4, fields = 4 }: { rows?: number; fields?: number }) {
+  const widths = [68, 48, 58, 39, 52, 44];
+  return (
+    <div aria-hidden="true" className="flex min-w-0 flex-col gap-2.5">
+      {Array.from({ length: rows }, (_, r) => (
+        <div key={r} className="flex min-w-0 items-center gap-4 rounded-[20px] border border-border bg-surface-1 px-[18px] py-4">
+          <span className="block h-3.5 w-[70%] animate-n-pulse rounded-md bg-surface-3 lg:w-auto lg:flex-[2.2]" style={{ animationDelay: `${r * 0.07}s` }} />
+          {Array.from({ length: fields }, (_, f) => (
+            <span key={f} className="hidden min-w-0 flex-1 flex-col gap-1.5 lg:flex">
+              <span className="block h-2 w-12 animate-n-pulse rounded bg-surface-3" style={{ animationDelay: `${r * 0.07}s` }} />
+              <span className="block h-3 animate-n-pulse rounded-md bg-surface-3" style={{ width: widths[(r + f) % widths.length], animationDelay: `${r * 0.07}s` }} />
+            </span>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }

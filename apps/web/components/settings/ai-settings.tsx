@@ -3,6 +3,7 @@
 import { CAPTION_LANGUAGES, QUALITY_LABEL, type Quality } from "@nelio/domain";
 import { Banner, Button, Card, CardHead, Illustration, Motion, PageHead, SelectField, Sk, Switch } from "@nelio/ui";
 import { useRouter } from "next/navigation";
+import { toast } from "@/components/feedback/toaster";
 import { useState, useTransition } from "react";
 import { saveAiSettingsAction } from "@/lib/actions/settings";
 
@@ -13,11 +14,9 @@ export function AiSettingsPage({ slug, saved, canEdit, aiReady }: { slug?: strin
   const router = useRouter();
   const [v, setV] = useState(saved);
   const [error, setError] = useState<string | null>(null);
-  const [done, setDone] = useState(false);
   const [pending, start] = useTransition();
   const dirty = JSON.stringify(v) !== JSON.stringify(saved);
   const set = (patch: Partial<AiSettings>) => {
-    setDone(false);
     setV((x) => ({ ...x, ...patch }));
   };
   const save = () => {
@@ -26,14 +25,14 @@ export function AiSettingsPage({ slug, saved, canEdit, aiReady }: { slug?: strin
     start(async () => {
       const r = await saveAiSettingsAction(slug, v);
       if (!r.ok) return setError(r.error);
-      setDone(true);
+      toast.success("Saved", { description: "New uploads start from these defaults." });
       router.refresh();
     });
   };
 
   return (
-    <Motion className="flex flex-col gap-6">
-      <div data-enter="" className="flex flex-col gap-6">
+    <Motion className="flex flex-col gap-5">
+      <div data-enter="" className="flex flex-col gap-5">
         <PageHead eyebrow="Settings" title="AI & processing" actions={<Button onClick={save} loading={pending} disabled={!dirty || !canEdit}>Save</Button>} />
         <section className="flex flex-wrap items-center gap-5 rounded-panel bg-ai-tint p-6">
           <Illustration name="strategist" width={180} />
@@ -43,7 +42,7 @@ export function AiSettingsPage({ slug, saved, canEdit, aiReady }: { slug?: strin
             {!aiReady ? <p className="m-0 mt-2 text-[13px] font-semibold text-ai-text">Not switched on for this deployment yet. Nothing is sent and no credits are used.</p> : null}
           </div>
         </section>
-        {error ? <Banner tone="err" title="That didn’t work" text={error} /> : done ? <Banner tone="ok" title="Saved" text="New uploads start from these defaults." /> : null}
+        {error ? <Banner tone="err" title="That didn’t work" text={error} /> : null}
         {!canEdit ? <Banner tone="blue" title="View only" text="Ask a workspace owner to change these defaults." /> : null}
         <Card>
           <CardHead title="Defaults" />
@@ -66,7 +65,7 @@ export function AiSettingsPage({ slug, saved, canEdit, aiReady }: { slug?: strin
 
 export function AiSettingsLoading() {
   return (
-    <div className="flex flex-col gap-6" aria-busy="true">
+    <div className="flex flex-col gap-5" aria-busy="true">
       <div className="flex flex-col gap-2"><Sk w={70} h={12} /><Sk w={260} h={36} /></div>
       <Sk h={183} r={32} />
       <div className="flex flex-col gap-4 rounded-card border border-border bg-surface-1 p-5 shadow-card"><Sk w="20%" h={16} /><Sk h={48} r={14} /><Sk h={48} r={14} /><Sk w="50%" h={20} /></div>

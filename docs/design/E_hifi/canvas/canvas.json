@@ -103,6 +103,24 @@
    "page": "foundations",
    "expand": "fill"
   },
+  "Brand.dc.html": {
+   "x": 3040,
+   "y": 520,
+   "w": 1440,
+   "h": 2900,
+   "title": "Brand: Nelio mascot logo",
+   "page": "foundations",
+   "expand": "fill"
+  },
+  "Delight.dc.html": {
+   "x": 0,
+   "y": 4480,
+   "w": 1440,
+   "h": 5200,
+   "title": "Delight kit: toasts, avatars, stickers, skeletons, sounds",
+   "page": "foundations",
+   "expand": "fill"
+  },
   "Motion.dc.html": {
    "x": 0,
    "y": 520,
@@ -3238,7 +3256,7 @@
    "x": 0,
    "y": 5725,
    "w": 1440,
-   "h": 950,
+   "h": 1250,
    "title": "ST-03 Appearance \u00b7 Filled",
    "page": "settings",
    "expand": "fill"
@@ -3247,7 +3265,7 @@
    "x": 1520,
    "y": 5725,
    "w": 1440,
-   "h": 950,
+   "h": 1250,
    "title": "ST-03 Appearance \u00b7 Dark selected",
    "page": "settings",
    "expand": "fill"
@@ -3256,14 +3274,14 @@
    "x": 3040,
    "y": 5725,
    "w": 924,
-   "h": 1945,
+   "h": 2515,
    "title": "ST-03 Appearance \u00b7 Mobile",
    "page": "settings",
    "expand": "fill"
   },
   "NotificationPrefs.dc.html": {
    "x": 0,
-   "y": 8130,
+   "y": 8700,
    "w": 1440,
    "h": 1100,
    "title": "ST-04 Notification preferences \u00b7 Filled",
@@ -3272,7 +3290,7 @@
   },
   "NotificationPrefs-Pushdenied.dc.html": {
    "x": 1520,
-   "y": 8130,
+   "y": 8700,
    "w": 1440,
    "h": 1100,
    "title": "ST-04 Notification preferences \u00b7 Push blocked",
@@ -3281,7 +3299,7 @@
   },
   "NotificationPrefs-Unsupported.dc.html": {
    "x": 3040,
-   "y": 8130,
+   "y": 8700,
    "w": 1440,
    "h": 1100,
    "title": "ST-04 Notification preferences \u00b7 Push unsupported",
@@ -3290,7 +3308,7 @@
   },
   "NotificationPrefs-Mobile.dc.html": {
    "x": 4560,
-   "y": 8130,
+   "y": 8700,
    "w": 1362,
    "h": 2230,
    "title": "ST-04 Notification preferences \u00b7 Mobile",
@@ -3299,7 +3317,7 @@
   },
   "Members.dc.html": {
    "x": 0,
-   "y": 10820,
+   "y": 11390,
    "w": 1440,
    "h": 850,
    "title": "ST-05 Workspace members \u00b7 Filled",
@@ -3308,7 +3326,7 @@
   },
   "Members-Empty.dc.html": {
    "x": 1520,
-   "y": 10820,
+   "y": 11390,
    "w": 1440,
    "h": 900,
    "title": "ST-05 Workspace members \u00b7 Empty",
@@ -3317,7 +3335,7 @@
   },
   "Members-Mobile.dc.html": {
    "x": 3040,
-   "y": 10820,
+   "y": 11390,
    "w": 924,
    "h": 1850,
    "title": "ST-05 Workspace members \u00b7 Mobile",
@@ -3326,7 +3344,7 @@
   },
   "BrandKits.dc.html": {
    "x": 0,
-   "y": 13130,
+   "y": 13700,
    "w": 1440,
    "h": 1100,
    "title": "ST-06 Brand kits \u00b7 Filled",
@@ -3335,7 +3353,7 @@
   },
   "BrandKits-Empty.dc.html": {
    "x": 1520,
-   "y": 13130,
+   "y": 13700,
    "w": 1440,
    "h": 950,
    "title": "ST-06 Brand kits \u00b7 Empty",
@@ -3344,7 +3362,7 @@
   },
   "BrandKits-Editing.dc.html": {
    "x": 3040,
-   "y": 13130,
+   "y": 13700,
    "w": 1440,
    "h": 1100,
    "title": "ST-06 Brand kits \u00b7 Editing",
@@ -3353,7 +3371,7 @@
   },
   "BrandKits-Mobile.dc.html": {
    "x": 4560,
-   "y": 13130,
+   "y": 13700,
    "w": 1362,
    "h": 2230,
    "title": "ST-06 Brand kits \u00b7 Mobile",
@@ -3362,7 +3380,7 @@
   },
   "AISettings.dc.html": {
    "x": 0,
-   "y": 15820,
+   "y": 16390,
    "w": 1440,
    "h": 1000,
    "title": "ST-07 AI & processing \u00b7 Filled",
@@ -3371,7 +3389,7 @@
   },
   "AISettings-Mobile.dc.html": {
    "x": 1520,
-   "y": 15820,
+   "y": 16390,
    "w": 486,
    "h": 2040,
    "title": "ST-07 AI & processing \u00b7 Mobile",
@@ -3380,7 +3398,7 @@
   },
   "IntegrationStatus.dc.html": {
    "x": 0,
-   "y": 18320,
+   "y": 18890,
    "w": 1440,
    "h": 900,
    "title": "ST-08 Integration status \u00b7 Filled",
@@ -3389,7 +3407,7 @@
   },
   "IntegrationStatus-Mobile.dc.html": {
    "x": 1520,
-   "y": 18320,
+   "y": 18890,
    "w": 486,
    "h": 1850,
    "title": "ST-08 Integration status \u00b7 Mobile",
@@ -3398,7 +3416,7 @@
   },
   "Privacy.dc.html": {
    "x": 0,
-   "y": 20630,
+   "y": 21200,
    "w": 1440,
    "h": 950,
    "title": "ST-09 Privacy & data \u00b7 Filled",
@@ -3407,7 +3425,7 @@
   },
   "Privacy-Exportready.dc.html": {
    "x": 1520,
-   "y": 20630,
+   "y": 21200,
    "w": 1440,
    "h": 950,
    "title": "ST-09 Privacy & data \u00b7 Export ready",
@@ -3416,7 +3434,7 @@
   },
   "Privacy-Deleting.dc.html": {
    "x": 3040,
-   "y": 20630,
+   "y": 21200,
    "w": 1440,
    "h": 950,
    "title": "ST-09 Privacy & data \u00b7 Deletion requested",
@@ -3425,7 +3443,7 @@
   },
   "Privacy-Mobile.dc.html": {
    "x": 4560,
-   "y": 20630,
+   "y": 21200,
    "w": 1362,
    "h": 1945,
    "title": "ST-09 Privacy & data \u00b7 Mobile",
@@ -3434,7 +3452,7 @@
   },
   "WorkspaceSettings.dc.html": {
    "x": 0,
-   "y": 23035,
+   "y": 23605,
    "w": 1440,
    "h": 950,
    "title": "ST-10 Workspace settings \u00b7 Filled",
@@ -3443,7 +3461,7 @@
   },
   "WorkspaceSettings-Paused.dc.html": {
    "x": 1520,
-   "y": 23035,
+   "y": 23605,
    "w": 1440,
    "h": 950,
    "title": "ST-10 Workspace settings \u00b7 Workspace paused",
@@ -3452,7 +3470,7 @@
   },
   "WorkspaceSettings-Resumed.dc.html": {
    "x": 3040,
-   "y": 23035,
+   "y": 23605,
    "w": 1440,
    "h": 950,
    "title": "ST-10 Workspace settings \u00b7 Resumed",
@@ -3461,7 +3479,7 @@
   },
   "WorkspaceSettings-Mobile.dc.html": {
    "x": 4560,
-   "y": 23035,
+   "y": 23605,
    "w": 1362,
    "h": 1945,
    "title": "ST-10 Workspace settings \u00b7 Mobile",
@@ -4315,6 +4333,8 @@
   "Main.dc.html",
   "Illustrations.dc.html",
   "Motion.dc.html",
+  "Brand.dc.html",
+  "Delight.dc.html",
   "Home.dc.html",
   "Product.dc.html",
   "UseCases.dc.html",
@@ -5543,7 +5563,7 @@
   },
   "n_ST_04": {
    "x": 0,
-   "y": 7830,
+   "y": 8400,
    "text": "ST-04 Notification preferences",
    "kind": "title1",
    "maxW": 5922,
@@ -5552,7 +5572,7 @@
   },
   "n_ST_05": {
    "x": 0,
-   "y": 10520,
+   "y": 11090,
    "text": "ST-05 Workspace members",
    "kind": "title1",
    "maxW": 3964,
@@ -5561,7 +5581,7 @@
   },
   "n_ST_06": {
    "x": 0,
-   "y": 12830,
+   "y": 13400,
    "text": "ST-06 Brand kits",
    "kind": "title1",
    "maxW": 5922,
@@ -5570,7 +5590,7 @@
   },
   "n_ST_07": {
    "x": 0,
-   "y": 15520,
+   "y": 16090,
    "text": "ST-07 AI & processing",
    "kind": "title1",
    "maxW": 2006,
@@ -5579,7 +5599,7 @@
   },
   "n_ST_08": {
    "x": 0,
-   "y": 18020,
+   "y": 18590,
    "text": "ST-08 Integration status",
    "kind": "title1",
    "maxW": 2006,
@@ -5588,7 +5608,7 @@
   },
   "n_ST_09": {
    "x": 0,
-   "y": 20330,
+   "y": 20900,
    "text": "ST-09 Privacy & data",
    "kind": "title1",
    "maxW": 5922,
@@ -5597,7 +5617,7 @@
   },
   "n_ST_10": {
    "x": 0,
-   "y": 22735,
+   "y": 23305,
    "text": "ST-10 Workspace settings",
    "kind": "title1",
    "maxW": 5922,

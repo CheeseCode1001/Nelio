@@ -1,5 +1,7 @@
 "use client";
 
+import { gooeyToast } from "goey-toast";
+import { toast } from "@/components/feedback/toaster";
 import { CAPTION_LANGUAGES, QUALITY_HELP, QUALITY_LABEL, checkUpload, formatBytes, formatDuration, processingEstimate, type Quality } from "@nelio/domain";
 import { Banner, Button, Card, CardHead, Chip, Icon, Illustration, Meter, SelectField, cn } from "@nelio/ui";
 import { useRouter } from "next/navigation";
@@ -88,10 +90,18 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
     const ac = new AbortController();
     abort.current = ac;
     const sentByPart = new Map<number, number>();
+    // Progress toast (Delight board): stays while the file uploads, so leaving the form still shows it.
+    const toastId = `upload-${started.assetId}`;
+    gooeyToast.info(`Uploading ${info.name}`, { id: toastId, description: `0 of ${formatBytes(info.size)} · keep this tab open`, duration: Infinity });
+    let lastToast = 0;
     const report = () => {
       const sent = [...sentByPart.values()].reduce((a, b) => a + b, 0);
       const etaSec = sent > 0 ? (((Date.now() - t0) / sent) * (info.size - sent)) / 1000 : null;
       setPhase({ k: "uploading", file: info, sent, etaSec });
+      if (Date.now() - lastToast > 1000) {
+        lastToast = Date.now();
+        gooeyToast.update(toastId, { description: `${formatBytes(sent)} of ${formatBytes(info.size)} · keep this tab open${etaSec !== null ? ` · ${etaSec < 60 ? "less than a minute" : `about ${Math.ceil(etaSec / 60)} min`}` : ""}` });
+      }
     };
     const done: { part: number; etag: string }[] = [];
     const queue = Array.from({ length: started.partCount }, (_, i) => i + 1);
@@ -122,10 +132,14 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
       const fin = await completeUploadAction(slug, started.assetId, done);
       if (!fin.ok) throw new Error(fin.error);
       setPhase({ k: "uploaded", file: info });
+      gooeyToast.dismiss(toastId);
+      toast.success(`${info.name} uploaded`, { description: "Tell us who owns it to start processing." });
     } catch (e) {
+      gooeyToast.dismiss(toastId);
       if (ac.signal.aborted) return;
       const msg = e instanceof Error && /CORS|ETag/.test(e.message) ? "The upload was blocked by the storage settings. Ask an admin to allow uploads from this site." : e instanceof Error && e.message.length < 120 ? e.message : "The upload stopped. Check your connection and try again.";
       setPhase({ k: "failed", file: info, text: msg });
+      toast.error(`${info.name} didn’t upload`, { description: msg });
     }
   }
 

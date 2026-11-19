@@ -1,4 +1,4 @@
-import { ButtonLink, Chip, EmptyState, Illustration, Motion, PageHead, PlatformBadge, Sk, cn, type IllustrationName } from "@nelio/ui";
+import { ButtonLink, Chip, EmptyState, Illustration, Motion, PageHead, PlatformBadge, RowCard, RowCardList, RowCardSkeleton, Sk, cn, type IllustrationName } from "@nelio/ui";
 import type { DraftRow } from "@/lib/content";
 
 export interface ContentHrefs { compose: string; script: string; caption: string; aiVideo: string; licensing: string; drafts: string }
@@ -35,15 +35,13 @@ function TileCard({ t }: { t: Tile }) {
   );
 }
 
-const TH = "whitespace-nowrap bg-surface-2 px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.04em] text-muted";
-const TD = "border-b border-border px-4 py-3.5 align-middle text-sm text-text";
 const BADGE = { instagram: "ig", youtube: "yt" } as const;
 
 /** CS-01 Content Studio: Filled, Empty and Loading, desktop and mobile. */
 export function ContentStudio({ drafts, hrefs }: { drafts: DraftRow[]; hrefs: ContentHrefs }) {
   return (
-    <Motion className="flex flex-col gap-6">
-      <div data-enter="" className="flex flex-col gap-6">
+    <Motion className="flex flex-col gap-5">
+      <div data-enter="" className="flex flex-col gap-5">
         <PageHead eyebrow="Create" title="Content Studio" sub="Write, design and remix with Nelio AI." actions={<ButtonLink href={hrefs.compose} icon="plus">New post</ButtonLink>} />
       </div>
       <div data-enter="" className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))]">
@@ -57,24 +55,19 @@ export function ContentStudio({ drafts, hrefs }: { drafts: DraftRow[]; hrefs: Co
               <span className="grow" />
               <a href={hrefs.drafts} className="tap-target text-[13.5px] font-bold text-accent-text no-underline">All drafts →</a>
             </div>
-            <div className="relative min-w-0 max-w-full overflow-x-auto rounded-row border border-border bg-surface-1 shadow-card">
-              <table className="w-full min-w-[560px] border-collapse">
-                <caption className="sr-only">Recent drafts</caption>
-                <thead><tr><th scope="col" className={TH}>Draft</th><th scope="col" className={TH}>Type</th><th scope="col" className={TH}>For</th><th scope="col" className={TH}>Updated</th></tr></thead>
-                <tbody className="[&>tr:last-child>td]:border-b-0">
-                  {drafts.map((d) => (
-                    <tr key={d.id}>
-                      <td className={cn(TD, "font-semibold")}><a href={d.href} className="tap-target text-text no-underline hover:text-accent-text">{d.title}</a></td>
-                      <td className={TD}><Chip tone={d.kind.tone}>{d.kind.label}</Chip></td>
-                      <td className={TD}>
-                        {d.platforms.length ? <span className="flex items-center gap-1">{d.platforms.map((p) => <PlatformBadge key={p} platform={BADGE[p]} size={24} />)}</span> : <span className="text-muted">—</span>}
-                      </td>
-                      <td className={cn(TD, "whitespace-nowrap")}>{d.updated}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <RowCardList label="Recent drafts">
+              {drafts.map((d) => (
+                <RowCard
+                  key={d.id}
+                  primary={<a href={d.href} className="tap-target text-text no-underline hover:text-accent-text">{d.title}</a>}
+                  fields={[
+                    { label: "Type", value: <Chip tone={d.kind.tone}>{d.kind.label}</Chip> },
+                    { label: "For", value: d.platforms.length ? <span className="flex items-center gap-1">{d.platforms.map((p) => <PlatformBadge key={p} platform={BADGE[p]} size={24} />)}</span> : <span className="text-muted">—</span> },
+                    { label: "Updated", value: d.updated },
+                  ]}
+                />
+              ))}
+            </RowCardList>
           </>
         ) : (
           <EmptyState illustration="drafts" title="No drafts yet" text="Start with a script, a caption or a clip. Drafts you and your agents make show up here." actions={<ButtonLink href={hrefs.compose} variant="cta" arrow>New post</ButtonLink>} />
@@ -86,13 +79,14 @@ export function ContentStudio({ drafts, hrefs }: { drafts: DraftRow[]; hrefs: Co
 
 export function ContentStudioLoading() {
   return (
-    <div className="flex flex-col gap-6" aria-busy="true">
+    <div className="flex flex-col gap-5" aria-busy="true">
       <div className="flex flex-col gap-2"><Sk w={60} h={12} /><Sk w={260} h={36} /><Sk w={280} h={16} /></div>
       <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))]">
         {Array.from({ length: 6 }, (_, i) => (
           <div key={i} className="flex flex-col gap-3 rounded-[30px] border border-border bg-surface-1 p-5 shadow-card"><Sk h={140} r={20} /><Sk w="60%" h={16} /><Sk w="80%" h={12} /></div>
         ))}
       </div>
+      <RowCardSkeleton rows={3} fields={3} />
       <span className="sr-only" role="status">Loading Content Studio…</span>
     </div>
   );

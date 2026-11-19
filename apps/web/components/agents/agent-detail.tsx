@@ -1,11 +1,9 @@
-import { AgentAvatar, Banner, Bubble, ButtonLink, Card, CardHead, Chip, Motion, PlatformBadge, Sk, SkCard, Small, cn } from "@nelio/ui";
+import { AgentAvatar, Banner, Bubble, ButtonLink, Card, CardHead, Chip, Motion, PlatformBadge, RowCard, RowCardList, Sk, SkCard, Small, cn } from "@nelio/ui";
 import Link from "next/link";
 import type { AgentDetailData, DetailTab } from "@/lib/agent-detail";
 import { BudgetForm, DetailActions, PolicyForm } from "./agent-detail-forms";
 
 const TAB_LABEL: Record<DetailTab, string> = { overview: "Overview", policy: "Policy & permissions", budget: "Budget", destinations: "Destinations", runs: "Runs" };
-const TH = "whitespace-nowrap border-b border-border bg-surface-2 px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.05em] text-muted";
-const TD = "border-b border-border px-4 py-3.5 align-middle text-sm text-text";
 
 export interface AgentDetailHrefs { agents: string; tab: (t: DetailTab) => string; newAgent: string; connections: string; activity: string }
 
@@ -68,28 +66,29 @@ function RunsTable({ d }: { d: AgentDetailData }) {
     );
   }
   return (
-    <div className="overflow-x-auto rounded-row border border-border bg-surface-1 shadow-card">
-      <table className="w-full min-w-[600px] border-collapse">
-        <caption className="sr-only">Runs of {d.name}</caption>
-        <thead><tr>{["Run", "Started", "Steps", "Credits (est → actual)", "Result"].map((h) => <th key={h} scope="col" className={TH}>{h}</th>)}</tr></thead>
-        <tbody className="[&>tr:last-child>td]:border-b-0">
-          {d.runs.map((r) => (
-            <tr key={r.id}>
-              <td className={TD}>#{r.number}</td>
-              <td className={TD}>{r.started}</td>
-              <td className={TD}>{r.steps}</td>
-              <td className={TD}>{r.credits}</td>
-              <td className={TD}>
+    <RowCardList label={`Runs of ${d.name}`}>
+      {d.runs.map((r) => (
+        <RowCard
+          key={r.id}
+          primary={`#${r.number}`}
+          fields={[
+            { label: "Started", value: r.started },
+            { label: "Steps", value: r.steps },
+            { label: "Credits (est → actual)", value: r.credits },
+            {
+              label: "Result",
+              wide: Boolean(r.reason),
+              value: (
                 <span className="flex flex-wrap items-center gap-1.5">
                   <Chip tone={r.result.tone} icon={r.result.icon}>{r.result.label}</Chip>
                   {r.reason ? <Small>{r.reason}</Small> : null}
                 </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+              ),
+            },
+          ]}
+        />
+      ))}
+    </RowCardList>
   );
 }
 
@@ -118,8 +117,8 @@ function LastRuns({ d }: { d: AgentDetailData }) {
 export function AgentDetail({ d, tab, hrefs, workspaceSlug }: { d: AgentDetailData; tab: DetailTab; hrefs: AgentDetailHrefs; workspaceSlug?: string }) {
   const stopped = d.state === "stopped";
   return (
-    <Motion className="flex flex-col gap-6">
-      <div data-enter="" className="flex flex-col gap-6">
+    <Motion className="flex flex-col gap-5">
+      <div data-enter="" className="flex flex-col gap-5">
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0">
             <nav aria-label="Breadcrumb" className="mb-2 text-[13px] font-semibold text-muted">
@@ -148,7 +147,7 @@ export function AgentDetail({ d, tab, hrefs, workspaceSlug }: { d: AgentDetailDa
           <LastRuns d={d} />
         </div>
       ) : (
-        <div data-enter="" className="flex flex-col gap-6">
+        <div data-enter="" className="flex flex-col gap-5">
           <Tabs active={tab} hrefs={hrefs} />
           {tab === "policy" ? <PolicyForm slug={workspaceSlug} d={d} /> : null}
           {tab === "budget" ? <BudgetForm slug={workspaceSlug} d={d} /> : null}
@@ -178,7 +177,7 @@ export function AgentDetail({ d, tab, hrefs, workspaceSlug }: { d: AgentDetailDa
 
 export function AgentDetailLoading() {
   return (
-    <div className="flex flex-col gap-6" aria-busy="true">
+    <div className="flex flex-col gap-5" aria-busy="true">
       <div className="flex flex-col gap-2"><Sk w={120} h={14} /><Sk w={260} h={36} /><Sk w={200} h={16} /></div>
       <div className="flex items-center gap-4"><Sk w={64} h={64} r={32} /><div className="flex grow flex-col gap-2"><Sk w={220} h={22} /><Sk w="60%" h={14} /></div></div>
       <Sk w={460} h={48} r={24} />

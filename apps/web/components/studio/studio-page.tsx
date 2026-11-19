@@ -48,8 +48,8 @@ export function StudioPage({ slug, d, hrefs, preview }: { slug?: string; d: Stud
   if (d.mode === "processing" && d.processing) {
     const first = d.moments[0];
     return (
-      <Motion className="flex flex-col gap-6">
-        <div data-enter="" className="flex flex-col gap-6">
+      <Motion className="flex flex-col gap-5">
+        <div data-enter="" className="flex flex-col gap-5">
           <StudioHeader d={d} hrefs={hrefs} estimate={renderEstimate(first ? (first.endMs - first.startMs) / 1000 : 30)} renderDisabled />
           <Processing d={d} />
         </div>
@@ -57,7 +57,7 @@ export function StudioPage({ slug, d, hrefs, preview }: { slug?: string; d: Stud
     );
   }
   return (
-    <Motion className="flex flex-col gap-6">
+    <Motion className="flex flex-col gap-5">
       <div data-enter="">
         <StudioEditor slug={slug} d={d} hrefs={hrefs} preview={preview} />
       </div>
@@ -67,7 +67,7 @@ export function StudioPage({ slug, d, hrefs, preview }: { slug?: string; d: Stud
 
 export function StudioLoading() {
   return (
-    <div className="flex flex-col gap-6" aria-busy="true">
+    <div className="flex flex-col gap-5" aria-busy="true">
       <div className="flex flex-col gap-2"><Sk w={180} h={13} /><Sk w={320} h={36} /><Sk w={200} h={16} /></div>
       <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 xl:[grid-template-columns:minmax(0,1fr)_minmax(0,1.15fr)_minmax(0,1fr)]">
         <div className="flex flex-col gap-3.5">

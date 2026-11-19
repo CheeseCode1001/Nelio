@@ -42,18 +42,6 @@ export function Illustration({ name, width = 240, className }: { name: Illustrat
 }
 
 // ------------------------------------------------------------------ Logo
-export function Logo({ size = 24, className }: { size?: number; className?: string }) {
-  const box = Math.floor(size * 1.15);
-  return (
-    <span className={cn("inline-flex items-center gap-2 font-display font-extrabold tracking-[-0.04em] text-text", className)} style={{ fontSize: size }}>
-      <span aria-hidden="true" className="inline-flex items-center justify-center rounded-[32%] bg-accent text-white" style={{ width: box, height: box }}>
-        <Icon name="spark" size={Math.floor(size * 0.72)} strokeWidth={2.6} />
-      </span>
-      nelio
-    </span>
-  );
-}
-
 // ------------------------------------------------------------------ Typography
 export function Heading({ size = 32, as: Tag = "h2", className, children }: { size?: 26 | 32 | 34 | 40; as?: "h1" | "h2"; className?: string; children: ReactNode }) {
   // Mobile sizes follow the generator's scale: 20 + (size - 20) * 0.55.
@@ -103,8 +91,24 @@ const buttonVariants = cva(
 
 type ButtonOwn = VariantProps<typeof buttonVariants> & { icon?: IconName; arrow?: boolean; loading?: boolean; children?: ReactNode };
 
+/** Arrow buttons (Delight board): the circle is the button height minus an 8 px inset, docked at the end. */
+const ARROW = {
+  sm: { box: "h-10 min-h-10 py-0.5 pr-0.5 pl-4 text-[13.5px]", circle: 32, icon: 17 },
+  md: { box: "h-12 min-h-12 py-0.5 pr-0.5 pl-5 text-[15px]", circle: 40, icon: 22 },
+  lg: { box: "h-[58px] min-h-[58px] py-0.5 pr-0.5 pl-6 text-[17px]", circle: 50, icon: 27 },
+} as const;
+const ARROW_FILL: Record<string, string> = {
+  cta: "bg-lime text-outline",
+  primary: "bg-white text-accent",
+  lime: "bg-ink text-lime",
+  secondary: "bg-ink text-on-ink",
+  ghost: "bg-ink text-on-ink",
+  ai: "bg-ai-text text-ai-tint",
+  danger: "bg-err-text text-err-tint",
+};
+
 function ButtonInner({ icon, arrow, loading, variant, size, children }: ButtonOwn) {
-  const s = size === "lg" ? 32 : 26;
+  const a = ARROW[size ?? "md"];
   return (
     <>
       {loading ? (
@@ -116,19 +120,19 @@ function ButtonInner({ icon, arrow, loading, variant, size, children }: ButtonOw
       ) : null}
       {children}
       {arrow ? (
-        <span aria-hidden="true" className={cn("inline-flex flex-none items-center justify-center rounded-full", variant === "cta" ? "bg-lime text-outline" : "bg-on-accent text-accent")} style={{ width: s, height: s }}>
-          <Icon name="arrowr" size={Math.floor(s * 0.55)} strokeWidth={2.6} />
+        <span aria-hidden="true" className={cn("n-arrow inline-flex flex-none items-center justify-center rounded-full transition-transform duration-150 group-active:scale-[1.06]", ARROW_FILL[variant ?? "primary"])} style={{ width: a.circle, height: a.circle }}>
+          <Icon name="arrowr" size={a.icon} strokeWidth={2.4} className="transition-transform duration-150 group-hover:translate-x-[3px]" />
         </span>
       ) : null}
     </>
   );
 }
 
-const arrowPad = (_size: ButtonOwn["size"], arrow?: boolean) => (arrow ? "pr-1.5" : "");
+const arrowPad = (size: ButtonOwn["size"], arrow?: boolean, full?: boolean | null) => (arrow ? cn("group gap-3.5", ARROW[size ?? "md"].box, full && "justify-between") : "");
 
 export function Button({ variant, size, full, icon, arrow, loading, className, children, disabled, ...props }: ButtonOwn & Omit<ComponentProps<"button">, "children">) {
   return (
-    <button type="button" {...props} disabled={disabled || loading} className={cn(buttonVariants({ variant, size, full }), arrowPad(size, arrow), (disabled || loading) && "opacity-80", className)}>
+    <button type="button" {...props} disabled={disabled || loading} className={cn(buttonVariants({ variant, size, full }), arrowPad(size, arrow, full), (disabled || loading) && "opacity-80", className)}>
       <ButtonInner {...{ icon, arrow, loading, variant, size }}>{children}</ButtonInner>
     </button>
   );
@@ -137,7 +141,7 @@ export function Button({ variant, size, full, icon, arrow, loading, className, c
 /** Anchor styled as a button. Pass `render` to use the framework's Link. */
 export function ButtonLink({ variant, size, full, icon, arrow, className, children, ...props }: ButtonOwn & Omit<ComponentProps<"a">, "children">) {
   return (
-    <a {...props} className={cn(buttonVariants({ variant, size, full }), arrowPad(size, arrow), className)}>
+    <a {...props} className={cn(buttonVariants({ variant, size, full }), arrowPad(size, arrow, full), className)}>
       <ButtonInner {...{ icon, arrow, variant, size }}>{children}</ButtonInner>
     </a>
   );
@@ -212,7 +216,7 @@ export function Banner({ tone, title, text, action, className }: { tone: Tone; t
 
 // ------------------------------------------------------------------ Card, key-value list
 export function Card({ className, children }: { className?: string; children: ReactNode }) {
-  return <section className={cn("box-border flex min-w-0 flex-col gap-3 rounded-card border border-border bg-surface-1 p-4 shadow-card md:gap-3.5 md:p-5", className)}>{children}</section>;
+  return <section className={cn("box-border flex min-w-0 flex-col gap-3 rounded-card border border-border bg-surface-1 p-3.5 shadow-card md:gap-3.5 md:p-[18px]", className)}>{children}</section>;
 }
 
 export function KeyValues({ pairs }: { pairs: [string, ReactNode][] }) {
@@ -237,22 +241,10 @@ export function PersonAvatar({ initials, color = "#59D8FF", size = 32, className
   );
 }
 
-const AGENT_RADIUS = { circle: "50%", square: "30%", blob: "42% 58% 55% 45%", pill: "999px" } as const;
+export const AGENT_RADIUS = { circle: "50%", square: "30%", blob: "42% 58% 55% 45%", pill: "999px" } as const;
 // Agent fills from the generator (AVC). "blue" is the light cyan fill, "grape" is pink, "teal" is the success green.
-const AGENT_COLORS = { lime: "#B6F24A", pink: "#FF4FB8", grape: "#FF4FB8", blue: "#59D8FF", cyan: "#59D8FF", orange: "#FF7A2F", yellow: "#FFD43B", teal: "#22C55E" } as const;
+export const AGENT_COLORS = { lime: "#B6F24A", pink: "#FF4FB8", grape: "#FF4FB8", blue: "#59D8FF", cyan: "#59D8FF", orange: "#FF7A2F", yellow: "#FFD43B", teal: "#22C55E" } as const;
 export type AgentColor = keyof typeof AGENT_COLORS;
-
-/** Nelio AI agent: a flat shape with two eyes. Eyes blink when `animated` (motion pattern 10). */
-export function AgentAvatar({ color = "lime", shape = "circle", size = 40, animated = true }: { color?: keyof typeof AGENT_COLORS; shape?: keyof typeof AGENT_RADIUS; size?: number; animated?: boolean }) {
-  const eye = Math.max(3, Math.floor(size / 9));
-  const eyeStyle = { width: eye, height: eye + 3 };
-  return (
-    <span aria-hidden="true" className="box-border inline-flex flex-none items-center justify-center border-2 border-outline" style={{ width: size, height: size, borderRadius: AGENT_RADIUS[shape], background: AGENT_COLORS[color], gap: eye + 2 }}>
-      <span className="rounded bg-outline" style={eyeStyle} {...(animated ? { "data-blink": "" } : {})} />
-      <span className="rounded bg-outline" style={eyeStyle} {...(animated ? { "data-blink": "" } : {})} />
-    </span>
-  );
-}
 
 // ------------------------------------------------------------------ Forms
 const CONTROL = "box-border min-h-12 w-full rounded-input border-2 bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";

@@ -1,7 +1,7 @@
 "use client";
 
 import { CAPTION_STYLES, renderEstimate, type Variant } from "@nelio/domain";
-import { Banner, Button, ButtonLink, Motion, cn } from "@nelio/ui";
+import { Banner, Button, ButtonLink, GlassChip, Icon, Motion, ShortFrame, cn } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { generateVariantsAction, renderVariantsAction } from "@/lib/actions/studio";
@@ -64,8 +64,8 @@ export function VariantsPage({ slug, d, hrefs, preview }: { slug?: string; d: Va
   };
 
   return (
-    <Motion className="flex flex-col gap-6">
-      <div data-enter="" className="flex flex-col gap-6">
+    <Motion className="flex flex-col gap-5">
+      <div data-enter="" className="flex flex-col gap-5">
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0">
             <nav aria-label="Breadcrumb" className="mb-2 text-[13px] font-semibold text-muted">
@@ -96,25 +96,40 @@ export function VariantsPage({ slug, d, hrefs, preview }: { slug?: string; d: Va
         ).map((v, i) => {
           const real = v.real;
           const on = real ? picked.includes(real.key) : i < 3;
-          const id = `variant-${v.key}`;
           return (
-            <section key={v.key} className="flex min-w-0 flex-col gap-2.5 rounded-card border border-border bg-surface-1 p-5 shadow-card">
-              <div className={cn("relative aspect-[170/303] overflow-hidden rounded-[22px] border-2", real ? `border-outline ${BACKDROP[i % BACKDROP.length]}` : "border-transparent bg-surface-3")}>
-                {real && d.posterUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element -- short-lived signed storage URL
-                  <img src={d.posterUrl} alt="" aria-hidden="true" className={cn("absolute inset-0 size-full object-cover", real.settings.format === "1:1" && "inset-y-[21.9%] h-[56.2%]")} />
-                ) : null}
-                {real && overlayText(real) ? (
-                  <div className="absolute inset-x-3 bottom-[18%] flex justify-center">
-                    <span className={cn("rounded-lg border-2 border-outline bg-yellow px-2.5 py-[3px] text-center font-display text-[15px] font-extrabold leading-tight text-outline", real.settings.captionStyle === "minimal" && "font-bold")}>{overlayText(real)}</span>
-                  </div>
-                ) : null}
-              </div>
-              <div className="flex items-start gap-2.5">
-                <input id={id} type="checkbox" checked={on} disabled={!real} onChange={(e) => real && setPicked((p) => (e.target.checked ? [...p, real.key] : p.filter((k) => k !== real.key)))} className="mt-px size-5 flex-none accent-[var(--color-accent)]" />
-                <label htmlFor={id} className="tap-target text-sm font-semibold text-text">{v.label}</label>
-              </div>
-            </section>
+            real ? (
+              <ShortFrame
+                key={v.key}
+                label={v.label}
+                selected={on}
+                className={cn("animate-none", BACKDROP[i % BACKDROP.length])}
+                media={
+                  d.posterUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element -- short-lived signed storage URL
+                    <img src={d.posterUrl} alt="" aria-hidden="true" className={cn("absolute inset-x-0 size-full object-cover", real.settings.format === "1:1" ? "top-[21.9%] h-[56.2%]" : "inset-y-0")} />
+                  ) : null
+                }
+                hook={overlayText(real) || null}
+                chips={<GlassChip>{real.settings.format}</GlassChip>}
+                title={v.label}
+                meta={`Preview free · render ≈${renderEstimate((real.settings.endMs - real.settings.startMs) / 1000)} cr`}
+                right={
+                  <button
+                    type="button"
+                    role="checkbox"
+                    aria-checked={on}
+                    aria-label={`Select ${v.label}`}
+                    onClick={() => setPicked((p) => (on ? p.filter((k) => k !== real.key) : [...p, real.key]))}
+                    className="tap-target inline-flex size-[26px] flex-none cursor-pointer items-center justify-center rounded-full border-2 border-white p-0 text-white"
+                    style={{ background: on ? "var(--color-accent)" : "transparent" }}
+                  >
+                    {on ? <Icon name="check" size={14} strokeWidth={3} /> : null}
+                  </button>
+                }
+              />
+            ) : (
+              <div key={v.key} aria-hidden="true" className="aspect-[9/16] w-full animate-n-pulse rounded-[26px] bg-surface-3" />
+            )
           );
         })}
       </div>

@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import type { ReactNode } from "react";
+import { Toaster } from "@/components/feedback/toaster";
+import { TapSounds } from "@/components/feedback/tap-sounds";
 import { ServiceWorker } from "@/components/pwa/pwa";
 import { readPreferences } from "@/lib/preferences";
 import "./globals.css";
@@ -45,6 +47,8 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: resolveSystemTheme }} />
         <a href="#main" className="sr-only-focusable">Skip to content</a>
         {children}
+        <Toaster />
+        <TapSounds />
         <ServiceWorker />
       </body>
     </html>

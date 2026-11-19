@@ -24,7 +24,7 @@ export default async function NewAgentRoute({ params, searchParams }: { params: 
     : null;
   const hrefs = { agents: href("APP-04"), plans: "/pricing", connections: href("IN-01") };
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       <div>
         <nav aria-label="Breadcrumb" className="mb-2 text-[13px] font-semibold text-muted">
           <Link href={hrefs.agents} className="tap-target text-muted no-underline hover:text-text">Agents</Link> › New

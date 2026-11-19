@@ -92,7 +92,7 @@ export function CreateAgentWizard({ slug, uploads, hrefs, from, initialStep = 1 
   };
 
   return (
-    <form action={action} className="flex flex-col gap-6" noValidate>
+    <form action={action} className="flex flex-col gap-5" noValidate>
       {/* Every answer is posted with the last step, whichever step is showing. */}
       <input type="hidden" name="name" value={name} />
       <input type="hidden" name="goal" value={goal} />

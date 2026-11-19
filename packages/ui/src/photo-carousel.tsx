@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { BigTitle, Blob, AgentAvatar, Sticker, cn } from "./primitives";
+import { AgentAvatar } from "./agent-avatar";
+import { BigTitle, Blob, Sticker, cn } from "./primitives";
 import { gsap, useGSAP, motionAllowed } from "./motion";
 import { photoSrc, type PhotoKey } from "./photos";
 

@@ -3,6 +3,7 @@
 import { LIMITS, validatePost, type Destination, type FieldKey, type PostContent, type PostKind } from "@nelio/domain";
 import { Banner, Button, ButtonLink, Card, CardHead, Chip, Icon, Motion, PlatformBadge, ResponsiveDialog, cn } from "@nelio/ui";
 import { useRouter } from "next/navigation";
+import { toast } from "@/components/feedback/toaster";
 import { useState, useTransition } from "react";
 import { rewriteAction, saveDraftAction } from "@/lib/actions/content";
 import type { ComposerData, MediaChoice } from "@/lib/content";
@@ -68,7 +69,7 @@ export function Composer({ slug, d, hrefs, connected = false }: { slug?: string;
     startSave(async () => {
       const r = await saveDraftAction(slug, d.draftId, { kind: d.kind, renderId: media?.renderId ?? null, platforms, content });
       if (!r.ok) return setNotice({ tone: "err", text: r.error });
-      setNotice({ tone: "ok", text: "Draft saved." });
+      toast.success("Draft saved");
       if (!d.draftId) router.replace(draftHref(r.draftId));
       else router.refresh();
     });
@@ -91,8 +92,8 @@ export function Composer({ slug, d, hrefs, connected = false }: { slug?: string;
   const hasProblems = Object.keys(problems).length > 0;
 
   return (
-    <Motion className="flex flex-col gap-6">
-      <div data-enter="" className="flex flex-col gap-6">
+    <Motion className="flex flex-col gap-5">
+      <div data-enter="" className="flex flex-col gap-5">
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0">
             <nav aria-label="Breadcrumb" className="mb-2 text-[13px] font-semibold text-muted">

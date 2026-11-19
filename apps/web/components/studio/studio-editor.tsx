@@ -4,7 +4,7 @@ import {
   CAPTION_STYLES, CLIP_FORMATS, captionChunks, clampClip, describeChanges, formatRange, formatStamp, renderEstimate,
   type CaptionStyle, type ClipFormat, type ClipSnapshot,
 } from "@nelio/domain";
-import { Banner, Button, ButtonLink, Card, CardHead, Chip, Icon, KeyValues, ResponsiveDialog, SelectField, cn } from "@nelio/ui";
+import { Banner, Button, ButtonLink, Card, CardHead, Chip, GlassChip, Icon, KeyValues, PlayDisc, ResponsiveDialog, SelectField, ShortFrame, cn } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { editWithWordsAction, saveVersionAction, startRenderAction } from "@/lib/actions/studio";
@@ -204,7 +204,7 @@ export function StudioEditor({ slug, d, hrefs, preview }: { slug?: string; d: St
   const playhead = clipMs ? t / clipMs : 0;
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       <StudioHeader d={d} hrefs={hrefs} estimate={estimate} onVersions={() => setVersionsOpen(true)} onRender={() => setEstimateOpen(true)} renderDisabled={Boolean(blocked) || queued} />
 
       {blocked ? <Banner tone="err" title={blocked.title} text={blocked.text} action={<ButtonLink href={hrefs.library} variant="secondary" size="sm">Pick another source</ButtonLink>} /> : null}
@@ -270,9 +270,12 @@ export function StudioEditor({ slug, d, hrefs, preview }: { slug?: string; d: St
 
         {/* Column 2: preview and timeline */}
         <div className="flex min-w-0 flex-col gap-3.5">
-          <Card className="items-center">
-            <div className={cn("relative w-full overflow-hidden rounded-[22px] border-2 border-outline bg-violet", snap.format === "9:16" ? "max-w-[300px]" : "max-w-[357px]")} style={{ aspectRatio: `${fmt.width} / ${fmt.height}` }}>
-              {d.videoUrl ? (
+          <ShortFrame
+            label="Clip preview"
+            aspect={`${fmt.width}/${fmt.height}`}
+            className={cn("mx-auto", snap.format === "9:16" ? "max-w-[340px]" : "")}
+            media={
+              d.videoUrl ? (
                 <video
                   ref={video}
                   src={`${d.videoUrl}#t=${snap.startMs / 1000}`}
@@ -283,25 +286,20 @@ export function StudioEditor({ slug, d, hrefs, preview }: { slug?: string; d: St
                   onPlay={() => setPlaying(true)}
                   onPause={() => setPlaying(false)}
                   className="absolute inset-0 size-full object-cover"
-                  aria-label="Clip preview"
                 />
               ) : d.posterUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element -- short-lived signed storage URL
                 <img src={d.posterUrl} alt="" aria-hidden="true" className="absolute inset-0 size-full object-cover" />
-              ) : null}
-              {overlay ? (
-                <div className={cn("pointer-events-none absolute inset-x-3 flex justify-center", snap.format === "9:16" ? "bottom-[64px]" : "bottom-6")}>
-                  <span className="rounded-lg border-2 border-outline bg-yellow px-2.5 py-[3px] text-center font-display font-extrabold text-outline" style={{ fontSize: Math.round(15 * (snap.captionSize / 100)) }}>{overlay}</span>
-                </div>
-              ) : null}
-              <button type="button" onClick={toggle} disabled={!d.videoUrl} aria-label={playing ? "Pause preview" : "Play preview"} className={cn("absolute left-1/2 top-1/2 inline-flex size-14 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-0 bg-[rgba(11,11,20,0.75)] text-white", playing && "opacity-0 hover:opacity-100 focus-visible:opacity-100")}>
-                <Icon name={playing ? "pause" : "play"} size={24} />
-              </button>
-            </div>
-            <div className="flex flex-wrap justify-center gap-1.5">
-              <Chip tone="blue" icon="shield">{d.asset.rightsLabel}</Chip>
-            </div>
-          </Card>
+              ) : null
+            }
+            hook={overlay || null}
+            hookStyle={{ fontSize: Math.round(15 * (snap.captionSize / 100)) }}
+            chips={<Chip tone="blue" icon="shield">{d.asset.rightsLabel}</Chip>}
+            center={<PlayDisc playing={playing} onClick={toggle} disabled={!d.videoUrl} />}
+            title={d.moments.find((m) => m.id === selectedMoment)?.title ?? snap.hook}
+            meta={`${formatRange(snap.startMs, snap.endMs).replace("–", " → ")} · ${Math.round(clipMs / 1000)} s · ${snap.format}`}
+            right={<GlassChip icon="type">{CAPTION_STYLES[snap.captionStyle].label}</GlassChip>}
+          />
 
           <Card>
             <div className="flex items-center gap-2.5">

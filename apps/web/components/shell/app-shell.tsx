@@ -17,8 +17,8 @@ export function AppShell({ strip, children, forceConnection, forceInstall, ...p 
       {strip}
       <div className="flex grow items-stretch">
         <Sidebar {...p} />
-        <main id="main" className="box-border min-w-0 flex-1 p-4 md:p-8">
-          <div className="mx-auto flex max-w-[1260px] flex-col gap-4 md:gap-6">{children}</div>
+        <main id="main" className="box-border min-w-0 flex-1 p-4 md:p-7">
+          <div className="mx-auto flex max-w-[1260px] flex-col gap-4 md:gap-5">{children}</div>
         </main>
       </div>
       <MobileTabBar {...p} />

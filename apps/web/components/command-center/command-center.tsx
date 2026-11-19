@@ -1,6 +1,6 @@
 import type { ScreenId } from "@nelio/config";
 import {
-  AgentAvatar, Blob, Bubble, ButtonLink, Card, CardHead, CardTitle, Chip, EmptyState, IPhone, Icon, IconButton, Illustration, LoadingNote, Meter,
+  AgentAvatar, AgentTrio, Blob, Bubble, ButtonLink, Card, CardHead, CardTitle, Chip, EmptyState, IPhone, Icon, IconButton, Illustration, LoadingNote, Meter,
   Motion, Pipeline, Row, RowList, SectionTitle, ShortScreen, Sk, SkCard, SkRows, SkStat, Small, StatTile, Sticker, TopStrip, photoForCaption,
 } from "@nelio/ui";
 import Link from "next/link";
@@ -90,7 +90,7 @@ function Filled({ d, href, workspaceSlug }: { d: CommandCenterData; href: HrefFo
               {d.agents.map((a) => <AgentCard key={a.id} a={a} openHref={`${href("APP-04")}/${a.id}`} workspaceSlug={workspaceSlug} />)}
             </div>
           ) : (
-            <EmptyState illustration="agents" width={220} title="No agents yet" text="Agents research, clip and schedule for you. Start with one, or let Nelio AI suggest a plan." actions={<ButtonLink href={href("APP-06")} variant="cta" arrow>Create your first agent</ButtonLink>} />
+            <EmptyState illustration="agents" art={<AgentTrio />} title="No agents yet" text="Agents research, clip and schedule for you. Start with one, or let Nelio AI suggest a plan." actions={<ButtonLink href={href("APP-06")} variant="cta" arrow>Create your first agent</ButtonLink>} />
           )}
           {p ? (
             <Card>
@@ -160,7 +160,7 @@ function Empty({ d, href }: { d: CommandCenterData; href: HrefFor }) {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-5">
         <EmptyState
           illustration="agents"
-          width={220}
+          art={<AgentTrio />}
           title="No agents yet"
           text="Agents research, clip and schedule for you. Start with one, or let Nelio AI suggest a plan."
           actions={
@@ -170,7 +170,7 @@ function Empty({ d, href }: { d: CommandCenterData; href: HrefFor }) {
             </>
           }
         />
-        <EmptyState illustration="inbox" width={220} title="Nothing needs you" text="Approvals, expiring sign-ins and budget alerts will show up here." />
+        <EmptyState illustration="inbox" width={158} title="Nothing needs you" text="Approvals, expiring sign-ins and budget alerts will show up here." />
       </div>
     </>
   );

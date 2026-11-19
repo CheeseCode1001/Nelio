@@ -1,4 +1,4 @@
-import { ButtonLink, Chip, EmptyState, Illustration, Motion, PageHead, Sk, cn } from "@nelio/ui";
+import { ButtonLink, Chip, EmptyState, Illustration, Motion, PageHead, ShortFrame, Sk, cn } from "@nelio/ui";
 import Link from "next/link";
 import { MEDIA_FILTERS, MEDIA_FILTER_LABEL, type MediaData, type MediaFilter } from "@/lib/media";
 
@@ -24,8 +24,8 @@ function Header({ hrefs }: { hrefs: MediaHrefs }) {
 export function MediaLibrary({ d, filter, hrefs }: { d: MediaData; filter: MediaFilter; hrefs: MediaHrefs }) {
   if (!d.anyUploads && d.items.length === 0) {
     return (
-      <Motion className="flex flex-col gap-6">
-        <div data-enter="" className="flex flex-col gap-6">
+      <Motion className="flex flex-col gap-5">
+        <div data-enter="" className="flex flex-col gap-5">
           <Header hrefs={hrefs} />
           <EmptyState
             illustration="media"
@@ -38,8 +38,8 @@ export function MediaLibrary({ d, filter, hrefs }: { d: MediaData; filter: Media
     );
   }
   return (
-    <Motion className="flex flex-col gap-6">
-      <div data-enter="" className="flex flex-col gap-6">
+    <Motion className="flex flex-col gap-5">
+      <div data-enter="" className="flex flex-col gap-5">
         <Header hrefs={hrefs} />
         <div className="flex flex-wrap items-center gap-3">
           <nav aria-label="Filter library" className="tab-scroll w-fit gap-0.5 self-start rounded-full border border-border bg-surface-1 p-1">
@@ -55,25 +55,22 @@ export function MediaLibrary({ d, filter, hrefs }: { d: MediaData; filter: Media
       </div>
       <div data-enter="" className="flex flex-col gap-4">
         {d.items.length ? (
-          <div className="grid grid-cols-2 gap-2.5 md:gap-4 md:[grid-template-columns:repeat(auto-fill,minmax(170px,1fr))]">
+          <div className="grid grid-cols-2 gap-2.5 md:gap-3.5 md:[grid-template-columns:repeat(auto-fill,minmax(170px,1fr))]">
             {d.items.map((i) => (
-              <Link key={`${i.kind}-${i.id}`} href={i.href} className="text-text no-underline hover:text-text">
-                <section className="flex h-full min-w-0 flex-col gap-2 rounded-[20px] border border-border bg-surface-1 p-2.5 shadow-card md:gap-2.5 md:rounded-card md:p-5">
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-[18px] border-2 border-outline bg-surface-3">
-                    {i.poster ? (
+              <Link key={`${i.kind}-${i.id}`} href={i.href} aria-label={i.title} className="block min-w-0 text-white no-underline hover:text-white">
+                <ShortFrame
+                  aspect="4/5"
+                  media={
+                    i.poster ? (
                       // eslint-disable-next-line @next/next/no-img-element -- short-lived signed storage URL
                       <img src={i.poster} alt="" aria-hidden="true" className="absolute inset-0 size-full object-cover" loading="lazy" />
-                    ) : null}
-                    {i.overlay ? (
-                      <span className="absolute bottom-2.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border-2 border-outline bg-yellow px-1.5 py-0.5 font-display text-[11px] font-extrabold text-outline">{i.overlay}</span>
-                    ) : null}
-                  </div>
-                  <div className="flex min-w-0 flex-col gap-0.5">
-                    <div className="truncate text-sm font-bold">{i.title}</div>
-                    <span className="text-[12.5px] font-medium text-muted">{i.sub}</span>
-                  </div>
-                  <Chip tone={i.chip.tone} icon={i.chip.icon}>{i.chip.label}</Chip>
-                </section>
+                    ) : null
+                  }
+                  hook={i.overlay}
+                  chips={<Chip tone={i.chip.tone} icon={i.chip.icon}>{i.chip.label}</Chip>}
+                  title={i.title}
+                  meta={i.sub}
+                />
               </Link>
             ))}
           </div>
@@ -98,7 +95,7 @@ export function MediaLibrary({ d, filter, hrefs }: { d: MediaData; filter: Media
 
 export function MediaLibraryLoading() {
   return (
-    <div className="flex flex-col gap-6" aria-busy="true">
+    <div className="flex flex-col gap-5" aria-busy="true">
       <div className="flex flex-col gap-2"><Sk w={70} h={12} /><Sk w={260} h={36} /><Sk w={240} h={16} /></div>
       <Sk w={420} h={48} r={24} className="max-w-full" />
       <div className="grid grid-cols-2 gap-2.5 md:gap-4 md:[grid-template-columns:repeat(auto-fill,minmax(170px,1fr))]">

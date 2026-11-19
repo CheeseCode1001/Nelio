@@ -25,6 +25,10 @@ a{color:#1E40D8}a:hover{color:#0B0B14}
 @keyframes nGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes nBar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 @keyframes nDash{to{stroke-dashoffset:0}}
+@keyframes nFluff{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+@keyframes nHair{0%,62%,100%{transform:rotate(0)}66%{transform:rotate(-7deg)}71%{transform:rotate(6deg)}76%{transform:rotate(-4deg)}81%{transform:rotate(2.5deg)}86%{transform:rotate(-1deg)}90%{transform:rotate(0)}}
+@keyframes nLook{0%,22%,100%{transform:translate(0,0)}28%,46%{transform:translate(-4px,-2px)}52%,72%{transform:translate(4px,1px)}78%{transform:translate(0,0)}}
+@keyframes nBlink2{0%,90%,100%{transform:scaleY(1)}93%{transform:scaleY(.1)}96%{transform:scaleY(1)}}
 @keyframes nCycle{0%{opacity:0}4%{opacity:1}25%{opacity:1}29%{opacity:0}100%{opacity:0}}
 @keyframes nDot{0%{width:10px;background:rgba(11,11,20,.25)}4%,25%{width:28px;background:#0B0B14}29%,100%{width:10px;background:rgba(11,11,20,.25)}}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}

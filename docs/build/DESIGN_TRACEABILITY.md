@@ -78,14 +78,14 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 
 | ID | Screen | Boards (desktop states + mobile) | Route | Web files | API and jobs | MS | Status | Gate |
 |---|---|---|---|---|---|---|---|---|
-| CL-01 | Media library | `MediaLibrary` · 4: Filled, Empty, Loading, Storage + `MediaLibrary-Mobile` | /w/[ws]/media | w/[ws]/media/page.tsx | `GET /api/media` · storage usage | 4 | not started | — |
-| CL-02 | Upload | `Upload` · 5: Filled, Uploading, Wrongtype, Norights, Lowcredits + `Upload-Mobile` | /w/[ws]/media/upload | w/[ws]/media/upload/page.tsx | `POST /api/media/uploads` (signed multipart) · `POST /api/media/[id]/complete` · `POST /api/billing/estimates` · jobs: probe, `transcribe`, `analyze` | 4 | not started | B-03 |
-| CL-03 | Clipping Studio | `ClippingStudio` · 7: Filled, Processing, Loading, Blocked, Unsaved, Estimate, Queued + `ClippingStudio-Mobile` | /w/[ws]/studio/[projectId] | w/[ws]/studio/[projectId]/page.tsx | `/api/projects/[id]` + `/candidates` `/revisions` `/preview` `/render` · `analyze`, `render` queues | 4 | not started | B-03 |
-| CL-04 | Batch variants | `Variants` · 3: Filled, Generating, Lowcredits + `Variants-Mobile` | /w/[ws]/studio/[projectId]/variants | w/[ws]/studio/[projectId]/variants/page.tsx | `POST /api/projects/[id]/variants` · `render` queue | 4 | not started | — |
-| CL-05 | Exports | `Exports` · 4: Filled, Empty, Loading, Trial + `Exports-Mobile` | /w/[ws]/exports | w/[ws]/exports/page.tsx | `GET /api/exports` · signed download URL · trial export cap | 4 | not started | — |
-| CS-01 | Content Studio | `ContentStudio` · 3: Filled, Empty, Loading + `ContentStudio-Mobile` | /w/[ws]/content | w/[ws]/content/page.tsx | `GET /api/posts?state=draft` · templates | 4 | not started | — |
-| CS-02 | Post composer | `Composer` · 4: Filled, Invalid, Nodest, Licensed + `Composer-Mobile` | /w/[ws]/content/compose · /compose/[draftId] | w/[ws]/content/compose/[[...draftId]]/page.tsx | `/api/posts` · `/api/posts/[id]/destinations` · per-platform validation | 4 | not started | — |
-| CS-03 | Original AI video | `AIVideo` · 1: Filled + `AIVideo-Mobile` | /w/[ws]/content/video-generation | w/[ws]/content/video-generation/page.tsx | none: gated screen · `POST /api/interest` (Notify me) | 4 | not started | B-09 |
+| CL-01 | Media library | `MediaLibrary` · 4: Filled, Empty, Loading, Storage + `MediaLibrary-Mobile` | /w/[ws]/media | w/[ws]/media/page.tsx | `GET /api/media` · storage usage | 4 | built | — |
+| CL-02 | Upload | `Upload` · 5: Filled, Uploading, Wrongtype, Norights, Lowcredits + `Upload-Mobile` | /w/[ws]/media/upload | w/[ws]/media/upload/page.tsx | `POST /api/media/uploads` (signed multipart) · `POST /api/media/[id]/complete` · `POST /api/billing/estimates` · jobs: probe, `transcribe`, `analyze` | 4 | built | B-03 |
+| CL-03 | Clipping Studio | `ClippingStudio` · 7: Filled, Processing, Loading, Blocked, Unsaved, Estimate, Queued + `ClippingStudio-Mobile` | /w/[ws]/studio/[assetId] (?project=) | w/[ws]/studio/[assetId]/page.tsx | `/api/projects/[id]` + `/candidates` `/revisions` `/preview` `/render` · `analyze`, `render` queues | 4 | built | B-03 |
+| CL-04 | Batch variants | `Variants` · 3: Filled, Generating, Lowcredits + `Variants-Mobile` | /w/[ws]/studio/[assetId]/variants (?project=) | w/[ws]/studio/[assetId]/variants/page.tsx | `POST /api/projects/[id]/variants` · `render` queue | 4 | built | — |
+| CL-05 | Exports | `Exports` · 4: Filled, Empty, Loading, Trial + `Exports-Mobile` | /w/[ws]/exports | w/[ws]/exports/page.tsx | `GET /api/exports` · signed download URL · trial export cap | 4 | built | — |
+| CS-01 | Content Studio | `ContentStudio` · 3: Filled, Empty, Loading + `ContentStudio-Mobile` | /w/[ws]/content | w/[ws]/content/page.tsx | `GET /api/posts?state=draft` · templates | 4 | built | — |
+| CS-02 | Post composer | `Composer` · 4: Filled, Invalid, Nodest, Licensed + `Composer-Mobile` | /w/[ws]/content/compose · /compose/[draftId] | w/[ws]/content/compose/[[...draftId]]/page.tsx | `/api/posts` · `/api/posts/[id]/destinations` · per-platform validation | 4 | built | — |
+| CS-03 | Original AI video | `AIVideo` · 1: Filled + `AIVideo-Mobile` | /w/[ws]/content/video-generation | w/[ws]/content/video-generation/page.tsx | none: gated screen · `POST /api/interest` (Notify me) | 4 | built | B-09 |
 
 ### 5 · Calendar, approvals & publishing
 
@@ -163,8 +163,8 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 | ST-03 | Appearance | `Appearance` · 2: Filled, Dark + `Appearance-Mobile` | /account/appearance | account/appearance/page.tsx | theme persisted (cookie + `PATCH /api/account/preferences`) | 2 | in progress | — |
 | ST-04 | Notification preferences | `NotificationPrefs` · 3: Filled, Pushdenied, Unsupported + `NotificationPrefs-Mobile` | /account/notifications | account/notifications/page.tsx | `GET/PUT /api/notifications/preferences` · push subscription | 9 | not started | — |
 | ST-05 | Workspace members | `Members` · 2: Filled, Empty + `Members-Mobile` | /w/[ws]/settings/members | w/[ws]/settings/members/page.tsx | `/api/workspaces/[ws]/members` | 7 | not started | — |
-| ST-06 | Brand kits | `BrandKits` · 3: Filled, Empty, Editing + `BrandKits-Mobile` | /w/[ws]/settings/brand-kits | w/[ws]/settings/brand-kits/page.tsx | `/api/brand-kits` | 4 | not started | — |
-| ST-07 | AI & processing | `AISettings` · 1: Filled + `AISettings-Mobile` | /w/[ws]/settings/ai | w/[ws]/settings/ai/page.tsx | `PATCH /api/workspaces/[ws]/settings` (Fast / Balanced / High Quality) | 4 | not started | — |
+| ST-06 | Brand kits | `BrandKits` · 3: Filled, Empty, Editing + `BrandKits-Mobile` | /w/[ws]/settings/brand-kits | w/[ws]/settings/brand-kits/page.tsx | `/api/brand-kits` | 4 | built | — |
+| ST-07 | AI & processing | `AISettings` · 1: Filled + `AISettings-Mobile` | /w/[ws]/settings/ai | w/[ws]/settings/ai/page.tsx | `PATCH /api/workspaces/[ws]/settings` (Fast / Balanced / High Quality) | 4 | built | — |
 | ST-08 | Integration status | `IntegrationStatus` · 1: Filled + `IntegrationStatus-Mobile` | /w/[ws]/settings/integrations | w/[ws]/settings/integrations/page.tsx | `GET /api/status` | 6 | not started | B-01 |
 | ST-09 | Privacy & data | `Privacy` · 3: Filled, Exportready, Deleting + `Privacy-Mobile` | /account/privacy | account/privacy/page.tsx | `POST /api/account/export` · `POST /api/account/delete` · `maintenance` queue | 9 | not started | B-10 |
 | ST-10 | Workspace settings | `WorkspaceSettings` · 3: Filled, Paused, Resumed + `WorkspaceSettings-Mobile` | /w/[ws]/settings | w/[ws]/settings/page.tsx | `PATCH /api/workspaces/[ws]` · `/pause` `/resume` | 9 | not started | — |

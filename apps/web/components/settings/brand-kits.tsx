@@ -1,8 +1,9 @@
 "use client";
 
 import { CAPTION_STYLES, type CaptionStyle } from "@nelio/domain";
-import { Banner, Button, Card, CardHead, Chip, EmptyState, Field, Icon, Motion, PageHead, SelectField, Sk, cn, photoSrc } from "@nelio/ui";
+import { Banner, Button, Card, CardHead, Chip, EmptyState, Field, GlassChip, Icon, Motion, PageHead, SelectField, ShortFrame, Sk, cn, photoSrc } from "@nelio/ui";
 import { useRouter } from "next/navigation";
+import { toast } from "@/components/feedback/toaster";
 import { useState, useTransition } from "react";
 import { createBrandKitAction, makeDefaultKitAction, saveBrandKitAction } from "@/lib/actions/settings";
 
@@ -23,7 +24,6 @@ export function BrandKitsPage({ slug, kits, current, kitBase, preview }: { slug?
   const saved = kits.find((k) => k.id === current) ?? kits[0] ?? null;
   const [kit, setKit] = useState<Kit | null>(() => (saved && preview?.editing ? { ...saved, voice: `${saved.voice} Short sentences.` } : saved));
   const [error, setError] = useState<{ text: string; field?: string } | null>(null);
-  const [done, setDone] = useState(false);
   const [saving, startSave] = useTransition();
   const [creating, startCreate] = useTransition();
 
@@ -39,8 +39,8 @@ export function BrandKitsPage({ slug, kits, current, kitBase, preview }: { slug?
 
   if (!saved || !kit) {
     return (
-      <Motion className="flex flex-col gap-6">
-        <div data-enter="" className="flex flex-col gap-6">
+      <Motion className="flex flex-col gap-5">
+        <div data-enter="" className="flex flex-col gap-5">
           <Header onNew={create} pending={creating} />
           {error ? <Banner tone="err" title="That didn’t work" text={error.text} /> : null}
           <EmptyState illustration="brand" title="No brand kit yet" text="Add your colours, fonts and caption style once, and every clip and agent uses them." actions={<Button variant="cta" arrow onClick={create} loading={creating} disabled={!slug}>Create brand kit</Button>} />
@@ -51,7 +51,6 @@ export function BrandKitsPage({ slug, kits, current, kitBase, preview }: { slug?
 
   const dirty = !same(kit, saved);
   const set = (patch: Partial<Kit>) => {
-    setDone(false);
     setError(null);
     setKit((k) => (k ? { ...k, ...patch } : k));
   };
@@ -60,7 +59,7 @@ export function BrandKitsPage({ slug, kits, current, kitBase, preview }: { slug?
     startSave(async () => {
       const r = await saveBrandKitAction(slug, kit.id, { name: kit.name, colours: kit.colours, captionStyle: kit.captionStyle, voice: kit.voice });
       if (!r.ok) return setError({ text: r.error, field: r.field });
-      setDone(true);
+      toast.success("Saved", { description: "New clips and agents use this kit." });
       router.refresh();
     });
   };
@@ -76,8 +75,8 @@ export function BrandKitsPage({ slug, kits, current, kitBase, preview }: { slug?
   const ink = kit.colours.find((c, i) => i > 0 && /^#(0|1|2)/.test(c)) ?? "#0B0B14";
 
   return (
-    <Motion className="flex flex-col gap-6">
-      <div data-enter="" className="flex flex-col gap-6">
+    <Motion className="flex flex-col gap-5">
+      <div data-enter="" className="flex flex-col gap-5">
         <Header onNew={slug ? create : undefined} pending={creating} />
         {kits.length > 1 ? (
           <nav aria-label="Brand kits" className="tab-scroll w-fit gap-0.5 self-start rounded-full border border-border bg-surface-1 p-1">
@@ -118,22 +117,22 @@ export function BrandKitsPage({ slug, kits, current, kitBase, preview }: { slug?
             <textarea id="voice" value={kit.voice} maxLength={600} onChange={(e) => set({ voice: e.target.value })} placeholder="Friendly, clear, no slang. Explain like a smart friend." className="box-border min-h-[100px] w-full rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text" />
           </div>
           {error && error.field !== "name" ? <Banner tone="err" title="That didn’t work" text={error.text} /> : null}
-          {dirty ? <Banner tone="blue" title="Unsaved changes" text="Save to apply to all agents." action={<Button variant="secondary" size="sm" onClick={save} loading={saving}>Save</Button>} /> : done ? <Banner tone="ok" title="Saved" text="New clips and agents use this kit." /> : null}
+          {dirty ? <Banner tone="blue" title="Unsaved changes" text="Save to apply to all agents." action={<Button variant="secondary" size="sm" onClick={save} loading={saving}>Save</Button>} /> : null}
         </Card>
 
-        <Card className="items-center">
-          <div className="relative aspect-[280/498] w-full max-w-[280px] overflow-hidden rounded-[22px] border-2 border-outline bg-violet">
-            {/* eslint-disable-next-line @next/next/no-img-element -- sample photo for the preview */}
+        <ShortFrame
+          label="Live caption preview"
+          className="mx-auto max-w-[340px] self-start"
+          media={
+            // eslint-disable-next-line @next/next/no-img-element -- sample photo for the preview
             <img src={photoSrc("p9")} alt="" aria-hidden="true" className="absolute inset-0 size-full object-cover" />
-            <div className="absolute inset-x-3 bottom-[17%] flex justify-center">
-              <span className="rounded-lg border-2 px-2.5 py-[3px] text-center font-display text-[15px] font-extrabold" style={{ background: hook, borderColor: ink, color: ink }}>
-                {"lower" in CAPTION_STYLES[kit.captionStyle] ? "stop budgeting like this" : "STOP BUDGETING LIKE THIS"}
-              </span>
-            </div>
-            <span aria-hidden="true" className="absolute left-1/2 top-1/2 inline-flex size-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[rgba(11,11,20,0.75)] text-white"><Icon name="play" size={24} /></span>
-          </div>
-          <span className="self-start text-[12.5px] font-medium text-muted">Live caption preview</span>
-        </Card>
+          }
+          hook={"lower" in CAPTION_STYLES[kit.captionStyle] ? "stop budgeting like this" : "STOP BUDGETING LIKE THIS"}
+          hookStyle={{ background: hook, borderColor: ink, color: ink }}
+          chips={<GlassChip icon="eye">Live caption preview</GlassChip>}
+          title="Your brand kit, on a real clip"
+          meta="Font, colours and caption style update as you edit"
+        />
       </div>
     </Motion>
   );
@@ -141,7 +140,7 @@ export function BrandKitsPage({ slug, kits, current, kitBase, preview }: { slug?
 
 export function BrandKitsLoading() {
   return (
-    <div className="flex flex-col gap-6" aria-busy="true">
+    <div className="flex flex-col gap-5" aria-busy="true">
       <div className="flex flex-col gap-2"><Sk w={90} h={12} /><Sk w={220} h={36} /><Sk w={320} h={16} /></div>
       <div className="grid grid-cols-1 gap-4 lg:[grid-template-columns:minmax(0,1.4fr)_minmax(0,1fr)]">
         <div className="flex flex-col gap-4 rounded-card border border-border bg-surface-1 p-5 shadow-card"><Sk w="40%" h={16} /><Sk h={48} r={14} /><div className="flex gap-2.5">{[0, 1, 2, 3].map((i) => <Sk key={i} w={56} h={56} r={16} />)}</div><Sk h={48} r={14} /><Sk h={100} r={14} /></div>

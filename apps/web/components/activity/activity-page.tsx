@@ -1,4 +1,4 @@
-import { AgentAvatar, Bubble, ButtonLink, Chip, EmptyState, Motion, PageHead, Sk, SkRows, cn } from "@nelio/ui";
+import { AgentAvatar, AgentTrio, Bubble, ButtonLink, Chip, EmptyState, Motion, PageHead, Sk, SkRows, cn } from "@nelio/ui";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ACTIVITY_FILTERS, FILTER_LABEL, type ActivityData, type ActivityFilter } from "@/lib/activity";
@@ -32,11 +32,12 @@ export function ActivityPage({ d, filter, hrefs, live, headerAction }: { d: Acti
 
   if (d.items.length === 0) {
     return (
-      <Motion className="flex flex-col gap-6">
-        <div data-enter="" className="flex flex-col gap-6">
+      <Motion className="flex flex-col gap-5">
+        <div data-enter="" className="flex flex-col gap-5">
           {header}
           <EmptyState
             illustration="inbox"
+            art={<AgentTrio />}
             title="Nothing running yet"
             text="When agents start working, every step shows up here live: what they’re doing, what it costs and anything that needs you."
             actions={<><ButtonLink href={hrefs.newAgent} variant="cta" arrow>{d.hasAgents ? "View agents" : "Create an agent"}</ButtonLink><ButtonLink href={hrefs.upload} variant="secondary">Upload a video</ButtonLink></>}
@@ -47,8 +48,8 @@ export function ActivityPage({ d, filter, hrefs, live, headerAction }: { d: Acti
   }
 
   return (
-    <Motion className="flex flex-col gap-6">
-      <div data-enter="" className="flex flex-col gap-6">
+    <Motion className="flex flex-col gap-5">
+      <div data-enter="" className="flex flex-col gap-5">
         {header}
         <LiveStatus topic={live.topic} preview={live.preview}>
           <Filters d={d} active={filter} hrefs={hrefs} />
@@ -117,7 +118,7 @@ export function ActivityPage({ d, filter, hrefs, live, headerAction }: { d: Acti
 
 export function ActivityLoading() {
   return (
-    <div className="flex flex-col gap-6" aria-busy="true">
+    <div className="flex flex-col gap-5" aria-busy="true">
       <div className="flex flex-col gap-2"><Sk w={170} h={36} /><Sk w={280} h={16} /></div>
       <Sk w={560} h={48} r={24} className="max-w-full" />
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">

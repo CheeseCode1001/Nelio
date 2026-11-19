@@ -18,8 +18,8 @@ export function AiVideoPage({ slug, hrefs, interested = false }: { slug?: string
     });
   };
   return (
-    <Motion className="flex flex-col gap-6">
-      <div data-enter="" className="flex flex-col gap-6">
+    <Motion className="flex flex-col gap-5">
+      <div data-enter="" className="flex flex-col gap-5">
         <header>
           <nav aria-label="Breadcrumb" className="mb-2 text-[13px] font-semibold text-muted">
             <a href={hrefs.content} className="tap-target text-muted no-underline hover:text-text">Content Studio</a>
