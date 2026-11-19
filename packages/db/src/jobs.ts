@@ -262,3 +262,42 @@ export async function workspaceWatchers(client: Client, workspaceId: string): Pr
   const org = await client.organizationMembership.findMany({ where: { orgId: ws.orgId }, select: { userId: true } });
   return [...new Set([...ws.memberships.map((m) => m.userId), ...org.map((m) => m.userId)])];
 }
+
+// ------------------------------------------------------------------ Processing an uploaded video (CL-02 → CL-03)
+
+/** The processing run's steps, as the ClippingStudio-Processing board lists them. */
+export const PROCESS_STEPS = [
+  { kind: "check_file", title: "Upload & check file" },
+  { kind: "transcribe", title: "Transcribe" },
+  { kind: "detect_scenes", title: "Detect scenes" },
+  { kind: "rank_moments", title: "Rank moments" },
+  { kind: "build_previews", title: "Build previews" },
+] as const;
+
+/**
+ * Starts processing an uploaded video: one run with five steps, the first queued through the outbox.
+ * The estimate was shown and confirmed before upload. Safe to retry (one processing run per upload).
+ */
+export async function startProcessingRun(tx: Tx, args: { assetId: string; userId: string; split: Record<(typeof PROCESS_STEPS)[number]["kind"], number>; now?: Date }): Promise<{ runId: string; existing: boolean }> {
+  const now = args.now ?? new Date();
+  const asset = await tx.mediaAsset.findUniqueOrThrow({ where: { id: args.assetId }, select: { id: true, orgId: true, workspaceId: true, filename: true, quality: true } });
+  const key = `process:${asset.id}`;
+  const existing = await tx.agentRun.findUnique({ where: { idempotencyKey: key }, select: { id: true } });
+  if (existing) return { runId: existing.id, existing: true };
+  const total = Object.values(args.split).reduce((a, b) => a + b, 0);
+  const qualityLabel = asset.quality === "high" ? "High quality" : asset.quality === "fast" ? "Fast quality" : "Balanced quality";
+  const run = await tx.agentRun.create({
+    data: {
+      orgId: asset.orgId, workspaceId: asset.workspaceId, kind: "process", assetId: asset.id, number: 1, trigger: "manual",
+      estimatedCredits: total, idempotencyKey: key, startedByUserId: args.userId,
+      deadlineAt: new Date(now.getTime() + RUN_DEADLINE_MINUTES * 60000),
+      steps: { create: PROCESS_STEPS.map((s, i) => ({ ordinal: i + 1, kind: s.kind, title: s.title, estimatedCredits: args.split[s.kind], detail: s.kind === "transcribe" ? qualityLabel : s.kind === "rank_moments" ? "Nelio AI" : null })) },
+    },
+    select: { id: true, steps: { where: { ordinal: 1 }, select: { id: true } } },
+  });
+  await tx.mediaAsset.update({ where: { id: asset.id }, data: { status: "processing", statusText: null } });
+  await recordActivity(tx, { orgId: asset.orgId, workspaceId: asset.workspaceId, runId: run.id, type: "run.started", status: "queued", title: `Processing ${asset.filename}`, detail: "started by hand" });
+  const first = run.steps[0];
+  if (first) await enqueue(tx, TOPICS.stepRun, { stepId: first.id }, `step:${first.id}:1`);
+  return { runId: run.id, existing: false };
+}

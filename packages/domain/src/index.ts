@@ -4,3 +4,4 @@ export * from "./access";
 export * from "./validation";
 export * from "./agents";
 export * from "./plans";
+export * from "./media";

@@ -698,7 +698,7 @@ model MediaAsset {
   multipartId      String?           @map("multipart_id")
   status           MediaStatus       @default(uploading)
   statusText       String?           @map("status_text")
-  rights           RightsBasis
+  rights           RightsBasis?
   rightsNote       String?           @map("rights_note")
   /// Short reference shown on clips ("rights r-881"), unique per workspace.
   rightsRef        String            @map("rights_ref")
