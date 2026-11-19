@@ -110,10 +110,10 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 
 | ID | Screen | Boards (desktop states + mobile) | Route | Web files | API and jobs | MS | Status | Gate |
 |---|---|---|---|---|---|---|---|---|
-| LI-01 | Marketplace | `Marketplace` · 3: Filled, Empty, Loading + `Marketplace-Mobile` | /w/[ws]/licensing | w/[ws]/licensing/page.tsx | `GET /api/licensing/sources` | 5 | not started | — |
-| LI-02 | Source detail & terms | `SourceDetail` · 6: Filled, Loading, Private, Paid, Suspended, Licensed + `SourceDetail-Mobile` | /w/[ws]/licensing/sources/[id] | w/[ws]/licensing/sources/[id]/page.tsx | `GET /api/licensing/sources/[id]` | 5 | not started | — |
-| LI-03 | Request / accept license | `RequestLicense` · 5: Filled, Private, Sent, Approved, Declined + `RequestLicense-Mobile` | /w/[ws]/licensing/sources/[id]/request | w/[ws]/licensing/sources/[id]/request/page.tsx | `POST /api/licensing/agreements` (accept / request) | 5 | not started | — |
-| LI-04 | My licenses | `MyLicenses` · 4: Filled, Empty, Loading, Expired + `MyLicenses-Mobile` | /w/[ws]/licensing/mine | w/[ws]/licensing/mine/page.tsx | `GET /api/licensing/agreements` · `rights-recheck` queue | 5 | not started | — |
+| LI-01 | Marketplace | `Marketplace` · 3: Filled, Empty, Loading + `Marketplace-Mobile` | /w/[ws]/licensing | w/[ws]/licensing/page.tsx | `GET /api/licensing/sources` | 5 | built | D-M5-3 |
+| LI-02 | Source detail & terms | `SourceDetail` · 6: Filled, Loading, Private, Paid, Suspended, Licensed + `SourceDetail-Mobile` | /w/[ws]/licensing/sources/[id] | w/[ws]/licensing/sources/[id]/page.tsx | `GET /api/licensing/sources/[id]` | 5 | built | D-M5-3 |
+| LI-03 | Request / accept license | `RequestLicense` · 5: Filled, Private, Sent, Approved, Declined + `RequestLicense-Mobile` | /w/[ws]/licensing/sources/[id]/request | w/[ws]/licensing/sources/[id]/request/page.tsx | `POST /api/licensing/agreements` (accept / request) | 5 | built | — |
+| LI-04 | My licenses | `MyLicenses` · 4: Filled, Empty, Loading, Expired + `MyLicenses-Mobile` | /w/[ws]/licensing/mine | w/[ws]/licensing/mine/page.tsx | `GET /api/licensing/agreements` · `rights-recheck` queue | 5 | built | — |
 
 ### 8 · Creator Portal
 
@@ -265,3 +265,5 @@ The product owner accepted the defaults below on 12 Nov 2026.
 **D-M5-1 (Milestone 5).** Creators upload the videos they license (decided 20 Nov 2026: importing from a channel waits for platform approval, B-01). The upload list is a "Your videos" card on LI-07 under "Excluded videos"; no board draws it, so it reuses the row, button and upload-progress parts of LI-07 and CL-02.
 
 **D-M5-2 (Milestone 5).** LI-06 verifies YouTube channels by Google sign-in (read-only, token revoked straight away, nothing stored), on a Google Cloud OAuth client in testing mode until Google verification (B-01). Instagram sign-in needs Meta approval, so Instagram (and YouTube while sign-in is off) uses a check by hand: the creator adds a one-time code to their bio or channel description and a platform admin confirms it (`pnpm --filter @nelio/worker-node admin:channel`, until AD-04). The board’s pending line "Waiting for Instagram to confirm · usually minutes" would not be true, so pending rows say what to do and how long the check takes.
+
+**D-M5-3 (Milestone 5).** Marketplace cards and the LI-02 strip use poster frames the worker takes from each creator video. "Popular with licensees" ranks the creator's own videos by how many licensees clipped them (a count across workspaces; no licensee content is shown). The niche filter lists the niches creators have; no board lets a creator set a niche or short description yet, so cards show the video count until that exists. LI-02's Paid board can't occur (paid terms can't be published, B-08); the button exists for when it can. Editors (licensing request: R) can request private licences; free licences are accepted by a manager. A licence the owner revoked can't be re-accepted on free terms.

@@ -92,4 +92,5 @@ export const storageKeys = {
   render: (workspaceId: string, renderId: string) => `ws/${workspaceId}/renders/${renderId}.mp4`,
   /** A creator's own video offered for licensing (Milestone 5). Licensees get a copy under their workspace. */
   creatorVideo: (creatorId: string, videoId: string, ext: string) => `creators/${creatorId}/videos/${videoId}/source.${ext}`,
+  creatorPoster: (creatorId: string, videoId: string) => `creators/${creatorId}/videos/${videoId}/poster.jpg`,
 };

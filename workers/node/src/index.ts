@@ -4,6 +4,7 @@ import { dispatchOutbox } from "./dispatcher";
 import { deliverNotification } from "./notify";
 import { db, resetBudgetWeeks } from "@nelio/db";
 import { processStep, startDueRuns, sweepTimeouts } from "./steps";
+import { checkCreatorVideos } from "./creator-videos";
 
 /**
  * Nelio Node worker: outbox dispatcher, agent step runner, notification delivery, scheduler and timeout sweep.
@@ -45,7 +46,8 @@ void loop("outbox", 1000, () => dispatchOutbox(queues));
 void loop("schedule", 30_000, () => startDueRuns());
 void loop("timeouts", 60_000, () => sweepTimeouts());
 void loop("budget-week", 5 * 60_000, () => resetBudgetWeeks(db()));
-console.log("Nelio worker started: queues agent-steps, notify; outbox, schedule, timeout and budget-week loops running.");
+void loop("creator-videos", 5_000, () => checkCreatorVideos());
+console.log("Nelio worker started: queues agent-steps, notify; outbox, schedule, timeout, budget-week and creator-video loops running.");
 
 async function shutdown() {
   if (stopping) return;

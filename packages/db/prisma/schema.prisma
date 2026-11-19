@@ -1019,6 +1019,9 @@ model CreatorVideo {
   /// Third-party music or footage the creator doesn't control: never licensable (LI-07 "Excluded videos").
   excluded      Boolean   @default(false)
   excludeReason String?   @map("exclude_reason")
+  /// Poster frame and length, read by the worker once the upload completes (marketplace cards, LI-02).
+  posterKey     String?   @map("poster_key")
+  checkedAt     DateTime? @map("checked_at") @db.Timestamptz(6)
   createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt     DateTime? @map("deleted_at") @db.Timestamptz(6)
