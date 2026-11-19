@@ -211,7 +211,7 @@ export async function resumeWorkspace(tx: Tx, args: { workspaceId: string; userI
   }
   const stoppedAgents = new Set(checks.filter((c) => !c.willResume).map((c) => c.agentId));
   const held = await tx.runStep.findMany({ where: { workspaceId: ws.id, status: "paused" }, orderBy: { ordinal: "asc" }, select: { id: true, runId: true, run: { select: { agentId: true } } } });
-  await requeueHeld(tx, held.filter((s) => !stoppedAgents.has(s.run.agentId)), now);
+  await requeueHeld(tx, held.filter((s) => !s.run.agentId || !stoppedAgents.has(s.run.agentId)), now);
   const agents = await tx.agent.findMany({ where: { workspaceId: ws.id, state: "active" }, select: { id: true } });
   for (const a of agents) await refreshNextRun(tx, a.id, now);
   await recordActivity(tx, { orgId: ws.orgId, workspaceId: ws.id, type: "workspace.resumed", status: "running", title: "Resumed", detail: `${checks.filter((c) => c.willResume).length} of ${checks.length} agents resumed` });

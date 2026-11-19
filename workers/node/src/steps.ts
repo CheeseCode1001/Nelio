@@ -10,8 +10,12 @@ export interface StepContext {
   stepId: string;
   kind: string;
   runId: string;
-  agent: { id: string; name: string; sourceRefs: unknown; destinationRefs: unknown };
+  run: { id: string; kind: "agent" | "process" | "render"; number: number; orgId: string; workspaceId: string; assetId: string | null; renderId: string | null };
+  /** Null for work a person started by hand (processing an upload, rendering a clip). */
+  agent: { id: string; name: string; sourceRefs: unknown; destinationRefs: unknown } | null;
   signal: AbortSignal;
+  /** Updates the step's one-line detail while it runs ("61%"), for the Activity panel and Studio. */
+  progress: (detail: string) => Promise<void>;
 }
 export type StepHandler = (ctx: StepContext) => Promise<StepOutcome>;
 
@@ -24,7 +28,7 @@ export class RetryableStepError extends Error {}
  */
 export const DEFAULT_HANDLERS: Record<string, StepHandler> = {
   async check_sources(ctx) {
-    const refs = Array.isArray(ctx.agent.sourceRefs) ? ctx.agent.sourceRefs : [];
+    const refs = Array.isArray(ctx.agent?.sourceRefs) ? (ctx.agent!.sourceRefs as unknown[]) : [];
     if (refs.length === 0) return { status: "blocked", reason: "no_sources", text: "No videos to work with yet. Upload a video to start." };
     return { status: "blocked", reason: "not_available", text: "Video processing isn’t switched on yet." };
   },
@@ -45,6 +49,7 @@ async function lockStep(tx: Tx, stepId: string) {
       run: {
         include: {
           agent: { select: { id: true, name: true, state: true, weeklyBudget: true, perRunLimit: true, sourceRefs: true, destinationRefs: true } },
+          asset: { select: { filename: true } },
           workspace: { select: { id: true, orgId: true, timezone: true, pausedAt: true, slug: true } },
         },
       },
@@ -53,6 +58,13 @@ async function lockStep(tx: Tx, stepId: string) {
 }
 
 type Loaded = NonNullable<Awaited<ReturnType<typeof lockStep>>>;
+
+/** How a run is named in the feed: "Budget Shorts · run #12", "Processing podcast_ep12.mp4", "Render #3". */
+export function runLabel(run: Loaded["run"]): string {
+  if (run.agent) return `${run.agent.name} · run #${run.number}`;
+  if (run.kind === "process") return `Processing ${run.asset?.filename ?? "video"}`;
+  return `Render #${run.number}`;
+}
 
 async function finishRun(tx: Tx, s: Loaded, status: "done" | "failed" | "blocked", reason: string | null, reasonText: string | null, now: Date) {
   const spend = await tx.agentSpend.findMany({ where: { runId: s.runId }, select: { kind: true, credits: true } });
@@ -84,9 +96,9 @@ export async function processStep(stepId: string, handlers: Record<string, StepH
     const { run } = s;
     const ws = run.workspace;
     const agent = run.agent;
-    const base = { orgId: ws.orgId, workspaceId: ws.id, agentId: agent.id, runId: run.id, stepId: s.id };
+    const base = { orgId: ws.orgId, workspaceId: ws.id, agentId: agent?.id ?? null, runId: run.id, stepId: s.id };
 
-    if (ws.pausedAt || agent.state === "paused" || agent.state === "stopped") {
+    if (ws.pausedAt || agent?.state === "paused" || agent?.state === "stopped") {
       await tx.runStep.update({ where: { id: s.id }, data: { status: "paused" } });
       await tx.agentRun.update({ where: { id: run.id }, data: { status: "paused" } });
       return { go: false as const, note: "paused" };
@@ -98,7 +110,7 @@ export async function processStep(stepId: string, handlers: Record<string, StepH
       return { go: false as const, note: "timeout" };
     }
 
-    if (s.estimatedCredits > 0) {
+    if (s.estimatedCredits > 0 && agent) {
       const week = await weekCommitted(tx, agent.id, now(), ws.timezone);
       const runSpend = await tx.agentSpend.findMany({ where: { runId: run.id }, select: { stepId: true, attempt: true, kind: true, credits: true } });
       const decision = canReserve({ estimate: s.estimatedCredits, weeklyBudget: agent.weeklyBudget, weekCommitted: week, perRunLimit: agent.perRunLimit, runCommitted: committedCredits(runSpend) });
@@ -115,12 +127,15 @@ export async function processStep(stepId: string, handlers: Record<string, StepH
         }
         return { go: false as const, note: "budget" };
       }
-      await tx.agentSpend.create({ data: { agentId: agent.id, runId: run.id, stepId: s.id, attempt: s.attempts + 1, kind: "reserve", credits: s.estimatedCredits, weekStart: new Date(`${weekStartFor(now(), ws.timezone)}T00:00:00Z`) } });
+    }
+    // Work started by hand was costed and confirmed before it started; its spend is recorded the same way.
+    if (s.estimatedCredits > 0) {
+      await tx.agentSpend.create({ data: { agentId: agent?.id ?? null, runId: run.id, stepId: s.id, attempt: s.attempts + 1, kind: "reserve", credits: s.estimatedCredits, weekStart: new Date(`${weekStartFor(now(), ws.timezone)}T00:00:00Z`) } });
     }
 
     await tx.runStep.update({ where: { id: s.id }, data: { status: "running", attempts: { increment: 1 }, startedAt: s.startedAt ?? now(), reason: null, reasonText: null } });
     if (run.status !== "running") await tx.agentRun.update({ where: { id: run.id }, data: { status: "running", startedAt: run.startedAt ?? now() } });
-    await recordActivity(tx, { ...base, type: "step.started", status: "running", title: s.title, detail: `${agent.name} · run #${run.number}` });
+    await recordActivity(tx, { ...base, type: "step.started", status: "running", title: s.title, detail: runLabel(run) });
     return { go: true as const, step: s };
   });
   if (!start.go) return start.note;
@@ -133,7 +148,15 @@ export async function processStep(stepId: string, handlers: Record<string, StepH
   const timer = setTimeout(() => ac.abort(), STEP_TIMEOUT_MS);
   try {
     outcome = handler
-      ? await handler({ stepId: s.id, kind: s.kind, runId: s.runId, agent: s.run.agent, signal: ac.signal })
+      ? await handler({
+          stepId: s.id,
+          kind: s.kind,
+          runId: s.runId,
+          run: { id: s.run.id, kind: s.run.kind, number: s.run.number, orgId: s.run.orgId, workspaceId: s.run.workspaceId, assetId: s.run.assetId, renderId: s.run.renderId },
+          agent: s.run.agent,
+          signal: ac.signal,
+          progress: async (detail) => { await client.runStep.update({ where: { id: s.id }, data: { detail: detail.slice(0, 200) } }).catch(() => {}); },
+        })
       : { status: "blocked", reason: "not_available", text: "This step isn’t available yet." };
   } catch (e) {
     outcome = { status: "error", text: e instanceof Error ? e.message.slice(0, 300) : "Unknown error" };
@@ -147,14 +170,15 @@ export async function processStep(stepId: string, handlers: Record<string, StepH
     if (!cur || cur.status !== "running") return "state changed while running";
     const ws = cur.run.workspace;
     const agent = cur.run.agent;
-    const base = { orgId: ws.orgId, workspaceId: ws.id, agentId: agent.id, runId: cur.runId, stepId: cur.id };
+    const label = runLabel(cur.run);
+    const base = { orgId: ws.orgId, workspaceId: ws.id, agentId: agent?.id ?? null, runId: cur.runId, stepId: cur.id };
     const reservation = await tx.agentSpend.findUnique({ where: { stepId_attempt_kind: { stepId: cur.id, attempt: cur.attempts, kind: "reserve" } } });
     const weekStart = reservation?.weekStart ?? new Date(`${weekStartFor(now(), ws.timezone)}T00:00:00Z`);
     const closeSpend = async (actual: number) => {
       if (!reservation) return { settled: 0, released: 0 };
       const r = settle(reservation.credits, actual);
-      await tx.agentSpend.create({ data: { agentId: agent.id, runId: cur.runId, stepId: cur.id, attempt: cur.attempts, kind: "settle", credits: r.settled, weekStart } });
-      await tx.agentSpend.create({ data: { agentId: agent.id, runId: cur.runId, stepId: cur.id, attempt: cur.attempts, kind: "release", credits: r.released, weekStart } });
+      await tx.agentSpend.create({ data: { agentId: agent?.id ?? null, runId: cur.runId, stepId: cur.id, attempt: cur.attempts, kind: "settle", credits: r.settled, weekStart } });
+      await tx.agentSpend.create({ data: { agentId: agent?.id ?? null, runId: cur.runId, stepId: cur.id, attempt: cur.attempts, kind: "release", credits: r.released, weekStart } });
       return r;
     };
 
@@ -167,7 +191,7 @@ export async function processStep(stepId: string, handlers: Record<string, StepH
       if (next) await enqueue(tx, TOPICS.stepRun, { stepId: next.id }, `step:${next.id}:1`);
       else {
         await finishRun(tx, cur, "done", null, null, now());
-        await recordActivity(tx, { ...base, stepId: null, type: "run.done", status: "done", title: `${agent.name} · run #${cur.run.number}`, detail: "Finished" });
+        await recordActivity(tx, { ...base, stepId: null, type: "run.done", status: "done", title: label, detail: "Finished" });
       }
       return "done";
     }
@@ -193,7 +217,7 @@ export async function processStep(stepId: string, handlers: Record<string, StepH
     await finishRun(tx, cur, "failed", "error", text, now());
     await recordActivity(tx, { ...base, type: "step.failed", status: "failed", title: cur.title, detail: text });
     for (const userId of await workspaceWatchers(tx, ws.id)) {
-      await notify(tx, { userId, category: "agents", title: `${agent.name}: “${cur.title}” failed`, body: text, href: `/w/${ws.slug}/activity`, dedupeKey: `stepfail:${cur.id}`, orgId: ws.orgId, workspaceId: ws.id });
+      await notify(tx, { userId, category: agent ? "agents" : "publishing", title: `${agent?.name ?? label}: “${cur.title}” failed`, body: text, href: `/w/${ws.slug}/activity`, dedupeKey: `stepfail:${cur.id}`, orgId: ws.orgId, workspaceId: ws.id });
     }
     return "failed";
   });
@@ -223,16 +247,17 @@ export async function sweepTimeouts(now = new Date()): Promise<number> {
   const late = await db().agentRun.findMany({ where: { deadlineAt: { lt: now }, status: { in: ["queued", "running"] } }, select: { id: true }, take: 50 });
   for (const r of late) {
     await db().$transaction(async (tx) => {
-      const run = await tx.agentRun.findUnique({ where: { id: r.id }, include: { agent: { select: { id: true, name: true } }, workspace: { select: { orgId: true } } } });
+      const run = await tx.agentRun.findUnique({ where: { id: r.id }, include: { agent: { select: { id: true, name: true } }, asset: { select: { filename: true } }, workspace: { select: { orgId: true } } } });
       if (!run || !["queued", "running"].includes(run.status)) return;
       const open = await tx.agentSpend.findMany({ where: { runId: run.id }, select: { stepId: true, attempt: true, kind: true, credits: true, weekStart: true } });
       const closed = new Set(open.filter((e) => e.kind !== "reserve").map((e) => `${e.stepId}:${e.attempt}`));
       for (const e of open.filter((x) => x.kind === "reserve" && !closed.has(`${x.stepId}:${x.attempt}`))) {
-        await tx.agentSpend.create({ data: { agentId: run.agent.id, runId: run.id, stepId: e.stepId, attempt: e.attempt, kind: "release", credits: e.credits, weekStart: e.weekStart } });
+        await tx.agentSpend.create({ data: { agentId: run.agent?.id ?? null, runId: run.id, stepId: e.stepId, attempt: e.attempt, kind: "release", credits: e.credits, weekStart: e.weekStart } });
       }
       await tx.runStep.updateMany({ where: { runId: run.id, status: { in: ["queued", "running"] } }, data: { status: "canceled", finishedAt: now } });
       await tx.agentRun.update({ where: { id: run.id }, data: { status: "failed", reason: "timeout", reasonText: "The run took too long and was stopped.", finishedAt: now } });
-      await recordActivity(tx, { orgId: run.workspace.orgId, workspaceId: run.workspaceId, agentId: run.agent.id, runId: run.id, type: "run.failed", status: "failed", title: `${run.agent.name} · run #${run.number}`, detail: "The run took too long and was stopped." });
+      const title = run.agent ? `${run.agent.name} · run #${run.number}` : run.kind === "process" ? `Processing ${run.asset?.filename ?? "video"}` : `Render #${run.number}`;
+      await recordActivity(tx, { orgId: run.workspace.orgId, workspaceId: run.workspaceId, agentId: run.agent?.id ?? null, runId: run.id, type: "run.failed", status: "failed", title, detail: "The run took too long and was stopped." });
     });
   }
   return late.length;
