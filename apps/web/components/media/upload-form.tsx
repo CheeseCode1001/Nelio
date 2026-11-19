@@ -11,7 +11,7 @@ type FileInfo = { name: string; size: number; type: string; durationSec: number 
 type Phase =
   | { k: "idle" }
   | { k: "wrongtype"; text: string }
-  | { k: "uploading"; file: FileInfo; sent: number; startedAt: number }
+  | { k: "uploading"; file: FileInfo; sent: number; etaSec: number | null }
   | { k: "uploaded"; file: FileInfo }
   | { k: "failed"; file: FileInfo; text: string };
 
@@ -84,11 +84,15 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
     if (!started.ok) { setPhase(started.field === "file" ? { k: "wrongtype", text: started.error } : { k: "failed", file: info, text: started.error }); return; }
     setAssetId(started.assetId);
     const t0 = Date.now();
-    setPhase({ k: "uploading", file: info, sent: 0, startedAt: t0 });
+    setPhase({ k: "uploading", file: info, sent: 0, etaSec: null });
     const ac = new AbortController();
     abort.current = ac;
     const sentByPart = new Map<number, number>();
-    const report = () => setPhase({ k: "uploading", file: info, sent: [...sentByPart.values()].reduce((a, b) => a + b, 0), startedAt: t0 });
+    const report = () => {
+      const sent = [...sentByPart.values()].reduce((a, b) => a + b, 0);
+      const etaSec = sent > 0 ? (((Date.now() - t0) / sent) * (info.size - sent)) / 1000 : null;
+      setPhase({ k: "uploading", file: info, sent, etaSec });
+    };
     const done: { part: number; etag: string }[] = [];
     const queue = Array.from({ length: started.partCount }, (_, i) => i + 1);
     try {
@@ -145,7 +149,7 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
   }
 
   const pct = phase.k === "uploading" ? Math.min(100, (phase.sent / Math.max(1, phase.file.size)) * 100) : 100;
-  const eta = phase.k === "uploading" && phase.sent > 0 ? ((Date.now() - phase.startedAt) / phase.sent) * (phase.file.size - phase.sent) / 1000 : null;
+  const eta = phase.k === "uploading" ? phase.etaSec : null;
 
   return (
     <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">

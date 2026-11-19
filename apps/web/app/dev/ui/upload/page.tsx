@@ -16,7 +16,7 @@ export default async function UploadPreviewPage({ searchParams }: { searchParams
   if (!devUiEnabled()) notFound();
   const state = (await searchParams).state ?? "filled";
   const preview: UploadPreview =
-    state === "uploading" ? { phase: { k: "uploading", file: FILE, sent: 1.5 * 1024 ** 3, startedAt: Date.now() - 110_000 }, rights: "own" }
+    state === "uploading" ? { phase: { k: "uploading", file: FILE, sent: 1.5 * 1024 ** 3, etaSec: 50 }, rights: "own" }
     : state === "wrongtype" ? { phase: { k: "wrongtype", text: "party_photos.zip isn’t a video. Upload MP4 or MOV up to 2 GB." }, rights: "own" }
     : state === "norights" ? { phase: { k: "uploaded", file: FILE }, rights: null, norights: true }
     : { phase: { k: "idle" }, rights: "own" };
