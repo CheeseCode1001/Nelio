@@ -119,7 +119,10 @@ try {
   const pending = await client.outboxEvent.count({ where: { dispatchedAt: null } });
   const moved = await dispatchOutbox(queues, 500);
   const waiting = await queues["agent-steps"].getJobCounts("waiting", "delayed");
-  check("budget week does not reset mid-week", (await (await import("@nelio/db")).resetBudgetWeeks(client)) === 0);
+  // Other workspaces' agents from earlier weeks may legitimately reset here; this week's must not.
+  await (await import("@nelio/db")).resetBudgetWeeks(client);
+  const a1After = await client.agent.findUniqueOrThrow({ where: { id: a1.id }, select: { state: true } });
+  check("budget week does not reset mid-week", a1After.state === "budget_reached", a1After.state);
   check("dispatcher moves outbox rows onto the queue", moved === pending && moved > 0 && (waiting.waiting ?? 0) + (waiting.delayed ?? 0) >= 1, { pending, moved, waiting });
   const movedAgain = await dispatchOutbox(queues, 500);
   check("a dispatched row is never sent twice", movedAgain === 0, movedAgain);
