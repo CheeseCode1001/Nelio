@@ -11,7 +11,8 @@
     "check:framework": "tsx --env-file=../../apps/web/.env.local scripts/framework-check.ts",
     "check:keys": "node --env-file=../../apps/web/.env.local scripts/check-keys.mjs",
     "storage:cors": "node --env-file=../../apps/web/.env.local scripts/set-cors.mjs",
-    "check:pipeline": "tsx --env-file=../../apps/web/.env.local scripts/pipeline-check.ts"
+    "check:pipeline": "tsx --env-file=../../apps/web/.env.local scripts/pipeline-check.ts",
+    "admin:channel": "tsx --env-file=../../apps/web/.env.local scripts/review-channel.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.10.0",

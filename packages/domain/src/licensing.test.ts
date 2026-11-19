@@ -70,3 +70,25 @@ describe("attribution and summary", () => {
     expect(s.edits).toBe("Captions, crops and trims");
   });
 });
+
+describe("parseChannelLink and claimMatches", () => {
+  it("reads YouTube handles and channel ids", async () => {
+    const { parseChannelLink } = await import("./licensing");
+    expect(parseChannelLink("youtube", "https://www.youtube.com/@ChefKemi")).toMatchObject({ handle: "@chefkemi", externalId: null });
+    expect(parseChannelLink("youtube", "youtube.com/channel/UC1234567890123456789012")).toMatchObject({ externalId: "UC1234567890123456789012" });
+    expect(parseChannelLink("youtube", "@chefkemi")).toMatchObject({ handle: "@chefkemi" });
+    expect(parseChannelLink("youtube", "https://evil.example/@chefkemi")).toBeNull();
+    expect(parseChannelLink("youtube", "https://www.youtube.com/watch?v=abc")).toBeNull();
+  });
+  it("reads Instagram handles", async () => {
+    const { parseChannelLink } = await import("./licensing");
+    expect(parseChannelLink("instagram", "instagram.com/chefkemi/")).toMatchObject({ handle: "@chefkemi" });
+    expect(parseChannelLink("instagram", "@chefkemi")).toMatchObject({ handle: "@chefkemi" });
+  });
+  it("matches only the claimed channel", async () => {
+    const { claimMatches } = await import("./licensing");
+    expect(claimMatches({ handle: "@chefkemi", externalId: null }, { id: "UCx", handle: "@ChefKemi" })).toBe(true);
+    expect(claimMatches({ handle: "@kemivlogs", externalId: null }, { id: "UCx", handle: "@chefkemi" })).toBe(false);
+    expect(claimMatches({ handle: null, externalId: "UCa" }, { id: "UCb", handle: null })).toBe(false);
+  });
+});

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { NotBuiltYet } from "@/components/system/not-built";
-import { requireCreator } from "@/lib/creator";
+import { Verification } from "@/components/creator/verification";
+import { loadVerification, requireCreator } from "@/lib/creator";
+import { youtubeConfigured } from "@/lib/youtube-verify";
 
 export const metadata: Metadata = { title: "Verification" };
 
-/** LI-06 Verification is built later in Milestone 5. */
-export default async function Page() {
-  await requireCreator("/creator/verify");
-  return <NotBuiltYet title="Verification" screen="LI-06 Verification" milestone={5} />;
+/** LI-06 Verification: YouTube sign-in (Google testing mode) or a check by hand. */
+export default async function VerifyPage({ searchParams }: { searchParams: Promise<{ result?: string }> }) {
+  const c = await requireCreator("/creator/verify");
+  const [d, { result }] = await Promise.all([loadVerification(c, youtubeConfigured()), searchParams]);
+  return <Verification d={d} result={result} />;
 }

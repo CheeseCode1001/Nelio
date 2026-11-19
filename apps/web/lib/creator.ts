@@ -153,3 +153,49 @@ export async function loadPayouts(c: CreatorContext): Promise<{ notified: boolea
   const row = await db().featureInterest.findUnique({ where: { userId_feature: { userId: c.session.user.id, feature: PAYOUTS_FEATURE } }, select: { id: true } });
   return { notified: Boolean(row) };
 }
+
+// ------------------------------------------------------------------ LI-06 Verification
+
+export interface ChannelRow {
+  id: string;
+  platform: "youtube" | "instagram" | "tiktok" | "facebook";
+  title: string;
+  sub: string;
+  status: "verified" | "pending" | "failed";
+  /** What "Try again" does: sign in again (YouTube) or ask for a check by hand. */
+  retry: "youtube" | "manual" | null;
+  code: string | null;
+}
+export interface VerificationData { channels: ChannelRow[]; youtubeReady: boolean }
+
+const LABEL: Record<string, string> = { youtube: "YouTube", instagram: "Instagram", tiktok: "TikTok", facebook: "Facebook" };
+const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "Africa/Lagos" });
+
+export async function loadVerification(c: CreatorContext, youtubeReady: boolean): Promise<VerificationData> {
+  const rows = await db().creatorChannel.findMany({ where: { creatorId: c.creatorId }, orderBy: { createdAt: "asc" } });
+  const order = { verified: 0, pending: 1, failed: 2, unverified: 3 } as const;
+  return {
+    youtubeReady,
+    channels: rows
+      .sort((a, b) => order[a.status] - order[b.status])
+      .map((r) => {
+        const ev = (r.evidence ?? {}) as { code?: string };
+        const manual = r.method === "manual";
+        const status = r.status === "verified" ? "verified" : r.status === "failed" ? "failed" : "pending";
+        const sub =
+          status === "verified" ? `Verified ${r.verifiedAt ? dateFmt.format(r.verifiedAt) : ""}`.trim()
+          : status === "failed" ? (r.failureReason ?? "We couldn’t confirm this channel.")
+          : manual ? `Add ${ev.code ?? "your code"} to your ${r.platform === "youtube" ? "channel description" : "bio"}. We’ll check within 1–2 working days.`
+          : "Sign-in not finished.";
+        return {
+          id: r.id,
+          platform: r.platform as ChannelRow["platform"],
+          title: `${LABEL[r.platform] ?? r.platform} · ${r.title}`,
+          sub,
+          status,
+          retry: status === "verified" || (status === "pending" && manual) ? null : r.platform === "youtube" && youtubeReady && !manual ? "youtube" : "manual",
+          code: manual ? (ev.code ?? null) : null,
+        };
+      }),
+  };
+}

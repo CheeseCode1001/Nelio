@@ -22,6 +22,7 @@ const DEV_PAGES = [
   { href: "/dev/ui/agent-detail", label: "APP-05 states" },
   { href: "/dev/ui/create-agent", label: "APP-06 steps" },
   { href: "/dev/ui/creator", label: "LI-05 states" },
+  { href: "/dev/ui/verification", label: "LI-06 states" },
   { href: "/dev/ui/creator-terms", label: "LI-07 states" },
   { href: "/dev/ui/payouts", label: "LI-10 gated" },
 ];

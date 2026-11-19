@@ -148,3 +148,37 @@ export function termsSummary(t: TermsSnapshot): { platforms: string; commercial:
     edits: list(t.edits.map((e, i) => (i === 0 ? e[0]!.toUpperCase() + e.slice(1) : e))),
   };
 }
+
+/** What a pasted channel link names (LI-06). Only YouTube and Instagram links are understood. */
+export type ChannelClaim = { platform: "youtube" | "instagram"; handle: string | null; externalId: string | null; url: string };
+
+export function parseChannelLink(platform: "youtube" | "instagram", raw: string): ChannelClaim | null {
+  const text = raw.trim();
+  if (!text) return null;
+  if (platform === "youtube") {
+    const bare = text.match(/^@([\w.-]{3,30})$/);
+    if (bare) return { platform, handle: `@${bare[1]!.toLowerCase()}`, externalId: null, url: `https://www.youtube.com/@${bare[1]}` };
+    let u: URL;
+    try { u = new URL(/^https?:\/\//i.test(text) ? text : `https://${text}`); } catch { return null; }
+    if (!/(^|\.)youtube\.com$/i.test(u.hostname)) return null;
+    const id = u.pathname.match(/^\/channel\/(UC[\w-]{22})\/?/);
+    if (id) return { platform, handle: null, externalId: id[1]!, url: `https://www.youtube.com/channel/${id[1]}` };
+    const h = u.pathname.match(/^\/@([\w.-]{3,30})\/?/);
+    if (h) return { platform, handle: `@${h[1]!.toLowerCase()}`, externalId: null, url: `https://www.youtube.com/@${h[1]}` };
+    return null;
+  }
+  const bare = text.match(/^@?([\w.]{1,30})$/);
+  if (bare && !text.includes(".com")) return { platform, handle: `@${bare[1]!.toLowerCase()}`, externalId: null, url: `https://www.instagram.com/${bare[1]}/` };
+  let u: URL;
+  try { u = new URL(/^https?:\/\//i.test(text) ? text : `https://${text}`); } catch { return null; }
+  if (!/(^|\.)instagram\.com$/i.test(u.hostname)) return null;
+  const h = u.pathname.match(/^\/([\w.]{1,30})\/?$/);
+  return h ? { platform, handle: `@${h[1]!.toLowerCase()}`, externalId: null, url: `https://www.instagram.com/${h[1]}/` } : null;
+}
+
+/** Does a channel the person proved they own (by signing in) match what they claimed? */
+export function claimMatches(claim: { handle: string | null; externalId: string | null }, owned: { id: string; handle: string | null }): boolean {
+  if (claim.externalId) return claim.externalId === owned.id;
+  if (claim.handle) return Boolean(owned.handle) && claim.handle.toLowerCase() === owned.handle!.toLowerCase();
+  return false;
+}

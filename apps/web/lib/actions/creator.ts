@@ -1,7 +1,8 @@
 "use server";
 
 import { PART_SIZE, abortMultipart, completeMultipart, db, headObject, isStorageConfigured, notify, signParts, startMultipart, storageKeys } from "@nelio/db";
-import { ACCEPTED_TYPES, ATTRIBUTION_MAX, EXPIRY_CHOICES, LICENSE_EDITS, LICENSE_PLATFORMS, LICENSE_USES, checkUpload, expiresAtFor, validateTerms, videoTypeFor } from "@nelio/domain";
+import { ACCEPTED_TYPES, ATTRIBUTION_MAX, EXPIRY_CHOICES, LICENSE_EDITS, LICENSE_PLATFORMS, LICENSE_USES, checkUpload, expiresAtFor, parseChannelLink, validateTerms, videoTypeFor } from "@nelio/domain";
+import { randomBytes } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getSession } from "../auth";
@@ -209,4 +210,49 @@ export async function decideRequestAction(agreementId: string, decision: "approv
   if (!r) return { ok: false, error: "That request was already answered." };
   revalidatePath("/creator", "layout");
   return { ok: true };
+}
+
+// ------------------------------------------------------------------ LI-06 Verification
+
+/**
+ * "Verify with YouTube" with a pasted link: records the claim so the sign-in can be matched against it
+ * (Failed board: "That sign-in didn’t own this channel"). Without a link, every channel the account owns is verified.
+ */
+export async function claimChannelAction(link: string): Promise<{ ok: true; claimId: string | null } | Fail> {
+  const c = await creator();
+  if ("ok" in c) return c;
+  if (!link.trim()) return { ok: true, claimId: null };
+  const claim = parseChannelLink("youtube", link);
+  if (!claim) return { ok: false, field: "link", error: "Paste a YouTube channel link, like youtube.com/@yourname." };
+  const client = db();
+  const mine = await client.creatorChannel.findFirst({ where: { creatorId: c.creatorId, platform: "youtube", OR: [claim.externalId ? { externalId: claim.externalId } : { handle: claim.handle }] }, select: { id: true, status: true } });
+  if (mine?.status === "verified") return { ok: false, field: "link", error: "That channel is already verified." };
+  const row = mine
+    ? await client.creatorChannel.update({ where: { id: mine.id }, data: { status: "pending", method: "oauth", failureReason: null }, select: { id: true } })
+    : await client.creatorChannel.create({ data: { creatorId: c.creatorId, platform: "youtube", title: claim.handle ?? "YouTube channel", handle: claim.handle, url: claim.url, status: "pending", method: "oauth", evidence: { claimedLink: claim.url } }, select: { id: true } });
+  return { ok: true, claimId: row.id };
+}
+
+/**
+ * A check by hand, for platforms whose sign-in isn't approved yet (Instagram, B-01): the creator adds a one-time
+ * code to their bio or channel description and a Nelio admin confirms it. Never verified from public visibility alone.
+ */
+export async function requestManualCheckAction(input: { platform: "youtube" | "instagram"; link: string }): Promise<{ ok: true; code: string } | Fail> {
+  const c = await creator();
+  if ("ok" in c) return c;
+  const claim = parseChannelLink(input.platform, input.link);
+  if (!claim) return { ok: false, field: "link", error: input.platform === "instagram" ? "Paste your Instagram profile link or @handle." : "Paste a YouTube channel link, like youtube.com/@yourname." };
+  const client = db();
+  const open = await client.creatorChannel.count({ where: { creatorId: c.creatorId, status: "pending", method: "manual" } });
+  if (open >= 3) return { ok: false, error: "You already have three checks waiting. We’ll get to them soon." };
+  const existing = await client.creatorChannel.findFirst({ where: { creatorId: c.creatorId, platform: input.platform, handle: claim.handle ?? undefined, externalId: claim.externalId ?? undefined } });
+  if (existing?.status === "verified") return { ok: false, field: "link", error: "That channel is already verified." };
+  const code = `nelio-${randomBytes(3).toString("hex").toUpperCase()}`;
+  const data = { title: claim.handle ?? claim.url, handle: claim.handle, url: claim.url, status: "pending" as const, method: "manual", failureReason: null, evidence: { code, link: claim.url, requestedAt: new Date().toISOString() } };
+  const row = existing
+    ? await client.creatorChannel.update({ where: { id: existing.id }, data, select: { id: true } })
+    : await client.creatorChannel.create({ data: { creatorId: c.creatorId, platform: input.platform, ...data }, select: { id: true } });
+  await client.auditEvent.create({ data: { actorUserId: c.userId, action: "creator_channel.manual_check_requested", targetType: "creator_channel", targetId: row.id, metadata: { platform: input.platform } } });
+  revalidatePath("/creator", "layout");
+  return { ok: true, code };
 }
