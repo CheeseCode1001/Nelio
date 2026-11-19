@@ -7,6 +7,7 @@ import { Banner, Button, Card, CardHead, Chip, Icon, Illustration, Meter, Select
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { cancelUploadAction, completeUploadAction, signPartsAction, startProcessingAction, startUploadAction } from "@/lib/actions/media";
+import { readDuration, sendParts, uploadErrorText } from "@/lib/multipart-client";
 
 type Rights = "own" | "permission" | "license";
 type FileInfo = { name: string; size: number; type: string; durationSec: number | null };
@@ -20,37 +21,6 @@ type Phase =
 export interface UploadPreview { phase: Phase; rights?: Rights | null; norights?: boolean }
 
 const TEXTAREA = "box-border min-h-[100px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
-const PARALLEL = 3;
-
-/** Reads a video's length in the browser before upload, for the estimate. Null if the browser can't tell. */
-function readDuration(file: File): Promise<number | null> {
-  return new Promise((resolve) => {
-    const url = URL.createObjectURL(file);
-    const v = document.createElement("video");
-    v.preload = "metadata";
-    const done = (d: number | null) => { URL.revokeObjectURL(url); resolve(d); };
-    v.onloadedmetadata = () => done(Number.isFinite(v.duration) && v.duration > 0 ? v.duration : null);
-    v.onerror = () => done(null);
-    setTimeout(() => done(null), 8000);
-    v.src = url;
-  });
-}
-
-function putPart(url: string, blob: Blob, onProgress: (n: number) => void, signal: AbortSignal): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const x = new XMLHttpRequest();
-    x.open("PUT", url);
-    x.upload.onprogress = (e) => onProgress(e.loaded);
-    x.onload = () => {
-      const etag = x.getResponseHeader("ETag");
-      if (x.status >= 200 && x.status < 300 && etag) resolve(etag);
-      else reject(new Error(x.status ? `part answered ${x.status}` : "no ETag (storage CORS)"));
-    };
-    x.onerror = () => reject(new Error("network"));
-    signal.addEventListener("abort", () => x.abort());
-    x.send(blob);
-  });
-}
 
 /** CL-02 Upload: Filled, Uploading, Wrongtype, Norights. Balance and Lowcredits arrive with the credit wallet (Milestone 8). */
 export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: string; defaults: { quality: Quality; language: string }; preview?: UploadPreview; studioBase: string }) {
@@ -89,13 +59,11 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
     setPhase({ k: "uploading", file: info, sent: 0, etaSec: null });
     const ac = new AbortController();
     abort.current = ac;
-    const sentByPart = new Map<number, number>();
     // Progress toast (Delight board): stays while the file uploads, so leaving the form still shows it.
     const toastId = `upload-${started.assetId}`;
     gooeyToast.info(`Uploading ${info.name}`, { id: toastId, description: `0 of ${formatBytes(info.size)} · keep this tab open`, duration: Infinity });
     let lastToast = 0;
-    const report = () => {
-      const sent = [...sentByPart.values()].reduce((a, b) => a + b, 0);
+    const report = (sent: number) => {
       const etaSec = sent > 0 ? (((Date.now() - t0) / sent) * (info.size - sent)) / 1000 : null;
       setPhase({ k: "uploading", file: info, sent, etaSec });
       if (Date.now() - lastToast > 1000) {
@@ -103,32 +71,8 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
         gooeyToast.update(toastId, { description: `${formatBytes(sent)} of ${formatBytes(info.size)} · keep this tab open${etaSec !== null ? ` · ${etaSec < 60 ? "less than a minute" : `about ${Math.ceil(etaSec / 60)} min`}` : ""}` });
       }
     };
-    const done: { part: number; etag: string }[] = [];
-    const queue = Array.from({ length: started.partCount }, (_, i) => i + 1);
     try {
-      const worker = async () => {
-        while (queue.length && !ac.signal.aborted) {
-          const batch = queue.splice(0, 1);
-          const signed = await signPartsAction(slug, started.assetId, batch);
-          if (!signed.ok) throw new Error(signed.error);
-          for (const { part, url } of signed.urls) {
-            const blob = f.slice((part - 1) * started.partSize, Math.min(f.size, part * started.partSize));
-            let etag = "";
-            for (let attempt = 1; attempt <= 3 && !etag; attempt++) {
-              try {
-                etag = await putPart(url, blob, (n) => { sentByPart.set(part, n); report(); }, ac.signal);
-              } catch (e) {
-                if (attempt === 3 || ac.signal.aborted) throw e;
-                await new Promise((r) => setTimeout(r, 1000 * attempt));
-              }
-            }
-            sentByPart.set(part, blob.size);
-            report();
-            done.push({ part, etag });
-          }
-        }
-      };
-      await Promise.all(Array.from({ length: Math.min(PARALLEL, started.partCount) }, worker));
+      const done = await sendParts({ file: f, partSize: started.partSize, partCount: started.partCount, sign: (parts) => signPartsAction(slug, started.assetId, parts), onProgress: report, signal: ac.signal });
       const fin = await completeUploadAction(slug, started.assetId, done);
       if (!fin.ok) throw new Error(fin.error);
       setPhase({ k: "uploaded", file: info });
@@ -137,7 +81,7 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
     } catch (e) {
       gooeyToast.dismiss(toastId);
       if (ac.signal.aborted) return;
-      const msg = e instanceof Error && /CORS|ETag/.test(e.message) ? "The upload was blocked by the storage settings. Ask an admin to allow uploads from this site." : e instanceof Error && e.message.length < 120 ? e.message : "The upload stopped. Check your connection and try again.";
+      const msg = uploadErrorText(e);
       setPhase({ k: "failed", file: info, text: msg });
       toast.error(`${info.name} didn’t upload`, { description: msg });
     }

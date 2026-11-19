@@ -1,0 +1,34 @@
+import type { CreatorShellProps } from "./creator-shell";
+import type { OverviewData, TermsData } from "@/lib/creator";
+
+/** Sample data for the development previews of the Creator Portal (boards LI-05 to LI-10). */
+export const SAMPLE_CREATOR: CreatorShellProps = { name: "Chef Kemi", email: "kemi@chefkemi.ng", initials: "CK", userId: null, unread: 2, operatorHref: null, preview: true };
+
+const kemiTerms = { licenseType: "private" as const, allowedUses: ["clips" as const], platforms: ["instagram" as const], commercial: true, attribution: "@chefkemi", edits: ["captions" as const, "crops" as const, "trims" as const], expiresMonths: 6, excludedCount: 2 };
+
+export const SAMPLE_OVERVIEW: OverviewData = {
+  firstName: "Kemi",
+  verified: true,
+  listing: "listed",
+  stats: { active: 12, clips: 148, published: 131, pending: 1 },
+  requests: [{ id: "q1", who: "Lagos Food Agency", initials: "LF", color: "#FF7A2F", title: "Lagos Food Agency wants a private license", sub: "Instagram · commercial use · 6 months", note: "We run food reels for three restaurants in Lekki.", terms: kemiTerms }],
+  uses: [
+    { id: "u1", who: "Ada Studio", video: "Ep 4 · Jollof for one", platform: "ig", when: "Today" },
+    { id: "u2", who: "Naija Eats", video: "Ep 9 · Pepper soup", platform: "yt", when: "Yesterday" },
+    { id: "u3", who: "Campus Hub", video: "Ep 2 · Plantain", platform: "ig", when: "3 days ago" },
+  ],
+};
+
+export const SAMPLE_TERMS: TermsData = {
+  verified: true,
+  listing: "listed",
+  published: true,
+  storageReady: true,
+  terms: { licenseType: "free", allowedUses: ["clips", "compilations"], platforms: ["instagram", "youtube", "tiktok"], commercial: false, attribution: "@chefkemi", edits: ["captions", "crops", "trims"], expiresMonths: 12, excludedCount: 2, hasThirdParty: true, thirdPartyNote: "Ep 7 (licensed music), Ep 12 (guest footage)" },
+  videos: [
+    { id: "v1", title: "Ep 4 · Jollof for one", meta: "12:40 · 486 MB", status: "ready", excluded: false, excludeReason: null },
+    { id: "v2", title: "Ep 7 · Party jollof", meta: "18:02 · 702 MB", status: "ready", excluded: true, excludeReason: "Licensed music" },
+    { id: "v3", title: "Ep 9 · Pepper soup", meta: "9:15 · 351 MB", status: "ready", excluded: false, excludeReason: null },
+    { id: "v4", title: "Ep 12 · Market day", meta: "21:30 · 840 MB", status: "ready", excluded: true, excludeReason: "Guest footage" },
+  ],
+};

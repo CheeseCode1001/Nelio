@@ -90,4 +90,6 @@ export const storageKeys = {
   audio: (workspaceId: string, assetId: string) => `ws/${workspaceId}/media/${assetId}/audio.m4a`,
   preview: (workspaceId: string, assetId: string, rank: number) => `ws/${workspaceId}/media/${assetId}/preview-${rank}.mp4`,
   render: (workspaceId: string, renderId: string) => `ws/${workspaceId}/renders/${renderId}.mp4`,
+  /** A creator's own video offered for licensing (Milestone 5). Licensees get a copy under their workspace. */
+  creatorVideo: (creatorId: string, videoId: string, ext: string) => `creators/${creatorId}/videos/${videoId}/source.${ext}`,
 };

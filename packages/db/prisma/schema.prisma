@@ -907,11 +907,12 @@ model Post {
   @@map("posts")
 }
 
-/// "Notify me" on gated features (CS-03 Original AI video). One row per person and feature.
+/// "Notify me" on gated features (CS-03 Original AI video, LI-10 Payouts). One row per person and feature;
+/// creators have no workspace, so org and workspace are empty for them.
 model FeatureInterest {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  orgId       String   @map("org_id") @db.Uuid
-  workspaceId String   @map("workspace_id") @db.Uuid
+  orgId       String?  @map("org_id") @db.Uuid
+  workspaceId String?  @map("workspace_id") @db.Uuid
   userId      String   @map("user_id") @db.Uuid
   feature     String
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)

@@ -21,6 +21,9 @@ const DEV_PAGES = [
   { href: "/dev/ui/ai-video", label: "CS-03 states" },
   { href: "/dev/ui/agent-detail", label: "APP-05 states" },
   { href: "/dev/ui/create-agent", label: "APP-06 steps" },
+  { href: "/dev/ui/creator", label: "LI-05 states" },
+  { href: "/dev/ui/creator-terms", label: "LI-07 states" },
+  { href: "/dev/ui/payouts", label: "LI-10 gated" },
 ];
 
 export function DevNav({ current }: { current: string }) {

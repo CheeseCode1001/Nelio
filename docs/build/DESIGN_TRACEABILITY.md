@@ -119,12 +119,12 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 
 | ID | Screen | Boards (desktop states + mobile) | Route | Web files | API and jobs | MS | Status | Gate |
 |---|---|---|---|---|---|---|---|---|
-| LI-05 | Creator portal overview | `CreatorOverview` · 4: Filled, Empty, Loading, Unverified + `CreatorOverview-Mobile` | /creator | creator/page.tsx | `GET /api/creator/overview` | 5 | not started | — |
+| LI-05 | Creator portal overview | `CreatorOverview` · 4: Filled, Empty, Loading, Unverified + `CreatorOverview-Mobile` | /creator | creator/page.tsx | `GET /api/creator/overview` | 5 | built | — |
 | LI-06 | Verification | `Verification` · 4: Filled, Pending, Failed, Empty + `Verification-Mobile` | /creator/verify | creator/verify/page.tsx | `/api/creator/channels` · ownership verification (channel OAuth) | 5 | not started | B-01 |
-| LI-07 | Licensing terms | `LicenseTerms` · 3: Filled, Unverified, Saved + `LicenseTerms-Mobile` | /creator/terms | creator/terms/page.tsx | `GET/PUT /api/creator/terms` | 5 | not started | — |
+| LI-07 | Licensing terms | `LicenseTerms` · 3: Filled, Unverified, Saved + `LicenseTerms-Mobile` | /creator/terms | creator/terms/page.tsx | `GET/PUT /api/creator/terms` | 5 | built | D-M5-1 |
 | LI-08 | Usage audit | `Usage` · 3: Filled, Empty, Loading + `Usage-Mobile` | /creator/usage | creator/usage/page.tsx | `GET /api/creator/usage` | 5 | not started | — |
 | LI-09 | Revoke a license | `Revoke` · 3: Filled, Done, Empty + `Revoke-Mobile` | /creator/revocations | creator/revocations/page.tsx | `POST /api/creator/agreements/[id]/revoke` · `rights-recheck` queue (hold posts, flag published) | 5 | not started | — |
-| LI-10 | Payouts | `Payouts` · 1: Filled + `Payouts-Mobile` | /creator/payouts | creator/payouts/page.tsx | none: gated "coming later" | 5 | not started | B-08 |
+| LI-10 | Payouts | `Payouts` · 1: Filled + `Payouts-Mobile` | /creator/payouts | creator/payouts/page.tsx | none: gated "coming later" | 5 | built | B-08 |
 
 ### 9 · Connections, agency & client portal
 
@@ -262,3 +262,4 @@ The product owner accepted the defaults below on 12 Nov 2026.
 | T-7 | Offline boards load photos from `/_blob/…` canvas URLs, so photos don't show when a board file is opened locally. Everything else renders correctly without the canvas runtime (checked on `CommandCenter`, `CommandCenter-Mobile` and `Main`). | Visual-snapshot baselines rewrite those URLs to `docs/design/E_hifi/photos/` using `generator/photos.json`. |
 | T-8 | The inventory lists all eight public mobile boards on the M-08 row. | Read as one mobile board per public page (`Home-Mobile` and so on), as on disk. |
 
+**D-M5-1 (Milestone 5).** Creators upload the videos they license (decided 20 Nov 2026: importing from a channel waits for platform approval, B-01). The upload list is a "Your videos" card on LI-07 under "Excluded videos"; no board draws it, so it reuses the row, button and upload-progress parts of LI-07 and CL-02.

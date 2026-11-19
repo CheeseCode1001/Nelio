@@ -39,10 +39,10 @@ export function PlatformBadge({ platform, size = 32 }: { platform: Platform; siz
 }
 
 /** Stat tile (generator `stat`). `filled` uses a flat fun fill with ink text. */
-export function StatTile({ label, value, sub, icon, filled }: { label: string; value: string; sub?: string; icon?: IconName; filled?: "lime" }) {
+export function StatTile({ label, value, sub, icon, filled }: { label: string; value: string; sub?: string; icon?: IconName; filled?: "lime" | "yellow" }) {
   const onFill = Boolean(filled);
   return (
-    <section className={cn("flex min-w-0 flex-col gap-1 rounded-card px-5 py-[18px]", onFill ? "bg-lime text-outline" : "border border-border bg-surface-1 shadow-card")}>
+    <section className={cn("flex min-w-0 flex-col gap-1 rounded-card px-5 py-[18px]", filled === "yellow" ? "bg-yellow text-outline" : onFill ? "bg-lime text-outline" : "border border-border bg-surface-1 shadow-card")}>
       <div className={cn("flex items-center gap-2 text-[13px] font-bold", onFill ? "text-outline" : "text-muted")}>
         {icon ? <Icon name={icon} size={16} /> : null}
         {label}
