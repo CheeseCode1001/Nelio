@@ -1,42 +1,13 @@
 import { db, enqueue, notify, recordActivity, refreshNextRun, TOPICS, weekCommitted, workspaceWatchers, type Tx } from "@nelio/db";
 import { canReserve, committedCredits, settle, weekStartFor } from "@nelio/domain";
 
-/** What a step handler reports. Handlers never fake success: unavailable work comes back as "blocked". */
-export type StepOutcome =
-  | { status: "done"; actualCredits: number; detail?: string }
-  | { status: "blocked"; reason: string; text: string };
+import { MEDIA_HANDLERS } from "./media";
+import { RetryableStepError, type StepHandler, type StepOutcome } from "./step-types";
 
-export interface StepContext {
-  stepId: string;
-  kind: string;
-  runId: string;
-  run: { id: string; kind: "agent" | "process" | "render"; number: number; orgId: string; workspaceId: string; assetId: string | null; renderId: string | null };
-  /** Null for work a person started by hand (processing an upload, rendering a clip). */
-  agent: { id: string; name: string; sourceRefs: unknown; destinationRefs: unknown } | null;
-  signal: AbortSignal;
-  /** Updates the step's one-line detail while it runs ("61%"), for the Activity panel and Studio. */
-  progress: (detail: string) => Promise<void>;
-}
-export type StepHandler = (ctx: StepContext) => Promise<StepOutcome>;
+export { RetryableStepError, type StepContext, type StepHandler, type StepOutcome } from "./step-types";
 
-/** A failure worth retrying (network, provider 5xx). Anything else thrown is treated the same way. */
-export class RetryableStepError extends Error {}
-
-/**
- * Milestone 3 handlers. Video work (MS 4) and Nelio AI ranking need services that are not switched on yet,
- * so their steps stop with an honest reason instead of pretending. MS 4 replaces these entries.
- */
-export const DEFAULT_HANDLERS: Record<string, StepHandler> = {
-  async check_sources(ctx) {
-    const refs = Array.isArray(ctx.agent?.sourceRefs) ? (ctx.agent!.sourceRefs as unknown[]) : [];
-    if (refs.length === 0) return { status: "blocked", reason: "no_sources", text: "No videos to work with yet. Upload a video to start." };
-    return { status: "blocked", reason: "not_available", text: "Video processing isn’t switched on yet." };
-  },
-  async transcribe() { return { status: "blocked", reason: "not_available", text: "Video processing isn’t switched on yet." }; },
-  async detect_scenes() { return { status: "blocked", reason: "not_available", text: "Video processing isn’t switched on yet." }; },
-  async rank_moments() { return { status: "blocked", reason: "not_available", text: "Nelio AI isn’t set up yet." }; },
-  async render_previews() { return { status: "blocked", reason: "not_available", text: "Rendering isn’t switched on yet." }; },
-};
+/** Real handlers from Milestone 4 on: the media pipeline (see media.ts). */
+export const DEFAULT_HANDLERS: Record<string, StepHandler> = MEDIA_HANDLERS;
 
 const STEP_TIMEOUT_MS = 30 * 60 * 1000;
 const backoffMs = (attempt: number) => Math.min(30_000 * 2 ** (attempt - 1), 15 * 60_000);
@@ -66,6 +37,25 @@ export function runLabel(run: Loaded["run"]): string {
   return `Render #${run.number}`;
 }
 
+/** What a finished processing run means for its video: ready, or failed / blocked with the reason, and a notification. */
+async function afterProcessRun(tx: Tx, s: Loaded, status: "done" | "failed" | "blocked", reasonText: string | null) {
+  if (s.run.kind !== "process" || !s.run.assetId) return;
+  const asset = await tx.mediaAsset.findUnique({ where: { id: s.run.assetId }, select: { id: true, filename: true, uploadedByUserId: true } });
+  if (!asset) return;
+  const ws = s.run.workspace;
+  await tx.mediaAsset.update({ where: { id: asset.id }, data: { status: status === "done" ? "ready" : status === "blocked" ? "blocked" : "failed", statusText: status === "done" ? null : reasonText } });
+  await notify(tx, {
+    userId: asset.uploadedByUserId,
+    category: "publishing",
+    title: status === "done" ? `${asset.filename} is ready` : `${asset.filename} couldn’t be processed`,
+    body: status === "done" ? "Your best moments are waiting in the Clipping Studio." : reasonText ?? undefined,
+    href: `/w/${ws.slug}/studio/${asset.id}`,
+    dedupeKey: `process:${asset.id}:${status}`,
+    orgId: ws.orgId,
+    workspaceId: ws.id,
+  });
+}
+
 async function finishRun(tx: Tx, s: Loaded, status: "done" | "failed" | "blocked", reason: string | null, reasonText: string | null, now: Date) {
   const spend = await tx.agentSpend.findMany({ where: { runId: s.runId }, select: { kind: true, credits: true } });
   const actual = spend.filter((e) => e.kind === "settle").reduce((n, e) => n + e.credits, 0);
@@ -74,6 +64,7 @@ async function finishRun(tx: Tx, s: Loaded, status: "done" | "failed" | "blocked
     where: { id: s.runId },
     data: { status, reason, reasonText, actualCredits: actual, refundedCredits: refunded, finishedAt: status === "blocked" ? null : now },
   });
+  await afterProcessRun(tx, s, status, reasonText);
 }
 
 /**
@@ -196,6 +187,8 @@ export async function processStep(stepId: string, handlers: Record<string, StepH
       return "done";
     }
 
+    // Kept on the step for diagnosis (URLs and long tokens removed); people see the plain reason text.
+    const errorText = outcome.status === "error" ? outcome.text.replace(/(https?|rediss?|postgres(ql)?):\/\/\S+/g, "[url]").replace(/[A-Za-z0-9_\-]{32,}/g, "[…]").slice(0, 180) : "";
     // Blocked or errored: nothing was used, so the whole reservation goes back.
     await closeSpend(0);
     if (outcome.status === "blocked") {
@@ -207,13 +200,13 @@ export async function processStep(stepId: string, handlers: Record<string, StepH
 
     if (cur.attempts < cur.maxAttempts) {
       const at = new Date(now().getTime() + backoffMs(cur.attempts));
-      await tx.runStep.update({ where: { id: cur.id }, data: { status: "queued", reason: "retrying", reasonText: `Attempt ${cur.attempts} failed. Trying again.` } });
+      await tx.runStep.update({ where: { id: cur.id }, data: { status: "queued", reason: "retrying", reasonText: `Attempt ${cur.attempts} failed. Trying again.`, detail: `Last error: ${errorText}` } });
       await recordActivity(tx, { ...base, type: "step.retrying", status: "queued", title: cur.title, detail: `Attempt ${cur.attempts} of ${cur.maxAttempts} failed. Trying again.` });
       await enqueue(tx, TOPICS.stepRun, { stepId: cur.id }, `step:${cur.id}:${cur.attempts + 1}`, at);
       return "retry scheduled";
     }
     const text = `Failed after ${cur.attempts} attempts.`;
-    await tx.runStep.update({ where: { id: cur.id }, data: { status: "failed", reason: "error", reasonText: text, finishedAt: now() } });
+    await tx.runStep.update({ where: { id: cur.id }, data: { status: "failed", reason: "error", reasonText: text, detail: `Last error: ${errorText}`, finishedAt: now() } });
     await finishRun(tx, cur, "failed", "error", text, now());
     await recordActivity(tx, { ...base, type: "step.failed", status: "failed", title: cur.title, detail: text });
     for (const userId of await workspaceWatchers(tx, ws.id)) {

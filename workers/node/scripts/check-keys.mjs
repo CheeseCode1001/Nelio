@@ -14,6 +14,9 @@ try {
     region: "auto",
     endpoint: `https://${env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
     credentials: { accessKeyId: env.R2_ACCESS_KEY_ID ?? "", secretAccessKey: env.R2_SECRET_ACCESS_KEY ?? "" },
+    forcePathStyle: true,
+    requestChecksumCalculation: "WHEN_REQUIRED",
+    responseChecksumValidation: "WHEN_REQUIRED",
   });
   await s3.send(new HeadBucketCommand({ Bucket: env.R2_BUCKET }));
   const Key = `_checks/key-check-${Date.now()}.txt`;
