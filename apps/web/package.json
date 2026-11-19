@@ -11,6 +11,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.10.0",
     "@nelio/config": "workspace:*",
     "@nelio/db": "workspace:*",
     "@nelio/domain": "workspace:*",

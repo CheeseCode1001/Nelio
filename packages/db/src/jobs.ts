@@ -301,3 +301,39 @@ export async function startProcessingRun(tx: Tx, args: { assetId: string; userId
   if (first) await enqueue(tx, TOPICS.stepRun, { stepId: first.id }, `step:${first.id}:1`);
   return { runId: run.id, existing: false };
 }
+
+
+/**
+ * Queues a render of one saved clip version: a Render row plus a one-step run (kind "render"), queued through
+ * the outbox. Safe to retry: one render per project version.
+ */
+export async function startRenderRun(tx: Tx, args: { projectId: string; userId: string; estimate: number; resolution?: string; label?: string | null; now?: Date }): Promise<{ renderId: string; runId: string; existing: boolean }> {
+  const now = args.now ?? new Date();
+  const project = await tx.clipProject.findUniqueOrThrow({ where: { id: args.projectId }, select: { id: true, orgId: true, workspaceId: true, name: true, version: true, hook: true, captionStyle: true, format: true } });
+  const key = `render:${project.id}:${project.version}:${args.label ?? ""}`;
+  const existing = await tx.agentRun.findUnique({ where: { idempotencyKey: key }, select: { id: true, renderId: true } });
+  if (existing?.renderId) return { renderId: existing.renderId, runId: existing.id, existing: true };
+  const number = (await tx.render.count({ where: { workspaceId: project.workspaceId } })) + 1;
+  const render = await tx.render.create({
+    data: {
+      orgId: project.orgId, workspaceId: project.workspaceId, projectId: project.id, revision: project.version, label: args.label ?? null,
+      hook: project.hook, captionStyle: project.captionStyle, format: project.format, resolution: args.resolution ?? "1080p",
+      estimatedCredits: args.estimate, createdById: args.userId,
+    },
+    select: { id: true },
+  });
+  const run = await tx.agentRun.create({
+    data: {
+      orgId: project.orgId, workspaceId: project.workspaceId, kind: "render", renderId: render.id, number, trigger: "manual",
+      estimatedCredits: args.estimate, idempotencyKey: key, startedByUserId: args.userId,
+      deadlineAt: new Date(now.getTime() + RUN_DEADLINE_MINUTES * 60000),
+      steps: { create: [{ ordinal: 1, kind: "render_clip", title: "Render clip", estimatedCredits: args.estimate, detail: `${project.format} · ${args.resolution ?? "1080p"}` }] },
+    },
+    select: { id: true, steps: { select: { id: true } } },
+  });
+  await tx.render.update({ where: { id: render.id }, data: { runId: run.id } });
+  await recordActivity(tx, { orgId: project.orgId, workspaceId: project.workspaceId, runId: run.id, type: "run.started", status: "queued", title: `Render #${number}`, detail: project.name });
+  const first = run.steps[0];
+  if (first) await enqueue(tx, TOPICS.stepRun, { stepId: first.id }, `step:${first.id}:1`);
+  return { renderId: render.id, runId: run.id, existing: false };
+}

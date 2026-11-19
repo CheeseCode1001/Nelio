@@ -2,12 +2,13 @@ import { db, enqueue, notify, recordActivity, refreshNextRun, TOPICS, weekCommit
 import { canReserve, committedCredits, settle, weekStartFor } from "@nelio/domain";
 
 import { MEDIA_HANDLERS } from "./media";
+import { RENDER_HANDLERS } from "./render";
 import { RetryableStepError, type StepHandler, type StepOutcome } from "./step-types";
 
 export { RetryableStepError, type StepContext, type StepHandler, type StepOutcome } from "./step-types";
 
 /** Real handlers from Milestone 4 on: the media pipeline (see media.ts). */
-export const DEFAULT_HANDLERS: Record<string, StepHandler> = MEDIA_HANDLERS;
+export const DEFAULT_HANDLERS: Record<string, StepHandler> = { ...MEDIA_HANDLERS, ...RENDER_HANDLERS };
 
 const STEP_TIMEOUT_MS = 30 * 60 * 1000;
 const backoffMs = (attempt: number) => Math.min(30_000 * 2 ** (attempt - 1), 15 * 60_000);
@@ -56,6 +57,28 @@ async function afterProcessRun(tx: Tx, s: Loaded, status: "done" | "failed" | "b
   });
 }
 
+async function afterRenderRun(tx: Tx, s: Loaded, status: "done" | "failed" | "blocked", reasonText: string | null) {
+  if (s.run.kind !== "render" || !s.run.renderId) return;
+  const render = await tx.render.findUnique({ where: { id: s.run.renderId }, select: { id: true, createdById: true, actualCredits: true, project: { select: { name: true, assetId: true } } } });
+  if (!render) return;
+  const ws = s.run.workspace;
+  const spent = await tx.agentSpend.findMany({ where: { runId: s.runId, kind: "settle" }, select: { credits: true } });
+  await tx.render.update({
+    where: { id: render.id },
+    data: status === "done" ? { status: "ready", statusText: null, actualCredits: spent.reduce((n, e) => n + e.credits, 0) } : { status: "failed", statusText: reasonText ?? "The render didn’t finish." },
+  });
+  await notify(tx, {
+    userId: render.createdById,
+    category: "publishing",
+    title: status === "done" ? `“${render.project.name}” is rendered` : `“${render.project.name}” couldn’t be rendered`,
+    body: status === "done" ? "Download it from Exports or schedule it." : `${reasonText ?? "Something went wrong."} Credits for it were refunded.`,
+    href: status === "done" ? `/w/${ws.slug}/exports` : `/w/${ws.slug}/studio/${render.project.assetId}`,
+    dedupeKey: `render:${render.id}:${status}`,
+    orgId: ws.orgId,
+    workspaceId: ws.id,
+  });
+}
+
 async function finishRun(tx: Tx, s: Loaded, status: "done" | "failed" | "blocked", reason: string | null, reasonText: string | null, now: Date) {
   const spend = await tx.agentSpend.findMany({ where: { runId: s.runId }, select: { kind: true, credits: true } });
   const actual = spend.filter((e) => e.kind === "settle").reduce((n, e) => n + e.credits, 0);
@@ -65,6 +88,7 @@ async function finishRun(tx: Tx, s: Loaded, status: "done" | "failed" | "blocked
     data: { status, reason, reasonText, actualCredits: actual, refundedCredits: refunded, finishedAt: status === "blocked" ? null : now },
   });
   await afterProcessRun(tx, s, status, reasonText);
+  await afterRenderRun(tx, s, status, reasonText);
 }
 
 /**

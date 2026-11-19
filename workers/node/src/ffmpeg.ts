@@ -9,9 +9,9 @@ import ffprobe from "ffprobe-static";
 const FFMPEG = process.env.FFMPEG_PATH || (ffmpegPath as unknown as string);
 const FFPROBE = process.env.FFPROBE_PATH || ffprobe.path;
 
-function run(bin: string, args: string[], signal?: AbortSignal, onStderr?: (chunk: string) => void): Promise<{ stdout: string; stderr: string }> {
+function run(bin: string, args: string[], signal?: AbortSignal, onStderr?: (chunk: string) => void, cwd?: string): Promise<{ stdout: string; stderr: string }> {
   return new Promise((resolve, reject) => {
-    const p = spawn(bin, args, { windowsHide: true });
+    const p = spawn(bin, args, { windowsHide: true, cwd });
     let stdout = "";
     let stderr = "";
     p.stdout.on("data", (d) => { stdout += d; });
@@ -51,8 +51,8 @@ export async function probe(input: string, signal?: AbortSignal): Promise<Probe>
   };
 }
 
-export function ffmpeg(args: string[], signal?: AbortSignal, onStderr?: (chunk: string) => void) {
-  return run(FFMPEG, ["-hide_banner", "-nostdin", "-y", ...args], signal, onStderr);
+export function ffmpeg(args: string[], signal?: AbortSignal, onStderr?: (chunk: string) => void, opts?: { cwd?: string }) {
+  return run(FFMPEG, ["-hide_banner", "-nostdin", "-y", ...args], signal, onStderr, opts?.cwd);
 }
 
 /** A private temporary folder for one step, removed afterwards whatever happens. */

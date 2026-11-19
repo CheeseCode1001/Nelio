@@ -771,6 +771,8 @@ model ClipProject {
   endMs        Int      @map("end_ms")
   hook         String
   captionStyle String   @default("bold_pop") @map("caption_style")
+  /// Caption size as a percentage of the default, 80–140.
+  captionSize  Int      @default(100) @map("caption_size")
   format       String   @default("9:16")
   brandKitId   String?  @map("brand_kit_id") @db.Uuid
   version      Int      @default(1)

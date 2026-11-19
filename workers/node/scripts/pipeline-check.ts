@@ -6,8 +6,9 @@
  */
 import { randomUUID } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { db, deleteObject, headObject, putObject, startProcessingRun, storageKeys } from "@nelio/db";
-import { processingEstimate, processingSplit } from "@nelio/domain";
+import { db, deleteObject, headObject, putObject, signedGetUrl, startProcessingRun, startRenderRun, storageKeys } from "@nelio/db";
+import { processingEstimate, processingSplit, renderEstimate } from "@nelio/domain";
+import { ffmpeg, withTempDir } from "../src/ffmpeg";
 import { probe } from "../src/ffmpeg";
 import { processStep } from "../src/steps";
 
@@ -75,6 +76,44 @@ try {
   check("credits settled within the estimate", run.actualCredits > 0 && run.actualCredits <= estimate, { actual: run.actualCredits, estimate });
   const n = await client.notification.findFirst({ where: { userId } });
   check("uploader told the video is ready", n?.title === "budgeting_talk.mp4 is ready", n?.title);
+
+  // Render the top moment as a saved clip version with a brand kit: 9:16, hook, captions, end card.
+  const top = cands[0];
+  if (top) {
+    const kit = await client.brandKit.create({ data: { orgId, workspaceId: ws.id, name: "Pipeline Kit", primary: "#2F5BFF", accent: "#FFD43B", isDefault: true } });
+    const snap = { startMs: top.startMs, endMs: Math.min(top.endMs, top.startMs + 20_000), hook: top.hook, captionStyle: "bold_pop", captionSize: 120, format: "9:16", brandKitId: kit.id };
+    const project = await client.clipProject.create({ data: { orgId, workspaceId: ws.id, assetId: asset.id, name: top.hook, startMs: snap.startMs, endMs: snap.endMs, hook: snap.hook, captionSize: 120, brandKitId: kit.id, createdById: userId } });
+    await client.projectRevision.create({ data: { projectId: project.id, number: 1, snapshot: snap, createdById: userId } });
+    const est = renderEstimate((snap.endMs - snap.startMs) / 1000);
+    const { renderId, runId: renderRun } = await client.$transaction((tx) => startRenderRun(tx, { projectId: project.id, userId, estimate: est }));
+    keys.push(storageKeys.render(ws.id, renderId));
+    const step = await client.runStep.findFirstOrThrow({ where: { runId: renderRun } });
+    const t0 = Date.now();
+    const note = await processStep(step.id);
+    console.log(`      render_clip: ${note} in ${((Date.now() - t0) / 1000).toFixed(1)} s`);
+    const r = await client.render.findUniqueOrThrow({ where: { id: renderId } });
+    check("render finished", r.status === "ready", { status: r.status, text: r.statusText });
+    const rr = await client.agentRun.findUniqueOrThrow({ where: { id: renderRun } });
+    check("render credits settled within the estimate", rr.status === "done" && rr.actualCredits > 0 && rr.actualCredits <= est, { status: rr.status, actual: rr.actualCredits, est });
+    if (r.storageKey) {
+      const url = await signedGetUrl(r.storageKey);
+      const p = await probe(url);
+      check("render is 1080×1920 with sound", p.width === 1080 && p.height === 1920 && p.hasAudio, p);
+      check("render is as long as the clip", Math.abs(p.durationSec - (snap.endMs - snap.startMs) / 1000) < 0.6, p.durationSec);
+      // The hook card is burned in: the top third of the first second has the brand yellow in it.
+      const yellow = await withTempDir(async (dir) => {
+        const out = `${dir}/frame.rgb`;
+        await ffmpeg(["-ss", "0.5", "-i", url, "-frames:v", "1", "-vf", "crop=1080:640:0:0,scale=54:32", "-f", "rawvideo", "-pix_fmt", "rgb24", out]);
+        const b = await readFile(out);
+        let n = 0;
+        for (let i = 0; i + 2 < b.length; i += 3) if (b[i]! > 200 && b[i + 1]! > 170 && b[i + 2]! < 120) n++;
+        return n;
+      });
+      check("hook card is burned in", yellow > 20, yellow);
+    }
+    const rn = await client.notification.findFirst({ where: { userId, title: { contains: "is rendered" } } });
+    check("creator told the clip is rendered", Boolean(rn), rn?.title);
+  }
 } catch (e) {
   failures++;
   console.log("FAIL  unexpected error:", e instanceof Error ? e.message.replace(/(postgres(ql)?|rediss?|https?):\/\/\S+/g, "[url]") : e);
