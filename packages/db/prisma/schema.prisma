@@ -179,6 +179,8 @@ model Workspace {
   /// ST-07 AI & processing: default quality and caption language for new uploads.
   processingQuality         ProcessingQuality @default(balanced) @map("processing_quality")
   captionLanguage           String            @default("en") @map("caption_language")
+  /// ST-07: let Nelio AI suggest posting times.
+  suggestPostTimes          Boolean           @default(true) @map("suggest_post_times")
   createdAt                 DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt                 DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt                 DateTime?         @map("deleted_at") @db.Timestamptz(6)
@@ -848,6 +850,10 @@ model BrandKit {
   accent       String
   captionFont  String   @default("Plus Jakarta Sans") @map("caption_font")
   captionStyle String   @default("bold_pop") @map("caption_style")
+  /// Palette shown on ST-06, first colour = primary, second = accent (hex, up to 6).
+  colours      String[] @default([])
+  /// Voice & tone Nelio AI writes in for this brand.
+  voice        String   @default("")
   isDefault    Boolean  @default(false) @map("is_default")
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
@@ -864,6 +870,10 @@ model Post {
   renderId    String?   @map("render_id") @db.Uuid
   agentId     String?   @map("agent_id") @db.Uuid
   title       String
+  /// script | caption | clip_caption
+  kind        String    @default("clip_caption")
+  /// Per-platform text: { instagram: { caption, firstComment }, youtube: { title, description }, script }.
+  content     Json      @default("{}")
   caption     String    @default("")
   hashtags    String[]  @default([])
   platforms   String[]  @default([])
@@ -876,4 +886,17 @@ model Post {
 
   @@index([workspaceId, state, updatedAt])
   @@map("posts")
+}
+
+/// "Notify me" on gated features (CS-03 Original AI video). One row per person and feature.
+model FeatureInterest {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId       String   @map("org_id") @db.Uuid
+  workspaceId String   @map("workspace_id") @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  feature     String
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@unique([userId, feature])
+  @@map("feature_interest")
 }

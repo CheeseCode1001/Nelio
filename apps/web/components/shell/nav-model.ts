@@ -1,4 +1,4 @@
-import { NAV_GROUPS, hrefFor, isBuilt, screen, screenForPath, type NavItem, type ScreenId } from "@nelio/config";
+import { NAV_GROUPS, NAV_PARENT, hrefFor, isBuilt, screen, screenForPath, type NavItem, type ScreenId } from "@nelio/config";
 import type { ShellProps } from "./types";
 
 export interface ResolvedNavItem extends NavItem {
@@ -27,7 +27,7 @@ export function resolveNav(p: Pick<ShellProps, "current" | "active" | "showUnbui
         .map<ResolvedNavItem>((it) => ({
           ...it,
           href: href(it.id),
-          active: it.id === p.active,
+          active: it.id === p.active || (p.active !== undefined && NAV_PARENT[p.active] === it.id),
           badge: it.id === "PB-04" ? p.extras.approvalsWaiting : null,
         })),
     }))

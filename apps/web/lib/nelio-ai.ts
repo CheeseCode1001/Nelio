@@ -111,3 +111,29 @@ export async function writeVariantHooks(args: { hook: string; clipText: string }
   const r = HooksSchema.parse(JSON.parse(out.text));
   return { question: r.question.trim(), number: r.number.trim() };
 }
+
+const FIELD_BRIEF: Record<string, string> = {
+  "instagram.caption": "an Instagram Reels caption: a strong first line, short lines, up to 5 relevant hashtags at the end, under 2,200 characters",
+  "youtube.title": "a YouTube Shorts title: plain, specific, under 100 characters, no hashtags",
+  "youtube.description": "a YouTube Shorts description: two or three short sentences and up to 3 hashtags, under 5,000 characters",
+  script: "a short-video script: a hook line, 3 to 6 short beats, and a closing line, written to be spoken aloud",
+};
+
+/** CS-02 "Rewrite with Nelio AI": one field, in the brand's voice. Returns plain text only. */
+export async function rewriteForPlatform(args: { field: string; text: string; context: string; voice: string }): Promise<string> {
+  const response = await ai().beta.messages.create({
+    model: MODEL,
+    max_tokens: 4000,
+    betas: ["server-side-fallback-2026-07-01"],
+    fallbacks: "default",
+    output_config: {
+      effort: "low",
+      format: { type: "json_schema", schema: { type: "object", additionalProperties: false, required: ["text"], properties: { text: { type: "string", description: "The rewritten text only, ready to paste." } } } },
+    },
+    system: `You are Nelio AI, writing for a creator. Write ${FIELD_BRIEF[args.field] ?? "a short social post"}. ${args.voice ? `Brand voice: ${args.voice}` : "Voice: friendly and clear."} Keep facts and claims to what the creator wrote or what the clip says. No emoji unless the creator used them.`,
+    messages: [{ role: "user", content: `${args.context ? `About the clip: ${args.context}\n\n` : ""}${args.text.trim() ? `Rewrite this:\n${args.text}` : "Write it from scratch from the clip details."}` }],
+  });
+  const out = response.content.find((b) => b.type === "text");
+  if (response.stop_reason === "refusal" || !out || out.type !== "text") throw new Error("no text");
+  return z.object({ text: z.string().min(1).max(20_000) }).parse(JSON.parse(out.text)).text.trim();
+}

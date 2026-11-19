@@ -32,7 +32,7 @@ const renderClip: StepHandler = async (ctx) => {
   } as ClipSnapshot;
   const format = isClipFormat(snap.format) ? snap.format : "9:16";
   const style = isCaptionStyle(snap.captionStyle) ? snap.captionStyle : "bold_pop";
-  const kit = snap.brandKitId ? await client.brandKit.findFirst({ where: { id: snap.brandKitId, workspaceId: render.workspaceId }, select: { name: true, accent: true } }) : null;
+  const kit = snap.brandKitId ? await client.brandKit.findFirst({ where: { id: snap.brandKitId, workspaceId: render.workspaceId }, select: { name: true, accent: true, colours: true } }) : null;
   const clipMs = snap.endMs - snap.startMs;
   await client.render.update({ where: { id: render.id }, data: { status: "rendering", statusText: null } });
 
@@ -44,7 +44,7 @@ const renderClip: StepHandler = async (ctx) => {
   const { width, height } = CLIP_FORMATS[format];
   const words = ((asset.transcript?.words as unknown as Word[] | undefined) ?? []);
   const ass = buildAss(captionChunks(words, snap.startMs, snap.endMs, style), {
-    format, style, sizePct: clampCaptionSize(snap.captionSize ?? 100), font: CAPTION_FONT, accent: kit?.accent, hook: snap.hook, endCard: kit?.name, clipMs,
+    format, style, sizePct: clampCaptionSize(snap.captionSize ?? 100), font: CAPTION_FONT, accent: kit?.colours[0] ?? kit?.accent, hook: snap.hook, endCard: kit?.name, clipMs,
   });
 
   // Cancelling from Exports stops FFmpeg within a few seconds.
