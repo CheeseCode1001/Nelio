@@ -10,3 +10,4 @@ allowBuilds:
   "@tailwindcss/oxide": true
   unrs-resolver: true
   msgpackr-extract: false
+  ffmpeg-static: true

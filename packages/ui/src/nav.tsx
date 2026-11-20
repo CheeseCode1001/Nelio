@@ -73,11 +73,33 @@ export function Row({ title, sub, left, right, children }: { title: string; sub?
   return <li className="border-b border-border">{children ?? <div className="flex items-center gap-3 px-4 py-3">{body}</div>}</li>;
 }
 
-/** Empty state: illustration, title, text and up to two actions on a dashed panel (decision D-22). */
-export function EmptyState({ illustration, title, text, width = 260, actions }: { illustration: IllustrationName; title: string; text: string; width?: number; actions?: ReactNode }) {
+/** Isometric sticker art (Delight board) that replaces an illustration in empty states, keyed by its name. */
+export const STICKER_FOR: Partial<Record<IllustrationName, string>> = {
+  approvals: "mailbox", inbox: "mailbox", calendar: "calendar", aivideo: "camera", audit: "pen", brand: "pen",
+  exports: "play", media: "folder", search: "search", limit: "battery", analytics: "streak", licenses: "padlock",
+  verify: "padlock", notifications: "bell", drafts: "notes", wallet: "coins", clients: "chat", team: "chat",
+};
+
+/** One animated sticker; the still frame under Reduce motion (the OS setting or the app's own switch). */
+export function StickerArt({ name, size = 187, className }: { name: string; size?: number; className?: string }) {
   return (
-    <div className="flex flex-col items-center gap-3.5 rounded-panel border-2 border-dashed border-border bg-surface-1 px-6 pb-11 pt-10 text-center">
-      <Illustration name={illustration} width={width} />
+    <picture className={cn("n-sticker block flex-none bg-contain bg-center bg-no-repeat", className)} style={{ width: size, height: size, ["--still" as string]: `url(/stickers/${name}-still.webp)` }}>
+      <source media="(prefers-reduced-motion: reduce)" srcSet={`/stickers/${name}-still.webp`} />
+      {/* eslint-disable-next-line @next/next/no-img-element -- static sticker, sized by the design */}
+      <img src={`/stickers/${name}.webp`} alt="" aria-hidden="true" width={size} height={size} className="block size-full object-contain" />
+    </picture>
+  );
+}
+
+/**
+ * Empty state on a dashed panel (decision D-22): sticker art when the illustration has one (Delight board),
+ * otherwise the illustration; `art` replaces both (e.g. a row of agent avatars). Up to two actions.
+ */
+export function EmptyState({ illustration, title, text, width, actions, art }: { illustration: IllustrationName; title: string; text: string; width?: number; actions?: ReactNode; art?: ReactNode }) {
+  const sticker = STICKER_FOR[illustration];
+  return (
+    <div className="flex flex-col items-center gap-3.5 rounded-[28px] border-2 border-dashed border-border bg-surface-1 px-5 pb-9 pt-8 text-center">
+      {art ?? (sticker ? <StickerArt name={sticker} size={width ? Math.min(width, 187) : 187} /> : <Illustration name={illustration} width={width ?? 260} />)}
       <Heading size={26} as="h2">{title}</Heading>
       <p className="m-0 max-w-[460px] text-[15px] leading-[1.55] text-muted">{text}</p>
       {actions ? <div className="flex flex-wrap justify-center gap-2.5">{actions}</div> : null}

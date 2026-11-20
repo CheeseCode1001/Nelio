@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useCallback, useState } from "react";
 import { markAllReadAction, recentNotificationsAction } from "@/lib/actions/notifications";
 import type { NotificationRow } from "@/lib/notifications";
+import { toast } from "@/components/feedback/toaster";
+import { useRouter } from "next/navigation";
 import { useLive } from "@/lib/use-live";
 import { NotificationList } from "./notification-list";
 
@@ -25,7 +27,18 @@ export function NotificationBell({ href, initialUnread, userId, preview }: { hre
     const r = await recentNotificationsAction();
     if (r.ok) { setRows(r.rows); setUnread(r.unread); }
   }, [preview]);
-  useLive(userId, "notification", () => { setUnread((n) => n + 1); if (open) void load(); });
+  const router = useRouter();
+  useLive(userId, "notification", (payload) => {
+    setUnread((n) => n + 1);
+    if (open) void load();
+    // A live notification also arrives as a toast (Delight board), e.g. "Clip rendered" with a way to open it.
+    const p = (payload ?? {}) as { title?: string; body?: string | null; href?: string | null; category?: string };
+    if (!p.title) return;
+    const opts = { description: p.body ?? undefined, action: p.href ? { label: "Open", onClick: () => router.push(p.href!) } : undefined };
+    if (/couldn.t|failed|blocked|expired/i.test(p.title)) toast.error(p.title, opts);
+    else if (p.category === "publishing") toast.success(p.title, opts);
+    else toast.info(p.title, opts);
+  });
 
   const label = unread ? `Notifications, ${unread} unread` : "Notifications";
   const dot = unread ? <span aria-hidden="true" className="absolute right-2 top-[7px] size-2.5 rounded-full border-2 border-surface-1 bg-ai" /> : null;

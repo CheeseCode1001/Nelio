@@ -10,8 +10,8 @@ export interface NotificationsData { rows: NotificationRow[]; unread: number; to
 /** NT-01 Notifications: Filled, Empty (all caught up) and a filtered view; Loading is NotificationsLoading. */
 export function NotificationsPage({ d, filter, hrefs, preview }: { d: NotificationsData; filter: NotificationFilter; hrefs: { filter: (f: NotificationFilter) => string; preferences: string }; preview?: "ask" | "prompt" }) {
   return (
-    <Motion className="flex flex-col gap-6">
-      <div data-enter="" className="flex flex-col gap-6">
+    <Motion className="flex flex-col gap-5">
+      <div data-enter="" className="flex flex-col gap-5">
         <PageHead
           title="Notifications"
           actions={
@@ -48,7 +48,7 @@ export function NotificationsPage({ d, filter, hrefs, preview }: { d: Notificati
 
 export function NotificationsLoading() {
   return (
-    <div className="flex flex-col gap-6" aria-busy="true">
+    <div className="flex flex-col gap-5" aria-busy="true">
       <div className="flex items-end justify-between gap-4"><Sk w={240} h={36} /><Sk w={260} h={44} r={22} /></div>
       <Sk w={460} h={48} r={24} className="max-w-full" />
       <SkRows n={6} />

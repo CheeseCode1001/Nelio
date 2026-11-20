@@ -1,0 +1,63 @@
+import type { CSSProperties } from "react";
+import { cn } from "./primitives";
+
+/**
+ * The Nelio mascot (Brand board): a fluffy cloud of hair with a cut-out face. One inline SVG: a mask with the
+ * face and ear cut out, eight hair curls and two eyes. Only black, gray or white; the cut-outs always show
+ * the background. Animated: pupils glance, a blink, a quick hair shake; still under reduced motion.
+ */
+const FACE = "M136.1 137.2C135.2 137.2 132.4 137.3 130.5 137.3C128.7 137.3 126.8 137.3 125.0 137.3C123.2 137.2 121.4 137.2 119.8 137.0C118.2 136.8 116.7 136.3 115.2 135.9C113.8 135.5 112.4 135.1 111.1 134.6C109.7 134.1 108.5 133.5 107.3 132.8C106.0 132.2 104.5 131.7 103.8 130.6C103.1 129.6 103.2 127.8 103.3 126.2C103.4 124.7 104.1 123.2 104.2 121.5C104.2 119.9 104.0 117.9 103.7 116.3C103.4 114.8 102.8 113.6 102.2 112.4C101.6 111.1 100.4 110.1 100.1 108.9C99.8 107.7 99.9 106.0 100.5 105.1C101.2 104.1 102.9 103.7 104.0 103.0C105.2 102.3 106.3 101.6 107.3 100.8C108.3 100.0 109.3 99.2 110.3 98.2C111.2 97.3 112.0 96.2 112.7 95.1C113.5 93.9 114.2 92.8 114.8 91.5C115.3 90.2 115.6 88.7 116.0 87.2C116.4 85.7 116.1 83.5 117.0 82.7C117.9 81.9 119.9 82.2 121.4 82.3C122.9 82.4 124.3 83.1 126.0 83.3C127.6 83.4 129.5 83.4 131.1 83.2C132.7 83.0 134.0 82.5 135.5 82.1C137.0 81.8 138.5 81.4 139.9 80.8C141.2 80.3 142.5 79.7 143.6 79.0C144.8 78.4 145.8 77.2 147.0 76.9C148.3 76.5 149.9 76.4 151.0 76.8C152.1 77.3 152.9 78.7 153.8 79.6C154.7 80.6 155.6 81.5 156.6 82.4C157.6 83.2 158.6 84.1 159.8 84.7C161.1 85.4 162.5 85.8 163.9 86.3C165.3 86.8 166.7 87.2 168.1 87.6C169.5 88.1 171.3 88.0 172.3 88.9C173.3 89.8 173.6 91.4 174.0 92.9C174.3 94.3 174.3 96.1 174.3 97.7C174.2 99.2 173.9 100.9 173.6 102.4C173.3 104.0 172.9 105.4 172.5 106.8C172.0 108.3 171.6 109.7 171.1 111.0C170.5 112.3 169.8 113.6 169.1 114.7C168.5 115.9 167.7 117.0 166.9 118.1C166.1 119.1 165.3 120.1 164.5 121.1C163.7 122.2 163.0 123.3 162.1 124.3C161.1 125.2 160.0 125.9 159.0 126.8C157.9 127.6 156.8 128.4 155.8 129.2C154.7 130.0 153.7 130.8 152.5 131.4C151.3 132.1 150.1 132.8 148.8 133.4C147.5 134.0 146.2 134.5 144.8 134.9C143.5 135.4 142.1 135.9 140.7 136.2C139.2 136.6 136.9 137.1 136.1 137.2C135.3 137.4 137.0 137.2 136.1 137.2Z";
+const EAR = "M70.9 115.0C69.8 115.0 68.2 114.9 67.1 114.5C66.1 114.1 65.3 113.4 64.7 112.6C64.1 111.7 63.7 110.6 63.5 109.4C63.3 108.1 63.4 106.4 63.4 105.0C63.4 103.6 63.4 102.1 63.6 100.8C63.8 99.6 64.1 98.5 64.6 97.5C65.0 96.4 65.5 95.4 66.1 94.6C66.8 93.7 67.5 93.0 68.3 92.3C69.1 91.7 69.9 90.9 70.9 90.5C71.9 90.2 73.3 90.0 74.5 90.2C75.6 90.3 76.8 90.8 77.9 91.3C78.9 91.7 79.7 92.3 80.6 92.9C81.4 93.5 82.1 94.2 82.8 95.0C83.5 95.8 84.2 96.5 84.7 97.5C85.3 98.4 85.8 99.5 86.0 100.6C86.1 101.8 86.0 103.3 85.7 104.4C85.4 105.5 84.8 106.4 84.2 107.2C83.6 108.1 82.9 108.9 82.1 109.6C81.4 110.3 80.7 111.0 79.8 111.6C78.9 112.2 77.9 112.7 76.9 113.2C75.9 113.6 74.8 114.1 73.8 114.4C72.8 114.6 72.0 114.9 70.9 115.0Z";
+const CURLS: [number, number][] = [[161.6, 100.0], [144.3, 142.8], [102.1, 161.6], [58.8, 145.8], [38.4, 100.0], [58.8, 54.2], [103.2, 38.5], [147.2, 60.4]];
+
+export type MarkVariant = "black" | "gray" | "white";
+/** "currentColor" follows the text colour, so the mark is black on light and white on dark automatically. */
+const FILL: Record<MarkVariant | "auto", string> = { black: "#0B0B14", gray: "#8A8F9E", white: "#FFFFFF", auto: "currentColor" };
+
+const fill: CSSProperties = { transformBox: "fill-box", transformOrigin: "center" };
+
+export function Mark({ size = 32, variant = "auto", animated = false, label, className }: { size?: number; variant?: MarkVariant | "auto"; animated?: boolean; label?: string; className?: string }) {
+  const id = "nelio-mark-cut";
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 200 200"
+      role={label ? "img" : undefined}
+      aria-label={label}
+      aria-hidden={label ? undefined : true}
+      className={cn("block flex-none overflow-visible", animated && "n-mark-animated", className)}
+      fill={FILL[variant]}
+    >
+      <defs>
+        <mask id={id} maskUnits="userSpaceOnUse" x="-20" y="-20" width="240" height="240">
+          <rect x="-20" y="-20" width="240" height="240" fill="#fff" />
+          <path d={FACE} fill="#000" />
+          <path d={EAR} fill="#000" />
+        </mask>
+      </defs>
+      <g className="n-mark-hair" style={{ transformOrigin: "100px 100px" }}>
+        <g mask={`url(#${id})`}>
+          <circle cx="100" cy="100" r="63.6" />
+          {CURLS.map(([cx, cy], i) => (
+            <circle key={i} cx={cx} cy={cy} r="34.4" className="n-mark-curl" style={{ ...fill, animationDelay: `${(i * 0.11).toFixed(2)}s` }} />
+          ))}
+        </g>
+        <g className="n-mark-look">
+          <ellipse cx="124.6" cy="106.8" rx="6" ry="7.8" className="n-mark-eye" style={fill} />
+          <ellipse cx="156.8" cy="103.2" rx="6" ry="7.8" className="n-mark-eye" style={fill} />
+        </g>
+      </g>
+    </svg>
+  );
+}
+
+/** Mark + wordmark lockup. `size` is the wordmark's font size; the mark is a third larger (board: 32 / 24). */
+export function Logo({ size = 24, variant = "auto", animated = false, className }: { size?: number; variant?: MarkVariant | "auto"; animated?: boolean; className?: string }) {
+  return (
+    <span role="img" aria-label="Nelio" className={cn("inline-flex w-fit max-w-full items-center font-display font-extrabold leading-none tracking-[-0.045em]", variant === "auto" ? "text-text" : "", className)} style={{ fontSize: size, gap: Math.round(size * 0.29), color: variant === "auto" ? undefined : FILL[variant] }}>
+      <Mark size={Math.round(size * 1.34)} variant={variant} animated={animated} />
+      <span aria-hidden="true">nelio</span>
+    </span>
+  );
+}

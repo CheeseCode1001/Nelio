@@ -2,7 +2,7 @@
  * Screen registry: every operator-app screen with its route (B §5) and the milestone that builds it
  * (DESIGN_TRACEABILITY.md §5). Navigation, the command palette and the "not built yet" stand-in all read this.
  */
-export const CURRENT_MILESTONE = 3;
+export const CURRENT_MILESTONE = 4;
 
 // Read from the host app's environment (Next.js inlines NEXT_PUBLIC_* values at build time).
 declare const process: { env: Record<string, string | undefined> };
@@ -29,8 +29,11 @@ export const SCREENS = [
   s("NT-01", "Notifications", "workspace", "/notifications", 3),
   s("CL-01", "Clipping Studio", "workspace", "/media", 4),
   s("CL-02", "Upload", "workspace", "/media/upload", 4),
+  s("CL-03", "Clipping Studio editor", "workspace", "/studio", 4),
   s("CL-05", "Exports", "workspace", "/exports", 4),
   s("CS-01", "Content Studio", "workspace", "/content", 4),
+  s("CS-02", "Post composer", "workspace", "/content/compose", 4),
+  s("CS-03", "Original AI video", "workspace", "/content/video-generation", 4),
   s("ST-06", "Brand kits", "workspace", "/settings/brand-kits", 4),
   s("ST-07", "AI & processing", "workspace", "/settings/ai", 4),
   s("LI-01", "Licensing", "workspace", "/licensing", 5),
@@ -62,6 +65,12 @@ export type ScreenId = (typeof SCREENS)[number]["id"];
 export function screen(id: ScreenId): ScreenDef {
   return SCREENS.find((x) => x.id === id)!;
 }
+
+/** Screens without their own navigation item highlight their parent's (the boards show it this way). */
+export const NAV_PARENT: Record<string, string> = {
+  "CL-02": "CL-01", "CL-03": "CL-01", "CS-02": "CS-01", "CS-03": "CS-01",
+  "APP-06": "APP-04", "ST-05": "ST-10", "ST-07": "ST-10", "ST-08": "ST-10",
+};
 
 export const isBuilt = (def: ScreenDef) => def.milestone <= CURRENT_MILESTONE;
 

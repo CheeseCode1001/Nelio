@@ -20,7 +20,7 @@ export default async function CreateAgentPreview({ searchParams }: { searchParam
   const step = Math.min(5, Math.max(1, Number(sp.step) || 1));
   return (
     <AppShell current={WS} workspaces={[WS]} account={{ fullName: "Ada Okafor", email: "ada@adastudio.ng", surfaces: ["operator"] }} role="CR" extras={SAMPLE_EXTRAS} showUnbuilt active="APP-04" preview>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-5">
         <div>
           <div className="mb-2 text-[13px] font-semibold text-muted">Agents › New</div>
           <PageHead title="New agent" />

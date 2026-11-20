@@ -4,9 +4,10 @@
  */
 export type PlanId = "free" | "trial" | "starter" | "creator_pro" | "business" | "agency" | "enterprise";
 
-export const PLANS: Record<PlanId, { label: string; agents: number | null; socialAccounts: number | null }> = {
+/** `exports`: short-video exports allowed in total (the three-day trial allows two); null = no fixed cap, credits limit them. */
+export const PLANS: Record<PlanId, { label: string; agents: number | null; socialAccounts: number | null; exports?: number }> = {
   free: { label: "Free", agents: 1, socialAccounts: 1 },
-  trial: { label: "Trial", agents: 1, socialAccounts: 1 },
+  trial: { label: "Trial", agents: 1, socialAccounts: 1, exports: 2 },
   starter: { label: "Starter", agents: 2, socialAccounts: 3 },
   creator_pro: { label: "Creator Pro", agents: 5, socialAccounts: 6 },
   business: { label: "Business", agents: 10, socialAccounts: 12 },
@@ -30,3 +31,9 @@ export function nextPlanForAgents(plan: PlanId): { id: PlanId; label: string; ag
  * Agents-Limit board); resuming checks the limit again, so pausing cannot be used to exceed it.
  */
 export const COUNTS_TOWARD_AGENT_LIMIT = ["active", "budget_reached"] as const;
+
+/** How many more exports the plan allows after `used` (failed and canceled ones don’t count); null = no fixed cap. */
+export function exportsLeft(plan: PlanId, used: number): number | null {
+  const cap = PLANS[plan].exports;
+  return cap === undefined ? null : Math.max(0, cap - used);
+}

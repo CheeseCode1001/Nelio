@@ -45,6 +45,7 @@ The product owner asked for the best option on each open question. These are now
 | Largest type size (T-3) | `tokens.json` is the scale (hero 76, display 56). Each screen uses the size in its own board file. |
 | Routes missing from B §5 (T-1) | The routes marked ⚠ in `DESIGN_TRACEABILITY.md` §2. |
 | Local development (B-04) | Hosted dev services, because the machine cannot run Docker. Compose file kept for CI. |
+| Media pipeline stack (19 Nov 2026, product owner) | **Approved change to Master Prompt 2's stack:** video work runs in the existing Node worker with a bundled FFmpeg (probe, audio extraction, scene detection, 9:16 rendering with brand captions); transcription and Nelio AI are called over their APIs. Replaces the Python FastAPI + PySceneDetect service and Remotion rendering for now, because the development machine (3.9 GB memory, no Docker) cannot run them. A Python service can be added later for a step that needs it. |
 
 ## 4. Risks carried into the build
 

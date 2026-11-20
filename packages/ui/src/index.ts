@@ -1,4 +1,7 @@
 export * from "./primitives";
+export * from "./logo";
+export * from "./agent-avatar";
+export * from "./short-frame";
 export * from "./nav";
 export * from "./tab-icon";
 export * from "./data-display";

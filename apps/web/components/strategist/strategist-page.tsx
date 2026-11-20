@@ -14,8 +14,8 @@ const STARTERS = [
  */
 export function StrategistPage({ available }: { available: boolean }) {
   return (
-    <Motion className="flex flex-col gap-6">
-      <div data-enter="" className="flex flex-col gap-6">
+    <Motion className="flex flex-col gap-5">
+      <div data-enter="" className="flex flex-col gap-5">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-3">

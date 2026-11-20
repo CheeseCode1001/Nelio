@@ -3,6 +3,7 @@ import { PageHead } from "@nelio/ui";
 import type { Metadata } from "next";
 import { AccountTabs } from "@/components/account/account-tabs";
 import { AppearanceForm } from "@/components/account/appearance-form";
+import { SoundCard } from "@/components/account/sound-card";
 import { requireSession } from "@/lib/auth";
 
 export const metadata: Metadata = { title: "Appearance" };
@@ -16,6 +17,7 @@ export default async function AppearancePage() {
       <PageHead eyebrow="Settings" title="Account" />
       <AccountTabs active="ST-03" />
       <AppearanceForm initialTheme={prefs.theme} initialReduceMotion={prefs.reduceMotion} />
+      <SoundCard />
     </>
   );
 }

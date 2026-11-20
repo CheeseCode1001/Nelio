@@ -1,6 +1,7 @@
 // Nelio database schema.
 // Milestone 1 covers identity, tenancy, invitations, creator profiles, audit and idempotency.
 // Milestone 3 adds agents, runs and steps, the activity feed, agent spend, notifications and the outbox.
+// Milestone 4 adds media assets, transcripts, clip candidates, clip projects and revisions, renders, brand kits and posts.
 // Later milestones add their own tables through new migrations (architecture document §5).
 //
 // Access model: the application connects with a privileged role through Prisma, server-side only,
@@ -161,23 +162,28 @@ model OrganizationMembership {
 
 /// Unit of work (B §1). Agents, content, accounts and approvals always belong to one workspace.
 model Workspace {
-  id                        String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  orgId                     String        @map("org_id") @db.Uuid
+  id                        String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId                     String            @map("org_id") @db.Uuid
   name                      String
-  slug                      String        @unique
-  kind                      WorkspaceKind @default(primary)
-  timezone                  String        @default("Africa/Lagos")
-  pausedAt                  DateTime?     @map("paused_at") @db.Timestamptz(6)
-  pausedByUserId            String?       @map("paused_by_user_id") @db.Uuid
+  slug                      String            @unique
+  kind                      WorkspaceKind     @default(primary)
+  timezone                  String            @default("Africa/Lagos")
+  pausedAt                  DateTime?         @map("paused_at") @db.Timestamptz(6)
+  pausedByUserId            String?           @map("paused_by_user_id") @db.Uuid
   /// Set when someone dismisses the setup checklist on the Command Center (ON-05).
-  setupChecklistDismissedAt DateTime?     @map("setup_checklist_dismissed_at") @db.Timestamptz(6)
+  setupChecklistDismissedAt DateTime?         @map("setup_checklist_dismissed_at") @db.Timestamptz(6)
   /// Onboarding step 2 (ON-02): what the workspace is going for. Used by Nelio AI to plan.
-  goals                     String[]      @default([])
+  goals                     String[]          @default([])
   niche                     String?
   audience                  String?
-  createdAt                 DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt                 DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
-  deletedAt                 DateTime?     @map("deleted_at") @db.Timestamptz(6)
+  /// ST-07 AI & processing: default quality and caption language for new uploads.
+  processingQuality         ProcessingQuality @default(balanced) @map("processing_quality")
+  captionLanguage           String            @default("en") @map("caption_language")
+  /// ST-07: let Nelio AI suggest posting times.
+  suggestPostTimes          Boolean           @default(true) @map("suggest_post_times")
+  createdAt                 DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt                 DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt                 DateTime?         @map("deleted_at") @db.Timestamptz(6)
 
   org         Organization          @relation(fields: [orgId], references: [id], onDelete: Cascade)
   memberships WorkspaceMembership[]
@@ -186,6 +192,7 @@ model Workspace {
   agents      Agent[]
   runs        AgentRun[]
   activity    ActivityEvent[]
+  media       MediaAsset[]
 
   // Lets child tables carry (workspace_id, org_id) with a foreign key that proves they match.
   @@unique([id, orgId])
@@ -421,12 +428,16 @@ model AgentAuthorization {
   @@map("agent_authorizations")
 }
 
-/// One run of an agent. Each step runs as a queued job.
+/// One run of work: an agent's run, processing one video, or rendering one clip. Each step runs as a queued job.
 model AgentRun {
   id               String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   orgId            String     @map("org_id") @db.Uuid
   workspaceId      String     @map("workspace_id") @db.Uuid
-  agentId          String     @map("agent_id") @db.Uuid
+  kind             RunKind    @default(agent)
+  /// Null for work a person started by hand (processing an upload, rendering a clip).
+  agentId          String?    @map("agent_id") @db.Uuid
+  assetId          String?    @map("asset_id") @db.Uuid
+  renderId         String?    @map("render_id") @db.Uuid
   number           Int
   trigger          RunTrigger
   status           RunStatus  @default(queued)
@@ -445,13 +456,15 @@ model AgentRun {
   updatedAt        DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   workspace Workspace    @relation(fields: [workspaceId, orgId], references: [id, orgId], onDelete: Cascade)
-  agent     Agent        @relation(fields: [agentId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  agent     Agent?       @relation(fields: [agentId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  asset     MediaAsset?  @relation(fields: [assetId], references: [id], onDelete: SetNull)
   steps     RunStep[]
   spend     AgentSpend[]
 
   @@unique([id, workspaceId])
   @@unique([agentId, number])
   @@index([workspaceId, status, createdAt])
+  @@index([assetId])
   @@map("agent_runs")
 }
 
@@ -509,7 +522,7 @@ model ActivityEvent {
 /// Hard budgets are read from here. The billing credit ledger (MS 8) builds on the same entries.
 model AgentSpend {
   id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  agentId   String    @map("agent_id") @db.Uuid
+  agentId   String?   @map("agent_id") @db.Uuid
   runId     String    @map("run_id") @db.Uuid
   stepId    String    @map("step_id") @db.Uuid
   /// Which attempt of the step this belongs to: a retried step reserves again.
@@ -519,7 +532,7 @@ model AgentSpend {
   weekStart DateTime  @map("week_start") @db.Date
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  agent Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  agent Agent?   @relation(fields: [agentId], references: [id], onDelete: Cascade)
   run   AgentRun @relation(fields: [runId], references: [id], onDelete: Cascade)
 
   @@unique([stepId, attempt, kind])
@@ -611,4 +624,279 @@ model OutboxEvent {
 
   @@index([dispatchedAt, availableAt])
   @@map("outbox_events")
+}
+
+// ---------------------------------------------------------------- Milestone 4: media pipeline
+
+enum MediaStatus {
+  uploading
+  uploaded
+  processing
+  ready
+  failed
+  blocked
+
+  @@map("media_status")
+}
+
+/// Who owns an uploaded video (CL-02 "Who owns this video?"). Public visibility is never a license.
+enum RightsBasis {
+  own
+  permission
+  license
+
+  @@map("rights_basis")
+}
+
+enum ProcessingQuality {
+  fast
+  balanced
+  high
+
+  @@map("processing_quality")
+}
+
+enum RunKind {
+  agent
+  process
+  render
+
+  @@map("run_kind")
+}
+
+enum RenderStatus {
+  queued
+  rendering
+  ready
+  failed
+  canceled
+
+  @@map("render_status")
+}
+
+enum PostState {
+  draft
+  needs_approval
+  scheduled
+  published
+  failed
+
+  @@map("post_state")
+}
+
+/// A source video in the workspace (CL-01, CL-02). Files live in object storage under `storageKey`;
+/// the browser uploads them directly with signed multipart URLs and never sees storage credentials.
+model MediaAsset {
+  id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId            String            @map("org_id") @db.Uuid
+  workspaceId      String            @map("workspace_id") @db.Uuid
+  filename         String
+  contentType      String            @map("content_type")
+  sizeBytes        BigInt            @map("size_bytes")
+  durationSec      Float?            @map("duration_sec")
+  width            Int?
+  height           Int?
+  storageKey       String            @unique @map("storage_key")
+  multipartId      String?           @map("multipart_id")
+  status           MediaStatus       @default(uploading)
+  statusText       String?           @map("status_text")
+  rights           RightsBasis?
+  rightsNote       String?           @map("rights_note")
+  /// Short reference shown on clips ("rights r-881"), unique per workspace.
+  rightsRef        String            @map("rights_ref")
+  quality          ProcessingQuality @default(balanced)
+  language         String            @default("en")
+  estimatedCredits Int               @default(0) @map("estimated_credits")
+  actualCredits    Int               @default(0) @map("actual_credits")
+  uploadedByUserId String            @map("uploaded_by_user_id") @db.Uuid
+  createdAt        DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt        DateTime?         @map("deleted_at") @db.Timestamptz(6)
+
+  workspace  Workspace       @relation(fields: [workspaceId, orgId], references: [id, orgId], onDelete: Cascade)
+  transcript Transcript?
+  candidates ClipCandidate[]
+  projects   ClipProject[]
+  runs       AgentRun[]
+
+  @@unique([id, workspaceId])
+  @@unique([workspaceId, rightsRef])
+  @@index([workspaceId, createdAt])
+  @@map("media_assets")
+}
+
+/// Word-level transcript with speakers and scene cuts. `words`: [{ w, s, e, sp }] in ms; `scenes`: cut times in ms.
+model Transcript {
+  id          String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  assetId     String            @unique @map("asset_id") @db.Uuid
+  workspaceId String            @map("workspace_id") @db.Uuid
+  language    String
+  quality     ProcessingQuality
+  words       Json
+  scenes      Json              @default("[]")
+  createdAt   DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  asset MediaAsset @relation(fields: [assetId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@unique([assetId, workspaceId])
+  @@map("transcripts")
+}
+
+/// A moment Nelio AI suggests as a short (CL-03 "Best moments"). Scores are estimates, never promises.
+model ClipCandidate {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  assetId     String   @map("asset_id") @db.Uuid
+  workspaceId String   @map("workspace_id") @db.Uuid
+  rank        Int
+  startMs     Int      @map("start_ms")
+  endMs       Int      @map("end_ms")
+  title       String
+  hook        String
+  score       Int
+  reasons     Json     @default("[]")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  asset MediaAsset @relation(fields: [assetId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+
+  @@unique([assetId, rank])
+  @@map("clip_candidates")
+}
+
+/// A clip being edited in the Clipping Studio. Every save is a numbered revision (Versions).
+model ClipProject {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId        String   @map("org_id") @db.Uuid
+  workspaceId  String   @map("workspace_id") @db.Uuid
+  assetId      String   @map("asset_id") @db.Uuid
+  name         String
+  startMs      Int      @map("start_ms")
+  endMs        Int      @map("end_ms")
+  hook         String
+  captionStyle String   @default("bold_pop") @map("caption_style")
+  /// Caption size as a percentage of the default, 80–140.
+  captionSize  Int      @default(100) @map("caption_size")
+  format       String   @default("9:16")
+  brandKitId   String?  @map("brand_kit_id") @db.Uuid
+  version      Int      @default(1)
+  /// CL-04: the generated variants (hooks, formats, caption styles) and which are picked.
+  variants     Json?
+  createdById  String   @map("created_by_id") @db.Uuid
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  asset     MediaAsset        @relation(fields: [assetId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  revisions ProjectRevision[]
+  renders   Render[]
+
+  @@unique([id, workspaceId])
+  @@index([workspaceId, updatedAt])
+  @@map("clip_projects")
+}
+
+model ProjectRevision {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  projectId   String   @map("project_id") @db.Uuid
+  number      Int
+  snapshot    Json
+  note        String?
+  createdById String   @map("created_by_id") @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  project ClipProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, number])
+  @@map("project_revisions")
+}
+
+/// A rendered clip (CL-04 variants, CL-05 exports). Credits: estimated before, actual after; a failure is refunded.
+model Render {
+  id               String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId            String       @map("org_id") @db.Uuid
+  workspaceId      String       @map("workspace_id") @db.Uuid
+  projectId        String       @map("project_id") @db.Uuid
+  revision         Int
+  label            String?
+  /// The exact clip settings rendered (a variant, or the saved version).
+  settings         Json?
+  hook             String
+  captionStyle     String       @map("caption_style")
+  format           String
+  resolution       String       @default("1080p")
+  status           RenderStatus @default(queued)
+  statusText       String?      @map("status_text")
+  estimatedCredits Int          @map("estimated_credits")
+  actualCredits    Int          @default(0) @map("actual_credits")
+  storageKey       String?      @map("storage_key")
+  sizeBytes        BigInt?      @map("size_bytes")
+  runId            String?      @map("run_id") @db.Uuid
+  createdById      String       @map("created_by_id") @db.Uuid
+  createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime     @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  project ClipProject @relation(fields: [projectId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  posts   Post[]
+
+  @@index([workspaceId, createdAt])
+  @@map("renders")
+}
+
+/// Brand kit (ST-06): colours and caption look every agent and render uses.
+model BrandKit {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId        String   @map("org_id") @db.Uuid
+  workspaceId  String   @map("workspace_id") @db.Uuid
+  name         String
+  primary      String
+  accent       String
+  captionFont  String   @default("Plus Jakarta Sans") @map("caption_font")
+  captionStyle String   @default("bold_pop") @map("caption_style")
+  /// Palette shown on ST-06, first colour = primary, second = accent (hex, up to 6).
+  colours      String[] @default([])
+  /// Voice & tone Nelio AI writes in for this brand.
+  voice        String   @default("")
+  isDefault    Boolean  @default(false) @map("is_default")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([workspaceId])
+  @@map("brand_kits")
+}
+
+/// A post draft (CS-01, CS-02). Publishing to platforms arrives with social connections (Milestone 6).
+model Post {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId       String    @map("org_id") @db.Uuid
+  workspaceId String    @map("workspace_id") @db.Uuid
+  renderId    String?   @map("render_id") @db.Uuid
+  agentId     String?   @map("agent_id") @db.Uuid
+  title       String
+  /// script | caption | clip_caption
+  kind        String    @default("clip_caption")
+  /// Per-platform text: { instagram: { caption, firstComment }, youtube: { title, description }, script }.
+  content     Json      @default("{}")
+  caption     String    @default("")
+  hashtags    String[]  @default([])
+  platforms   String[]  @default([])
+  state       PostState @default(draft)
+  createdById String    @map("created_by_id") @db.Uuid
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  render Render? @relation(fields: [renderId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, state, updatedAt])
+  @@map("posts")
+}
+
+/// "Notify me" on gated features (CS-03 Original AI video). One row per person and feature.
+model FeatureInterest {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orgId       String   @map("org_id") @db.Uuid
+  workspaceId String   @map("workspace_id") @db.Uuid
+  userId      String   @map("user_id") @db.Uuid
+  feature     String
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@unique([userId, feature])
+  @@map("feature_interest")
 }

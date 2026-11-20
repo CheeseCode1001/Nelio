@@ -69,13 +69,18 @@ export async function loadActivity(workspaceId: string, selectedRun: string | nu
       where: { workspaceId, createdAt: { gte: new Date(now.getTime() - 7 * 86_400_000) } },
       orderBy: { createdAt: "desc" },
       take: 60,
-      include: { agent: { select: { name: true, color: true, shape: true } }, steps: { orderBy: { ordinal: "asc" } } },
+      include: { agent: { select: { name: true, color: true, shape: true } }, asset: { select: { filename: true } }, steps: { orderBy: { ordinal: "asc" } } },
     }),
     client.agent.count({ where: { workspaceId } }),
   ]);
   const time = (d: Date) => new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(d);
 
+  // Work started by hand has no agent: it is named after what it works on and shown with a neutral avatar.
+  const who = (r: (typeof runs)[number]) => r.agent
+    ? { name: r.agent.name, color: r.agent.color as AgentColor, shape: r.agent.shape as AgentShape, label: `${r.agent.name} · run #${r.number}` }
+    : { name: r.kind === "process" ? "Processing" : "Render", color: "blue" as AgentColor, shape: "square" as AgentShape, label: r.kind === "process" ? `Processing ${r.asset?.filename ?? "video"}` : `Render #${r.number}` };
   const items: ActivityItem[] = runs.map((r) => {
+    const w = who(r);
     const current = r.steps.find((s) => ["running", "blocked", "failed", "needs_approval", "confirming"].includes(s.status))
       ?? r.steps.find((s) => s.status === "queued" || s.status === "paused")
       ?? r.steps.at(-1);
@@ -87,11 +92,11 @@ export async function loadActivity(workspaceId: string, selectedRun: string | nu
       : r.reasonText ?? current?.reasonText ?? (st === "queued" ? "waiting to start" : "");
     return {
       runId: r.id,
-      title: st === "done" ? `${r.agent.name} · run #${r.number} finished` : current?.title ?? `Run #${r.number}`,
-      sub: [r.agent.name, detail].filter(Boolean).join(" · "),
+      title: st === "done" ? `${w.label} finished` : current?.title ?? w.label,
+      sub: [r.agent ? w.name : w.label, detail].filter(Boolean).join(" · "),
       bucket: BUCKET[st] ?? "queued",
       chip: { ...chip, label: reason && (st === "blocked" || st === "failed") ? `${chip.label} · ${reason}` : chip.label },
-      agent: { color: r.agent.color as AgentColor, shape: r.agent.shape as AgentShape },
+      agent: { color: w.color, shape: w.shape },
     };
   });
   const counts = Object.fromEntries(ACTIVITY_FILTERS.map((f) => [f, f === "all" ? items.length : items.filter((i) => i.bucket === f).length])) as Record<ActivityFilter, number>;
@@ -103,8 +108,8 @@ export async function loadActivity(workspaceId: string, selectedRun: string | nu
     const trigger = pick.trigger === "schedule" ? "triggered by schedule" : pick.trigger === "manual" ? "started by hand" : "started by Nelio AI";
     panel = {
       runId: pick.id,
-      agentName: pick.agent.name,
-      agent: { color: pick.agent.color as AgentColor, shape: pick.agent.shape as AgentShape },
+      agentName: pick.agent ? pick.agent.name : who(pick).label,
+      agent: { color: who(pick).color, shape: who(pick).shape },
       number: pick.number,
       started: `Started ${formatWhen(pick.startedAt ?? pick.createdAt, now, tz).replace(/^today /, "")} · ${trigger}`,
       estimated: pick.estimatedCredits,
