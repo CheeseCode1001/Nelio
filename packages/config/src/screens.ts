@@ -64,7 +64,7 @@ export const SCREENS = [
   s("TF-01", "Transform", "workspace", "/transform", 11),
   s("VL-01", "Voice Lab", "workspace", "/voice", 11),
   s("TR-01", "Translate", "workspace", "/translate", 11),
-  s("LV-01", "Likeness and voice", "account", "/likeness", 11),
+  s("ST-11", "Likeness and voice", "account", "/likeness", 11),
 ] as const satisfies readonly ScreenDef[];
 
 export type ScreenId = (typeof SCREENS)[number]["id"];
