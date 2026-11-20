@@ -27,7 +27,8 @@ function WorkspaceSwitcher({ open, onOpenChange, current, workspaces, preview }:
   const [q, setQ] = useState("");
   const found = useMemo(() => workspaces.filter((w) => w.name.toLowerCase().includes(q.trim().toLowerCase())), [q, workspaces]);
   return (
-    <ResponsiveDialog open={open} onOpenChange={onOpenChange} title="Switch workspace" description="Choose one of the workspaces you belong to." maxWidth={500} top={80}>
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange} title="Switch workspace" description="Jump between your workspaces and client accounts." maxWidth={500} top={80}>
+      <p className="m-0 max-w-[420px] text-sm text-muted">Jump between your workspaces and client accounts.</p>
       <div className="flex min-w-0 flex-col gap-1.5">
         <label htmlFor="ws-search" className="text-[13px] font-bold text-text">Search</label>
         <input id="ws-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search workspaces" autoComplete="off" className="box-border min-h-12 w-full rounded-input border-2 border-border bg-surface-1 px-4 py-3 text-sm text-text placeholder:text-muted" />

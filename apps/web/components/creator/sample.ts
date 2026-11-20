@@ -1,5 +1,5 @@
 import type { CreatorShellProps } from "./creator-shell";
-import type { OverviewData, RevocationsData, TermsData, UsageRow } from "@/lib/creator";
+import type { ChannelRow, OverviewData, RevocationsData, TermsData, UsageRow } from "@/lib/creator";
 
 /** Sample data for the development previews of the Creator Portal (boards LI-05 to LI-10). */
 export const SAMPLE_CREATOR: CreatorShellProps = { name: "Chef Kemi", email: "kemi@chefkemi.ng", initials: "CK", userId: null, unread: 2, operatorHref: null, preview: true };
@@ -47,3 +47,8 @@ export const SAMPLE_REVOCATIONS: RevocationsData = {
     { id: "a2", who: "Ada Studio", type: "free", since: "1 Oct 2026", scheduled: 2, published: 4 },
   ],
 };
+
+const VERIFIED: ChannelRow = { id: "c1", platform: "youtube", title: "YouTube · Chef Kemi", sub: "Verified 2 Nov 2026", status: "verified", retry: null, code: null };
+const PENDING: ChannelRow = { id: "c2", platform: "instagram", title: "Instagram · @chefkemi", sub: "Add nelio-4F2K9A to your bio. We’ll check within 1–2 working days.", status: "pending", retry: null, code: "nelio-4F2K9A" };
+const FAILED: ChannelRow = { id: "c3", platform: "youtube", title: "YouTube · Kemi Vlogs", sub: "That sign-in didn’t own this channel. Sign in with the owner account.", status: "failed", retry: "youtube", code: null };
+export const SAMPLE_CHANNELS = [VERIFIED, PENDING, FAILED] as const;

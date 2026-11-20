@@ -1,15 +1,14 @@
 "use client";
 
 import { EXPIRY_CHOICES, PLATFORM_LABEL, type LicensePlatform } from "@nelio/domain";
-import {
-  Banner, Button, ButtonLink, Card, CardHead, Checkbox, Chip, Icon, KeyValues, Motion, PersonAvatar, PlatformBadge, PlayDisc, ResponsiveDialog, SelectField, Sk, cn,
-} from "@nelio/ui";
+import { Banner, Button, ButtonLink, Card, CardHead, Checkbox, Chip, Icon, KeyValues, Motion, PersonAvatar, PlatformBadge, PlayDisc, ResponsiveDialog, SelectField, Sk, cn, Ghost } from "@nelio/ui";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition, type ReactNode } from "react";
 import { toast } from "@/components/feedback/toaster";
 import { acceptFreeLicenseAction, cancelRequestAction, importLicensedVideoAction, requestPrivateLicenseAction } from "@/lib/actions/licensing";
 import type { SourceData } from "@/lib/licensing";
+import { SAMPLE_SOURCE } from "./sample";
 
 const TEXTAREA = "box-border min-h-[100px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
 const THUMB = ["bg-orange", "bg-lime", "bg-cyan", "bg-yellow", "bg-pink", "bg-violet"];
@@ -291,18 +290,7 @@ export function SourceDetail({ d, wsName, slug, hrefs, canAccept, initialDialog 
   );
 }
 
+/** LI-02 Loading: the source page itself, ghosted. */
 export function SourceDetailLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={140} h={12} /><Sk w={240} h={36} /><Sk w={300} h={15} /></div>
-      <div className="grid grid-cols-1 gap-3.5 lg:[grid-template-columns:minmax(0,1.4fr)_minmax(0,1fr)]">
-        <div className="flex flex-col gap-4">
-          <div className="rounded-card border border-border bg-surface-1 p-[18px]"><div className="aspect-video w-full animate-n-pulse rounded-[22px] bg-surface-3" /></div>
-          <div className="flex gap-3 overflow-hidden rounded-card border border-border bg-surface-1 p-[18px]">{Array.from({ length: 4 }, (_, i) => <div key={i} className="aspect-[9/16] w-[150px] flex-none animate-n-pulse rounded-[22px] bg-surface-3" />)}</div>
-        </div>
-        <div className="flex flex-col gap-3 rounded-card border border-border bg-surface-1 p-[18px]">{Array.from({ length: 7 }, (_, i) => <div key={i} className="flex justify-between"><Sk w={80} h={12} /><Sk w={120} h={12} /></div>)}<Sk w="100%" h={58} r={29} /></div>
-      </div>
-      <span className="sr-only" role="status">Loading this creator…</span>
-    </div>
-  );
+  return <Ghost><SourceDetail d={SAMPLE_SOURCE} wsName="" hrefs={{ marketplace: "#", mine: "#", studio: "#", request: "#", source: "#", studioBase: "#" }} canAccept preview /></Ghost>;
 }

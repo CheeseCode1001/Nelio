@@ -1,6 +1,7 @@
-import { ButtonLink, Chip, EmptyState, Motion, PageHead, PlatformBadge, RowCard, RowCardList, RowCardSkeleton, Sk, cn } from "@nelio/ui";
+import { ButtonLink, Chip, EmptyState, Motion, PageHead, PlatformBadge, RowCard, RowCardList, RowCardSkeleton, Sk, cn, Ghost } from "@nelio/ui";
 import Link from "next/link";
 import type { UsageRow, UsageTab } from "@/lib/creator";
+import { SAMPLE_USAGE } from "./sample";
 
 const TABS: { id: UsageTab; label: string }[] = [
   { id: "all", label: "All" },
@@ -50,7 +51,7 @@ export function Usage({ d, hrefs }: { d: { rows: UsageRow[]; tab: UsageTab; any:
                 { label: "Source video", value: r.video },
                 { label: "Clip", value: r.clip },
                 { label: "Platform", value: r.platform ? <PlatformBadge platform={r.platform} size={26} /> : "—" },
-                { label: "Status", value: <Status r={r} /> },
+                { label: "Status", value: <Status r={r} />, headline: true },
               ]}
             />
           ))}
@@ -62,13 +63,7 @@ export function Usage({ d, hrefs }: { d: { rows: UsageRow[]; tab: UsageTab; any:
   );
 }
 
+/** LI-08 Loading: the usage audit itself, ghosted. */
 export function UsageLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={320} h={36} /></div>
-      <Sk w={330} h={48} r={24} />
-      <RowCardSkeleton rows={4} fields={4} />
-      <span className="sr-only" role="status">Loading usage…</span>
-    </div>
-  );
+  return <Ghost><Usage d={{ rows: SAMPLE_USAGE, tab: "all", any: true }} hrefs={{ tab: () => "#", csv: "#" }} /></Ghost>;
 }

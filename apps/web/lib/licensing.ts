@@ -27,7 +27,11 @@ async function publishedTerms(creatorId: string): Promise<TermsSnapshot | null> 
 
 // ------------------------------------------------------------------ LI-01 Marketplace
 
-export interface SourceCard { id: string; name: string; sub: string; license: LicenseKind; platforms: Badge[]; licensees: number; posterUrl: string | null; verified: boolean }
+export interface SourceCard {
+  id: string; name: string; sub: string; license: LicenseKind; platforms: Badge[]; licensees: number; posterUrl: string | null; verified: boolean;
+  /** Source card (refresh of 20 Nov 2026): "@handle · niche" and the video count. */
+  line?: string; videos?: number;
+}
 export interface MarketFilters { q: string; niche: string; type: "all" | "free" | "private"; platform: "" | LicensePlatform; commercial: boolean; verified: boolean }
 export interface MarketplaceData { cards: SourceCard[]; niches: string[]; filters: MarketFilters; filtered: boolean }
 
@@ -60,7 +64,7 @@ export async function loadMarketplace(f: MarketFilters): Promise<MarketplaceData
     select: {
       id: true, displayName: true, bio: true, niche: true,
       terms: { select: { licenseType: true, platforms: true } },
-      channels: { where: { status: "verified" }, select: { id: true }, take: 1 },
+      channels: { where: { status: "verified" }, select: { id: true, handle: true }, orderBy: { verifiedAt: "asc" }, take: 1 },
       videos: { where: { status: "ready", deletedAt: null, excluded: false }, orderBy: { createdAt: "desc" }, select: { posterKey: true } },
       _count: { select: { agreements: { where: { status: "active", OR: [{ expiresAt: null }, { expiresAt: { gt: now } }] } } } },
     },
@@ -76,6 +80,8 @@ export async function loadMarketplace(f: MarketFilters): Promise<MarketplaceData
       licensees: r._count.agreements,
       posterUrl: await posterUrl(r.videos.find((v) => v.posterKey)?.posterKey ?? null),
       verified: r.channels.length > 0,
+      line: [r.channels[0]?.handle, r.niche || r.bio].filter(Boolean).join(" · ") || "Verified creator",
+      videos: r.videos.length,
     })),
   );
   const filtered = Boolean(f.q || f.niche || f.type !== "all" || f.platform || f.commercial);

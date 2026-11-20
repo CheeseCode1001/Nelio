@@ -1,7 +1,7 @@
 "use client";
 
 import { CAPTION_LANGUAGES, QUALITY_LABEL, type Quality } from "@nelio/domain";
-import { Banner, Button, Card, CardHead, Illustration, Motion, PageHead, SelectField, Sk, Switch } from "@nelio/ui";
+import { Banner, Button, Card, CardHead, Illustration, Motion, PageHead, SelectField, Sk, Switch, Ghost } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/feedback/toaster";
 import { useState, useTransition } from "react";
@@ -63,13 +63,7 @@ export function AiSettingsPage({ slug, saved, canEdit, aiReady }: { slug?: strin
   );
 }
 
+/** ST-07 Loading: the settings themselves, ghosted. */
 export function AiSettingsLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={70} h={12} /><Sk w={260} h={36} /></div>
-      <Sk h={183} r={32} />
-      <div className="flex flex-col gap-4 rounded-card border border-border bg-surface-1 p-5 shadow-card"><Sk w="20%" h={16} /><Sk h={48} r={14} /><Sk h={48} r={14} /><Sk w="50%" h={20} /></div>
-      <span className="sr-only" role="status">Loading settings…</span>
-    </div>
-  );
+  return <Ghost><AiSettingsPage saved={{ quality: "balanced", language: "en", suggestPostTimes: true }} canEdit aiReady /></Ghost>;
 }

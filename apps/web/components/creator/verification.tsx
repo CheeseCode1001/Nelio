@@ -1,11 +1,12 @@
 "use client";
 
-import { Banner, Button, Chip, EmptyState, Field, Motion, PageHead, PlatformBadge, ResponsiveDialog, Sk, cn } from "@nelio/ui";
+import { Banner, Button, Chip, EmptyState, Field, Motion, PageHead, PlatformBadge, ResponsiveDialog, Sk, cn, Ghost } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "@/components/feedback/toaster";
 import { claimChannelAction, requestManualCheckAction } from "@/lib/actions/creator";
 import type { ChannelRow, VerificationData } from "@/lib/creator";
+import { SAMPLE_CHANNELS } from "./sample";
 
 const BADGE = { youtube: "yt", instagram: "ig", tiktok: "tt", facebook: "fb" } as const;
 const CHIP = { verified: "ok", pending: "blue", failed: "err" } as const;
@@ -150,14 +151,7 @@ export function Verification({ d, result, preview }: { d: VerificationData; resu
   );
 }
 
+/** LI-06 Loading: the channel list itself, ghosted. */
 export function VerificationLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={280} h={36} /><Sk w={340} h={15} /></div>
-      <div className="flex flex-col rounded-row border border-border bg-surface-1">
-        {Array.from({ length: 3 }, (_, i) => <div key={i} className="flex items-center gap-3 border-b border-border px-4 py-3 last:border-b-0"><Sk w={44} h={44} r={13} /><div className="flex grow flex-col gap-2"><Sk w="40%" h={13} /><Sk w="60%" h={11} /></div><Sk w={70} h={24} r={12} /></div>)}
-      </div>
-      <span className="sr-only" role="status">Loading your channels…</span>
-    </div>
-  );
+  return <Ghost><Verification d={{ channels: [...SAMPLE_CHANNELS], youtubeReady: true }} preview /></Ghost>;
 }

@@ -1,6 +1,7 @@
-import { ButtonLink, Chip, EmptyState, Illustration, Motion, PageHead, ShortFrame, Sk, cn } from "@nelio/ui";
+import { ButtonLink, Chip, EmptyState, Illustration, Motion, PageHead, ShortFrame, Sk, cn, Ghost } from "@nelio/ui";
 import Link from "next/link";
 import { MEDIA_FILTERS, MEDIA_FILTER_LABEL, type MediaData, type MediaFilter } from "@/lib/media";
+import { MEDIA_SAMPLE } from "./sample";
 
 export interface MediaHrefs { filter: (f: MediaFilter) => string; upload: string; licensing: string; mine?: string }
 
@@ -93,19 +94,7 @@ export function MediaLibrary({ d, filter, hrefs }: { d: MediaData; filter: Media
   );
 }
 
+/** CL-01 Loading: the library itself, ghosted. */
 export function MediaLibraryLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={70} h={12} /><Sk w={260} h={36} /><Sk w={240} h={16} /></div>
-      <Sk w={420} h={48} r={24} className="max-w-full" />
-      <div className="grid grid-cols-2 gap-2.5 md:gap-4 md:[grid-template-columns:repeat(auto-fill,minmax(170px,1fr))]">
-        {Array.from({ length: 6 }, (_, i) => (
-          <div key={i} className="flex flex-col gap-2 rounded-[20px] border border-border bg-surface-1 p-2.5 shadow-card md:gap-2.5 md:rounded-card md:p-5">
-            <Sk h={160} r={18} /><Sk w="80%" h={14} /><Sk w="60%" h={12} /><Sk w={80} h={24} r={12} />
-          </div>
-        ))}
-      </div>
-      <span className="sr-only" role="status">Loading library…</span>
-    </div>
-  );
+  return <Ghost><MediaLibrary d={MEDIA_SAMPLE} filter="all" hrefs={{ filter: () => "#", upload: "#", licensing: "#" }} /></Ghost>;
 }

@@ -63,15 +63,15 @@ export function CommandPalette({ open, onOpenChange, current, workspaces, showUn
   const screenEntry = (d: ScreenDef): Entry => ({ key: d.id, title: d.title, sub: "Page", icon: SCREEN_ICON[d.id] ?? "grid", tone: "neutral", run: go(d) });
 
   const actions: Entry[] = useMemo(() => {
-    const a: { id: string; title: string; icon: IconName; tone: Entry["tone"]; hint: string }[] = [
-      { id: "CL-02", title: "New upload", icon: "upload", tone: "blue", hint: "U" },
-      { id: "APP-06", title: "Create agent", icon: "bot", tone: "ai", hint: "A" },
-      { id: "APP-02", title: "Ask Nelio AI", icon: "spark", tone: "ai", hint: "Enter" },
+    const a: { id: string; title: string; sub: string; icon: IconName; tone: Entry["tone"]; hint: string }[] = [
+      { id: "CL-02", title: "New upload", sub: "Video or podcast to clip", icon: "upload", tone: "blue", hint: "U" },
+      { id: "APP-06", title: "Create agent", sub: "Set up an AI teammate", icon: "bot", tone: "ai", hint: "A" },
+      { id: "APP-02", title: "Ask Nelio AI", sub: "Type a question", icon: "spark", tone: "ai", hint: "Enter" },
     ];
     return a
       .map((x) => ({ x, def: SCREENS.find((d) => d.id === x.id)! }))
       .filter(({ def }) => showUnbuilt || isBuilt(def))
-      .map(({ x, def }) => ({ key: `action-${x.id}`, title: x.title, sub: x.id === "APP-02" ? "Type a question" : x.hint, icon: x.icon, tone: x.tone, hint: x.hint, run: go(def) }));
+      .map(({ x, def }) => ({ key: `action-${x.id}`, title: x.title, sub: x.sub, icon: x.icon, tone: x.tone, hint: x.hint, run: go(def) }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showUnbuilt, current.slug, preview]);
 

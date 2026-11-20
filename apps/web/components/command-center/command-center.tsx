@@ -1,13 +1,11 @@
 import type { ScreenId } from "@nelio/config";
-import {
-  AgentAvatar, AgentTrio, Blob, Bubble, ButtonLink, Card, CardHead, CardTitle, Chip, EmptyState, IPhone, Icon, IconButton, Illustration, LoadingNote, Meter,
-  Motion, Pipeline, Row, RowList, SectionTitle, ShortScreen, Sk, SkCard, SkRows, SkStat, Small, StatTile, Sticker, TopStrip, photoForCaption,
-} from "@nelio/ui";
+import { AgentAvatar, AgentTrio, Blob, Bubble, ButtonLink, Card, CardHead, CardTitle, Chip, EmptyState, IPhone, Icon, IconButton, Illustration, LoadingNote, Meter, Motion, Pipeline, Row, RowList, SectionTitle, ShortScreen, Sk, SkCard, SkRows, SkStat, Small, StatTile, Sticker, TopStrip, photoForCaption, Ghost } from "@nelio/ui";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { AgentCard } from "@/components/agents/agent-card";
 import { ChecklistCard } from "./checklist";
 import { CHECKLIST, isFirstRun, type AgentCardData, type CommandCenterData, type StripState } from "./model";
+import { sampleFor } from "./sample";
 
 export type HrefFor = (id: ScreenId) => string;
 const fmt = (n: number) => n.toLocaleString("en-US");
@@ -177,32 +175,9 @@ function Empty({ d, href }: { d: CommandCenterData; href: HrefFor }) {
 }
 
 // ------------------------------------------------------------------ Loading
+/** APP-01 Loading: the Command Center itself, ghosted. */
 export function CommandCenterLoading() {
-  return (
-    <div className="flex flex-col gap-4 md:gap-6" aria-busy="true">
-      <div className="flex flex-wrap gap-4 md:gap-5">
-        <Sk h={290} r={36} className="flex-[2_1_560px]" />
-        <div className="grid flex-[1_1_280px] grid-cols-2 gap-3.5">
-          <SkStat />
-          <SkStat />
-          <SkStat />
-          <SkStat />
-        </div>
-      </div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-5">
-        <div className="flex flex-col gap-3.5">
-          <Sk w={180} h={20} />
-          <SkCard />
-          <SkCard />
-        </div>
-        <div className="flex flex-col gap-3.5">
-          <Sk w={140} h={20} />
-          <SkRows n={4} />
-        </div>
-      </div>
-      <LoadingNote text="Loading your studio…" />
-    </div>
-  );
+  return <Ghost><CommandCenter data={sampleFor("filled")} href={() => "#"} /></Ghost>;
 }
 
 /** APP-01 Command Center body. The state comes from the data (Filled or Empty); Loading is its own component. */

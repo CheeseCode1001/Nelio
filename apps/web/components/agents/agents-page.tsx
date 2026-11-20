@@ -1,8 +1,7 @@
-import { AgentAvatar, AgentTrio, Banner, ButtonLink, Chip, EmptyState, Meter, Motion, PageHead, RowCard, RowCardList, RowCardSkeleton, Sk, SkCard } from "@nelio/ui";
+import { AgentTrio, Banner, ButtonLink, EmptyState, Ghost, Motion, PageHead } from "@nelio/ui";
 import type { AgentsPageData } from "@/lib/agents";
 import { AgentCard } from "./agent-card";
-
-const fmt = (n: number) => n.toLocaleString("en-US");
+import { AGENTS_SAMPLE } from "./sample";
 
 export interface AgentsHrefs { newAgent: string; strategist: string; plans: string; agent: (id: string) => string }
 
@@ -59,45 +58,14 @@ export function AgentsPage({ d, hrefs, workspaceSlug }: { d: AgentsPageData; hre
         ) : null}
         {d.workspacePaused ? <Banner tone="warn" title="Everything in this workspace is paused" text="Agents won’t start new work until you resume from the top bar." /> : null}
       </div>
-      <div data-enter="" className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))]">
+      <div data-enter="" className="grid gap-3.5 [grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr))]">
         {d.cards.map((a) => <AgentCard key={a.id} a={a} openHref={hrefs.agent(a.id)} workspaceSlug={workspaceSlug} />)}
       </div>
-      <RowCardList label="All agents">
-        {d.rows.map((r) => {
-          const pct = Math.min(100, (r.budget.used / Math.max(1, r.budget.limit)) * 100);
-          return (
-            <RowCard
-              key={r.id}
-              primary={
-                <a href={hrefs.agent(r.id)} className="tap-target flex items-center gap-2.5 text-text no-underline hover:text-accent-text">
-                  <AgentAvatar color={r.color} shape={r.shape} size={40} animated={false} />
-                  {r.name}
-                </a>
-              }
-              fields={[
-                { label: "Mode", value: <Chip tone={r.mode.tone} icon={r.mode.icon}>{r.mode.label}</Chip> },
-                { label: "State", value: <Chip tone={r.state.tone} icon={r.state.icon}>{r.state.label}</Chip> },
-                { label: "This week", value: r.thisWeek },
-                { label: "Budget", value: <Meter right={`${fmt(r.budget.used)}/${fmt(r.budget.limit)}`} ariaLabel={`Weekly budget ${fmt(r.budget.used)} of ${fmt(r.budget.limit)} credits`} pct={pct} tone={pct >= 100 ? "warn" : "acc"} /> },
-                { label: "Next run", value: r.nextRun },
-              ]}
-            />
-          );
-        })}
-      </RowCardList>
     </Motion>
   );
 }
 
+/** APP-04 Loading: the agents page itself, ghosted. */
 export function AgentsLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={160} h={36} /><Sk w={220} h={16} /></div>
-      <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))]">
-        <SkCard /><SkCard /><SkCard />
-      </div>
-      <RowCardSkeleton rows={3} fields={5} />
-      <span className="sr-only" role="status">Loading agents…</span>
-    </div>
-  );
+  return <Ghost><AgentsPage d={AGENTS_SAMPLE} hrefs={{ newAgent: "#", strategist: "#", plans: "#", agent: () => "#" }} /></Ghost>;
 }

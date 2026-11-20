@@ -1,9 +1,10 @@
-import { ButtonLink, EmptyState, Motion, PageHead, Sk, SkRows, cn } from "@nelio/ui";
+import { ButtonLink, EmptyState, Motion, PageHead, Sk, SkRows, cn, Ghost } from "@nelio/ui";
 import Link from "next/link";
 import { NOTIFICATION_FILTERS, NOTIFICATION_FILTER_LABEL, type NotificationFilter, type NotificationRow } from "@/lib/notifications";
 import { MarkAllReadButton } from "./mark-all-read";
 import { NotificationList } from "./notification-list";
 import { PushCard } from "./push-card";
+import { PREVIEW_NOTIFICATIONS } from "./sample";
 
 export interface NotificationsData { rows: NotificationRow[]; unread: number; total: number }
 
@@ -46,13 +47,7 @@ export function NotificationsPage({ d, filter, hrefs, preview }: { d: Notificati
   );
 }
 
+/** NT-01 Loading: the list itself, ghosted. */
 export function NotificationsLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex items-end justify-between gap-4"><Sk w={240} h={36} /><Sk w={260} h={44} r={22} /></div>
-      <Sk w={460} h={48} r={24} className="max-w-full" />
-      <SkRows n={6} />
-      <span className="sr-only" role="status">Loading notifications…</span>
-    </div>
-  );
+  return <Ghost><NotificationsPage d={{ rows: PREVIEW_NOTIFICATIONS, unread: 3, total: 6 }} filter="all" hrefs={{ filter: () => "#", preferences: "#" }} preview="ask" /></Ghost>;
 }

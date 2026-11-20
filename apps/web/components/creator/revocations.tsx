@@ -1,11 +1,12 @@
 "use client";
 
-import { Banner, Button, EmptyState, Motion, PageHead, PersonAvatar, ResponsiveDialog, RowCard, RowCardList, RowCardSkeleton, SelectField, Sk } from "@nelio/ui";
+import { Banner, Button, EmptyState, Motion, PageHead, PersonAvatar, ResponsiveDialog, RowCard, RowCardList, RowCardSkeleton, SelectField, Sk, Ghost } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "@/components/feedback/toaster";
 import { revokeLicenseAction } from "@/lib/actions/creator";
 import type { ActiveLicense, RevocationsData } from "@/lib/creator";
+import { SAMPLE_REVOCATIONS } from "./sample";
 
 const TEXTAREA = "box-border min-h-[100px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
@@ -47,8 +48,8 @@ function RevokeDialog({ active, open, onOpenChange, onDone, preview, initial }: 
           </div>
         </div>
         {active.length > 1 ? <SelectField label="Which license?" name="revoke-which" value={id} onChange={(e) => setId(e.target.value)} options={active.map((x) => ({ value: x.id, label: `${x.who} · since ${x.since}` }))} /> : null}
-        <Impact title="Stops right away" text={`New clips, renders${a.scheduled ? ` and ${plural(a.scheduled, "scheduled post", "scheduled posts")}` : ""}.`} />
-        <Impact title="Flagged for review" text={a.published ? `${plural(a.published, "published post", "published posts")}. ${a.who} is asked to review ${a.published === 1 ? "it" : "them"} and take ${a.published === 1 ? "it" : "them"} down if required.` : "Nothing published yet."} />
+        <Impact title="Stops right away" text={`New clips, renders${a.scheduled ? ` and ${plural(a.scheduled, "scheduled post", "scheduled posts")}` : ""}`} />
+        <Impact title="Flagged for review" text={a.published ? `${plural(a.published, "published post", "published posts")}, for ${a.who} to review` : "Nothing published yet"} />
         <div className="flex flex-col gap-1.5">
           <label htmlFor="revoke-reason" className="text-[13px] font-bold text-text">Reason (shared with {a.who})</label>
           <textarea id="revoke-reason" className={TEXTAREA} placeholder="Optional" value={reason} onChange={(e) => setReason(e.target.value)} maxLength={500} />
@@ -101,12 +102,7 @@ export function Revocations({ d, preview, initialOpen, initialDone }: { d: Revoc
   );
 }
 
+/** LI-09 Loading: the revocations page itself, ghosted. */
 export function RevocationsLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={220} h={36} /><Sk w={260} h={15} /></div>
-      <RowCardSkeleton rows={3} fields={3} />
-      <span className="sr-only" role="status">Loading revocations…</span>
-    </div>
-  );
+  return <Ghost><Revocations d={SAMPLE_REVOCATIONS} preview /></Ghost>;
 }

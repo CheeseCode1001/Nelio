@@ -1,11 +1,12 @@
 "use client";
 
 import { CAPTION_STYLES, type CaptionStyle } from "@nelio/domain";
-import { Banner, Button, Card, CardHead, Chip, EmptyState, Field, GlassChip, Icon, Motion, PageHead, SelectField, ShortFrame, Sk, cn, photoSrc } from "@nelio/ui";
+import { Banner, Button, Card, CardHead, Chip, EmptyState, Field, GlassChip, Icon, Motion, PageHead, SelectField, ShortFrame, Sk, cn, photoSrc, Ghost } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/feedback/toaster";
 import { useState, useTransition } from "react";
 import { createBrandKitAction, makeDefaultKitAction, saveBrandKitAction } from "@/lib/actions/settings";
+import { SAMPLE_KIT } from "./sample";
 
 export interface Kit { id: string; name: string; colours: string[]; captionFont: string; captionStyle: CaptionStyle; voice: string; isDefault: boolean }
 
@@ -138,15 +139,7 @@ export function BrandKitsPage({ slug, kits, current, kitBase, preview }: { slug?
   );
 }
 
+/** ST-06 Loading: the kits page itself, ghosted. */
 export function BrandKitsLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={90} h={12} /><Sk w={220} h={36} /><Sk w={320} h={16} /></div>
-      <div className="grid grid-cols-1 gap-4 lg:[grid-template-columns:minmax(0,1.4fr)_minmax(0,1fr)]">
-        <div className="flex flex-col gap-4 rounded-card border border-border bg-surface-1 p-5 shadow-card"><Sk w="40%" h={16} /><Sk h={48} r={14} /><div className="flex gap-2.5">{[0, 1, 2, 3].map((i) => <Sk key={i} w={56} h={56} r={16} />)}</div><Sk h={48} r={14} /><Sk h={100} r={14} /></div>
-        <div className="flex flex-col items-center gap-3 rounded-card border border-border bg-surface-1 p-5 shadow-card"><div className="aspect-[280/498] w-full max-w-[280px] rounded-[22px] bg-surface-3" /></div>
-      </div>
-      <span className="sr-only" role="status">Loading brand kits…</span>
-    </div>
-  );
+  return <Ghost><BrandKitsPage kits={[SAMPLE_KIT]} current={SAMPLE_KIT.id} kitBase="#" /></Ghost>;
 }

@@ -1,3 +1,4 @@
+import { photoSrc } from "@nelio/ui/photos";
 import type { CommandCenterData, CommandCenterState } from "./model";
 
 /**
@@ -20,9 +21,9 @@ export const SAMPLE_FILLED: CommandCenterData = {
   stats: { agentsActive: 2, agentsPaused: 1, waiting: 4, waitingClients: 2, published: 12, creditsUsed: 760, creditBudget: 1000 },
   checklist: { done: ["upload", "connect"], dismissed: false },
   agents: [
-    { id: "ag_budget", name: "Budget Shorts", color: "lime", shape: "circle", state: { label: "active", tone: "blue", icon: "zap" }, line: "Clips your podcast into 3 shorts a week", meta: "Next run today 15:00", budget: { used: 180, limit: 300 }, running: true },
-    { id: "ag_podcast", name: "Podcast Clipper", color: "blue", shape: "square", state: { label: "paused", tone: "neutral", icon: "pause" }, line: "Paused by you on Monday", meta: "Resume re-checks budget & licenses", budget: { used: 0, limit: 200 }, running: false },
-    { id: "ag_recipe", name: "Recipe Reels", color: "pink", shape: "blob", state: { label: "budget reached", tone: "warn", icon: "alert" }, line: "Autonomous · Instagram only", meta: "Resets Monday 00:00", budget: { used: 300, limit: 300 }, running: false },
+    { id: "ag_budget", name: "Budget Shorts", color: "lime", shape: "circle", state: { label: "active", tone: "blue", icon: "zap" }, line: "Clips your podcast into 3 shorts a week", meta: "Next run today 15:00", budget: { used: 180, limit: 300 }, running: true, mode: { label: "Assisted mode", icon: "check" }, when: "Next run today 15:00", drafts: 3, cover: photoSrc("p1"), people: [{ initials: "AO", color: "#B6F24A" }, { initials: "SE", color: "#FF7A2F" }, { initials: "CN", color: "#59D8FF" }], morePeople: 3, platforms: ["yt", "ig", "tt"] },
+    { id: "ag_podcast", name: "Podcast Clipper", color: "blue", shape: "square", state: { label: "paused", tone: "neutral", icon: "pause" }, line: "Paused by you on Monday", meta: "Resume re-checks budget & licenses", budget: { used: 0, limit: 200 }, running: false, mode: { label: "Manual mode", icon: "pen" }, when: "Paused by you Monday", drafts: 0, cover: photoSrc("p5"), people: [{ initials: "AO", color: "#B6F24A" }, { initials: "SE", color: "#FF7A2F" }], morePeople: 2, platforms: ["yt", "ig"] },
+    { id: "ag_recipe", name: "Recipe Reels", color: "pink", shape: "blob", state: { label: "budget reached", tone: "warn", icon: "alert" }, line: "Autonomous · Instagram only", meta: "Resets Monday 00:00", budget: { used: 300, limit: 300 }, running: false, mode: { label: "Autonomous mode", icon: "zap" }, when: "Resets Monday 00:00", drafts: 6, cover: null, people: [{ initials: "AO", color: "#B6F24A" }], morePeople: 0, platforms: ["ig"] },
   ],
   pipeline: { ideas: 6, drafts: 9, needsApproval: 4, scheduled: 7, published: 12 },
   needs: [

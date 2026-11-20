@@ -1,7 +1,7 @@
 "use client";
 
 import { EXPIRY_CHOICES, PLATFORM_LABEL, checkUpload, formatBytes, termsSummary, type LicenseKind, type LicensePlatform, type LicenseUse } from "@nelio/domain";
-import { Banner, Button, ButtonLink, Card, CardHead, Checkbox, Chip, Field, Icon, KeyValues, Meter, Motion, PageHead, ResponsiveDialog, SelectField, Sk, Switch, cn } from "@nelio/ui";
+import { Banner, Button, ButtonLink, Card, CardHead, Checkbox, Chip, Field, Icon, KeyValues, Meter, Motion, PageHead, ResponsiveDialog, SelectField, Sk, Switch, cn, Ghost } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState, useTransition } from "react";
 import { toast } from "@/components/feedback/toaster";
@@ -10,6 +10,7 @@ import {
 } from "@/lib/actions/creator";
 import type { TermsData, VideoRow } from "@/lib/creator";
 import { readDuration, sendParts, uploadErrorText } from "@/lib/multipart-client";
+import { SAMPLE_TERMS } from "./sample";
 
 const TEXTAREA = "box-border min-h-[100px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
 
@@ -299,15 +300,7 @@ function ExcludedRow({ v, preview }: { v: VideoRow; preview?: boolean }) {
   );
 }
 
+/** LI-07 Loading: the terms page itself, ghosted. */
 export function LicenseTermsLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={280} h={36} /><Sk w={300} h={15} /></div>
-      <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
-        <div className="flex flex-col gap-3.5 rounded-card border border-border bg-surface-1 p-[18px]">{Array.from({ length: 7 }, (_, i) => <Sk key={i} w={i % 2 ? "100%" : "45%"} h={i % 2 ? 44 : 13} r={i % 2 ? 14 : 6} />)}</div>
-        <div className="flex flex-col gap-3.5 rounded-card border border-border bg-surface-1 p-[18px]"><Sk w="40%" h={16} /><Sk w="90%" h={13} /><Sk w="100%" h={100} r={14} /></div>
-      </div>
-      <span className="sr-only" role="status">Loading your terms…</span>
-    </div>
-  );
+  return <Ghost><LicenseTerms d={SAMPLE_TERMS} displayName="Creator" hrefs={{ verify: "#" }} preview /></Ghost>;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Banner, Button, ButtonLink, Card, CardHead, Chip, EmptyState, Icon, Motion, PageHead, PersonAvatar, RowCard, RowCardList, RowCardSkeleton, Sk } from "@nelio/ui";
+import { Banner, Button, ButtonLink, Card, CardHead, Chip, EmptyState, Icon, Motion, PageHead, PersonAvatar, RowCard, RowCardList, RowCardSkeleton, Sk, Ghost } from "@nelio/ui";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -8,6 +8,7 @@ import { toast } from "@/components/feedback/toaster";
 import { confirmTakedownAction, removeFromScheduleAction } from "@/lib/actions/licensing";
 import type { AffectedPost, LicenseRow, MyLicensesData } from "@/lib/licensing";
 import { ResponsiveDialog } from "@nelio/ui";
+import { SAMPLE_MINE } from "./sample";
 
 const STEPS = [
   "Open the post on the platform where it’s published.",
@@ -91,7 +92,7 @@ export function MyLicenses({ d, hrefs, slug }: { d: MyLicensesData; hrefs: MyLic
             }
             fields={[
               { label: "Type", value: <Chip tone={TYPE_CHIP[l.type].tone}>{TYPE_CHIP[l.type].label}</Chip> },
-              { label: "Status", value: <Chip tone={STATUS_TONE[l.status.kind]}>{l.statusLabel}</Chip> },
+              { label: "Status", value: <Chip tone={STATUS_TONE[l.status.kind]}>{l.statusLabel}</Chip>, headline: true },
               { label: "Expires", value: l.expires },
               { label: "Affected content", value: l.affected },
             ]}
@@ -119,12 +120,7 @@ export function MyLicenses({ d, hrefs, slug }: { d: MyLicensesData; hrefs: MyLic
   );
 }
 
+/** LI-04 Loading: the licences page itself, ghosted. */
 export function MyLicensesLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={70} h={12} /><Sk w={220} h={36} /></div>
-      <RowCardSkeleton rows={3} fields={4} />
-      <span className="sr-only" role="status">Loading your licenses…</span>
-    </div>
-  );
+  return <Ghost><MyLicenses d={SAMPLE_MINE} hrefs={{ marketplace: "#", sourceBase: "#", affected: "#" }} /></Ghost>;
 }

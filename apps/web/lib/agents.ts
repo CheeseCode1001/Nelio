@@ -1,5 +1,5 @@
 import "server-only";
-import { db, weekCommitted } from "@nelio/db";
+import { db, isStorageConfigured, signedGetUrl, storageKeys, weekCommitted, workspaceWatchers } from "@nelio/db";
 import { COUNTS_TOWARD_AGENT_LIMIT, PLANS, nextPlanForAgents, weekResetsAt, type PlanId } from "@nelio/domain";
 import type { AgentColor, IconName, Tone } from "@nelio/ui";
 import type { AgentCardData } from "@/components/command-center/model";
@@ -80,6 +80,18 @@ export async function loadAgents(workspaceId: string, now = new Date()): Promise
     _count: { _all: true },
   });
   const runCount = new Map(runsThisWeek.map((r) => [r.agentId, r._count._all]));
+  const weekFrom = new Date(weekResetsAt(weekStart, ws.timezone).getTime() - 7 * DAY);
+  const drafts = await client.post.groupBy({ by: ["agentId"], where: { workspaceId, agentId: { not: null }, createdAt: { gte: weekFrom } }, _count: { _all: true } });
+  const draftCount = new Map(drafts.map((d) => [d.agentId!, d._count._all]));
+  // Agent card header: the poster of the last video each agent worked on.
+  const lastAssets = agents.length ? await client.agentRun.findMany({ where: { workspaceId, agentId: { in: agents.map((a) => a.id) }, assetId: { not: null } }, orderBy: { createdAt: "desc" }, distinct: ["agentId"], select: { agentId: true, assetId: true } }) : [];
+  const cover = new Map<string, string | null>();
+  for (const r of lastAssets) cover.set(r.agentId!, isStorageConfigured() ? await signedGetUrl(storageKeys.poster(workspaceId, r.assetId!), { expiresIn: 900 }).catch(() => null) : null);
+  // People who see the agents' work: the workspace's managers and the org's owners and admins.
+  const watcherIds = await workspaceWatchers(client, workspaceId);
+  const watchers = watcherIds.length ? await client.user.findMany({ where: { id: { in: watcherIds } }, select: { fullName: true }, take: 3 }) : [];
+  const PEOPLE_COLORS = ["#B6F24A", "#FF7A2F", "#59D8FF"];
+  const people = watchers.map((u, i) => ({ initials: u.fullName.split(/\s+/).filter(Boolean).slice(0, 2).map((p) => p[0]!.toUpperCase()).join(""), color: PEOPLE_COLORS[i % 3]! }));
 
   const cards: AgentsPageData["cards"] = [];
   const rows: AgentRowData[] = [];
@@ -97,7 +109,12 @@ export async function loadAgents(workspaceId: string, now = new Date()): Promise
     const color = a.color as AgentColor;
     const shape = a.shape as AgentShape;
     const budget = { used, limit: a.weeklyBudget };
-    cards.push({ id: a.id, name: a.name, color, shape, state: STATE_CHIP[state], stateName: state, line, meta, budget, running: state === "active" && !ws.pausedAt });
+    const when = ws.pausedAt ? "Workspace paused" : state === "paused" ? line : state === "budget_reached" ? resets : a.nextRunAt ? `Next run ${formatWhen(a.nextRunAt, now, ws.timezone)}` : "Runs when you start it";
+    cards.push({
+      id: a.id, name: a.name, color, shape, state: STATE_CHIP[state], stateName: state, line, meta, budget, running: state === "active" && !ws.pausedAt,
+      mode: { label: `${MODE_LABEL[a.mode as AgentModeName]} mode`, icon: MODE_CHIP[a.mode as AgentModeName].icon },
+      when, drafts: draftCount.get(a.id) ?? 0, cover: cover.get(a.id) ?? null, people, morePeople: Math.max(0, watcherIds.length - people.length), platforms: [],
+    });
     const n = runCount.get(a.id) ?? 0;
     rows.push({
       id: a.id, name: a.name, color, shape, mode: MODE_CHIP[a.mode as AgentModeName], state: STATE_CHIP[state],

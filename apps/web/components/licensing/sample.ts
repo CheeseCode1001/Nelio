@@ -10,11 +10,11 @@ export const SAMPLE_MARKET: MarketplaceData = {
   filtered: false,
   niches: ["Food & cooking", "Fitness", "Personal finance", "Comedy", "Tech"],
   cards: [
-    { id: "s1", name: "Chef Kemi", sub: "Nigerian home cooking · 120 videos", license: "free", platforms: ["ig", "yt", "tt"], licensees: 12, posterUrl: photoSrc("p1"), verified: true },
-    { id: "s2", name: "Lagos Money Talk", sub: "Personal finance interviews", license: "private", platforms: ["ig", "yt"], licensees: 4, posterUrl: photoSrc("p5"), verified: true },
-    { id: "s3", name: "FitWithTobi", sub: "Home workouts and nutrition", license: "free", platforms: ["ig", "yt"], licensees: 20, posterUrl: photoSrc("p7"), verified: true },
-    { id: "s4", name: "Campus Comedy", sub: "Student sketches", license: "private", platforms: ["ig", "tt"], licensees: 7, posterUrl: photoSrc("p3"), verified: true },
-    { id: "s5", name: "Naija Tech Daily", sub: "Gadgets and apps", license: "free", platforms: ["yt"], licensees: 9, posterUrl: photoSrc("p2"), verified: true },
+    { id: "s1", name: "Chef Kemi", sub: "Nigerian home cooking · 120 videos", license: "free", platforms: ["ig", "yt", "tt"], licensees: 12, posterUrl: photoSrc("p1"), verified: true, line: "@chefkemi · Nigerian home cooking", videos: 120 },
+    { id: "s2", name: "Lagos Money Talk", sub: "Personal finance interviews", license: "private", platforms: ["ig", "yt"], licensees: 4, posterUrl: photoSrc("p5"), verified: true, line: "@lagosmoneytalk · finance interviews", videos: 48 },
+    { id: "s3", name: "FitWithTobi", sub: "Home workouts and nutrition", license: "free", platforms: ["ig", "yt"], licensees: 20, posterUrl: photoSrc("p7"), verified: true, line: "@fitwithtobi · home workouts", videos: 64 },
+    { id: "s4", name: "Campus Comedy", sub: "Student sketches", license: "private", platforms: ["ig", "tt"], licensees: 7, posterUrl: photoSrc("p3"), verified: true, line: "@campuscomedy · student sketches", videos: 31 },
+    { id: "s5", name: "Naija Tech Daily", sub: "Gadgets and apps", license: "free", platforms: ["yt"], licensees: 9, posterUrl: photoSrc("p2"), verified: true, line: "@naijatech · gadgets and apps", videos: 87 },
   ],
 };
 

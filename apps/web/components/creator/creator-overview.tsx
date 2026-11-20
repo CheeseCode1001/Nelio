@@ -1,13 +1,14 @@
 "use client";
 
 import { termsSummary } from "@nelio/domain";
-import { Banner, Button, ButtonLink, Card, CardHead, EmptyState, Field, KeyValues, Motion, PageHead, PersonAvatar, PlatformBadge, ResponsiveDialog, RowCard, RowCardList, RowCardSkeleton, Sk, StatTile } from "@nelio/ui";
+import { Banner, Button, ButtonLink, Card, CardHead, EmptyState, Field, KeyValues, Motion, PageHead, PersonAvatar, PlatformBadge, ResponsiveDialog, RowCard, RowCardList, RowCardSkeleton, Sk, StatTile, Ghost } from "@nelio/ui";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "@/components/feedback/toaster";
 import { decideRequestAction } from "@/lib/actions/creator";
 import type { OverviewData, RequestRow } from "@/lib/creator";
+import { SAMPLE_OVERVIEW } from "./sample";
 
 const fmt = (n: number) => n.toLocaleString("en-US");
 
@@ -181,15 +182,7 @@ function CopyListing({ href, preview }: { href: string; preview?: boolean }) {
   );
 }
 
+/** LI-05 Loading: the overview itself, ghosted. */
 export function CreatorOverviewLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={110} h={12} /><Sk w={220} h={36} /><Sk w={280} h={15} /></div>
-      <div className="grid grid-cols-1 gap-3.5 min-[480px]:grid-cols-2 xl:grid-cols-4">
-        {Array.from({ length: 4 }, (_, i) => <div key={i} className="flex flex-col gap-2.5 rounded-card border border-border bg-surface-1 px-5 py-[18px]"><Sk w={110} h={12} /><Sk w={60} h={30} /></div>)}
-      </div>
-      <div className="flex flex-col gap-3.5 rounded-card border border-border bg-surface-1 p-[18px]"><Sk w={120} h={16} /><RowCardSkeleton rows={3} fields={3} /></div>
-      <span className="sr-only" role="status">Loading your overview…</span>
-    </div>
-  );
+  return <Ghost><CreatorOverview d={SAMPLE_OVERVIEW} hrefs={{ verify: "#", terms: "#", usage: "#", listing: null }} preview /></Ghost>;
 }

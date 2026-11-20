@@ -208,3 +208,22 @@ html[data-motion="reduce"] .n-mark-animated *, html[data-motion="reduce"] [aria-
 /* App-level Reduce motion switch: animated stickers show their still frame. */
 html[data-motion="reduce"] .n-sticker { background-image: var(--still); }
 html[data-motion="reduce"] .n-sticker img { visibility: hidden; }
+
+/* Loading states that keep the real layout (Ghost, refresh of 20 Nov 2026): text becomes flat grey blocks shaped like
+   the words, pictures and icons go flat grey, and everything pulses gently. Still under reduced motion. */
+.n-ghost { --n-ghost-fill: var(--color-surface-3); pointer-events: none; user-select: none; }
+.n-ghost * { color: transparent !important; text-decoration: none !important; caret-color: transparent; box-shadow: none !important; border-color: var(--color-border) !important; }
+/* Coloured panels, chips and buttons go neutral: the layout shows, not the colour. */
+.n-ghost :is([class*="bg-"]:not([class*="bg-surface-1"]):not([class*="bg-transparent"]):not([class*="bg-white"]), [style*="background"]) { background-color: var(--color-surface-2) !important; }
+.n-ghost :is(h1, h2, h3, h4, p, span, a, button, label, dt, dd, li, b, strong, small, kbd, div):not(:has(*)):not(:empty) {
+  background-color: var(--n-ghost-fill) !important; border-radius: 6px; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  animation: n-ghost 1.4s ease-in-out infinite;
+}
+.n-ghost :is(h1, h2, h3, h4, p, span, b, strong, small, dt, dd, label, div):not(:has(*)):not(:empty) { width: fit-content; max-width: 100%; }
+.n-ghost :is(img, video, canvas) { filter: brightness(0) invert(0.88); animation: n-ghost 1.4s ease-in-out infinite; }
+.n-ghost svg, .n-ghost svg * { color: #000 !important; }
+.n-ghost svg { filter: brightness(0) invert(0.88); animation: n-ghost 1.4s ease-in-out infinite; }
+.n-ghost :is(input, textarea, select)::placeholder { color: transparent !important; }
+@keyframes n-ghost { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+@media (prefers-reduced-motion: reduce) { .n-ghost *, .n-ghost :is(img, svg, video) { animation: none !important; } }
+html[data-motion="reduce"] .n-ghost *, html[data-motion="reduce"] .n-ghost :is(img, svg, video) { animation: none !important; }
