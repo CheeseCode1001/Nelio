@@ -14,6 +14,9 @@ export interface ExportRow {
   credits: string;
   posterUrl: string | null;
   downloadUrl: string | null;
+  /** Clip card (refresh of 20 Nov 2026): length ("0:42") and the source video it was cut from. */
+  duration?: string;
+  source?: string;
 }
 export interface ExportsData { rows: ExportRow[]; trial: { used: number; cap: number } | null }
 
@@ -35,7 +38,7 @@ export async function loadExports(workspaceId: string, orgId: string): Promise<E
       where: { workspaceId },
       orderBy: { createdAt: "desc" },
       take: 100,
-      include: { project: { select: { name: true, assetId: true } } },
+      include: { project: { select: { name: true, assetId: true, startMs: true, endMs: true, asset: { select: { filename: true } } } } },
     }),
     client.organization.findUniqueOrThrow({ where: { id: orgId }, select: { plan: true } }),
     client.render.count({ where: { orgId, status: { notIn: ["failed", "canceled"] } } }),
@@ -47,12 +50,15 @@ export async function loadExports(workspaceId: string, orgId: string): Promise<E
   const rows: ExportRow[] = [];
   for (const r of renders) {
     const status = r.status as ExportRow["status"];
-    const settings = r.settings as { format?: string } | null;
+    const settings = r.settings as { format?: string; startMs?: number; endMs?: number } | null;
+    const secs = Math.max(0, Math.round(((settings?.endMs ?? r.project.endMs) - (settings?.startMs ?? r.project.startMs)) / 1000));
     const pct = status === "rendering" ? Number(/(\d+)%/.exec(steps.find((s) => s.runId === r.runId)?.detail ?? "")?.[1] ?? 0) : null;
     rows.push({
       id: r.id,
       title: `“${r.project.name}”${r.label ? ` · ${r.label.split(" · ")[0]}` : ""}`,
       format: `${settings?.format ?? r.format} · ${r.resolution}`,
+      duration: `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}`,
+      source: r.project.asset.filename.replace(/\.[^.]+$/, ""),
       status,
       chip: CHIP[status],
       progress: pct,

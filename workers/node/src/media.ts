@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { db, putObject, signedGetUrl, storageKeys } from "@nelio/db";
+import { db, licenseForAsset, putObject, signedGetUrl, storageKeys } from "@nelio/db";
 import { MAX_DURATION_SEC, formatBytes, formatDuration, processingEstimate, processingSplit } from "@nelio/domain";
 import { ffmpeg, probe, progressSeconds, withTempDir } from "./ffmpeg";
 import { NelioAiDeclined, NelioAiUnavailable, isRetryableAiError, rankMoments, transcriptLines } from "./nelio-ai";
@@ -45,6 +45,9 @@ const checkFile: StepHandler = async (ctx) => {
   const asset = await assetFor(ctx);
   if (!asset) return blocked("missing", "This video was deleted.");
   if (!asset.rights) return blocked("rights", "Tell us who owns this video before it’s processed.");
+  // Licensed videos: the licence is checked again before any work (revoked, expired, suspended or excluded stops it).
+  const lic = await licenseForAsset(db(), asset.id, { action: "process" });
+  if (lic && !lic.check.ok) return blocked("license", lic.check.message);
   const url = await signedGetUrl(asset.storageKey, { expiresIn: 3600 });
   let p;
   try {

@@ -1,7 +1,7 @@
 "use server";
 
-import { db, findWorkspaceFor, type WorkspaceSummary } from "@nelio/db";
-import { DESTINATIONS, POST_KINDS, can, draftTitle, hashtagsIn, type PostContent } from "@nelio/domain";
+import { db, findWorkspaceFor, type WorkspaceSummary, licenseForAsset } from "@nelio/db";
+import { DESTINATIONS, POST_KINDS, can, draftTitle, hashtagsIn, type PostContent, withAttribution } from "@nelio/domain";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getSession, type Session } from "../auth";
@@ -46,9 +46,15 @@ export async function saveDraftAction(slug: string, draftId: string | null, inpu
   const client = db();
   let clipName: string | null = null;
   if (v.renderId) {
-    const r = await client.render.findFirst({ where: { id: v.renderId, workspaceId: a.ws.workspaceId, status: "ready" }, select: { label: true, project: { select: { name: true } } } });
+    const r = await client.render.findFirst({ where: { id: v.renderId, workspaceId: a.ws.workspaceId, status: "ready" }, select: { label: true, project: { select: { name: true, assetId: true } } } });
     if (!r) return { ok: false, error: "That clip isn’t available any more. Pick another one." };
     clipName = `${r.project.name}${r.label ? ` · ${r.label.split(" · ")[0]}` : ""}`;
+    // Licensed clips always carry the owner's attribution (CS-02 Licensed: added automatically).
+    const lic = await licenseForAsset(client, r.project.assetId, { action: "schedule" });
+    if (lic?.attribution) {
+      v.content.instagram.caption = withAttribution(v.content.instagram.caption, lic.attribution);
+      v.content.youtube.description = withAttribution(v.content.youtube.description, lic.attribution);
+    }
   }
   const kind = v.kind === "script" ? "script" : v.renderId ? "clip_caption" : "caption";
   const data = {

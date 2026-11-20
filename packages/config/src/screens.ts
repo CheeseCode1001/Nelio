@@ -2,7 +2,7 @@
  * Screen registry: every operator-app screen with its route (B §5) and the milestone that builds it
  * (DESIGN_TRACEABILITY.md §5). Navigation, the command palette and the "not built yet" stand-in all read this.
  */
-export const CURRENT_MILESTONE = 4;
+export const CURRENT_MILESTONE = 5;
 
 // Read from the host app's environment (Next.js inlines NEXT_PUBLIC_* values at build time).
 declare const process: { env: Record<string, string | undefined> };
@@ -58,6 +58,13 @@ export const SCREENS = [
   s("ST-03", "Appearance", "account", "/appearance", 2),
   s("ST-04", "Notification preferences", "account", "/notifications", 9),
   s("ST-09", "Privacy & data", "account", "/privacy", 9),
+  // Nelio Studio (linked "Studio" canvas, 109 boards, added 20 Nov 2026): on the roadmap after launch, hidden until built.
+  s("ED-01", "Editor", "workspace", "/editor", 11),
+  s("GE-01", "Generate", "workspace", "/generate", 11),
+  s("TF-01", "Transform", "workspace", "/transform", 11),
+  s("VL-01", "Voice Lab", "workspace", "/voice", 11),
+  s("TR-01", "Translate", "workspace", "/translate", 11),
+  s("ST-11", "Likeness and voice", "account", "/likeness", 11),
 ] as const satisfies readonly ScreenDef[];
 
 export type ScreenId = (typeof SCREENS)[number]["id"];
@@ -112,7 +119,8 @@ export interface NavItem {
 export const NAV_GROUPS: { label: string | null; agencyOnly?: boolean; items: NavItem[] }[] = [
   { label: null, items: [{ id: "APP-01", icon: "home", label: "Command Center", tab: "home" }, { id: "APP-03", icon: "activity", label: "Activity", tab: "activity" }] },
   { label: "AI", items: [{ id: "APP-02", icon: "spark", label: "Strategist" }, { id: "APP-04", icon: "bot", label: "Agents" }] },
-  { label: "Create", items: [{ id: "CL-01", icon: "scissors", label: "Clipping Studio" }, { id: "CS-01", icon: "pen", label: "Content Studio" }, { id: "CL-05", icon: "download", label: "Exports" }] },
+  { label: "Create", items: [{ id: "CL-01", icon: "scissors", label: "Clipping Studio" }, { id: "ED-01", icon: "file", label: "Editor" }, { id: "GE-01", icon: "spark", label: "Generate" }, { id: "CS-01", icon: "pen", label: "Content Studio" }, { id: "CL-05", icon: "download", label: "Exports" }] },
+  { label: "Voice and video", items: [{ id: "TF-01", icon: "eye", label: "Transform" }, { id: "VL-01", icon: "zap", label: "Voice Lab" }, { id: "TR-01", icon: "globe", label: "Translate" }] },
   { label: "Publish", items: [{ id: "PB-01", icon: "calendar", label: "Calendar", tab: "calendar" }, { id: "PB-02", icon: "file", label: "Drafts" }, { id: "PB-04", icon: "check", label: "Approvals", tab: "approvals" }] },
   { label: "Grow", items: [{ id: "AN-01", icon: "chart", label: "Analytics" }, { id: "LI-01", icon: "shield", label: "Licensing" }] },
   { label: "Workspace", items: [{ id: "IN-01", icon: "link", label: "Connections" }, { id: "ST-06", icon: "palette", label: "Brand kits" }, { id: "ST-10", icon: "gear", label: "Settings" }] },

@@ -193,6 +193,7 @@ model Workspace {
   runs        AgentRun[]
   activity    ActivityEvent[]
   media       MediaAsset[]
+  licenses    LicenseAgreement[]
 
   // Lets child tables carry (workspace_id, org_id) with a foreign key that proves they match.
   @@unique([id, orgId])
@@ -253,10 +254,19 @@ model CreatorProfile {
   displayName        String             @map("display_name")
   primaryPlatform    String             @map("primary_platform")
   verificationStatus VerificationStatus @default(unverified) @map("verification_status")
+  /// Milestone 5: the public listing in the licensing marketplace (LI-01, LI-02).
+  bio                String             @default("")
+  niche              String?
+  listingStatus      ListingStatus      @default(draft) @map("listing_status")
+  suspendedReason    String?            @map("suspended_reason")
   createdAt          DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt          DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channels   CreatorChannel[]
+  terms      LicenseTerms?
+  videos     CreatorVideo[]
+  agreements LicenseAgreement[]
 
   @@map("creator_profiles")
 }
@@ -678,6 +688,8 @@ enum PostState {
   draft
   needs_approval
   scheduled
+  /// Licence revoked, expired or suspended: the post won't go out until it's resolved (LI-04, LI-09).
+  on_hold
   published
   failed
 
@@ -704,6 +716,9 @@ model MediaAsset {
   rightsNote       String?           @map("rights_note")
   /// Short reference shown on clips ("rights r-881"), unique per workspace.
   rightsRef        String            @map("rights_ref")
+  /// Milestone 5: set when the video comes from a creator under a licence. Every use re-checks the licence.
+  licenseAgreementId String?         @map("license_agreement_id") @db.Uuid
+  creatorVideoId     String?         @map("creator_video_id") @db.Uuid
   quality          ProcessingQuality @default(balanced)
   language         String            @default("en")
   estimatedCredits Int               @default(0) @map("estimated_credits")
@@ -718,9 +733,11 @@ model MediaAsset {
   candidates ClipCandidate[]
   projects   ClipProject[]
   runs       AgentRun[]
+  license    LicenseAgreement? @relation(fields: [licenseAgreementId], references: [id], onDelete: Restrict)
 
   @@unique([id, workspaceId])
   @@unique([workspaceId, rightsRef])
+  @@index([licenseAgreementId])
   @@index([workspaceId, createdAt])
   @@map("media_assets")
 }
@@ -878,6 +895,8 @@ model Post {
   hashtags    String[]  @default([])
   platforms   String[]  @default([])
   state       PostState @default(draft)
+  /// Milestone 5: "review" when the licence behind a published post was revoked (takedown checklist).
+  rightsFlag  String?   @map("rights_flag")
   createdById String    @map("created_by_id") @db.Uuid
   createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
@@ -888,15 +907,158 @@ model Post {
   @@map("posts")
 }
 
-/// "Notify me" on gated features (CS-03 Original AI video). One row per person and feature.
+/// "Notify me" on gated features (CS-03 Original AI video, LI-10 Payouts). One row per person and feature;
+/// creators have no workspace, so org and workspace are empty for them.
 model FeatureInterest {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  orgId       String   @map("org_id") @db.Uuid
-  workspaceId String   @map("workspace_id") @db.Uuid
+  orgId       String?  @map("org_id") @db.Uuid
+  workspaceId String?  @map("workspace_id") @db.Uuid
   userId      String   @map("user_id") @db.Uuid
   feature     String
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
   @@unique([userId, feature])
   @@map("feature_interest")
+}
+
+// ---------------------------------------------------------------- Milestone 5: licensing and the creator portal
+
+enum ListingStatus {
+  draft
+  listed
+  suspended
+
+  @@map("listing_status")
+}
+
+enum LicenseType {
+  free
+  private
+  /// Shown as "Coming later" until payouts exist (B-08). Never offered.
+  paid
+
+  @@map("license_type")
+}
+
+enum AgreementStatus {
+  requested
+  active
+  declined
+  revoked
+  expired
+  canceled
+
+  @@map("agreement_status")
+}
+
+/// A channel the creator claims (LI-06). Verified only by signing in with that platform (oauth)
+/// or by a platform admin checking evidence (manual). Never by public visibility.
+model CreatorChannel {
+  id            String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  creatorId     String             @map("creator_id") @db.Uuid
+  platform      String
+  title         String
+  handle        String?
+  url           String?
+  externalId    String?            @map("external_id")
+  status        VerificationStatus @default(pending)
+  /// oauth | manual
+  method        String?
+  evidence      Json               @default("{}")
+  failureReason String?            @map("failure_reason")
+  verifiedAt    DateTime?          @map("verified_at") @db.Timestamptz(6)
+  createdAt     DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  creator CreatorProfile @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@unique([platform, externalId])
+  @@index([creatorId])
+  @@map("creator_channels")
+}
+
+/// The creator's licensing terms (LI-07). Agreements keep a snapshot, so edits never change a licence already given.
+model LicenseTerms {
+  id             String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  creatorId      String      @unique @map("creator_id") @db.Uuid
+  licenseType    LicenseType @default(free) @map("license_type")
+  /// clips | compilations
+  allowedUses    String[]    @default(["clips"]) @map("allowed_uses")
+  platforms      String[]    @default([])
+  commercial     Boolean     @default(false)
+  attribution    String      @default("")
+  /// captions | crops | trims
+  edits          String[]    @default(["captions", "crops", "trims"])
+  /// Months a licence lasts from the day it starts; null = until revoked.
+  expiresMonths  Int?        @default(12) @map("expires_months")
+  hasThirdParty  Boolean     @default(false) @map("has_third_party")
+  thirdPartyNote String      @default("") @map("third_party_note")
+  version        Int         @default(0)
+  publishedAt    DateTime?   @map("published_at") @db.Timestamptz(6)
+  createdAt      DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  creator CreatorProfile @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@map("license_terms")
+}
+
+/// A video the creator offers for licensing. Creators upload it to Nelio; importing from a channel waits for B-01.
+model CreatorVideo {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  creatorId     String    @map("creator_id") @db.Uuid
+  title         String
+  filename      String
+  contentType   String    @map("content_type")
+  sizeBytes     BigInt    @map("size_bytes")
+  durationSec   Float?    @map("duration_sec")
+  storageKey    String    @unique @map("storage_key")
+  multipartId   String?   @map("multipart_id")
+  /// uploading | ready | failed
+  status        String    @default("uploading")
+  /// Third-party music or footage the creator doesn't control: never licensable (LI-07 "Excluded videos").
+  excluded      Boolean   @default(false)
+  excludeReason String?   @map("exclude_reason")
+  /// Poster frame and length, read by the worker once the upload completes (marketplace cards, LI-02).
+  posterKey     String?   @map("poster_key")
+  checkedAt     DateTime? @map("checked_at") @db.Timestamptz(6)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt     DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+  creator CreatorProfile @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@index([creatorId, createdAt])
+  @@map("creator_videos")
+}
+
+/// A licence between a creator and a workspace (LI-03, LI-04, LI-09). `terms` is the snapshot agreed to.
+model LicenseAgreement {
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  creatorId     String          @map("creator_id") @db.Uuid
+  orgId         String          @map("org_id") @db.Uuid
+  workspaceId   String          @map("workspace_id") @db.Uuid
+  type          LicenseType
+  status        AgreementStatus
+  terms         Json
+  termsVersion  Int             @map("terms_version")
+  requestNote   String?         @map("request_note")
+  decisionNote  String?         @map("decision_note")
+  requestedById String          @map("requested_by_id") @db.Uuid
+  startsAt      DateTime?       @map("starts_at") @db.Timestamptz(6)
+  expiresAt     DateTime?       @map("expires_at") @db.Timestamptz(6)
+  decidedAt     DateTime?       @map("decided_at") @db.Timestamptz(6)
+  revokedAt     DateTime?       @map("revoked_at") @db.Timestamptz(6)
+  revokeReason  String?         @map("revoke_reason")
+  createdAt     DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  creator   CreatorProfile @relation(fields: [creatorId], references: [id], onDelete: Restrict)
+  workspace Workspace      @relation(fields: [workspaceId, orgId], references: [id, orgId], onDelete: Cascade)
+  assets    MediaAsset[]
+
+  @@index([workspaceId, status])
+  @@index([creatorId, status])
+  @@index([status, expiresAt])
+  @@map("license_agreements")
 }

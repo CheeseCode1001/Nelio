@@ -1,14 +1,14 @@
 "use client";
 
 import { SCHEDULE_PRESETS } from "@nelio/domain";
-import { Banner, Button, Card, CardHead, Chip, Field, Meter, SelectField, Switch } from "@nelio/ui";
+import { Banner, Button, Card, CardHead, Chip, Field, Meter, SelectField, Switch, TEXTAREA_CLASS, LABEL_CLASS } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { useActionState, useId, useState, useTransition } from "react";
 import { pauseAgentAction, resumeAgentAction, runAgentNowAction, saveAgentBudgetAction, saveAgentPolicyAction, type FormState } from "@/lib/actions/agents";
 import type { AgentDetailData } from "@/lib/agent-detail";
 
 export const AGENT_FORM_ID = "agent-form";
-const TEXTAREA = "box-border min-h-[96px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
+const TEXTAREA = TEXTAREA_CLASS;
 const fmt = (n: number) => n.toLocaleString("en-US");
 
 function Saved({ state }: { state: FormState }) {
@@ -66,8 +66,8 @@ export function PolicyForm({ slug, d }: { slug?: string; d: AgentDetailData }) {
         <SelectField label="Content types" name="contentTypes" options={[{ value: "short_clips", label: "Short clips from long videos" }]} disabled={stopped} />
         <SelectField label="Source pool" name="sourcePool" options={[{ value: "uploads", label: "Your uploads" }]} hint="Licensed creators can be added once licensing opens." disabled={stopped} />
         <SelectField label="Schedule" name="schedule" defaultValue={d.policy.schedule} options={Object.entries(SCHEDULE_PRESETS).map(([value, p]) => ({ value, label: p.schedule ? `${p.label} WAT` : p.label }))} error={e.schedule} disabled={stopped} />
-        <div className="flex min-w-0 flex-col gap-1.5">
-          <label htmlFor={`${id}-rules`} className="text-[13px] font-bold text-text">Brand rules</label>
+        <div className="flex min-w-0 flex-col gap-2">
+          <label htmlFor={`${id}-rules`} className={LABEL_CLASS}>Brand rules</label>
           <textarea id={`${id}-rules`} name="brandRules" defaultValue={d.policy.brandRules} maxLength={600} disabled={stopped} className={TEXTAREA} placeholder="Tone, words to avoid, caption style…" aria-invalid={e.brandRules ? true : undefined} />
           {e.brandRules ? <span className="text-[12.5px] text-err-text">{e.brandRules}</span> : null}
         </div>

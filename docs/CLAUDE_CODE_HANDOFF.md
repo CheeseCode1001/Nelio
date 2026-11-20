@@ -7,6 +7,7 @@ Read this file together with **`docs/source/04_MASTER_PROMPT_2_CLAUDE_CODE.md`**
 | **Product** | Nelio: an AI social media operating system for creators, businesses and agencies. Authorized AI video clipping is the flagship. |
 | **Approved design (canvas)** | **https://claude.ai/artifact/5rE8YAdMngxLvgf5GsdPKu** ("Nelio — High-fidelity UI", 471 boards) |
 | **Offline copy of the design** | `docs/design/E_hifi/canvas/`: every board as an HTML file. Use this if you can't open the link. |
+| **Nelio Studio canvas** (added 20 Nov 2026) | **https://claude.ai/artifact/SvKwDjia8PLUWyY7b16Stn** ("Nelio Studio — High-fidelity UI", pages 4a–4e, 109 boards); offline copy `docs/design/E_hifi/canvas-studio/`. It is part of the same approved design, split off because a canvas holds at most 512 files; the main canvas indexes it on the `StudioIndex` board. Spec: the Studio feature plan, https://claude.ai/artifact/65M4cHQBPnNAhd3D8ZDC7Y. Screen map: `docs/build/DESIGN_TRACEABILITY.md` §2 section 14. |
 | **Repository** | https://github.com/CheeseCode1001/Nelio |
 | **Design status** | Approved for implementation by the product owner (Miracle Eze), 12 Nov 2026 |
 | **Owner contact** | Ask the product owner in chat. Never put credentials in chat or in the repo. |

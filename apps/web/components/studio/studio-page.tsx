@@ -1,7 +1,8 @@
 import { renderEstimate } from "@nelio/domain";
-import { Card, Icon, Illustration, KeyValues, Motion, Sk, cn } from "@nelio/ui";
+import { Card, Icon, Illustration, KeyValues, Motion, Sk, cn, Ghost } from "@nelio/ui";
 import type { StepState, StudioData } from "@/lib/studio";
 import { StudioEditor, StudioHeader, type StudioHrefs } from "./studio-editor";
+import { STUDIO_SAMPLE } from "./sample";
 
 const STEP_LOOK: Record<StepState, { bg: string; icon: "check" | "refresh" | "clock" | "alert"; fg: string }> = {
   done: { bg: "bg-ok-tint", icon: "check", fg: "text-ok-text" },
@@ -65,24 +66,7 @@ export function StudioPage({ slug, d, hrefs, preview }: { slug?: string; d: Stud
   );
 }
 
+/** CL-03 Loading: the Studio itself, ghosted. */
 export function StudioLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={180} h={13} /><Sk w={320} h={36} /><Sk w={200} h={16} /></div>
-      <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 xl:[grid-template-columns:minmax(0,1fr)_minmax(0,1.15fr)_minmax(0,1fr)]">
-        <div className="flex flex-col gap-3.5">
-          <div className="flex flex-col gap-2.5 rounded-card border border-border bg-surface-1 p-5 shadow-card">
-            {Array.from({ length: 4 }, (_, i) => <div key={i} className="flex items-center gap-3"><Sk w={36} h={36} r={12} /><div className="flex grow flex-col gap-2"><Sk w="70%" h={12} /><Sk w="45%" h={10} /></div><Sk w={70} h={24} r={12} /></div>)}
-          </div>
-          <div className="flex flex-col gap-2.5 rounded-card border border-border bg-surface-1 p-5 shadow-card"><Sk w="90%" h={12} /><Sk w="80%" h={12} /><Sk w="85%" h={12} /><Sk w="60%" h={12} /></div>
-        </div>
-        <div className="flex flex-col items-center gap-3.5 rounded-card border border-border bg-surface-1 p-5 shadow-card"><div className="aspect-[9/16] w-full max-w-[300px] rounded-[22px] bg-surface-3" /></div>
-        <div className="flex flex-col gap-3.5 md:col-span-2 md:grid md:grid-cols-2 xl:col-span-1 xl:flex">
-          <div className="flex flex-col gap-2.5 rounded-card border border-border bg-surface-1 p-5 shadow-card"><Sk w="70%" h={12} /><Sk w="90%" h={12} /><Sk w="55%" h={12} /></div>
-          <div className="flex flex-col gap-2.5 rounded-card border border-border bg-surface-1 p-5 shadow-card"><Sk w="80%" h={12} /><Sk w="60%" h={12} /></div>
-        </div>
-      </div>
-      <span className="sr-only" role="status">Loading the Studio…</span>
-    </div>
-  );
+  return <Ghost><StudioPage d={STUDIO_SAMPLE} hrefs={{ library: "#", variants: "#" }} /></Ghost>;
 }

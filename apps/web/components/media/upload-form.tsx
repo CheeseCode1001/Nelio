@@ -3,10 +3,11 @@
 import { gooeyToast } from "goey-toast";
 import { toast } from "@/components/feedback/toaster";
 import { CAPTION_LANGUAGES, QUALITY_HELP, QUALITY_LABEL, checkUpload, formatBytes, formatDuration, processingEstimate, type Quality } from "@nelio/domain";
-import { Banner, Button, Card, CardHead, Chip, Icon, Illustration, Meter, SelectField, cn } from "@nelio/ui";
+import { Banner, Button, ButtonLink, Card, CardHead, Chip, Icon, Illustration, Meter, SelectField, cn, TEXTAREA_CLASS, LABEL_CLASS } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { cancelUploadAction, completeUploadAction, signPartsAction, startProcessingAction, startUploadAction } from "@/lib/actions/media";
+import { readDuration, sendParts, uploadErrorText } from "@/lib/multipart-client";
 
 type Rights = "own" | "permission" | "license";
 type FileInfo = { name: string; size: number; type: string; durationSec: number | null };
@@ -19,41 +20,10 @@ type Phase =
 
 export interface UploadPreview { phase: Phase; rights?: Rights | null; norights?: boolean }
 
-const TEXTAREA = "box-border min-h-[100px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
-const PARALLEL = 3;
-
-/** Reads a video's length in the browser before upload, for the estimate. Null if the browser can't tell. */
-function readDuration(file: File): Promise<number | null> {
-  return new Promise((resolve) => {
-    const url = URL.createObjectURL(file);
-    const v = document.createElement("video");
-    v.preload = "metadata";
-    const done = (d: number | null) => { URL.revokeObjectURL(url); resolve(d); };
-    v.onloadedmetadata = () => done(Number.isFinite(v.duration) && v.duration > 0 ? v.duration : null);
-    v.onerror = () => done(null);
-    setTimeout(() => done(null), 8000);
-    v.src = url;
-  });
-}
-
-function putPart(url: string, blob: Blob, onProgress: (n: number) => void, signal: AbortSignal): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const x = new XMLHttpRequest();
-    x.open("PUT", url);
-    x.upload.onprogress = (e) => onProgress(e.loaded);
-    x.onload = () => {
-      const etag = x.getResponseHeader("ETag");
-      if (x.status >= 200 && x.status < 300 && etag) resolve(etag);
-      else reject(new Error(x.status ? `part answered ${x.status}` : "no ETag (storage CORS)"));
-    };
-    x.onerror = () => reject(new Error("network"));
-    signal.addEventListener("abort", () => x.abort());
-    x.send(blob);
-  });
-}
+const TEXTAREA = TEXTAREA_CLASS;
 
 /** CL-02 Upload: Filled, Uploading, Wrongtype, Norights. Balance and Lowcredits arrive with the credit wallet (Milestone 8). */
-export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: string; defaults: { quality: Quality; language: string }; preview?: UploadPreview; studioBase: string }) {
+export function UploadForm({ slug, defaults, preview, studioBase, licensesHref }: { slug?: string; defaults: { quality: Quality; language: string }; preview?: UploadPreview; studioBase: string; licensesHref?: string }) {
   const id = useId();
   const router = useRouter();
   const input = useRef<HTMLInputElement>(null);
@@ -89,13 +59,11 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
     setPhase({ k: "uploading", file: info, sent: 0, etaSec: null });
     const ac = new AbortController();
     abort.current = ac;
-    const sentByPart = new Map<number, number>();
     // Progress toast (Delight board): stays while the file uploads, so leaving the form still shows it.
     const toastId = `upload-${started.assetId}`;
     gooeyToast.info(`Uploading ${info.name}`, { id: toastId, description: `0 of ${formatBytes(info.size)} · keep this tab open`, duration: Infinity });
     let lastToast = 0;
-    const report = () => {
-      const sent = [...sentByPart.values()].reduce((a, b) => a + b, 0);
+    const report = (sent: number) => {
       const etaSec = sent > 0 ? (((Date.now() - t0) / sent) * (info.size - sent)) / 1000 : null;
       setPhase({ k: "uploading", file: info, sent, etaSec });
       if (Date.now() - lastToast > 1000) {
@@ -103,32 +71,8 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
         gooeyToast.update(toastId, { description: `${formatBytes(sent)} of ${formatBytes(info.size)} · keep this tab open${etaSec !== null ? ` · ${etaSec < 60 ? "less than a minute" : `about ${Math.ceil(etaSec / 60)} min`}` : ""}` });
       }
     };
-    const done: { part: number; etag: string }[] = [];
-    const queue = Array.from({ length: started.partCount }, (_, i) => i + 1);
     try {
-      const worker = async () => {
-        while (queue.length && !ac.signal.aborted) {
-          const batch = queue.splice(0, 1);
-          const signed = await signPartsAction(slug, started.assetId, batch);
-          if (!signed.ok) throw new Error(signed.error);
-          for (const { part, url } of signed.urls) {
-            const blob = f.slice((part - 1) * started.partSize, Math.min(f.size, part * started.partSize));
-            let etag = "";
-            for (let attempt = 1; attempt <= 3 && !etag; attempt++) {
-              try {
-                etag = await putPart(url, blob, (n) => { sentByPart.set(part, n); report(); }, ac.signal);
-              } catch (e) {
-                if (attempt === 3 || ac.signal.aborted) throw e;
-                await new Promise((r) => setTimeout(r, 1000 * attempt));
-              }
-            }
-            sentByPart.set(part, blob.size);
-            report();
-            done.push({ part, etag });
-          }
-        }
-      };
-      await Promise.all(Array.from({ length: Math.min(PARALLEL, started.partCount) }, worker));
+      const done = await sendParts({ file: f, partSize: started.partSize, partCount: started.partCount, sign: (parts) => signPartsAction(slug, started.assetId, parts), onProgress: report, signal: ac.signal });
       const fin = await completeUploadAction(slug, started.assetId, done);
       if (!fin.ok) throw new Error(fin.error);
       setPhase({ k: "uploaded", file: info });
@@ -137,7 +81,7 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
     } catch (e) {
       gooeyToast.dismiss(toastId);
       if (ac.signal.aborted) return;
-      const msg = e instanceof Error && /CORS|ETag/.test(e.message) ? "The upload was blocked by the storage settings. Ask an admin to allow uploads from this site." : e instanceof Error && e.message.length < 120 ? e.message : "The upload stopped. Check your connection and try again.";
+      const msg = uploadErrorText(e);
       setPhase({ k: "failed", file: info, text: msg });
       toast.error(`${info.name} didn’t upload`, { description: msg });
     }
@@ -222,17 +166,18 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
           <fieldset className="m-0 flex flex-col gap-3 border-0 p-0" aria-describedby={norights && !rights ? `${id}-nr` : undefined}>
             <legend className="sr-only">Who owns this video?</legend>
             {([["own", "I own this content", "I made it, or my company did."], ["permission", "I have the owner’s permission", "You may be asked for proof later."], ["license", "It’s from a Nelio license", "Pick an active license instead."]] as const).map(([v, t, sub]) => (
-              <label key={v} className={cn("flex items-start gap-2.5 text-sm font-semibold leading-[1.4] text-text", v === "license" ? "cursor-not-allowed opacity-60" : "cursor-pointer")}>
-                <input type="radio" name={`${id}-rights`} value={v} checked={rights === v} disabled={v === "license"} onChange={() => { setRights(v); setNorights(false); }} className="mt-px size-5 flex-none accent-accent" />
-                <span>{t}<span className="block text-[13px] font-normal text-muted">{sub}{v === "license" ? " Licensing opens soon." : ""}</span></span>
+              <label key={v} className="flex cursor-pointer items-start gap-2.5 text-sm font-semibold leading-[1.4] text-text">
+                <input type="radio" name={`${id}-rights`} value={v} checked={rights === v} onChange={() => { setRights(v); setNorights(false); }} className="mt-px size-5 flex-none accent-accent" />
+                <span>{t}<span className="block text-[13px] font-normal text-muted">{sub}</span></span>
               </label>
             ))}
           </fieldset>
           {norights && !rights ? <div id={`${id}-nr`}><Banner tone="err" title="Tell us who owns this video" text="Pick an option before we can process it." /></div> : null}
-          <div className="flex min-w-0 flex-col gap-1.5">
-            <label htmlFor={`${id}-note`} className="text-[13px] font-bold text-text">Notes or proof (optional)</label>
+          <div className="flex min-w-0 flex-col gap-2">
+            <label htmlFor={`${id}-note`} className={LABEL_CLASS}>Notes or proof (optional)</label>
             <textarea id={`${id}-note`} value={note} onChange={(e) => setNote(e.target.value)} maxLength={500} placeholder="e.g. link to agreement" className={TEXTAREA} />
           </div>
+          {rights === "license" ? <Banner tone="blue" title="Pick an active license instead" text="Licensed videos come straight from the creator, so there’s nothing to upload. Open the creator from My licenses and choose “Clip this”." action={licensesHref ? <ButtonLink href={licensesHref} variant="secondary" size="sm">My licenses</ButtonLink> : undefined} /> : null}
           <Banner tone="blue" title="Public videos aren’t automatically licensed" text="If you found it online, you need the owner’s permission or a Nelio license." />
         </Card>
       </div>
@@ -257,7 +202,7 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
         </dl>
         <p className="m-0 text-[12.5px] text-muted">Credit amounts are provisional until launch. You’ll always see the estimate before anything runs.</p>
         {error ? <p role="alert" className="m-0 text-[13px] font-semibold text-err-text">{error}</p> : null}
-        <Button variant="cta" arrow size="lg" full loading={starting} disabled={phase.k !== "uploaded" && !preview} onClick={start}>Start processing</Button>
+        <Button variant="cta" arrow size="lg" full loading={starting} disabled={(phase.k !== "uploaded" && !preview) || rights === "license"} onClick={start}>Start processing</Button>
       </Card>
     </div>
   );

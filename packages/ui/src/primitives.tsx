@@ -247,35 +247,70 @@ export const AGENT_COLORS = { lime: "#B6F24A", pink: "#FF4FB8", grape: "#FF4FB8"
 export type AgentColor = keyof typeof AGENT_COLORS;
 
 // ------------------------------------------------------------------ Forms
-const CONTROL = "box-border min-h-12 w-full rounded-input border-2 bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
+/**
+ * Form controls (Form controls · shadcn/ui board, refresh of 20 Nov 2026): every text input, textarea, select and
+ * multi-select uses these. 10 px radius, 1 px border, 44 px tall, a faint shadow; focus = accent border + 3 px tint ring;
+ * error = error border + red ring (`aria-invalid`). Search bars, the Nelio AI prompt box and code inputs keep their own look.
+ */
+export const INPUT_CLASS =
+  "box-border min-h-11 w-full rounded-[10px] border border-border bg-surface-1 px-3 font-body text-sm text-text shadow-[0_1px_2px_rgba(11,11,20,0.05)] placeholder:text-muted " +
+  "focus-visible:border-accent focus-visible:shadow-[0_0_0_3px_var(--n-acc-t)] focus-visible:outline-none " +
+  "aria-[invalid=true]:border-err-text aria-[invalid=true]:shadow-[0_0_0_3px_rgba(229,72,77,0.2)] disabled:cursor-not-allowed disabled:opacity-60";
+export const TEXTAREA_CLASS = cn(INPUT_CLASS, "min-h-24 resize-y px-3 py-2.5 leading-normal");
+export const LABEL_CLASS = "text-sm font-semibold leading-none text-text";
+export const FIELD_STACK = "flex min-w-0 flex-col gap-2";
+const HINT = "text-[13px] text-muted";
+const ERROR = "text-[13px] font-semibold text-err-text";
 
 export function Field({ label, hint, error, id, className, ...props }: { label: string; hint?: string; error?: string } & ComponentProps<"input">) {
   const fid = id ?? props.name;
   const describedBy = error ? `${fid}-err` : hint ? `${fid}-hint` : undefined;
   return (
-    <div className="flex min-w-0 flex-col gap-1.5">
-      <label htmlFor={fid} className="text-[13px] font-bold text-text">{label}</label>
-      <input id={fid} aria-invalid={error ? true : undefined} aria-describedby={describedBy} {...props} className={cn(CONTROL, error ? "border-err-text" : "border-border", className)} />
+    <div className={FIELD_STACK}>
+      <label htmlFor={fid} className={LABEL_CLASS}>{label}</label>
+      <input id={fid} aria-invalid={error ? true : undefined} aria-describedby={describedBy} {...props} className={cn(INPUT_CLASS, className)} />
       {error ? (
-        <div id={`${fid}-err`} className="text-[12.5px] font-semibold text-err-text">{error}</div>
+        <div id={`${fid}-err`} className={ERROR}>{error}</div>
       ) : hint ? (
-        <div id={`${fid}-hint`} className="text-[12.5px] text-muted">{hint}</div>
+        <div id={`${fid}-hint`} className={HINT}>{hint}</div>
       ) : null}
     </div>
+  );
+}
+
+export function TextareaField({ label, hint, error, id, className, ...props }: { label: string; hint?: string; error?: string } & ComponentProps<"textarea">) {
+  const fid = id ?? props.name;
+  const describedBy = error ? `${fid}-err` : hint ? `${fid}-hint` : undefined;
+  return (
+    <div className={FIELD_STACK}>
+      <label htmlFor={fid} className={LABEL_CLASS}>{label}</label>
+      <textarea id={fid} aria-invalid={error ? true : undefined} aria-describedby={describedBy} {...props} className={cn(TEXTAREA_CLASS, className)} />
+      {error ? <div id={`${fid}-err`} className={ERROR}>{error}</div> : hint ? <div id={`${fid}-hint`} className={HINT}>{hint}</div> : null}
+    </div>
+  );
+}
+
+/** A native select drawn as the board's Select trigger (chevron at half opacity). */
+export function SelectControl({ className, children, ...props }: ComponentProps<"select">) {
+  return (
+    <span className="relative flex min-w-0">
+      <select {...props} className={cn(INPUT_CLASS, "cursor-pointer appearance-none pr-9", className)}>{children}</select>
+      <span aria-hidden="true" className="pointer-events-none absolute right-3 top-1/2 inline-flex -translate-y-1/2 text-text opacity-50"><Icon name="chevd" size={16} /></span>
+    </span>
   );
 }
 
 export function SelectField({ label, hint, error, id, options, className, ...props }: { label: string; hint?: string; error?: string; options: { value: string; label: string }[] } & ComponentProps<"select">) {
   const fid = id ?? props.name;
   return (
-    <div className="flex min-w-0 flex-col gap-1.5">
-      <label htmlFor={fid} className="text-[13px] font-bold text-text">{label}</label>
-      <select id={fid} aria-invalid={error ? true : undefined} {...props} className={cn(CONTROL, error ? "border-err-text" : "border-border", className)}>
+    <div className={FIELD_STACK}>
+      <label htmlFor={fid} className={LABEL_CLASS}>{label}</label>
+      <SelectControl id={fid} aria-invalid={error ? true : undefined} {...props} className={className}>
         {options.map((o) => (
           <option key={o.value} value={o.value}>{o.label}</option>
         ))}
-      </select>
-      {error ? <div className="text-[12.5px] font-semibold text-err-text">{error}</div> : hint ? <div className="text-[12.5px] text-muted">{hint}</div> : null}
+      </SelectControl>
+      {error ? <div className={ERROR}>{error}</div> : hint ? <div className={HINT}>{hint}</div> : null}
     </div>
   );
 }

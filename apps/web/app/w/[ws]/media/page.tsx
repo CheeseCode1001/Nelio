@@ -14,5 +14,5 @@ export default async function MediaRoute({ params, searchParams }: { params: Pro
   const filter: MediaFilter = (MEDIA_FILTERS as readonly string[]).includes(sp.filter ?? "") ? (sp.filter as MediaFilter) : "all";
   const base = href("CL-01");
   const d = await loadMedia(workspace.workspaceId, filter, { studio: `/w/${workspace.slug}/studio`, upload: href("CL-02"), exports: href("CL-05") });
-  return <MediaLibrary d={d} filter={filter} hrefs={{ filter: (f) => (f === "all" ? base : `${base}?filter=${f}`), upload: href("CL-02"), licensing: href("LI-01") }} />;
+  return <MediaLibrary d={d} filter={filter} hrefs={{ filter: (f) => (f === "all" ? base : `${base}?filter=${f}`), upload: href("CL-02"), licensing: href("LI-01"), mine: href("LI-04") }} />;
 }

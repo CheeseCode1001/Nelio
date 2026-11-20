@@ -1,5 +1,5 @@
 import { db } from "@nelio/db";
-import webpush from "web-push";
+import { sendNotification, setVapidDetails } from "web-push";
 
 /**
  * Delivers a notification's email and push copies. Channels whose service is not configured are marked
@@ -63,7 +63,7 @@ function vapid(): boolean {
   const priv = process.env.NELIO_VAPID_PRIVATE_KEY;
   const subject = process.env.NELIO_VAPID_SUBJECT;
   vapidReady = Boolean(pub && priv && subject);
-  if (vapidReady) webpush.setVapidDetails(subject!, pub!, priv!);
+  if (vapidReady) setVapidDetails(subject!, pub!, priv!);
   return vapidReady;
 }
 
@@ -76,7 +76,7 @@ async function sendPush(n: Loaded): Promise<Result> {
   let lastError: string | null = null;
   for (const s of subs) {
     try {
-      await webpush.sendNotification({ endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } }, payload, { TTL: 24 * 3600, timeout: 15000 });
+      await sendNotification({ endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } }, payload, { TTL: 24 * 3600, timeout: 15000 });
       sent++;
       await db().pushSubscription.update({ where: { id: s.id }, data: { lastSuccessAt: new Date() } });
     } catch (e) {

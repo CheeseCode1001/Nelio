@@ -1,8 +1,9 @@
-import { AgentAvatar, AgentTrio, Bubble, ButtonLink, Chip, EmptyState, Motion, PageHead, Sk, SkRows, cn } from "@nelio/ui";
+import { AgentAvatar, AgentTrio, Bubble, ButtonLink, Chip, EmptyState, Motion, PageHead, Sk, SkRows, cn, Ghost } from "@nelio/ui";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ACTIVITY_FILTERS, FILTER_LABEL, type ActivityData, type ActivityFilter } from "@/lib/activity";
 import { LiveStatus, RunPanelActions } from "./activity-live";
+import { ACTIVITY_SAMPLE } from "./sample";
 
 export interface ActivityHrefs { filter: (f: ActivityFilter, run?: string) => string; run: (id: string, f: ActivityFilter) => string; newAgent: string; upload: string }
 
@@ -116,16 +117,7 @@ export function ActivityPage({ d, filter, hrefs, live, headerAction }: { d: Acti
   );
 }
 
+/** APP-03 Loading: the feed itself, ghosted. */
 export function ActivityLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={170} h={36} /><Sk w={280} h={16} /></div>
-      <Sk w={560} h={48} r={24} className="max-w-full" />
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-        <div className="rounded-card border border-border bg-surface-1 p-2 shadow-card"><SkRows n={7} /></div>
-        <div className="hidden rounded-card border border-border bg-surface-1 p-5 shadow-card lg:block"><SkRows n={5} /></div>
-      </div>
-      <span className="sr-only" role="status">Loading activity…</span>
-    </div>
-  );
+  return <Ghost><ActivityPage d={ACTIVITY_SAMPLE} filter="all" hrefs={{ filter: () => "#", run: () => "#", newAgent: "#", upload: "#" }} live={{ topic: null, preview: "live" }} /></Ghost>;
 }

@@ -138,7 +138,7 @@ export async function startProcessingAction(slug: string, assetId: string, input
   if (!parsed.success) return { ok: false, error: "Check the processing options." };
   const v = parsed.data;
   if (!v.rights) return { ok: false, field: "rights", error: "Tell us who owns this video" };
-  if (v.rights === "license") return { ok: false, field: "rights", error: "Pick an active license instead. Licensing opens soon." };
+  if (v.rights === "license") return { ok: false, field: "rights", error: "Pick an active license instead: open the creator from My licenses and choose “Clip this”." };
   const asset = await db().mediaAsset.findFirst({ where: { id: assetId, workspaceId: a.ws.workspaceId, status: "uploaded", deletedAt: null }, select: { id: true, durationSec: true } });
   if (!asset) return { ok: false, error: "This video isn’t ready to process." };
   const estimate = asset.durationSec ? processingEstimate(asset.durationSec, v.quality) : 1;

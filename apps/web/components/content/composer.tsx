@@ -1,7 +1,7 @@
 "use client";
 
-import { LIMITS, validatePost, type Destination, type FieldKey, type PostContent, type PostKind } from "@nelio/domain";
-import { Banner, Button, ButtonLink, Card, CardHead, Chip, Icon, Motion, PlatformBadge, ResponsiveDialog, cn } from "@nelio/ui";
+import { LIMITS, PLATFORM_LABEL, validatePost, withAttribution, type Destination, type FieldKey, type PostContent, type PostKind } from "@nelio/domain";
+import { Banner, Button, ButtonLink, Card, CardHead, Chip, Icon, Motion, PlatformBadge, ResponsiveDialog, cn, INPUT_CLASS, TEXTAREA_CLASS, LABEL_CLASS } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/feedback/toaster";
 import { useState, useTransition } from "react";
@@ -9,24 +9,23 @@ import { rewriteAction, saveDraftAction } from "@/lib/actions/content";
 import type { ComposerData, MediaChoice } from "@/lib/content";
 
 const fmt = (n: number) => n.toLocaleString("en-US");
-const CONTROL = "box-border w-full rounded-input border-2 bg-surface-1 px-4 py-3 font-body text-sm text-text";
 
 function TextArea({ id, label, value, onChange, limit, error, rows = 4, note }: { id: string; label: string; value: string; onChange: (v: string) => void; limit: number; error?: string; rows?: number; note?: string }) {
   return (
-    <div className="flex min-w-0 flex-col gap-1.5">
-      <label htmlFor={id} className="text-[13px] font-bold text-text">{label}</label>
-      <textarea id={id} rows={rows} value={value} onChange={(e) => onChange(e.target.value)} aria-invalid={error ? true : undefined} aria-describedby={`${id}-hint`} className={cn(CONTROL, "min-h-[100px]", error ? "border-err-text" : "border-border")} />
-      <div id={`${id}-hint`} className={cn("text-[12.5px]", error ? "font-semibold text-err-text" : "text-muted")}>{error ?? `${fmt(value.length)} / ${fmt(limit)}${note ? ` · ${note}` : ""}`}</div>
+    <div className="flex min-w-0 flex-col gap-2">
+      <label htmlFor={id} className={LABEL_CLASS}>{label}</label>
+      <textarea id={id} rows={rows} value={value} onChange={(e) => onChange(e.target.value)} aria-invalid={error ? true : undefined} aria-describedby={`${id}-hint`} className={cn(TEXTAREA_CLASS, "min-h-[100px]")} />
+      <div id={`${id}-hint`} className={cn("text-[13px]", error ? "font-semibold text-err-text" : "text-muted")}>{error ?? `${fmt(value.length)} / ${fmt(limit)}${note ? ` · ${note}` : ""}`}</div>
     </div>
   );
 }
 
 function Input({ id, label, value, onChange, error, hint }: { id: string; label: string; value: string; onChange: (v: string) => void; error?: string; hint?: string }) {
   return (
-    <div className="flex min-w-0 flex-col gap-1.5">
-      <label htmlFor={id} className="text-[13px] font-bold text-text">{label}</label>
-      <input id={id} value={value} onChange={(e) => onChange(e.target.value)} aria-invalid={error ? true : undefined} aria-describedby={error || hint ? `${id}-hint` : undefined} className={cn(CONTROL, "min-h-12", error ? "border-err-text" : "border-border")} />
-      {error || hint ? <div id={`${id}-hint`} className={cn("text-[12.5px]", error ? "font-semibold text-err-text" : "text-muted")}>{error ?? hint}</div> : null}
+    <div className="flex min-w-0 flex-col gap-2">
+      <label htmlFor={id} className={LABEL_CLASS}>{label}</label>
+      <input id={id} value={value} onChange={(e) => onChange(e.target.value)} aria-invalid={error ? true : undefined} aria-describedby={error || hint ? `${id}-hint` : undefined} className={INPUT_CLASS} />
+      {error || hint ? <div id={`${id}-hint`} className={cn("text-[13px]", error ? "font-semibold text-err-text" : "text-muted")}>{error ?? hint}</div> : null}
     </div>
   );
 }
@@ -44,8 +43,14 @@ function Thumb({ m, className }: { m: MediaChoice | null; className?: string }) 
 export function Composer({ slug, d, hrefs, connected = false }: { slug?: string; d: ComposerData; hrefs: { content: string; connect: string; exports: string; draftBase: string }; connected?: boolean }) {
   const router = useRouter();
   const draftHref = (id: string) => `${hrefs.draftBase}/${id}`;
-  const [content, setContent] = useState<PostContent>(d.content);
-  const [media, setMedia] = useState<MediaChoice | null>(d.media);
+  const attributed = (c: PostContent, m: MediaChoice | null): PostContent =>
+    m?.license?.attribution ? { ...c, instagram: { ...c.instagram, caption: withAttribution(c.instagram.caption, m.license.attribution) }, youtube: { ...c.youtube, description: withAttribution(c.youtube.description, m.license.attribution) } } : c;
+  const [content, setContent] = useState<PostContent>(() => (d.kind === "script" ? d.content : attributed(d.content, d.media)));
+  const [media, setMediaState] = useState<MediaChoice | null>(d.media);
+  const setMedia = (m: MediaChoice | null) => {
+    setMediaState(m);
+    if (m?.license?.attribution) setContent((c) => attributed(c, m));
+  };
   const [platforms, setPlatforms] = useState<Destination[]>(d.platforms);
   // Open on the platform that needs attention, so a problem is never hidden behind the other tab.
   const [tab, setTab] = useState<Destination>(() => {
@@ -175,7 +180,7 @@ export function Composer({ slug, d, hrefs, connected = false }: { slug?: string;
               <TextArea id="script" label="Script" rows={12} value={content.script} onChange={(v) => setContent((c) => ({ ...c, script: v }))} limit={LIMITS.script} error={err("script")} />
             ) : tab === "instagram" ? (
               <>
-                <TextArea id="ig-caption" label="Caption" value={content.instagram.caption} onChange={(v) => setIg({ caption: v })} limit={LIMITS.instagram.caption} error={err("instagram.caption")} />
+                <TextArea id="ig-caption" label="Caption" value={content.instagram.caption} onChange={(v) => setIg({ caption: v })} limit={LIMITS.instagram.caption} error={err("instagram.caption")} note={media?.license?.attribution ? "attribution added automatically" : undefined} />
                 <Input id="ig-comment" label="First comment (optional)" value={content.instagram.firstComment} onChange={(v) => setIg({ firstComment: v })} error={err("instagram.firstComment")} />
               </>
             ) : (
@@ -205,7 +210,10 @@ export function Composer({ slug, d, hrefs, connected = false }: { slug?: string;
             ) : null}
             <p className={cn("m-0 whitespace-pre-wrap break-words text-[13px] text-text", script && "max-h-[520px] overflow-y-auto")}>{previewText || <span className="text-muted">Your {script ? "script" : "caption"} shows here.</span>}</p>
           </div>
-          {!script && media ? <Banner tone="ok" title="License OK" text={media.rights} /> : null}
+          {!script && media && media.license && !media.license.ok ? <Banner tone="err" title="License stopped" text={`${media.license.message} This post can’t be scheduled.`} /> : !script && media ? <Banner tone="ok" title="License OK" text={media.rights} /> : null}
+          {!script && media?.license?.ok && platforms.some((p) => !media.license!.platforms.includes(p)) ? (
+            <Banner tone="warn" title="Not covered by the license" text={`${media.license.creator}’s license doesn’t allow ${platforms.filter((p) => !media.license!.platforms.includes(p)).map((p) => PLATFORM_LABEL[p]).join(" or ")}. Untick it before you schedule.`} />
+          ) : null}
           {!script && d.workspace.client ? <Banner tone="warn" title="Client approval required" text="Your client reviews each platform separately." /> : null}
         </div>
       </div>

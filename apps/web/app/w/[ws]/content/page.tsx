@@ -15,5 +15,5 @@ export default async function ContentRoute({ params }: { params: Promise<{ ws: s
   const { timezone } = await db().workspace.findUniqueOrThrow({ where: { id: workspace.workspaceId }, select: { timezone: true } });
   const compose = `/w/${workspace.slug}/content/compose`;
   const drafts = await loadDrafts(workspace.workspaceId, timezone, compose);
-  return <ContentStudio drafts={drafts} hrefs={{ compose, script: `${compose}?kind=script`, caption: `${compose}?kind=caption`, aiVideo: href("CS-03"), licensing: href("LI-01"), drafts: href("PB-02") }} />;
+  return <ContentStudio drafts={drafts} hrefs={{ compose, script: `${compose}?kind=script`, caption: `${compose}?kind=caption`, aiVideo: href("CS-03"), licensing: href("LI-04"), drafts: href("PB-02") }} />;
 }

@@ -1,7 +1,7 @@
 import { copyFile, mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { join } from "node:path";
-import { db, putObject, signedGetUrl, storageKeys } from "@nelio/db";
+import { db, licenseForAsset, putObject, signedGetUrl, storageKeys } from "@nelio/db";
 import { CLIP_FORMATS, buildAss, captionChunks, clampCaptionSize, cropFor, isCaptionStyle, isClipFormat, renderEstimate, type ClipSnapshot, type Word } from "@nelio/domain";
 import { ffmpeg, probe, progressSeconds, withTempDir } from "./ffmpeg";
 import { RetryableStepError, type StepHandler } from "./step-types";
@@ -25,6 +25,8 @@ const renderClip: StepHandler = async (ctx) => {
   const asset = render.project.asset;
   if (asset.deletedAt || asset.status !== "ready") return { status: "blocked", reason: "source", text: `${asset.filename} can’t be used any more. Pick another source.` };
   if (render.status === "canceled") return { status: "blocked", reason: "canceled", text: "This render was canceled." };
+  const lic = await licenseForAsset(client, render.project.assetId, { action: "render" });
+  if (lic && !lic.check.ok) return { status: "blocked", reason: "license", text: lic.check.message };
   // A variant carries its own settings; otherwise the saved version that was rendered.
   const revision = render.settings ? null : await client.projectRevision.findUnique({ where: { projectId_number: { projectId: render.projectId, number: render.revision } } });
   const snap = (render.settings as unknown as ClipSnapshot | null) ?? (revision?.snapshot as unknown as ClipSnapshot | undefined) ?? {

@@ -1,7 +1,8 @@
-import { AgentAvatar, Banner, Bubble, ButtonLink, Card, CardHead, Chip, Motion, PlatformBadge, RowCard, RowCardList, Sk, SkCard, Small, cn } from "@nelio/ui";
+import { AgentAvatar, Banner, Bubble, ButtonLink, Card, CardHead, Chip, Motion, PlatformBadge, RowCard, RowCardList, Sk, SkCard, Small, cn, Ghost } from "@nelio/ui";
 import Link from "next/link";
 import type { AgentDetailData, DetailTab } from "@/lib/agent-detail";
 import { BudgetForm, DetailActions, PolicyForm } from "./agent-detail-forms";
+import { AGENT_DETAIL_SAMPLE } from "./sample";
 
 const TAB_LABEL: Record<DetailTab, string> = { overview: "Overview", policy: "Policy & permissions", budget: "Budget", destinations: "Destinations", runs: "Runs" };
 
@@ -175,14 +176,7 @@ export function AgentDetail({ d, tab, hrefs, workspaceSlug }: { d: AgentDetailDa
   );
 }
 
+/** APP-05 Loading: the agent page itself, ghosted. */
 export function AgentDetailLoading() {
-  return (
-    <div className="flex flex-col gap-5" aria-busy="true">
-      <div className="flex flex-col gap-2"><Sk w={120} h={14} /><Sk w={260} h={36} /><Sk w={200} h={16} /></div>
-      <div className="flex items-center gap-4"><Sk w={64} h={64} r={32} /><div className="flex grow flex-col gap-2"><Sk w={220} h={22} /><Sk w="60%" h={14} /></div></div>
-      <Sk w={460} h={48} r={24} />
-      <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))]"><SkCard lines={5} /><SkCard lines={5} /></div>
-      <span className="sr-only" role="status">Loading agent…</span>
-    </div>
-  );
+  return <Ghost><AgentDetail d={AGENT_DETAIL_SAMPLE} tab="overview" hrefs={{ agents: "#", tab: () => "#", newAgent: "#", connections: "#", activity: "#" }} /></Ghost>;
 }

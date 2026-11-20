@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Children, isValidElement, type ReactElement, type ReactNode } from "react";
 import { Icon, cn, type IconName, type Tone } from "./primitives";
 
 const TONE_PAIR: Record<Tone, string> = {
@@ -39,10 +39,10 @@ export function PlatformBadge({ platform, size = 32 }: { platform: Platform; siz
 }
 
 /** Stat tile (generator `stat`). `filled` uses a flat fun fill with ink text. */
-export function StatTile({ label, value, sub, icon, filled }: { label: string; value: string; sub?: string; icon?: IconName; filled?: "lime" }) {
+export function StatTile({ label, value, sub, icon, filled }: { label: string; value: string; sub?: string; icon?: IconName; filled?: "lime" | "yellow" }) {
   const onFill = Boolean(filled);
   return (
-    <section className={cn("flex min-w-0 flex-col gap-1 rounded-card px-5 py-[18px]", onFill ? "bg-lime text-outline" : "border border-border bg-surface-1 shadow-card")}>
+    <section className={cn("flex min-w-0 flex-col gap-1 rounded-card px-5 py-[18px]", filled === "yellow" ? "bg-yellow text-outline" : onFill ? "bg-lime text-outline" : "border border-border bg-surface-1 shadow-card")}>
       <div className={cn("flex items-center gap-2 text-[13px] font-bold", onFill ? "text-outline" : "text-muted")}>
         {icon ? <Icon name={icon} size={16} /> : null}
         {label}
@@ -187,31 +187,59 @@ export function LoadingNote({ text = "Loading…" }: { text?: string }) {
 }
 
 // ------------------------------------------------------------------ Row cards (Delight refresh: tables became rows)
-export interface RowField { label: string; value: ReactNode; /** spans the full width on mobile (status with a progress bar) */ wide?: boolean }
-
-/**
- * A list of row cards: each row is its own card with a primary cell, labelled fields and an optional action.
- * Desktop: one line (primary 2.2fr, fields 1fr, action 168 px). Below 1024 px: primary on top, fields two
- * to a row, then the action.
- */
-export function RowCardList({ label, children, className }: { label: string; children: ReactNode; className?: string }) {
-  return <div role="list" aria-label={label} className={cn("flex min-w-0 flex-col gap-2.5", className)}>{children}</div>;
+export interface RowField {
+  label: string;
+  value: ReactNode;
+  /** spans the full width on mobile (status with a progress bar) */
+  wide?: boolean;
+  /** Below 1024 px this field (a status chip) sits beside the title instead of in the grid (refresh of 20 Nov 2026). */
+  headline?: boolean;
 }
 
-export function RowCard({ primary, fields, action, actionWidth = 168, dim, className }: { primary: ReactNode; fields: RowField[]; action?: ReactNode; actionWidth?: number; dim?: boolean; className?: string }) {
-  const cols = `minmax(200px,2.2fr) ${fields.map(() => "minmax(88px,1fr)").join(" ")}${action ? ` ${actionWidth}px` : ""}`;
+type RowCardProps = { primary: ReactNode; fields: RowField[]; action?: ReactNode; actionWidth?: number; dim?: boolean; className?: string };
+
+/**
+ * A list of row cards. Desktop (1024 px and up): every row shares one grid, so fields line up in columns across
+ * rows (CSS subgrid: primary at least 240 px, then each field and the action at their content width, spread
+ * out). Below 1024 px: each row is a card with the title (and its headline chip) on top, fields two to a row,
+ * then the action.
+ */
+export function RowCardList({ label, children, className }: { label: string; children: ReactNode; className?: string }) {
+  const first = Children.toArray(children).find((c): c is ReactElement<RowCardProps> => isValidElement(c) && Array.isArray((c.props as RowCardProps).fields));
+  const n = first ? first.props.fields.length : 0;
+  const cols = `minmax(240px,auto)${" auto".repeat(n)}${first?.props.action ? " auto" : ""}`;
+  return (
+    <div
+      role="list"
+      aria-label={label}
+      className={cn("flex min-w-0 flex-col gap-2.5 lg:grid lg:justify-between lg:gap-x-[clamp(16px,2.2vw,32px)] lg:gap-y-2.5 lg:overflow-x-auto lg:[grid-template-columns:var(--row-cols)]", className)}
+      style={{ ["--row-cols" as string]: cols }}
+    >
+      {children}
+    </div>
+  );
+}
+
+export function RowCard({ primary, fields, action, dim, className }: RowCardProps) {
+  const head = fields.find((f) => f.headline);
   return (
     <div
       role="listitem"
       data-enter-item=""
-      className={cn("grid min-w-0 grid-cols-2 items-center gap-3 rounded-[20px] border border-border bg-surface-1 p-3.5 shadow-card lg:gap-4 lg:px-[18px] lg:[grid-template-columns:var(--row-cols)]", className)}
-      style={{ ["--row-cols" as string]: cols }}
+      className={cn(
+        "grid min-w-0 grid-cols-2 items-center gap-x-3.5 gap-y-3 rounded-[20px] border border-border bg-surface-1 p-3.5 shadow-card",
+        "lg:col-span-full lg:box-border lg:min-h-16 lg:[grid-template-columns:subgrid] lg:py-3 lg:pl-[18px] lg:pr-4",
+        className,
+      )}
     >
-      <div className={cn("col-span-2 min-w-0 text-[15px] font-bold text-text lg:col-span-1", dim && "text-muted")}>{primary}</div>
+      <div className="col-span-2 flex min-w-0 items-center justify-between gap-2.5 lg:col-span-1">
+        <div className={cn("min-w-0 flex-1 break-words text-[15px] font-bold text-text", dim && "text-muted")}>{primary}</div>
+        {head ? <span className="flex-none lg:hidden">{head.value}</span> : null}
+      </div>
       {fields.map((f) => (
-        <div key={f.label} className={cn("flex min-w-0 flex-col gap-[3px]", f.wide && "col-span-2 lg:col-span-1")}>
+        <div key={f.label} className={cn("flex min-w-0 flex-col gap-1", f.wide && "col-span-2 lg:col-span-1", f.headline && "max-lg:hidden")}>
           <span className="text-[11.5px] font-bold tracking-[0.02em] text-muted">{f.label}</span>
-          <span className={cn("min-w-0 text-sm text-text", dim && "text-muted")}>{f.value}</span>
+          <span className={cn("min-w-0 break-words text-sm font-semibold text-text", dim && "text-muted")}>{f.value}</span>
         </div>
       ))}
       {action ? <div className="col-span-2 flex min-w-0 justify-start lg:col-span-1 lg:justify-end">{action}</div> : null}
@@ -235,6 +263,20 @@ export function RowCardSkeleton({ rows = 4, fields = 4 }: { rows?: number; field
           ))}
         </div>
       ))}
+    </div>
+  );
+}
+
+/**
+ * Loading state that keeps the real layout (refresh of 20 Nov 2026, the boards' "skz" skeletons): the page is drawn
+ * with placeholder content, its text becomes soft grey blocks, pictures and icons go flat grey, and nothing inside
+ * can be focused or clicked. Screen readers hear only "Loading…".
+ */
+export function Ghost({ children, label = "Loading…", className }: { children: ReactNode; label?: string; className?: string }) {
+  return (
+    <div className={cn("relative", className)} aria-busy="true">
+      <span role="status" className="sr-only">{label}</span>
+      <div className="n-ghost" aria-hidden="true" inert>{children}</div>
     </div>
   );
 }

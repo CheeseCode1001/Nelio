@@ -21,6 +21,15 @@ const DEV_PAGES = [
   { href: "/dev/ui/ai-video", label: "CS-03 states" },
   { href: "/dev/ui/agent-detail", label: "APP-05 states" },
   { href: "/dev/ui/create-agent", label: "APP-06 steps" },
+  { href: "/dev/ui/marketplace", label: "LI-01 states" },
+  { href: "/dev/ui/source", label: "LI-02/03 states" },
+  { href: "/dev/ui/my-licenses", label: "LI-04 states" },
+  { href: "/dev/ui/creator", label: "LI-05 states" },
+  { href: "/dev/ui/verification", label: "LI-06 states" },
+  { href: "/dev/ui/creator-terms", label: "LI-07 states" },
+  { href: "/dev/ui/usage", label: "LI-08 states" },
+  { href: "/dev/ui/revocations", label: "LI-09 states" },
+  { href: "/dev/ui/payouts", label: "LI-10 gated" },
 ];
 
 export function DevNav({ current }: { current: string }) {

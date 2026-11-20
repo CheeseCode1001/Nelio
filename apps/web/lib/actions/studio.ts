@@ -1,12 +1,18 @@
 "use server";
 
-import { cancelRenderRun, db, findWorkspaceFor, startRenderRun, type WorkspaceSummary } from "@nelio/db";
+import { cancelRenderRun, db, findWorkspaceFor, licenseForAsset, startRenderRun, type WorkspaceSummary } from "@nelio/db";
 import { CAPTION_STYLES, CLIP_FORMATS, buildVariants, can, clampCaptionSize, clampClip, exportsLeft, renderEstimate, transcriptLines, type ClipSnapshot, type PlanId, type Variant } from "@nelio/domain";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getSession, type Session } from "../auth";
 
 type Fail = { ok: false; error: string };
+
+/** Licensed videos: no render once the licence is revoked, expired, suspended or the video was excluded. */
+async function licenseBlocks(assetId: string): Promise<Fail | null> {
+  const lic = await licenseForAsset(db(), assetId, { action: "render" });
+  return lic && !lic.check.ok ? { ok: false, error: lic.check.message } : null;
+}
 
 async function authorize(slug: string, permission: "content.edit" | "content.render"): Promise<{ session: Session; ws: WorkspaceSummary } | Fail> {
   const session = await getSession();
@@ -88,6 +94,8 @@ export async function saveVersionAction(slug: string, assetId: string, projectId
 export async function startRenderAction(slug: string, assetId: string, projectId: string | null, snapshot: ClipSnapshot): Promise<{ ok: true; projectId: string; renderId: string } | Fail> {
   const a = await authorize(slug, "content.render");
   if ("ok" in a) return a;
+  const stop = await licenseBlocks(assetId);
+  if (stop) return stop;
   const saved = await save(a.ws, a.session.user.id, assetId, projectId, snapshot, "Saved for render");
   if (!saved.ok) return saved;
   const client = db();
@@ -171,6 +179,8 @@ export async function renderVariantsAction(slug: string, projectId: string, keys
   const p = await client.clipProject.findFirst({ where: { id: projectId, workspaceId: a.ws.workspaceId }, select: { id: true, assetId: true, variants: true, asset: { select: { status: true } } } });
   if (!p) return { ok: false, error: "This clip was deleted." };
   if (p.asset.status !== "ready") return { ok: false, error: "This video can’t be used any more." };
+  const stop = await licenseBlocks(p.assetId);
+  if (stop) return stop;
   const set = p.variants as unknown as VariantSet | null;
   const picked = (set?.items ?? []).filter((v) => keys.includes(v.key));
   if (!set || !picked.length) return { ok: false, error: "Pick at least one variant to render." };
@@ -202,9 +212,11 @@ export async function retryRenderAction(slug: string, renderId: string): Promise
   const a = await authorize(slug, "content.render");
   if ("ok" in a) return a;
   const client = db();
-  const r = await client.render.findFirst({ where: { id: renderId, workspaceId: a.ws.workspaceId, status: { in: ["failed", "canceled"] } }, include: { project: { select: { id: true, asset: { select: { status: true, deletedAt: true } } } } } });
+  const r = await client.render.findFirst({ where: { id: renderId, workspaceId: a.ws.workspaceId, status: { in: ["failed", "canceled"] } }, include: { project: { select: { id: true, assetId: true, asset: { select: { status: true, deletedAt: true } } } } } });
   if (!r) return { ok: false, error: "This export can’t be retried." };
   if (r.project.asset.deletedAt || r.project.asset.status !== "ready") return { ok: false, error: "The source video can’t be used any more." };
+  const stop = await licenseBlocks(r.project.assetId);
+  if (stop) return stop;
   const room = await exportRoom(a.ws.orgId, 1);
   if (room) return room;
   const settings = (r.settings as object | null) ?? ((await client.projectRevision.findUnique({ where: { projectId_number: { projectId: r.projectId, number: r.revision } } }))?.snapshot as object | undefined) ?? null;

@@ -12,3 +12,4 @@ export * from "./motion";
 export * from "./photos";
 export * from "./photo-carousel";
 export * from "./responsive-dialog";
+export * from "./cards";

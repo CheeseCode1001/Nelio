@@ -7,6 +7,8 @@ Generated 12 Nov 2026 from the inventory (v2.3) and checked against the 471 boar
 
 Update this file at the end of every milestone.
 
+**Two canvases, one design (from 20 Nov 2026).** The main canvas (`docs/design/E_hifi/canvas/`, 476 boards) and the Nelio Studio canvas (`docs/design/E_hifi/canvas-studio/`, 109 boards) are split only because a canvas holds at most 512 files. The end-of-milestone canvas diff and the UI and responsiveness check cover both.
+
 ## 1. Repository layout (approved 12 Nov 2026)
 
 File paths below assume this layout. It follows the handoff §12 example and keeps the two shared packages from the architecture document §3.
@@ -110,21 +112,21 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 
 | ID | Screen | Boards (desktop states + mobile) | Route | Web files | API and jobs | MS | Status | Gate |
 |---|---|---|---|---|---|---|---|---|
-| LI-01 | Marketplace | `Marketplace` · 3: Filled, Empty, Loading + `Marketplace-Mobile` | /w/[ws]/licensing | w/[ws]/licensing/page.tsx | `GET /api/licensing/sources` | 5 | not started | — |
-| LI-02 | Source detail & terms | `SourceDetail` · 6: Filled, Loading, Private, Paid, Suspended, Licensed + `SourceDetail-Mobile` | /w/[ws]/licensing/sources/[id] | w/[ws]/licensing/sources/[id]/page.tsx | `GET /api/licensing/sources/[id]` | 5 | not started | — |
-| LI-03 | Request / accept license | `RequestLicense` · 5: Filled, Private, Sent, Approved, Declined + `RequestLicense-Mobile` | /w/[ws]/licensing/sources/[id]/request | w/[ws]/licensing/sources/[id]/request/page.tsx | `POST /api/licensing/agreements` (accept / request) | 5 | not started | — |
-| LI-04 | My licenses | `MyLicenses` · 4: Filled, Empty, Loading, Expired + `MyLicenses-Mobile` | /w/[ws]/licensing/mine | w/[ws]/licensing/mine/page.tsx | `GET /api/licensing/agreements` · `rights-recheck` queue | 5 | not started | — |
+| LI-01 | Marketplace | `Marketplace` · 3: Filled, Empty, Loading + `Marketplace-Mobile` | /w/[ws]/licensing | w/[ws]/licensing/page.tsx | `GET /api/licensing/sources` | 5 | built | D-M5-3 |
+| LI-02 | Source detail & terms | `SourceDetail` · 6: Filled, Loading, Private, Paid, Suspended, Licensed + `SourceDetail-Mobile` | /w/[ws]/licensing/sources/[id] | w/[ws]/licensing/sources/[id]/page.tsx | `GET /api/licensing/sources/[id]` | 5 | built | D-M5-3 |
+| LI-03 | Request / accept license | `RequestLicense` · 5: Filled, Private, Sent, Approved, Declined + `RequestLicense-Mobile` | /w/[ws]/licensing/sources/[id]/request | w/[ws]/licensing/sources/[id]/request/page.tsx | `POST /api/licensing/agreements` (accept / request) | 5 | built | — |
+| LI-04 | My licenses | `MyLicenses` · 4: Filled, Empty, Loading, Expired + `MyLicenses-Mobile` | /w/[ws]/licensing/mine | w/[ws]/licensing/mine/page.tsx | `GET /api/licensing/agreements` · `rights-recheck` queue | 5 | built | — |
 
 ### 8 · Creator Portal
 
 | ID | Screen | Boards (desktop states + mobile) | Route | Web files | API and jobs | MS | Status | Gate |
 |---|---|---|---|---|---|---|---|---|
-| LI-05 | Creator portal overview | `CreatorOverview` · 4: Filled, Empty, Loading, Unverified + `CreatorOverview-Mobile` | /creator | creator/page.tsx | `GET /api/creator/overview` | 5 | not started | — |
-| LI-06 | Verification | `Verification` · 4: Filled, Pending, Failed, Empty + `Verification-Mobile` | /creator/verify | creator/verify/page.tsx | `/api/creator/channels` · ownership verification (channel OAuth) | 5 | not started | B-01 |
-| LI-07 | Licensing terms | `LicenseTerms` · 3: Filled, Unverified, Saved + `LicenseTerms-Mobile` | /creator/terms | creator/terms/page.tsx | `GET/PUT /api/creator/terms` | 5 | not started | — |
-| LI-08 | Usage audit | `Usage` · 3: Filled, Empty, Loading + `Usage-Mobile` | /creator/usage | creator/usage/page.tsx | `GET /api/creator/usage` | 5 | not started | — |
-| LI-09 | Revoke a license | `Revoke` · 3: Filled, Done, Empty + `Revoke-Mobile` | /creator/revocations | creator/revocations/page.tsx | `POST /api/creator/agreements/[id]/revoke` · `rights-recheck` queue (hold posts, flag published) | 5 | not started | — |
-| LI-10 | Payouts | `Payouts` · 1: Filled + `Payouts-Mobile` | /creator/payouts | creator/payouts/page.tsx | none: gated "coming later" | 5 | not started | B-08 |
+| LI-05 | Creator portal overview | `CreatorOverview` · 4: Filled, Empty, Loading, Unverified + `CreatorOverview-Mobile` | /creator | creator/page.tsx | `GET /api/creator/overview` | 5 | built | — |
+| LI-06 | Verification | `Verification` · 4: Filled, Pending, Failed, Empty + `Verification-Mobile` | /creator/verify | creator/verify/page.tsx | `/api/creator/channels` · ownership verification (channel OAuth) | 5 | built | B-01, D-M5-2 |
+| LI-07 | Licensing terms | `LicenseTerms` · 3: Filled, Unverified, Saved + `LicenseTerms-Mobile` | /creator/terms | creator/terms/page.tsx | `GET/PUT /api/creator/terms` | 5 | built | D-M5-1 |
+| LI-08 | Usage audit | `Usage` · 3: Filled, Empty, Loading + `Usage-Mobile` | /creator/usage | creator/usage/page.tsx | `GET /api/creator/usage` | 5 | built | — |
+| LI-09 | Revoke a license | `Revoke` · 3: Filled, Done, Empty + `Revoke-Mobile` | /creator/revocations | creator/revocations/page.tsx | `POST /api/creator/agreements/[id]/revoke` · `rights-recheck` queue (hold posts, flag published) | 5 | built | D-M5-5 |
+| LI-10 | Payouts | `Payouts` · 1: Filled + `Payouts-Mobile` | /creator/payouts | creator/payouts/page.tsx | none: gated "coming later" | 5 | built | B-08 |
 
 ### 9 · Connections, agency & client portal
 
@@ -199,6 +201,58 @@ e2e                 Playwright: journeys J-01..J-15, visual snapshots, axe
 
 **102 screen IDs** mapped (public 8, auth and onboarding 13, product and system 81).
 
+### 14 · Nelio Studio (Required module 12)
+
+Boards live on the linked Studio canvas (https://claude.ai/artifact/SvKwDjia8PLUWyY7b16Stn, pages 4a–4e, 109 boards; offline copy `docs/design/E_hifi/canvas-studio/`). The main canvas indexes them on the `StudioIndex` board. Both canvases are one design. Spec, rules and credit units: the Studio feature plan (https://claude.ai/artifact/65M4cHQBPnNAhd3D8ZDC7Y).
+
+Routes and APIs are proposals, fixed in `docs/API.md` during the owning milestone. Every Studio page sits behind a per-tool feature flag (`studio.editor`, `studio.translate`, `studio.voice`, `studio.consent`, `studio.generate`, `studio.transform`). A shell may land before its pipeline, but until the pipeline is verified end to end it shows the honest gated state (Milestone 2 report conventions), never a working-looking screen. Milestones 4S and 5S are defined in Master Prompt 2's implementation sequence.
+
+| ID | Screen | Boards (desktop states + mobile) | Route | Web files | API and jobs | MS | Status | Gate |
+|---|---|---|---|---|---|---|---|---|
+| ED-01 | Editor projects | `Editor` · 4: Filled, Empty, Loading, Storage + `Editor-Mobile` | /w/[ws]/editor | w/[ws]/editor/page.tsx | `GET /api/editor/projects` · storage usage | 4S | not started | — |
+| ED-02 | Editor workspace | `Editor-Workspace` · 8: Filled, Loading, Empty (timeline), Captions, Ai (edit running), Preview (accept or undo), Unsaved, Offline + `Editor-Workspace-Mobile` | /w/[ws]/editor/[projectId] | w/[ws]/editor/[projectId]/page.tsx | `/api/editor/projects/[id]` (timeline model, versions) · `/ai-edits` (captions, silences, filler, reframe, enhance voice, beat sync, Ask Nelio AI) · `analyze` queue | 4S | not started | B-24 (heavy AI edits), B-17 |
+| ED-03 | Export | `Editor-Export` · 4: Filled, Rendering, Done, Failed (refunded) + `Editor-Export-Mobile` | dialog in ED-02 (no route) | `EditorExportDialog` | `POST /api/editor/projects/[id]/export` → existing `render` queue · estimate, reservation, refund | 4S | not started | B-24 (4K) |
+| ED-04 | Templates | `Editor-Templates` · 3: Filled, Loading, Applying + `Editor-Templates-Mobile` | /w/[ws]/editor/templates | w/[ws]/editor/templates/page.tsx | `GET /api/editor/templates` · apply to project | 4S | not started | — |
+| TR-01 | Translate home | `Translate` · 3: Filled, Empty, Loading + `Translate-Mobile` | /w/[ws]/translate | w/[ws]/translate/page.tsx | `GET /api/translate/jobs` | 4S | not started | B-17 |
+| TR-02 | New translation | `Translate-New` · 3: Filled, Noconsent (speaker without voice consent, falls back to a preset voice), Estimate + `Translate-New-Mobile` | /w/[ws]/translate/new | w/[ws]/translate/new/page.tsx | `POST /api/translate/jobs` (video, languages, level per language) · licence gate (`translation` use) · consent check | 4S subtitles · 5S dub levels | not started | B-17, B-18, B-19 |
+| TR-03 | Script review | `Translate-Script` · 3: Filled, Editing (a line), Toolong (line too long for timing) + `Translate-Script-Mobile` | /w/[ws]/translate/[jobId]/script | w/[ws]/translate/[jobId]/script/page.tsx | `/api/translate/jobs/[id]/lines` · glossary | 4S | not started | B-17 |
+| TR-04 | Language versions | `Translate-Versions` · 3: Filled, Rendering, Failed (one language, refunded) + `Translate-Versions-Mobile` | /w/[ws]/translate/[jobId] | w/[ws]/translate/[jobId]/page.tsx | `render` / `dub` queues · versions linked to the original post | 4S (subtitle versions) · 5S (dubs) · 6 (publish per platform and language) | not started | B-01, B-18, B-19 |
+| VL-01 | Voice Lab | `VoiceLab` · 3: Filled, Empty (no clone yet), Loading + `VoiceLab-Mobile` | /w/[ws]/voice | w/[ws]/voice/page.tsx | `GET /api/voices` (my voice, presets, granted) | 5S | not started | B-18 |
+| VL-02 | Clone my voice | `VoiceLab-Clone` · 6: Filled (reading the script), Mic (permission), Noisy, Noconsent (consent line missing), Processing, Ready + `VoiceLab-Clone-Mobile` | /w/[ws]/voice/clone | w/[ws]/voice/clone/page.tsx | `POST /api/consent/voice` (recording, consent line match, live-reading check) · `voice` queue | 5S | not started | B-18, B-22, B-25 |
+| VL-03 | Change a voice | `VoiceLab-Change` · 3: Filled, Rendering, Done + `VoiceLab-Change-Mobile` | /w/[ws]/voice/change | w/[ws]/voice/change/page.tsx | `POST /api/voice/change` · estimate · `voice` queue | 5S | not started | B-18 |
+| VL-04 | Text to voice | `VoiceLab-Tts` · 2: Filled, Generating (line-level retry) + `VoiceLab-Tts-Mobile` | /w/[ws]/voice/text | w/[ws]/voice/text/page.tsx | `POST /api/voice/tts` · `voice` queue | 5S | not started | B-18 |
+| VL-05 | Request a voice | `VoiceLab-Request` · 3: Filled, Sent (invite sent), Declined + `VoiceLab-Request-Mobile` | /w/[ws]/voice/request | w/[ws]/voice/request/page.tsx | `POST /api/consent/requests` (invite, accept, decline, expire) · email | 5S | not started | — |
+| ST-11 | Likeness and voice (consent registry) | `Likeness` · 6: Filled, Empty, Loading, Verify (likeness), Revoke (access), Incoming (request) + `Likeness-Mobile` | /account/likeness | account/likeness/page.tsx | `/api/consent/likeness` (live selfie check) · `/api/consent/grants` (person or workspace, scope, expiry, revoke) · usage log in the audit trail · revoke holds scheduled posts | 5S | not started | B-22, B-25 |
+| GE-01 | Generate | `Generate` · 3: Filled (presets, recent), Empty, Loading + `Generate-Mobile` | /w/[ws]/generate | w/[ws]/generate/page.tsx | `GET /api/generate/runs` · presets | 9 | not started | B-20 |
+| GE-02 | Prompt composer | `Generate-Compose` · 3: Filled (with references), Estimate, Blocked (prompt) + `Generate-Compose-Mobile` | /w/[ws]/generate/new | w/[ws]/generate/new/page.tsx | `POST /api/generate/runs` · prompt safety check · consent check for characters | 9 | not started | B-20, B-26 |
+| GE-03 | Results | `Generate-Results` · 3: Filled (variations), Generating, Failed (one, refunded) + `Generate-Results-Mobile` | /w/[ws]/generate/[runId] | w/[ws]/generate/[runId]/page.tsx | `generate` queue · extend, remix, upscale, send to Editor | 9 | not started | B-20, B-23 |
+| GE-04 | Characters | `Generate-Characters` · 3: Filled, Empty, Create (a character) + `Generate-Characters-Mobile` | /w/[ws]/generate/characters | w/[ws]/generate/characters/page.tsx | `/api/generate/characters` (synthetic, or my verified likeness) | 9 | not started | B-20, B-22 |
+| GE-05 | Storyboard | `Generate-Storyboard` · 2: Filled (shot list), Generating (all) + `Generate-Storyboard-Mobile` | /w/[ws]/generate/storyboards/[id] | w/[ws]/generate/storyboards/[id]/page.tsx | `/api/generate/storyboards` · assembled in the Editor | 9 | not started | B-20 |
+| TF-01 | Transform camera | `Transform` · 7: Filled (live preview), Permission (camera), Denied, Nocam, Recording, Layer (sheet open), Slow (record now, transform after) + `Transform-Mobile` | /w/[ws]/transform | w/[ws]/transform/page.tsx | live preview session · `transform` queue for the full-quality render | 10 | not started | B-21, B-26 |
+| TF-02 | Look picker | `Transform-Looks` · 3: Filled, Blocked (real person), Request (a likeness) + `Transform-Looks-Mobile` | sheet in TF-01 / TF-04 (no route) | `LookPicker` | `GET /api/looks` (library, my likeness, granted likenesses) · consent check | 10 | not started | B-21, B-22, B-26 |
+| TF-03 | Prop and scene swap | `Transform-Props` · 3: Filled (tap to select), Generating (swapping), Swapped + `Transform-Props-Mobile` | panel in TF-01 / TF-04 (no route) | `PropSwapPanel` | `/api/transform/props` (select, prompt, swap, remove) | 10 | not started | B-21 |
+| TF-04 | Transform a video | `Transform-Video` · 3: Filled, Estimate, Rendering + `Transform-Video-Mobile` | /w/[ws]/transform/video | w/[ws]/transform/video/page.tsx | `POST /api/transform/jobs` · `transform` queue | 10 | not started | B-21, B-23 |
+| TF-05 | Result review | `Transform-Review` · 1: Filled (before/after, AI-changed label) + `Transform-Review-Mobile` | /w/[ws]/transform/[takeId] | w/[ws]/transform/[takeId]/page.tsx | send to Editor · publish (label, credentials, platform AI flag) | 10 | not started | B-23 |
+
+**24 Studio screen IDs** mapped (Editor 4, Translate 4, Voice Lab 5, consent registry 1, Generate 5, Transform 5) across 109 boards. Running total: 126 screen IDs.
+
+**ST-11 Likeness and voice.** The Studio canvas labels this screen ST-10, which is already Workspace settings (§11). The product owner chose ST-11 on 20 Nov 2026; the code uses ST-11. The canvas boards keep their ST-10 titles.
+
+Changes the Studio plan asks for on screens that already exist (built in the milestone named):
+
+| Where | Change | MS |
+|---|---|---|
+| Sidebar | Create: Clipping Studio, Editor, Generate, Content Studio, Exports. New group Voice and video: Transform, Voice Lab, Translate. Account settings: Likeness and voice. Already registered and hidden; each entry appears when its flag turns on. | 4S, 5S, 9, 10 |
+| CL-03, CS-01, CL-05 | "Open in Editor" on every clip, draft and export | 4S |
+| PB-01 / CL-05 | "Translate" on every post and export; language variants in the composer | 4S (entry), 6 (composer) |
+| CL-01 | Media Library tags each item with the tool that made it and an "AI-changed" chip | 5S |
+| LI-07, LI-02, LI-03 | A "Translations" allowed use on licence terms (today only clips and compilations). No board draws it yet. | 5S |
+| CS-02 | Locked AI-content toggle with a short reason; AI-changed chip in the post preview | 6 |
+| APP-04 / approvals | Approval card marked "Uses a cloned voice" or "Uses a changed face" | 7 |
+| AD-06 | Reports of a Nelio output used without consent, linked from the content credentials | 11 |
+| CL-02, mobile home | "Record with Transform" entry point | 10 |
+| CS-03 | The "Notify me" gate becomes "Original AI video now lives in Generate" (as drawn) | 9 |
+
 ## 3. Reference boards (no route of their own)
 
 | Boards | Use in the build | MS |
@@ -241,11 +295,17 @@ J-01, J-04, J-10 and J-11 need a publishing adapter. Until a platform is approve
 | 3 | Jobs, agents, activity, notifications | 7: APP-02, APP-03, APP-04, APP-05, APP-06, NT-01, SY-09 |
 | 4 | Media pipeline | 10: CL-01, CL-02, CL-03, CL-04, CL-05, CS-01, CS-02, CS-03, ST-06, ST-07 |
 | 5 | Licensing + creator portal | 10: LI-01, LI-02, LI-03, LI-04, LI-05, LI-06, LI-07, LI-08, LI-09, LI-10 |
-| 6 | OAuth + publishing | 6: PB-01, PB-02, PB-03, IN-01, IN-02, ST-08 |
-| 7 | Agency, client approvals, analytics | 15: PB-04, PB-05, AN-01, AN-02, AN-03, AN-04, AG-01, AG-02, AG-03, AG-04, AG-05, AG-06, CP-01, CP-02, ST-05 |
-| 8 | Billing | 8: BI-01, BI-02, BI-03, BI-04, BI-05, BI-06, BI-07, BI-08 |
-| 9 | Hardening | 15: ST-01, ST-02, ST-04, ST-09, ST-10, AD-01, AD-02, AD-03, AD-04, AD-05, AD-06, AD-07, AD-08, AD-09, SY-06 |
-| 10 | Release | M-08 live status, J-01 to J-15 on staging, accessibility pass, dark parity |
+| 4S | Studio: Editor + Translate subtitles | 8: ED-01, ED-02, ED-03, ED-04, TR-01, TR-02 (subtitles), TR-03, TR-04 (subtitle versions); "Open in Editor" and "Translate" entry points |
+| 5S | Studio: consent registry, Voice Lab, dubbing | 7: ST-11 Likeness and voice, VL-01, VL-02, VL-03, VL-04, VL-05; TR-02 and TR-04 dub levels; AI-changed chip, content credentials and watermark on outputs; "Translations" licence use |
+| 6 | OAuth + publishing | 6: PB-01, PB-02, PB-03, IN-01, IN-02, ST-08; AI-content disclosure at publish (platform flag locked on); publishing language versions (TR-04) |
+| 7 | Agency, client approvals, analytics | 15: PB-04, PB-05, AN-01, AN-02, AN-03, AN-04, AG-01, AG-02, AG-03, AG-04, AG-05, AG-06, CP-01, CP-02, ST-05; agent use of Studio tools; per-language analytics |
+| 8 | Billing | 8: BI-01, BI-02, BI-03, BI-04, BI-05, BI-06, BI-07, BI-08; Studio credit units and plan gates |
+| 9 | Studio: Generate | 5: GE-01, GE-02, GE-03, GE-04, GE-05 |
+| 10 | Studio: Transform | 5: TF-01, TF-02, TF-03, TF-04, TF-05 (on a video first, then live camera) |
+| 11 | Hardening (was 9) | 15: ST-01, ST-02, ST-04, ST-09, ST-10, AD-01, AD-02, AD-03, AD-04, AD-05, AD-06, AD-07, AD-08, AD-09, SY-06; Studio covered by the load, cost, security and abuse tests |
+| 12 | Release (was 10) | M-08 live status, J-01 to J-15 on staging, accessibility pass, dark parity, Studio launch gates |
+
+Milestones 9 and 10 became 11 and 12 on 20 Nov 2026. Where this file, `BLOCKERS.md` or an older report says "MS 9" (hardening) or "MS 10" (release), read 11 and 12. The MS column in §2 sections 1–13 still shows the old numbers for those two milestones; `packages/config/src/screens.ts` is renumbered when the next milestone starts.
 
 ## 6. Differences found between the documents
 
@@ -261,4 +321,32 @@ The product owner accepted the defaults below on 12 Nov 2026.
 | T-6 | The main text of `G_UX_AUDIT.md` describes the v1 look (Volt, Grape, Bricolage Grotesque). | Its v2 addendum and the handoff supersede it. Open audit items carried into the build: G-12 (check GSAP timing) and G-14 (dark from tokens only). |
 | T-7 | Offline boards load photos from `/_blob/…` canvas URLs, so photos don't show when a board file is opened locally. Everything else renders correctly without the canvas runtime (checked on `CommandCenter`, `CommandCenter-Mobile` and `Main`). | Visual-snapshot baselines rewrite those URLs to `docs/design/E_hifi/photos/` using `generator/photos.json`. |
 | T-8 | The inventory lists all eight public mobile boards on the M-08 row. | Read as one mobile board per public page (`Home-Mobile` and so on), as on disk. |
+
+**D-M5-1 (Milestone 5).** Creators upload the videos they license (decided 20 Nov 2026: importing from a channel waits for platform approval, B-01). The upload list is a "Your videos" card on LI-07 under "Excluded videos"; no board draws it, so it reuses the row, button and upload-progress parts of LI-07 and CL-02.
+
+**D-M5-2 (Milestone 5).** LI-06 verifies YouTube channels by Google sign-in (read-only, token revoked straight away, nothing stored), on a Google Cloud OAuth client in testing mode until Google verification (B-01). Instagram sign-in needs Meta approval, so Instagram (and YouTube while sign-in is off) uses a check by hand: the creator adds a one-time code to their bio or channel description and a platform admin confirms it (`pnpm --filter @nelio/worker-node admin:channel`, until AD-04). The board’s pending line "Waiting for Instagram to confirm · usually minutes" would not be true, so pending rows say what to do and how long the check takes.
+
+**D-M5-3 (Milestone 5).** Marketplace cards and the LI-02 strip use poster frames the worker takes from each creator video. "Popular with licensees" ranks the creator's own videos by how many licensees clipped them (a count across workspaces; no licensee content is shown). The niche filter lists the niches creators have; no board lets a creator set a niche or short description yet, so cards show the video count until that exists. LI-02's Paid board can't occur (paid terms can't be published, B-08); the button exists for when it can. Editors (licensing request: R) can request private licences; free licences are accepted by a manager. A licence the owner revoked can't be re-accepted on free terms.
+
+**D-M5-4 (Milestone 5).** No board draws how a licensee picks a creator's video, so LI-02 in the Licensed state turns its strip into "Pick a video to clip", with a "Clip this" button on each short. That copies the video into the workspace (a server-side storage copy) and starts processing. CL-01's "Import licensed" opens My licenses once the workspace holds a licence (the marketplace otherwise), and CL-02's "It’s from a Nelio license" option points there. Every licensed use goes through one gate (`licenseForAsset`): processing and rendering in the worker, rendering and retries in the app, and the composer, which adds the attribution automatically (CS-02 Licensed) and warns about platforms the licence doesn't cover.
+
+**D-M5-5 (Milestone 5).** LI-09 draws the revoke dialog but not how a creator picks the licence: a "Revoke a license" button in the page header opens the board's dialog, with a "Which license?" picker when there is more than one. Revoking (and expiry, run by the worker every minute) cancels queued renders without charge, holds scheduled posts, flags published ones and notifies the workspace. LI-04's "Open takedown checklist" lists the steps and records the confirmation; Nelio can't remove posts from platforms itself until Milestone 6. Verified end to end with `pnpm --filter @nelio/worker-node check:licensing` (26 checks against the dev database and storage).
+
+**D-M5-6 (Milestone 5 end check, 20 Nov 2026): second canvas refresh.** The live canvas (version 1795153016) added the Cards board ("Eight cards, one family") and restyled shared parts. Built for every screen from Milestones 0–5: the solid-blue active navigation item; row cards on one shared grid (subgrid columns, bolder values, 64 px rows; the status chip sits beside the title on phones); loading states that draw the real page with text-shaped grey blocks (`Ghost`); toasts with "just now"; the agent card (Agents, Command Center), tool tiles and draft cards (Content Studio), clip cards (Exports) and source cards (Marketplace); copy changes in the command palette, pause dialog, workspace switcher and revoke dialog. Differences kept on purpose: "Create an image" and "Templates" stay "Coming later" (no engine); CS-03 keeps its gated "Notify me" instead of "Original AI video now lives in Generate", because Generate isn't built; agent cards show no platform badges until agents have destinations (Milestone 6); the agent card header uses the poster of the agent's last video, or the agent's colour when there is none. Remaining cards (campaign, client, post ticket) arrive with their screens (Milestones 6–7).
+
+### Nelio Studio (approved scope, 20 Nov 2026)
+
+The product owner made Nelio Studio part of the approved scope on 20 Nov 2026, replacing the earlier "roadmap after the current milestones" decision. It is Required module 12 in Master Prompt 2, with the same standards, milestone process and launch gates as the rest. Screens are in §2 section 14 and the order in §5. Its navigation entries are registered (`packages/config/src/screens.ts`, currently milestone 11) and stay hidden until each tool's flag turns on.
+
+**D-M5-7 (20 Nov 2026): third canvas refresh, built the same day in the final check.** After the Milestone 5 end check the live main canvas moved to version 1795156541. 314 boards changed style only, no text changed, and one board is new: **Form controls · shadcn/ui** (Foundations). What changed:
+- Every text input, textarea, select and multi-select uses the shadcn/ui component themed with Nelio tokens: 10 px radius, 1 px border, a light shadow, 44 px height, and labels at 14 px semibold with an 8 px gap. Multi-select is Popover + Command with checkbox items and badges in the trigger. Search bars, the Nelio AI prompt box and code inputs keep their own designs.
+- The top bar is sticky (z-index 25). The sidebar is a fixed 250 px column that stays in place at the full viewport height below the top bar.
+
+The offline copy is synced. Built in `packages/ui` (`INPUT_CLASS`, `TEXTAREA_CLASS`, `LABEL_CLASS`, `Field`, `TextareaField`, `SelectControl`, `SelectField`) and used by every form on screens built so far. The operator and Creator Portal top bars are sticky at all widths, 69 px tall, and the sidebars stick below them with their own scroll. Kept as drawn: the workspace search, the Clipping Studio "Edit with words" prompt and the code digits keep their own designs. The multi-select (Popover + Command) arrives with its first screen (Translate languages, 4S).
+
+**D-M5-8 (20 Nov 2026): Studio scope notes.**
+- Studio's ST-10 clashed with Workspace settings ST-10. The owner chose ST-11 for Likeness and voice (§2 section 14).
+- The Studio canvas boards already use the refreshed sidebar, the Ghost loading style and the shadcn form controls.
+- Translating someone else's video needs a licence that allows it. Licence terms today offer only clips and compilations (`LICENSE_USES`), so a "Translations" use is added to LI-07, LI-02 and LI-03 in 5S. No board draws it, so it reuses the existing use checkboxes.
+- The Studio plan puts content credentials and the watermark with publishing. They are moved into 5S because a cloned voice can leave Nelio as a download or export before publishing exists (Milestone 6). The platform's AI flag stays in Milestone 6.
 

@@ -1,5 +1,5 @@
 import {
-  AbortMultipartUploadCommand, CompleteMultipartUploadCommand, CreateMultipartUploadCommand, DeleteObjectCommand, GetObjectCommand, HeadObjectCommand,
+  AbortMultipartUploadCommand, CompleteMultipartUploadCommand, CopyObjectCommand, CreateMultipartUploadCommand, DeleteObjectCommand, GetObjectCommand, HeadObjectCommand,
   PutObjectCommand, S3Client, UploadPartCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
@@ -70,6 +70,11 @@ export async function signedGetUrl(key: string, opts: { expiresIn?: number; down
   }), { expiresIn: opts.expiresIn ?? 900 });
 }
 
+/** Server-side copy inside the bucket (a licensed creator video into the licensee's workspace). Files over 5 GB aren't accepted at upload. */
+export async function copyObject(from: string, to: string, contentType: string): Promise<void> {
+  await s3().send(new CopyObjectCommand({ Bucket: bucket(), CopySource: `${bucket()}/${from.split("/").map(encodeURIComponent).join("/")}`, Key: to, ContentType: contentType, MetadataDirective: "REPLACE" }));
+}
+
 export async function putObject(key: string, body: Uint8Array | Buffer | string, contentType: string): Promise<void> {
   await s3().send(new PutObjectCommand({ Bucket: bucket(), Key: key, Body: body, ContentType: contentType }));
 }
@@ -90,4 +95,7 @@ export const storageKeys = {
   audio: (workspaceId: string, assetId: string) => `ws/${workspaceId}/media/${assetId}/audio.m4a`,
   preview: (workspaceId: string, assetId: string, rank: number) => `ws/${workspaceId}/media/${assetId}/preview-${rank}.mp4`,
   render: (workspaceId: string, renderId: string) => `ws/${workspaceId}/renders/${renderId}.mp4`,
+  /** A creator's own video offered for licensing (Milestone 5). Licensees get a copy under their workspace. */
+  creatorVideo: (creatorId: string, videoId: string, ext: string) => `creators/${creatorId}/videos/${videoId}/source.${ext}`,
+  creatorPoster: (creatorId: string, videoId: string) => `creators/${creatorId}/videos/${videoId}/poster.jpg`,
 };

@@ -18,7 +18,8 @@ export function Sidebar(p: ShellProps) {
   const credits = p.extras.credits;
   const pct = credits ? Math.round((credits.used / Math.max(1, credits.allocation)) * 100) : 0;
   return (
-    <nav aria-label="Main" className="hidden flex-none flex-col gap-0.5 border-r border-border bg-surface-1 px-3 py-[18px] md:flex md:w-[76px] xl:w-[250px] xl:px-3.5">
+    <nav aria-label="Main" className="sticky top-[69px] hidden h-[calc(100dvh-69px)] flex-none flex-col self-start border-r border-border bg-surface-1 px-3 pb-4 pt-3 md:flex md:w-[76px] xl:w-[250px] xl:px-3.5">
+      <div className="-mx-1.5 flex min-h-0 flex-auto flex-col gap-0.5 overflow-y-auto overscroll-contain px-1.5 pb-2 pt-1.5">
       {groups.map((g) => (
         <div key={g.label ?? "top"} className="flex flex-col gap-0.5">
           {g.label ? (
@@ -37,8 +38,9 @@ export function Sidebar(p: ShellProps) {
           ))}
         </div>
       ))}
+      </div>
       {credits ? (
-        <div className="relative mt-5 hidden flex-col gap-2 rounded-[22px] bg-lime p-4 text-outline xl:flex">
+        <div className="relative mt-3 hidden flex-none flex-col gap-2 rounded-[22px] bg-lime p-4 text-outline xl:flex">
           <div className="absolute -top-3 right-2.5">
             <Sticker fill="yellow" rotate={6} size={13}>{credits.planLabel}</Sticker>
           </div>

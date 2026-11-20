@@ -4,7 +4,7 @@ import Link from "next/link";
 import { UploadForm, type UploadPreview } from "./upload-form";
 
 /** CL-02 Upload page frame: breadcrumb, title and the form. */
-export function UploadPage({ slug, defaults, libraryHref, studioBase, preview }: { slug?: string; defaults: { quality: Quality; language: string }; libraryHref: string; studioBase: string; preview?: UploadPreview }) {
+export function UploadPage({ slug, defaults, libraryHref, studioBase, licensesHref, preview }: { slug?: string; defaults: { quality: Quality; language: string }; libraryHref: string; studioBase: string; licensesHref?: string; preview?: UploadPreview }) {
   return (
     <div className="flex flex-col gap-5">
       <div>
@@ -13,7 +13,7 @@ export function UploadPage({ slug, defaults, libraryHref, studioBase, preview }:
         </nav>
         <PageHead title="Add a video" />
       </div>
-      <UploadForm slug={slug} defaults={defaults} preview={preview} studioBase={studioBase} />
+      <UploadForm slug={slug} defaults={defaults} preview={preview} studioBase={studioBase} licensesHref={licensesHref} />
     </div>
   );
 }

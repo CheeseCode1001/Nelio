@@ -28,7 +28,7 @@ export function Toaster() {
       obs.disconnect();
     };
   }, []);
-  return <GooeyToaster position={mobile ? "top-center" : "top-right"} offset={mobile ? 12 : 76} visibleToasts={3} theme={dark ? "dark" : "light"} closeOnEscape swipeToDismiss />;
+  return <GooeyToaster position={mobile ? "top-center" : "top-right"} offset={mobile ? 12 : 76} visibleToasts={3} theme={dark ? "dark" : "light"} closeOnEscape swipeToDismiss showTimestamp />;
 }
 
 type Action = { label: string; onClick: () => void };

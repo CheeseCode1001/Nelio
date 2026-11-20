@@ -40,6 +40,10 @@
    "name": "4 \u00b7 Clipping & Content"
   },
   {
+   "id": "studio",
+   "name": "4 \u00b7 Nelio Studio (linked canvas)"
+  },
+  {
    "id": "publishing",
    "name": "5 \u00b7 Calendar, approvals & publishing"
   },
@@ -118,6 +122,24 @@
    "w": 1440,
    "h": 5200,
    "title": "Delight kit: toasts, avatars, stickers, skeletons, sounds",
+   "page": "foundations",
+   "expand": "fill"
+  },
+  "FormControls.dc.html": {
+   "x": 1520,
+   "y": 4480,
+   "w": 1440,
+   "h": 1900,
+   "title": "Form controls \u00b7 shadcn/ui",
+   "page": "foundations",
+   "expand": "fill"
+  },
+  "Cards.dc.html": {
+   "x": 3040,
+   "y": 4480,
+   "w": 1440,
+   "h": 6400,
+   "title": "Card concepts",
    "page": "foundations",
    "expand": "fill"
   },
@@ -1648,6 +1670,15 @@
    "h": 2040,
    "title": "CS-03 Original AI video \u00b7 Mobile",
    "page": "clipping",
+   "expand": "fill"
+  },
+  "StudioIndex.dc.html": {
+   "x": 0,
+   "y": 520,
+   "w": 1800,
+   "h": 960,
+   "title": "Nelio Studio \u00b7 index of all Studio screens",
+   "page": "studio",
    "expand": "fill"
   },
   "Calendar.dc.html": {
@@ -4335,6 +4366,8 @@
   "Motion.dc.html",
   "Brand.dc.html",
   "Delight.dc.html",
+  "FormControls.dc.html",
+  "Cards.dc.html",
   "Home.dc.html",
   "Product.dc.html",
   "UseCases.dc.html",
@@ -4486,6 +4519,7 @@
   "Composer-Mobile.dc.html",
   "AIVideo.dc.html",
   "AIVideo-Mobile.dc.html",
+  "StudioIndex.dc.html",
   "Calendar.dc.html",
   "Calendar-Empty.dc.html",
   "Calendar-Loading.dc.html",
@@ -5137,6 +5171,15 @@
    "maxW": 2006,
    "page": "clipping",
    "w": 240
+  },
+  "legend_studio": {
+   "x": 0,
+   "y": 0,
+   "text": "4 \u00b7 Nelio Studio (linked canvas) \u2014 Editor, Translate, Voice Lab and consent, Generate and Transform. Their 109 boards live on the linked Nelio Studio canvas (512-file limit per canvas); this index links to every one of them.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "studio"
   },
   "legend_publishing": {
    "x": 0,

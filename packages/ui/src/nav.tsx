@@ -6,16 +6,17 @@ export type NavIconName = keyof typeof NAV_ICONS.NAVIC | "arrowr" | "sun";
 
 /**
  * Navigation icon with outline (idle) and filled (active) states (handoff §6.4 rule 4).
- * Active: the shape is filled in accent and its details are cut out in the accent tint.
+ * Active (refresh of 20 Nov 2026): the row is solid accent, so the shape is filled in the on-accent colour and its
+ * details are cut out in the accent.
  */
 export function NavIcon({ name, active = false, size = 20 }: { name: NavIconName; active?: boolean; size?: number }) {
   // Names without a dedicated drawing fall back to the grid shape, exactly as the design generator does.
   const [shape, detail] = (NAV_ICONS.NAVIC as Record<string, readonly [string, string]>)[name] ?? NAV_ICONS.NAVIC.grid;
   if (active) {
-    const cut = "var(--n-acc-t)";
+    const cut = "var(--n-acc)";
     const det = detail.replaceAll("<path", `<path stroke="${cut}" fill="none"`).replaceAll("<circle", `<circle stroke="${cut}" fill="${cut}"`);
     return (
-      <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" className="flex-none" fill="var(--n-acc)" stroke="var(--n-acc)" strokeWidth={1.7} strokeLinejoin="round" strokeLinecap="round" dangerouslySetInnerHTML={{ __html: `${shape}<g stroke-width="2">${det}</g>` }} />
+      <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" className="flex-none" fill="var(--n-on-acc, #fff)" stroke="var(--n-on-acc, #fff)" strokeWidth={1.7} strokeLinejoin="round" strokeLinecap="round" dangerouslySetInnerHTML={{ __html: `${shape}<g stroke-width="2">${det}</g>` }} />
     );
   }
   return (
@@ -27,16 +28,15 @@ export function NavIcon({ name, active = false, size = 20 }: { name: NavIconName
 export function navItemClass(active: boolean) {
   return cn(
     "relative box-border flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-[14px] border-0 px-3.5 py-2.5 text-left text-sm no-underline",
-    active ? "bg-accent-tint font-extrabold text-accent-text" : "bg-transparent font-semibold text-muted",
+    active ? "bg-accent font-extrabold text-on-accent hover:text-on-accent" : "bg-transparent font-semibold text-muted",
   );
 }
 
 export function NavItemContent({ icon, label, active, labelClassName }: { icon: NavIconName; label: string; active: boolean; labelClassName?: string }) {
   return (
     <>
-      {active ? <span aria-hidden="true" className="absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r bg-accent" /> : null}
       <NavIcon name={icon} active={active} />
-      <span className={cn(active ? "text-accent-text" : "text-text", labelClassName)}>{label}</span>
+      <span className={cn(active ? "text-on-accent" : "text-text", labelClassName)}>{label}</span>
     </>
   );
 }

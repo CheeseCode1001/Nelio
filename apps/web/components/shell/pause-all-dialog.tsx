@@ -69,6 +69,7 @@ export function PauseAllDialog({ slug, workspaceName, mode, open, onOpenChange, 
         <div className="flex flex-col gap-3">
           <div className="flex justify-center"><Illustration name="limit" width={130} /></div>
           <h2 className="m-0 font-display text-[22px] font-extrabold tracking-[-0.02em] text-text">Pause everything in {workspaceName}?</h2>
+          <p className="m-0 text-sm text-muted">Agents stop and queued jobs are held. You can resume any time.</p>
           {summary ? (
             <dl className="m-0 flex flex-col">
               {rows.map(([k, v]) => (

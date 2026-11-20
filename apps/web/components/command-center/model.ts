@@ -21,6 +21,18 @@ export interface AgentCardData {
   meta: string;
   budget: { used: number; limit: number };
   running: boolean;
+  /** Agent card (Cards board, refresh of 20 Nov 2026). Optional so older samples still render. */
+  mode?: { label: string; icon: IconName };
+  /** "Next run today 15:00" / "Paused by you Monday", shown beside the state. */
+  when?: string;
+  /** Drafts this agent made this week. */
+  drafts?: number;
+  /** Poster of the last video the agent worked on (signed URL), else the agent colour fills the header. */
+  cover?: string | null;
+  /** People who see this agent's work: up to three initials, and how many more. */
+  people?: { initials: string; color: string }[];
+  morePeople?: number;
+  platforms?: ("yt" | "ig" | "tt" | "fb")[];
 }
 
 export interface NeedItem {
