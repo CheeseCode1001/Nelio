@@ -1,7 +1,7 @@
 "use client";
 
 import { EXPIRY_CHOICES, PLATFORM_LABEL, checkUpload, formatBytes, termsSummary, type LicenseKind, type LicensePlatform, type LicenseUse } from "@nelio/domain";
-import { Banner, Button, ButtonLink, Card, CardHead, Checkbox, Chip, Field, Icon, KeyValues, Meter, Motion, PageHead, ResponsiveDialog, SelectField, Sk, Switch, cn, Ghost } from "@nelio/ui";
+import { Banner, Button, ButtonLink, Card, CardHead, Checkbox, Chip, Field, Icon, KeyValues, Meter, Motion, PageHead, ResponsiveDialog, SelectField, Sk, Switch, cn, Ghost, TEXTAREA_CLASS, LABEL_CLASS } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState, useTransition } from "react";
 import { toast } from "@/components/feedback/toaster";
@@ -12,7 +12,7 @@ import type { TermsData, VideoRow } from "@/lib/creator";
 import { readDuration, sendParts, uploadErrorText } from "@/lib/multipart-client";
 import { SAMPLE_TERMS } from "./sample";
 
-const TEXTAREA = "box-border min-h-[100px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
+const TEXTAREA = TEXTAREA_CLASS;
 
 const USE_OPTIONS: { value: string; label: string; uses: LicenseUse[] }[] = [
   { value: "both", label: "Clips and compilations", uses: ["clips", "compilations"] },
@@ -241,8 +241,8 @@ export function LicenseTerms({ d, hrefs, preview, saved: savedInitially, display
             <CardHead title="Third-party rights" right={<Chip tone="warn">Important</Chip>} />
             <Checkbox label="Some of my videos contain music or footage I don’t own" checked={thirdParty} onChange={(e) => setThirdParty(e.target.checked)} />
             {thirdParty ? (
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="third-party-note" className="text-[13px] font-bold text-text">Which ones?</label>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="third-party-note" className={LABEL_CLASS}>Which ones?</label>
                 <textarea id="third-party-note" className={TEXTAREA} value={note} onChange={(e) => setNote(e.target.value)} maxLength={1000} aria-invalid={Boolean(fieldError("thirdPartyNote"))} placeholder="Ep 7 (licensed music), Ep 12 (guest footage)" />
                 {fieldError("thirdPartyNote") ? <span role="alert" className="text-[13px] font-semibold text-err-text">{fieldError("thirdPartyNote")}</span> : <span className="text-[13px] text-muted">Then exclude those videos below so no one can clip them.</span>}
               </div>

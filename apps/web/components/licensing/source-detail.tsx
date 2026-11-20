@@ -1,7 +1,7 @@
 "use client";
 
 import { EXPIRY_CHOICES, PLATFORM_LABEL, type LicensePlatform } from "@nelio/domain";
-import { Banner, Button, ButtonLink, Card, CardHead, Checkbox, Chip, Icon, KeyValues, Motion, PersonAvatar, PlatformBadge, PlayDisc, ResponsiveDialog, SelectField, Sk, cn, Ghost } from "@nelio/ui";
+import { Banner, Button, ButtonLink, Card, CardHead, Checkbox, Chip, Icon, KeyValues, Motion, PersonAvatar, PlatformBadge, PlayDisc, ResponsiveDialog, SelectField, Sk, cn, Ghost, TEXTAREA_CLASS, LABEL_CLASS } from "@nelio/ui";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition, type ReactNode } from "react";
@@ -10,7 +10,7 @@ import { acceptFreeLicenseAction, cancelRequestAction, importLicensedVideoAction
 import type { SourceData } from "@/lib/licensing";
 import { SAMPLE_SOURCE } from "./sample";
 
-const TEXTAREA = "box-border min-h-[100px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
+const TEXTAREA = TEXTAREA_CLASS;
 const THUMB = ["bg-orange", "bg-lime", "bg-cyan", "bg-yellow", "bg-pink", "bg-violet"];
 const TYPE_CHIP = { free: { tone: "ok", label: "Free" }, private: { tone: "blue", label: "Private" }, paid: { tone: "neutral", label: "Paid · later" } } as const;
 
@@ -155,8 +155,8 @@ function RequestDialog({ d, open, onOpenChange, slug, onSent, preview }: { d: So
     <ResponsiveDialog open={open} onOpenChange={onOpenChange} title={`Request from ${d.name}`} hideTitle>
       <div className="flex flex-col gap-[18px]">
         <DialogHead d={d} title={`Request from ${d.name}`} sub="Private license · they approve each request" />
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="request-note" className="text-[13px] font-bold text-text">What will you use it for?</label>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="request-note" className={LABEL_CLASS}>What will you use it for?</label>
           <textarea id="request-note" className={TEXTAREA} value={note} onChange={(e) => setNote(e.target.value)} maxLength={600} aria-invalid={error?.field === "note"} placeholder="Short clips for my channel about…" />
           {error?.field === "note" ? <span role="alert" className="text-[13px] font-semibold text-err-text">{error.text}</span> : null}
         </div>

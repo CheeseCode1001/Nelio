@@ -1,6 +1,6 @@
 "use client";
 
-import { Banner, Button, EmptyState, Motion, PageHead, PersonAvatar, ResponsiveDialog, RowCard, RowCardList, RowCardSkeleton, SelectField, Sk, Ghost } from "@nelio/ui";
+import { Banner, Button, EmptyState, Motion, PageHead, PersonAvatar, ResponsiveDialog, RowCard, RowCardList, RowCardSkeleton, SelectField, Sk, Ghost, TEXTAREA_CLASS, LABEL_CLASS } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "@/components/feedback/toaster";
@@ -8,7 +8,7 @@ import { revokeLicenseAction } from "@/lib/actions/creator";
 import type { ActiveLicense, RevocationsData } from "@/lib/creator";
 import { SAMPLE_REVOCATIONS } from "./sample";
 
-const TEXTAREA = "box-border min-h-[100px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
+const TEXTAREA = TEXTAREA_CLASS;
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
 function Impact({ title, text }: { title: string; text: string }) {
@@ -50,8 +50,8 @@ function RevokeDialog({ active, open, onOpenChange, onDone, preview, initial }: 
         {active.length > 1 ? <SelectField label="Which license?" name="revoke-which" value={id} onChange={(e) => setId(e.target.value)} options={active.map((x) => ({ value: x.id, label: `${x.who} · since ${x.since}` }))} /> : null}
         <Impact title="Stops right away" text={`New clips, renders${a.scheduled ? ` and ${plural(a.scheduled, "scheduled post", "scheduled posts")}` : ""}`} />
         <Impact title="Flagged for review" text={a.published ? `${plural(a.published, "published post", "published posts")}, for ${a.who} to review` : "Nothing published yet"} />
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="revoke-reason" className="text-[13px] font-bold text-text">Reason (shared with {a.who})</label>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="revoke-reason" className={LABEL_CLASS}>Reason (shared with {a.who})</label>
           <textarea id="revoke-reason" className={TEXTAREA} placeholder="Optional" value={reason} onChange={(e) => setReason(e.target.value)} maxLength={500} />
         </div>
         {error ? <Banner tone="err" title="Not revoked" text={error} /> : null}

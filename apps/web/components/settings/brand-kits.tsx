@@ -1,7 +1,7 @@
 "use client";
 
 import { CAPTION_STYLES, type CaptionStyle } from "@nelio/domain";
-import { Banner, Button, Card, CardHead, Chip, EmptyState, Field, GlassChip, Icon, Motion, PageHead, SelectField, ShortFrame, Sk, cn, photoSrc, Ghost } from "@nelio/ui";
+import { Banner, Button, Card, CardHead, Chip, EmptyState, Field, GlassChip, Icon, Motion, PageHead, SelectField, ShortFrame, Sk, cn, photoSrc, Ghost, TEXTAREA_CLASS, LABEL_CLASS } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/feedback/toaster";
 import { useState, useTransition } from "react";
@@ -113,9 +113,9 @@ export function BrandKitsPage({ slug, kits, current, kitBase, preview }: { slug?
             <SelectField label="Caption font" name="captionFont" value={kit.captionFont} onChange={() => {}} options={FONTS} />
             <SelectField label="Caption style" name="captionStyle" value={kit.captionStyle} onChange={(e) => set({ captionStyle: e.target.value as CaptionStyle })} options={Object.entries(CAPTION_STYLES).filter(([k]) => k !== "none").map(([value, s]) => ({ value, label: s.label }))} />
           </div>
-          <div className="flex min-w-0 flex-col gap-1.5">
-            <label htmlFor="voice" className="text-[13px] font-bold text-text">Voice &amp; tone</label>
-            <textarea id="voice" value={kit.voice} maxLength={600} onChange={(e) => set({ voice: e.target.value })} placeholder="Friendly, clear, no slang. Explain like a smart friend." className="box-border min-h-[100px] w-full rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text" />
+          <div className="flex min-w-0 flex-col gap-2">
+            <label htmlFor="voice" className={LABEL_CLASS}>Voice &amp; tone</label>
+            <textarea id="voice" value={kit.voice} maxLength={600} onChange={(e) => set({ voice: e.target.value })} placeholder="Friendly, clear, no slang. Explain like a smart friend." className={TEXTAREA_CLASS} />
           </div>
           {error && error.field !== "name" ? <Banner tone="err" title="That didn’t work" text={error.text} /> : null}
           {dirty ? <Banner tone="blue" title="Unsaved changes" text="Save to apply to all agents." action={<Button variant="secondary" size="sm" onClick={save} loading={saving}>Save</Button>} /> : null}

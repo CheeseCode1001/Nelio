@@ -338,11 +338,11 @@ The product owner accepted the defaults below on 12 Nov 2026.
 
 The product owner made Nelio Studio part of the approved scope on 20 Nov 2026, replacing the earlier "roadmap after the current milestones" decision. It is Required module 12 in Master Prompt 2, with the same standards, milestone process and launch gates as the rest. Screens are in §2 section 14 and the order in §5. Its navigation entries are registered (`packages/config/src/screens.ts`, currently milestone 11) and stay hidden until each tool's flag turns on.
 
-**D-M5-7 (20 Nov 2026): third canvas refresh, not built yet.** After the Milestone 5 end check the live main canvas moved to version 1795156541. 314 boards changed style only, no text changed, and one board is new: **Form controls · shadcn/ui** (Foundations). What changed:
+**D-M5-7 (20 Nov 2026): third canvas refresh, built the same day in the final check.** After the Milestone 5 end check the live main canvas moved to version 1795156541. 314 boards changed style only, no text changed, and one board is new: **Form controls · shadcn/ui** (Foundations). What changed:
 - Every text input, textarea, select and multi-select uses the shadcn/ui component themed with Nelio tokens: 10 px radius, 1 px border, a light shadow, 44 px height, and labels at 14 px semibold with an 8 px gap. Multi-select is Popover + Command with checkbox items and badges in the trigger. Search bars, the Nelio AI prompt box and code inputs keep their own designs.
 - The top bar is sticky (z-index 25). The sidebar is a fixed 250 px column that stays in place at the full viewport height below the top bar.
 
-The offline copy is synced. The build is the first slice of Milestone 4S, so every existing screen and the new Studio screens share one form-control set.
+The offline copy is synced. Built in `packages/ui` (`INPUT_CLASS`, `TEXTAREA_CLASS`, `LABEL_CLASS`, `Field`, `TextareaField`, `SelectControl`, `SelectField`) and used by every form on screens built so far. The operator and Creator Portal top bars are sticky at all widths, 69 px tall, and the sidebars stick below them with their own scroll. Kept as drawn: the workspace search, the Clipping Studio "Edit with words" prompt and the code digits keep their own designs. The multi-select (Popover + Command) arrives with its first screen (Translate languages, 4S).
 
 **D-M5-8 (20 Nov 2026): Studio scope notes.**
 - Studio's ST-10 clashes with Workspace settings ST-10 (§2 section 14). The code uses `LV-01`.

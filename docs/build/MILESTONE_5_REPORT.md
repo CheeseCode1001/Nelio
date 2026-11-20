@@ -67,6 +67,21 @@ Kept different on purpose (recorded as D-M5-6): "Create an image" and "Templates
 
 Fixed during the check: the agent card name link and the tool-tile and draft-card buttons now meet the 44 px touch target. Accepted as before: inline text links in the marketing footer and in the sign-up "Terms of Service" / "Privacy Policy" sentence are smaller than 44 px tall, which is normal for links inside running text.
 
+### 3.2 Final check of Milestones 0–5 (20 Nov 2026, after Studio planning)
+
+| Check | Result |
+|---|---|
+| Live canvases | Main (1795156541) and Studio (1795156632) unchanged since the sync. The third refresh (D-M5-7: shadcn form controls, sticky 69 px top bar and sidebars) is now built. |
+| Type check, lint, unit tests | Pass; 81 tests in 8 files |
+| Vendor names in user-facing source | None (235 files scanned) |
+| Gradients | None in product code |
+| Licensing check | 26 / 26 pass. The first run failed once reading a stored video while the type check was loading the machine; the rerun passed. The database driver logs a deprecation warning about overlapping queries on one connection, which comes from inside the driver, not from Nelio code. |
+| Job framework check (Milestone 3) | Not run: the hosted dev Redis only accepts one allow-listed address, and this machine's public address has changed. The Redis instance itself is up. |
+| Pipeline check (Milestone 4) | Not run (spends Nelio AI and transcription credits) |
+| Signed-out access | Every workspace, creator, account, org, admin and onboarding page redirects to log in; the workspaces API answers 401; the YouTube sign-in start and callback refuse without a session; design previews are disabled in production builds |
+| Responsive (133 pages, every state) | 133 / 133 at 375, 768, 1024 and 1440, including a new check that the sticky header stays 69 px. Same accepted exceptions as §3.1 (inline links in running text). |
+| Form behaviour | Sign-up submitted empty shows the drawn error state (red border and ring, messages under each field); nothing is sent |
+
 ## 4. Real vs not yet connected
 
 | Integration | Status |

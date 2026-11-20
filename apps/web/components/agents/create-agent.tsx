@@ -1,7 +1,7 @@
 "use client";
 
 import { SCHEDULE_PRESETS, type SchedulePresetId } from "@nelio/domain";
-import { AgentAvatar, Banner, Bubble, Button, ButtonLink, Card, CardHead, Chip, Field, Icon, Meter, PlatformBadge, SelectField, Small, StepProgress, cn, type AgentColor } from "@nelio/ui";
+import { AgentAvatar, Banner, Bubble, Button, ButtonLink, Card, CardHead, Chip, Field, Icon, Meter, PlatformBadge, SelectField, Small, StepProgress, cn, type AgentColor, TEXTAREA_CLASS, LABEL_CLASS } from "@nelio/ui";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useId, useState } from "react";
@@ -21,7 +21,7 @@ const SUGGESTIONS = [
   { label: "Repurpose streams", goal: "Turn my live streams into short highlights" },
   { label: "Post daily tips", goal: "Post one short tip every day from my videos" },
 ];
-const TEXTAREA = "box-border min-h-[96px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
+const TEXTAREA = TEXTAREA_CLASS;
 const CREDITS_PER_CLIP = 50; // provisional, Balanced quality (D-10)
 const fmt = (n: number) => n.toLocaleString("en-US");
 
@@ -111,10 +111,10 @@ export function CreateAgentWizard({ slug, uploads, hrefs, from, initialStep = 1 
         <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))]">
           <Card>
             <Field label="Name your agent" id={`${id}-name`} value={name} onChange={(e) => setName(e.target.value)} maxLength={40} error={errors.name} autoFocus placeholder="Budget Shorts" />
-            <div className="flex min-w-0 flex-col gap-1.5">
-              <label htmlFor={`${id}-goal`} className="text-[13px] font-bold text-text">What should it do?</label>
+            <div className="flex min-w-0 flex-col gap-2">
+              <label htmlFor={`${id}-goal`} className={LABEL_CLASS}>What should it do?</label>
               <textarea id={`${id}-goal`} value={goal} onChange={(e) => setGoal(e.target.value)} maxLength={300} className={TEXTAREA} aria-invalid={errors.goal ? true : undefined} placeholder="Clip my podcast into 3 shorts a week about budgeting" />
-              {errors.goal ? <span className="text-[12.5px] font-semibold text-err-text">{errors.goal}</span> : null}
+              {errors.goal ? <span className="text-[13px] font-semibold text-err-text">{errors.goal}</span> : null}
             </div>
             <div className="flex flex-wrap gap-2">
               {SUGGESTIONS.map((s) => (

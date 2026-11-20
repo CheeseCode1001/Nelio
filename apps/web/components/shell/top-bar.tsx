@@ -3,6 +3,7 @@
 import { topBarVisibility } from "@nelio/domain";
 import {
   CardTitle, Chip, DropdownMenu, EmptyState, Icon, IconButton, Logo, NavItemContent, PersonAvatar, ResponsiveDialog, Row, RowList, Small, navItemClass, useIsMobile,
+  FIELD_STACK, INPUT_CLASS, LABEL_CLASS,
 } from "@nelio/ui";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -29,9 +30,9 @@ function WorkspaceSwitcher({ open, onOpenChange, current, workspaces, preview }:
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange} title="Switch workspace" description="Jump between your workspaces and client accounts." maxWidth={500} top={80}>
       <p className="m-0 max-w-[420px] text-sm text-muted">Jump between your workspaces and client accounts.</p>
-      <div className="flex min-w-0 flex-col gap-1.5">
-        <label htmlFor="ws-search" className="text-[13px] font-bold text-text">Search</label>
-        <input id="ws-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search workspaces" autoComplete="off" className="box-border min-h-12 w-full rounded-input border-2 border-border bg-surface-1 px-4 py-3 text-sm text-text placeholder:text-muted" />
+      <div className={FIELD_STACK}>
+        <label htmlFor="ws-search" className={LABEL_CLASS}>Search</label>
+        <input id="ws-search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search workspaces" autoComplete="off" className={INPUT_CLASS} />
       </div>
       {found.length === 0 ? (
         <EmptyState illustration="search" width={180} title={`No workspace called “${q.trim()}”`} text="You only see workspaces you’re a member of." />
@@ -123,7 +124,7 @@ function AccountMenu({ account, current, settingsHref, appearanceHref }: { accou
 
 // ------------------------------------------------------------------ Top bar
 // No display class here: each pill is hidden below 768 px and shown with md:flex / md:inline-flex.
-const PILL = "box-border min-h-11 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm no-underline";
+const PILL = "box-border h-11 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm no-underline";
 
 /**
  * Operator top bar (generator `topbar` on desktop, `mtopbar` below 768 px).
@@ -178,12 +179,12 @@ export function TopBar(p: ShellProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-[5] flex items-center gap-2 border-b border-border bg-surface-1 px-4 py-3 md:static md:gap-3 md:px-5 xl:flex-wrap">
+      <header className="sticky top-0 z-[25] flex items-center gap-2 border-b border-border bg-surface-1 px-4 py-3 md:gap-3 md:px-5 xl:flex-wrap">
         <Link href={screenHref(p, "APP-01")} aria-label="Command Center" className="tap-target hidden no-underline md:inline-flex">
           <Logo size={22} />
         </Link>
         <span className="hidden w-1.5 md:inline" />
-        <button type="button" onClick={() => setSwitcher(true)} aria-haspopup="dialog" className="box-border flex min-h-11 min-w-0 max-w-[170px] cursor-pointer items-center gap-2 rounded-full border-2 border-border bg-surface-1 py-1 pl-1 pr-3 text-text md:max-w-none md:gap-2.5 md:py-[5px] md:pl-[5px] md:pr-3.5">
+        <button type="button" onClick={() => setSwitcher(true)} aria-haspopup="dialog" className="box-border flex h-11 min-w-0 max-w-[170px] cursor-pointer items-center gap-2 rounded-full border-2 border-border bg-surface-1 py-1 pl-1 pr-3 text-text md:max-w-none md:gap-2.5 md:py-[5px] md:pl-[5px] md:pr-3.5">
           <PersonAvatar initials={p.current.name.slice(0, 1).toUpperCase()} color="#FFD43B" size={30} className="flex-none md:size-8" />
           <span className="flex min-w-0 flex-col text-left">
             <span className="truncate whitespace-nowrap text-sm font-bold">{p.current.name}</span>

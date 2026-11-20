@@ -1,7 +1,7 @@
 "use client";
 
 import { LIMITS, PLATFORM_LABEL, validatePost, withAttribution, type Destination, type FieldKey, type PostContent, type PostKind } from "@nelio/domain";
-import { Banner, Button, ButtonLink, Card, CardHead, Chip, Icon, Motion, PlatformBadge, ResponsiveDialog, cn } from "@nelio/ui";
+import { Banner, Button, ButtonLink, Card, CardHead, Chip, Icon, Motion, PlatformBadge, ResponsiveDialog, cn, INPUT_CLASS, TEXTAREA_CLASS, LABEL_CLASS } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/feedback/toaster";
 import { useState, useTransition } from "react";
@@ -9,24 +9,23 @@ import { rewriteAction, saveDraftAction } from "@/lib/actions/content";
 import type { ComposerData, MediaChoice } from "@/lib/content";
 
 const fmt = (n: number) => n.toLocaleString("en-US");
-const CONTROL = "box-border w-full rounded-input border-2 bg-surface-1 px-4 py-3 font-body text-sm text-text";
 
 function TextArea({ id, label, value, onChange, limit, error, rows = 4, note }: { id: string; label: string; value: string; onChange: (v: string) => void; limit: number; error?: string; rows?: number; note?: string }) {
   return (
-    <div className="flex min-w-0 flex-col gap-1.5">
-      <label htmlFor={id} className="text-[13px] font-bold text-text">{label}</label>
-      <textarea id={id} rows={rows} value={value} onChange={(e) => onChange(e.target.value)} aria-invalid={error ? true : undefined} aria-describedby={`${id}-hint`} className={cn(CONTROL, "min-h-[100px]", error ? "border-err-text" : "border-border")} />
-      <div id={`${id}-hint`} className={cn("text-[12.5px]", error ? "font-semibold text-err-text" : "text-muted")}>{error ?? `${fmt(value.length)} / ${fmt(limit)}${note ? ` · ${note}` : ""}`}</div>
+    <div className="flex min-w-0 flex-col gap-2">
+      <label htmlFor={id} className={LABEL_CLASS}>{label}</label>
+      <textarea id={id} rows={rows} value={value} onChange={(e) => onChange(e.target.value)} aria-invalid={error ? true : undefined} aria-describedby={`${id}-hint`} className={cn(TEXTAREA_CLASS, "min-h-[100px]")} />
+      <div id={`${id}-hint`} className={cn("text-[13px]", error ? "font-semibold text-err-text" : "text-muted")}>{error ?? `${fmt(value.length)} / ${fmt(limit)}${note ? ` · ${note}` : ""}`}</div>
     </div>
   );
 }
 
 function Input({ id, label, value, onChange, error, hint }: { id: string; label: string; value: string; onChange: (v: string) => void; error?: string; hint?: string }) {
   return (
-    <div className="flex min-w-0 flex-col gap-1.5">
-      <label htmlFor={id} className="text-[13px] font-bold text-text">{label}</label>
-      <input id={id} value={value} onChange={(e) => onChange(e.target.value)} aria-invalid={error ? true : undefined} aria-describedby={error || hint ? `${id}-hint` : undefined} className={cn(CONTROL, "min-h-12", error ? "border-err-text" : "border-border")} />
-      {error || hint ? <div id={`${id}-hint`} className={cn("text-[12.5px]", error ? "font-semibold text-err-text" : "text-muted")}>{error ?? hint}</div> : null}
+    <div className="flex min-w-0 flex-col gap-2">
+      <label htmlFor={id} className={LABEL_CLASS}>{label}</label>
+      <input id={id} value={value} onChange={(e) => onChange(e.target.value)} aria-invalid={error ? true : undefined} aria-describedby={error || hint ? `${id}-hint` : undefined} className={INPUT_CLASS} />
+      {error || hint ? <div id={`${id}-hint`} className={cn("text-[13px]", error ? "font-semibold text-err-text" : "text-muted")}>{error ?? hint}</div> : null}
     </div>
   );
 }

@@ -102,7 +102,7 @@ export function CreatorShell({ children, ...p }: CreatorShellProps & { children:
   const href = (h: string, id: string) => (p.preview ? `#${id}` : h);
   return (
     <div className="flex min-h-dvh grow flex-col">
-      <header className="sticky top-0 z-[5] flex items-center gap-2.5 border-b border-border bg-surface-1 px-4 py-3 md:static md:gap-3.5 md:px-5">
+      <header className="sticky top-0 z-[25] flex items-center gap-2.5 border-b border-border bg-surface-1 px-4 py-3 md:gap-3.5 md:px-5">
         <Link href={href("/creator", "LI-05")} aria-label="Creator Portal home" className="tap-target inline-flex no-underline">
           <Logo size={22} />
         </Link>
@@ -116,7 +116,7 @@ export function CreatorShell({ children, ...p }: CreatorShellProps & { children:
       </header>
       <OfflineStatus />
       <div className="flex grow flex-col md:flex-row md:items-stretch">
-        <nav aria-label="Creator portal" className="flex-none border-b border-border bg-surface-1 md:w-[250px] md:border-b-0 md:border-r md:px-3.5 md:py-[18px]">
+        <nav aria-label="Creator portal" className="flex-none border-b border-border bg-surface-1 md:sticky md:top-[69px] md:h-[calc(100dvh-69px)] md:w-[250px] md:self-start md:overflow-y-auto md:overscroll-contain md:border-b-0 md:border-r md:px-3.5 md:py-[18px]">
           <ul className="m-0 flex list-none gap-1 overflow-x-auto px-3 py-2 [scroll-snap-type:x_proximity] md:flex-col md:gap-0.5 md:overflow-visible md:p-0">
             {CREATOR_NAV.map((n) => {
               const on = n.id === active;

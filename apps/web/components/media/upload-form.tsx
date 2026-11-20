@@ -3,7 +3,7 @@
 import { gooeyToast } from "goey-toast";
 import { toast } from "@/components/feedback/toaster";
 import { CAPTION_LANGUAGES, QUALITY_HELP, QUALITY_LABEL, checkUpload, formatBytes, formatDuration, processingEstimate, type Quality } from "@nelio/domain";
-import { Banner, Button, ButtonLink, Card, CardHead, Chip, Icon, Illustration, Meter, SelectField, cn } from "@nelio/ui";
+import { Banner, Button, ButtonLink, Card, CardHead, Chip, Icon, Illustration, Meter, SelectField, cn, TEXTAREA_CLASS, LABEL_CLASS } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { cancelUploadAction, completeUploadAction, signPartsAction, startProcessingAction, startUploadAction } from "@/lib/actions/media";
@@ -20,7 +20,7 @@ type Phase =
 
 export interface UploadPreview { phase: Phase; rights?: Rights | null; norights?: boolean }
 
-const TEXTAREA = "box-border min-h-[100px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
+const TEXTAREA = TEXTAREA_CLASS;
 
 /** CL-02 Upload: Filled, Uploading, Wrongtype, Norights. Balance and Lowcredits arrive with the credit wallet (Milestone 8). */
 export function UploadForm({ slug, defaults, preview, studioBase, licensesHref }: { slug?: string; defaults: { quality: Quality; language: string }; preview?: UploadPreview; studioBase: string; licensesHref?: string }) {
@@ -173,8 +173,8 @@ export function UploadForm({ slug, defaults, preview, studioBase, licensesHref }
             ))}
           </fieldset>
           {norights && !rights ? <div id={`${id}-nr`}><Banner tone="err" title="Tell us who owns this video" text="Pick an option before we can process it." /></div> : null}
-          <div className="flex min-w-0 flex-col gap-1.5">
-            <label htmlFor={`${id}-note`} className="text-[13px] font-bold text-text">Notes or proof (optional)</label>
+          <div className="flex min-w-0 flex-col gap-2">
+            <label htmlFor={`${id}-note`} className={LABEL_CLASS}>Notes or proof (optional)</label>
             <textarea id={`${id}-note`} value={note} onChange={(e) => setNote(e.target.value)} maxLength={500} placeholder="e.g. link to agreement" className={TEXTAREA} />
           </div>
           {rights === "license" ? <Banner tone="blue" title="Pick an active license instead" text="Licensed videos come straight from the creator, so there’s nothing to upload. Open the creator from My licenses and choose “Clip this”." action={licensesHref ? <ButtonLink href={licensesHref} variant="secondary" size="sm">My licenses</ButtonLink> : undefined} /> : null}
