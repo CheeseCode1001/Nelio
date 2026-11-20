@@ -5,3 +5,4 @@ export * from "./jobs";
 /** Stores SQL NULL in a JSON column (for example clearing an agent's schedule). */
 export { DbNull } from "./generated/internal/prismaNamespace";
 export * from "./storage";
+export * from "./licensing";

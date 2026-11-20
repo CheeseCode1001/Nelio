@@ -3,7 +3,7 @@
 import { gooeyToast } from "goey-toast";
 import { toast } from "@/components/feedback/toaster";
 import { CAPTION_LANGUAGES, QUALITY_HELP, QUALITY_LABEL, checkUpload, formatBytes, formatDuration, processingEstimate, type Quality } from "@nelio/domain";
-import { Banner, Button, Card, CardHead, Chip, Icon, Illustration, Meter, SelectField, cn } from "@nelio/ui";
+import { Banner, Button, ButtonLink, Card, CardHead, Chip, Icon, Illustration, Meter, SelectField, cn } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { cancelUploadAction, completeUploadAction, signPartsAction, startProcessingAction, startUploadAction } from "@/lib/actions/media";
@@ -23,7 +23,7 @@ export interface UploadPreview { phase: Phase; rights?: Rights | null; norights?
 const TEXTAREA = "box-border min-h-[100px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
 
 /** CL-02 Upload: Filled, Uploading, Wrongtype, Norights. Balance and Lowcredits arrive with the credit wallet (Milestone 8). */
-export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: string; defaults: { quality: Quality; language: string }; preview?: UploadPreview; studioBase: string }) {
+export function UploadForm({ slug, defaults, preview, studioBase, licensesHref }: { slug?: string; defaults: { quality: Quality; language: string }; preview?: UploadPreview; studioBase: string; licensesHref?: string }) {
   const id = useId();
   const router = useRouter();
   const input = useRef<HTMLInputElement>(null);
@@ -166,9 +166,9 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
           <fieldset className="m-0 flex flex-col gap-3 border-0 p-0" aria-describedby={norights && !rights ? `${id}-nr` : undefined}>
             <legend className="sr-only">Who owns this video?</legend>
             {([["own", "I own this content", "I made it, or my company did."], ["permission", "I have the owner’s permission", "You may be asked for proof later."], ["license", "It’s from a Nelio license", "Pick an active license instead."]] as const).map(([v, t, sub]) => (
-              <label key={v} className={cn("flex items-start gap-2.5 text-sm font-semibold leading-[1.4] text-text", v === "license" ? "cursor-not-allowed opacity-60" : "cursor-pointer")}>
-                <input type="radio" name={`${id}-rights`} value={v} checked={rights === v} disabled={v === "license"} onChange={() => { setRights(v); setNorights(false); }} className="mt-px size-5 flex-none accent-accent" />
-                <span>{t}<span className="block text-[13px] font-normal text-muted">{sub}{v === "license" ? " Licensing opens soon." : ""}</span></span>
+              <label key={v} className="flex cursor-pointer items-start gap-2.5 text-sm font-semibold leading-[1.4] text-text">
+                <input type="radio" name={`${id}-rights`} value={v} checked={rights === v} onChange={() => { setRights(v); setNorights(false); }} className="mt-px size-5 flex-none accent-accent" />
+                <span>{t}<span className="block text-[13px] font-normal text-muted">{sub}</span></span>
               </label>
             ))}
           </fieldset>
@@ -177,6 +177,7 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
             <label htmlFor={`${id}-note`} className="text-[13px] font-bold text-text">Notes or proof (optional)</label>
             <textarea id={`${id}-note`} value={note} onChange={(e) => setNote(e.target.value)} maxLength={500} placeholder="e.g. link to agreement" className={TEXTAREA} />
           </div>
+          {rights === "license" ? <Banner tone="blue" title="Pick an active license instead" text="Licensed videos come straight from the creator, so there’s nothing to upload. Open the creator from My licenses and choose “Clip this”." action={licensesHref ? <ButtonLink href={licensesHref} variant="secondary" size="sm">My licenses</ButtonLink> : undefined} /> : null}
           <Banner tone="blue" title="Public videos aren’t automatically licensed" text="If you found it online, you need the owner’s permission or a Nelio license." />
         </Card>
       </div>
@@ -201,7 +202,7 @@ export function UploadForm({ slug, defaults, preview, studioBase }: { slug?: str
         </dl>
         <p className="m-0 text-[12.5px] text-muted">Credit amounts are provisional until launch. You’ll always see the estimate before anything runs.</p>
         {error ? <p role="alert" className="m-0 text-[13px] font-semibold text-err-text">{error}</p> : null}
-        <Button variant="cta" arrow size="lg" full loading={starting} disabled={phase.k !== "uploaded" && !preview} onClick={start}>Start processing</Button>
+        <Button variant="cta" arrow size="lg" full loading={starting} disabled={(phase.k !== "uploaded" && !preview) || rights === "license"} onClick={start}>Start processing</Button>
       </Card>
     </div>
   );

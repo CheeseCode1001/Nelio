@@ -12,6 +12,6 @@ export async function requireLicensing(slug: string) {
   return {
     ...r,
     canAccept: req.allowed && (req.access === "F" || req.access === "A"),
-    hrefs: { marketplace: `${base}/licensing`, mine: `${base}/licensing/mine`, studio: `${base}/media?filter=licensed`, sourceBase: `${base}/licensing/sources`, source: (id: string) => `${base}/licensing/sources/${id}` },
+    hrefs: { marketplace: `${base}/licensing`, mine: `${base}/licensing/mine`, studio: `${base}/media?filter=licensed`, studioBase: `${base}/studio`, sourceBase: `${base}/licensing/sources`, source: (id: string) => `${base}/licensing/sources/${id}` },
   };
 }

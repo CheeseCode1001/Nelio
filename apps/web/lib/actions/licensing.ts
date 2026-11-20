@@ -1,7 +1,8 @@
 "use server";
 
-import { db, findWorkspaceFor, notify, recordActivity, type WorkspaceSummary } from "@nelio/db";
-import { EXPIRY_CHOICES, LICENSE_PLATFORMS, can, expiresAtFor, type LicensePlatform, type TermsSnapshot } from "@nelio/domain";
+import { copyObject, db, findWorkspaceFor, isStorageConfigured, licenseForAsset, notify, recordActivity, startProcessingRun, storageKeys, type WorkspaceSummary } from "@nelio/db";
+import { ACCEPTED_TYPES, EXPIRY_CHOICES, LICENSE_PLATFORMS, can, checkUse, expiresAtFor, processingEstimate, processingSplit, type LicensePlatform, type TermsSnapshot } from "@nelio/domain";
+import { randomInt } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { getSession, type Session } from "../auth";
@@ -122,4 +123,70 @@ export async function cancelRequestAction(slug: string, agreementId: string): Pr
   await db().auditEvent.create({ data: { orgId: a.ws.orgId, workspaceId: a.ws.workspaceId, actorUserId: a.session.user.id, action: "license.request_canceled", targetType: "license_agreement", targetId: agreementId } });
   revalidatePath(`/w/${slug}/licensing`, "layout");
   return { ok: true };
+}
+
+// ------------------------------------------------------------------ Clip a licensed video (LI-02 Licensed → CL-03)
+
+/**
+ * "Clip this": copies the creator's video into the workspace under the active licence and starts processing
+ * with the workspace's defaults. The licence is checked here and again by every later step.
+ */
+export async function importLicensedVideoAction(slug: string, creatorVideoId: string): Promise<{ ok: true; assetId: string } | Fail> {
+  const session = await getSession();
+  if (!session || session.user.needsMfa) return { ok: false, error: "Please sign in again." };
+  const ws = await findWorkspaceFor(db(), session.actor, slug);
+  if (!ws) return { ok: false, error: "You don’t have permission to do that here." };
+  const d = can(session.actor, "media.upload", ws);
+  if (!d.allowed || d.access === "R" || d.access === "V") return { ok: false, error: "You don’t have permission to add videos here." };
+  if (!isStorageConfigured()) return { ok: false, error: "Video storage isn’t switched on for this deployment yet." };
+  const client = db();
+  const video = await client.creatorVideo.findFirst({ where: { id: creatorVideoId, status: "ready", deletedAt: null }, select: { id: true, creatorId: true, title: true, filename: true, contentType: true, sizeBytes: true, durationSec: true, storageKey: true, excluded: true, creator: { select: { displayName: true, listingStatus: true } } } });
+  if (!video) return { ok: false, error: "This video isn’t available any more." };
+  const existing = await client.mediaAsset.findFirst({ where: { workspaceId: ws.workspaceId, creatorVideoId: video.id, deletedAt: null, status: { notIn: ["failed"] } }, select: { id: true, licenseAgreementId: true } });
+  if (existing) {
+    const lic = await licenseForAsset(client, existing.id, { action: "process" });
+    if (lic && !lic.check.ok) return { ok: false, error: lic.check.message };
+    return { ok: true, assetId: existing.id };
+  }
+  const now = new Date();
+  const agreement = await client.licenseAgreement.findFirst({ where: { creatorId: video.creatorId, workspaceId: ws.workspaceId, status: "active" }, orderBy: { createdAt: "desc" }, select: { id: true, status: true, expiresAt: true, type: true, terms: true } });
+  const terms = readTerms(agreement?.terms);
+  const check = checkUse(agreement ? { ...agreement, terms } : null, video.creator.listingStatus, { action: "process", videoExcluded: video.excluded }, now);
+  if (!check.ok) return { ok: false, error: check.message };
+  const type = (Object.keys(ACCEPTED_TYPES) as (keyof typeof ACCEPTED_TYPES)[]).find((t) => t === video.contentType) ?? "video/mp4";
+  const settings = await client.workspace.findUniqueOrThrow({ where: { id: ws.workspaceId }, select: { processingQuality: true, captionLanguage: true } });
+  const estimate = video.durationSec ? processingEstimate(video.durationSec, settings.processingQuality) : 1;
+
+  const asset = await client.$transaction(async (tx) => {
+    let rightsRef = "";
+    for (let i = 0; i < 8 && !rightsRef; i++) {
+      const c = `r-${randomInt(100, 1000)}`;
+      if (!(await tx.mediaAsset.findFirst({ where: { workspaceId: ws.workspaceId, rightsRef: c }, select: { id: true } }))) rightsRef = c;
+    }
+    const created = await tx.mediaAsset.create({
+      data: {
+        orgId: ws.orgId, workspaceId: ws.workspaceId, filename: `${video.creator.displayName} · ${video.title}`, contentType: type, sizeBytes: video.sizeBytes, durationSec: video.durationSec,
+        storageKey: `pending/${crypto.randomUUID()}`, status: "uploading", rights: "license", rightsNote: `Licensed from ${video.creator.displayName}`, rightsRef: rightsRef || `r-${randomInt(1000, 100000)}`,
+        licenseAgreementId: agreement!.id, creatorVideoId: video.id, quality: settings.processingQuality, language: settings.captionLanguage, estimatedCredits: estimate, uploadedByUserId: session.user.id,
+      },
+      select: { id: true },
+    });
+    const key = storageKeys.source(ws.workspaceId, created.id, ACCEPTED_TYPES[type]);
+    await tx.mediaAsset.update({ where: { id: created.id }, data: { storageKey: key } });
+    await tx.auditEvent.create({ data: { orgId: ws.orgId, workspaceId: ws.workspaceId, actorUserId: session.user.id, action: "media.license_import", targetType: "media_asset", targetId: created.id, metadata: { agreementId: agreement!.id, creatorVideoId: video.id } } });
+    return { id: created.id, key };
+  });
+  try {
+    await copyObject(video.storageKey, asset.key, type);
+  } catch {
+    await client.mediaAsset.update({ where: { id: asset.id }, data: { status: "failed", statusText: "Couldn’t copy the video. Try again." } });
+    return { ok: false, error: "Couldn’t copy the video. Try again in a moment." };
+  }
+  await client.$transaction(async (tx) => {
+    await tx.mediaAsset.update({ where: { id: asset.id }, data: { status: "uploaded" } });
+    await recordActivity(tx, { orgId: ws.orgId, workspaceId: ws.workspaceId, type: "media.uploaded", status: "done", title: `Added ${video.title} from ${video.creator.displayName}`, detail: `Licensed · by ${session.user.fullName}` });
+    await startProcessingRun(tx, { assetId: asset.id, userId: session.user.id, split: processingSplit(estimate) });
+  });
+  revalidatePath(`/w/${slug}/media`);
+  return { ok: true, assetId: asset.id };
 }

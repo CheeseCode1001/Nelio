@@ -2,9 +2,9 @@ import { ButtonLink, Chip, EmptyState, Illustration, Motion, PageHead, ShortFram
 import Link from "next/link";
 import { MEDIA_FILTERS, MEDIA_FILTER_LABEL, type MediaData, type MediaFilter } from "@/lib/media";
 
-export interface MediaHrefs { filter: (f: MediaFilter) => string; upload: string; licensing: string }
+export interface MediaHrefs { filter: (f: MediaFilter) => string; upload: string; licensing: string; mine?: string }
 
-function Header({ hrefs }: { hrefs: MediaHrefs }) {
+function Header({ hrefs, licensed }: { hrefs: MediaHrefs; licensed: number }) {
   return (
     <PageHead
       eyebrow="Create"
@@ -12,7 +12,7 @@ function Header({ hrefs }: { hrefs: MediaHrefs }) {
       sub="Your videos, licensed sources and clips."
       actions={
         <>
-          <ButtonLink href={hrefs.licensing} variant="secondary" icon="shield">Import licensed</ButtonLink>
+          <ButtonLink href={licensed > 0 && hrefs.mine ? hrefs.mine : hrefs.licensing} variant="secondary" icon="shield">Import licensed</ButtonLink>
           <ButtonLink href={hrefs.upload} icon="upload">Upload video</ButtonLink>
         </>
       }
@@ -26,7 +26,7 @@ export function MediaLibrary({ d, filter, hrefs }: { d: MediaData; filter: Media
     return (
       <Motion className="flex flex-col gap-5">
         <div data-enter="" className="flex flex-col gap-5">
-          <Header hrefs={hrefs} />
+          <Header hrefs={hrefs} licensed={d.licensed ?? 0} />
           <EmptyState
             illustration="media"
             title="Add your first video"
@@ -40,7 +40,7 @@ export function MediaLibrary({ d, filter, hrefs }: { d: MediaData; filter: Media
   return (
     <Motion className="flex flex-col gap-5">
       <div data-enter="" className="flex flex-col gap-5">
-        <Header hrefs={hrefs} />
+        <Header hrefs={hrefs} licensed={d.licensed ?? 0} />
         <div className="flex flex-wrap items-center gap-3">
           <nav aria-label="Filter library" className="tab-scroll w-fit gap-0.5 self-start rounded-full border border-border bg-surface-1 p-1">
             {MEDIA_FILTERS.map((f) => (
@@ -77,7 +77,7 @@ export function MediaLibrary({ d, filter, hrefs }: { d: MediaData; filter: Media
         ) : (
           <div className="flex flex-col items-center gap-2 rounded-card border border-border bg-surface-1 px-6 py-12 text-center shadow-card">
             <h2 className="m-0 font-display text-[20px] font-extrabold text-text">{filter === "licensed" ? "No licensed sources yet" : `No ${MEDIA_FILTER_LABEL[filter].toLowerCase()} yet`}</h2>
-            <p className="m-0 text-sm text-muted">{filter === "licensed" ? "Licensed videos from creators appear here once licensing opens." : filter === "clips" ? "Open a video in the Studio and save a moment as a clip." : filter === "exports" ? "Rendered clips appear here." : "Upload a video to get started."}</p>
+            <p className="m-0 text-sm text-muted">{filter === "licensed" ? ((d.licensed ?? 0) > 0 ? "Open a creator you’ve licensed from My licenses and pick a video to clip." : "License a creator in the marketplace, then pick their videos to clip here.") : filter === "clips" ? "Open a video in the Studio and save a moment as a clip." : filter === "exports" ? "Rendered clips appear here." : "Upload a video to get started."}</p>
           </div>
         )}
         <Link href={hrefs.upload} className="flex flex-wrap items-center gap-[18px] rounded-[28px] border-2 border-dashed border-accent bg-accent-tint px-6 py-5 text-text no-underline hover:text-text">

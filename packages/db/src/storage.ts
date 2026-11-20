@@ -1,5 +1,5 @@
 import {
-  AbortMultipartUploadCommand, CompleteMultipartUploadCommand, CreateMultipartUploadCommand, DeleteObjectCommand, GetObjectCommand, HeadObjectCommand,
+  AbortMultipartUploadCommand, CompleteMultipartUploadCommand, CopyObjectCommand, CreateMultipartUploadCommand, DeleteObjectCommand, GetObjectCommand, HeadObjectCommand,
   PutObjectCommand, S3Client, UploadPartCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
@@ -68,6 +68,11 @@ export async function signedGetUrl(key: string, opts: { expiresIn?: number; down
     Bucket: bucket(), Key: key,
     ...(opts.downloadName ? { ResponseContentDisposition: `attachment; filename="${opts.downloadName.replace(/[^\w.\- ]/g, "_")}"` } : {}),
   }), { expiresIn: opts.expiresIn ?? 900 });
+}
+
+/** Server-side copy inside the bucket (a licensed creator video into the licensee's workspace). Files over 5 GB aren't accepted at upload. */
+export async function copyObject(from: string, to: string, contentType: string): Promise<void> {
+  await s3().send(new CopyObjectCommand({ Bucket: bucket(), CopySource: `${bucket()}/${from.split("/").map(encodeURIComponent).join("/")}`, Key: to, ContentType: contentType, MetadataDirective: "REPLACE" }));
 }
 
 export async function putObject(key: string, body: Uint8Array | Buffer | string, contentType: string): Promise<void> {

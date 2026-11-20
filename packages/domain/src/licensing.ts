@@ -182,3 +182,11 @@ export function claimMatches(claim: { handle: string | null; externalId: string 
   if (claim.handle) return Boolean(owned.handle) && claim.handle.toLowerCase() === owned.handle!.toLowerCase();
   return false;
 }
+
+/** Adds the licence's attribution to a caption once (CS-02 Licensed: "· via @chefkemi", added automatically). */
+export function withAttribution(text: string, attribution: string): string {
+  const a = attribution.trim();
+  if (!a || !attributionMissing(a, text)) return text;
+  const body = text.trimEnd();
+  return body ? `${body} · via ${a}` : `via ${a}`;
+}

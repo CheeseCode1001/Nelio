@@ -1,6 +1,6 @@
 import "server-only";
 import { db, isStorageConfigured, signedGetUrl, storageKeys } from "@nelio/db";
-import { formatBytes, formatDuration } from "@nelio/domain";
+import { effectiveStatus, formatBytes, formatDuration } from "@nelio/domain";
 import type { IconName, Tone } from "@nelio/ui";
 
 export const MEDIA_FILTERS = ["all", "uploads", "licensed", "clips", "exports"] as const;
@@ -39,14 +39,19 @@ async function poster(workspaceId: string, assetId: string): Promise<string | nu
   return signedGetUrl(storageKeys.poster(workspaceId, assetId), { expiresIn: 900 }).catch(() => null);
 }
 
-/** CL-01 from real data: uploads, draft clips and exports, newest first. Licensed sources arrive with licensing (MS 5). */
+/** CL-01 from real data: uploads, licensed sources, draft clips and exports, newest first. */
 export async function loadMedia(workspaceId: string, filter: MediaFilter, base: { studio: string; upload: string; exports: string }, now = new Date()) {
   const client = db();
   const ws = await client.workspace.findUniqueOrThrow({ where: { id: workspaceId }, select: { timezone: true } });
   const tz = ws.timezone;
   const [assets, projects, renders, storage] = await Promise.all([
-    filter === "all" || filter === "uploads"
-      ? client.mediaAsset.findMany({ where: { workspaceId, deletedAt: null }, orderBy: { createdAt: "desc" }, take: 60, select: { id: true, filename: true, durationSec: true, status: true, statusText: true, rights: true, createdAt: true } })
+    filter === "all" || filter === "uploads" || filter === "licensed"
+      ? client.mediaAsset.findMany({
+          where: { workspaceId, deletedAt: null, ...(filter === "licensed" ? { rights: "license" as const } : filter === "uploads" ? { OR: [{ rights: null }, { rights: { not: "license" as const } }] } : {}) },
+          orderBy: { createdAt: "desc" },
+          take: 60,
+          select: { id: true, filename: true, durationSec: true, status: true, statusText: true, rights: true, createdAt: true, license: { select: { status: true, type: true, expiresAt: true, creator: { select: { listingStatus: true } } } } },
+        })
       : [],
     filter === "all" || filter === "clips"
       ? client.clipProject.findMany({ where: { workspaceId }, orderBy: { updatedAt: "desc" }, take: 60, select: { id: true, assetId: true, name: true, hook: true, startMs: true, endMs: true, asset: { select: { filename: true } } } })
@@ -59,8 +64,14 @@ export async function loadMedia(workspaceId: string, filter: MediaFilter, base: 
 
   const items: MediaItem[] = [];
   for (const a of assets) {
-    const chip = UPLOAD_CHIP[a.status] ?? UPLOAD_CHIP.uploaded!;
-    const sub = a.status === "blocked" || a.status === "failed" ? `${formatDuration(a.durationSec)} · ${a.statusText ?? "can’t be used"}` : `${formatDuration(a.durationSec)} · uploaded ${when(a.createdAt, now, tz)}`;
+    let chip = UPLOAD_CHIP[a.status] ?? UPLOAD_CHIP.uploaded!;
+    let sub = a.status === "blocked" || a.status === "failed" ? `${formatDuration(a.durationSec)} · ${a.statusText ?? "can’t be used"}` : `${formatDuration(a.durationSec)} · uploaded ${when(a.createdAt, now, tz)}`;
+    // Licensed sources (CL-01 board): "licensed" while the licence holds, "license expired" / "revoked" / "paused" once it stops.
+    if (a.license && (a.status === "ready" || a.status === "blocked")) {
+      const st = effectiveStatus({ status: a.license.status, expiresAt: a.license.expiresAt, type: a.license.type }, a.license.creator.listingStatus, now);
+      chip = st.kind === "active" || st.kind === "expiring" ? { label: "licensed", tone: "ai", icon: "shield" } : { label: st.kind === "suspended" ? "license paused" : st.kind === "revoked" ? "license revoked" : "license expired", tone: "err", icon: "alert" };
+      sub = `${formatDuration(a.durationSec)} · ${a.license.type} license`;
+    }
     items.push({
       id: a.id, kind: "upload", title: a.filename, sub, chip,
       poster: a.status === "uploading" || a.status === "uploaded" ? null : await poster(workspaceId, a.id),
@@ -82,6 +93,6 @@ export async function loadMedia(workspaceId: string, filter: MediaFilter, base: 
       href: base.exports,
     });
   }
-  return { items, storageUsed: formatBytes(Number(storage._sum.sizeBytes ?? 0)), anyUploads: (await client.mediaAsset.count({ where: { workspaceId, deletedAt: null } })) > 0 };
+  return { items, licensed: await client.licenseAgreement.count({ where: { workspaceId, status: "active", OR: [{ expiresAt: null }, { expiresAt: { gt: now } }] } }), storageUsed: formatBytes(Number(storage._sum.sizeBytes ?? 0)), anyUploads: (await client.mediaAsset.count({ where: { workspaceId, deletedAt: null } })) > 0 };
 }
 export type MediaData = Awaited<ReturnType<typeof loadMedia>>;

@@ -1,5 +1,5 @@
 import "server-only";
-import { db, isStorageConfigured, signedGetUrl, storageKeys } from "@nelio/db";
+import { db, isStorageConfigured, licenseForAsset, signedGetUrl, storageKeys } from "@nelio/db";
 import { DESTINATIONS, POST_KIND_LABEL, formatDuration, readContent, relativeTime, type Destination, type PostContent, type PostKind } from "@nelio/domain";
 import type { Tone } from "@nelio/ui";
 
@@ -23,7 +23,8 @@ export async function loadDrafts(workspaceId: string, tz: string, composeBase: s
   });
 }
 
-export interface MediaChoice { renderId: string; title: string; sub: string; posterUrl: string | null; hook: string; rights: string }
+export interface MediaLicense { creator: string; attribution: string; platforms: string[]; ok: boolean; message: string }
+export interface MediaChoice { renderId: string; title: string; sub: string; posterUrl: string | null; hook: string; rights: string; license: MediaLicense | null }
 export interface ComposerData {
   draftId: string | null;
   kind: PostKind;
@@ -38,14 +39,16 @@ export interface ComposerData {
 async function choiceFor(workspaceId: string, r: { id: string; label: string | null; hook: string; format: string; settings: unknown; project: { name: string; assetId: string; startMs: number; endMs: number; asset: { rights: string | null; rightsRef: string } } }): Promise<MediaChoice> {
   const s = (r.settings ?? {}) as { startMs?: number; endMs?: number; format?: string; hook?: string };
   const len = ((s.endMs ?? r.project.endMs) - (s.startMs ?? r.project.startMs)) / 1000;
-  const rights = r.project.asset.rights === "permission" ? "with permission" : r.project.asset.rights === "license" ? "licensed" : "own upload";
+  const lic = r.project.asset.rights === "license" ? await licenseForAsset(db(), r.project.assetId, { action: "schedule" }) : null;
+  const rights = r.project.asset.rights === "permission" ? "with permission" : lic ? `licensed: ${lic.creatorName}` : r.project.asset.rights === "license" ? "licensed" : "own upload";
   return {
     renderId: r.id,
     title: `“${r.project.name}”${r.label ? ` · ${r.label.split(" · ")[0]}` : ""}`,
     sub: `${formatDuration(len, "clock")} · ${s.format ?? r.format} · ${rights}`,
     posterUrl: isStorageConfigured() ? await signedGetUrl(storageKeys.poster(workspaceId, r.project.assetId), { expiresIn: 3600 }).catch(() => null) : null,
     hook: s.hook ?? r.hook,
-    rights: r.project.asset.rights === "license" ? "Licensed source. Checked again right before publishing." : `${r.project.asset.rights === "permission" ? "Used with permission" : "Own upload"} · rights ${r.project.asset.rightsRef}. Checked again right before publishing.`,
+    rights: lic ? `${lic.creatorName} · ${lic.type} license${lic.attribution ? " · attribution required" : ""}. Checked again right before publishing.` : r.project.asset.rights === "license" ? "Licensed source. Checked again right before publishing." : `${r.project.asset.rights === "permission" ? "Used with permission" : "Own upload"} · rights ${r.project.asset.rightsRef}. Checked again right before publishing.`,
+    license: lic ? { creator: lic.creatorName, attribution: lic.attribution, platforms: lic.platforms, ok: lic.check.ok, message: lic.check.ok ? "" : lic.check.message } : null,
   };
 }
 

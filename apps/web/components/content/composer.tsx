@@ -1,6 +1,6 @@
 "use client";
 
-import { LIMITS, validatePost, type Destination, type FieldKey, type PostContent, type PostKind } from "@nelio/domain";
+import { LIMITS, PLATFORM_LABEL, validatePost, withAttribution, type Destination, type FieldKey, type PostContent, type PostKind } from "@nelio/domain";
 import { Banner, Button, ButtonLink, Card, CardHead, Chip, Icon, Motion, PlatformBadge, ResponsiveDialog, cn } from "@nelio/ui";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/feedback/toaster";
@@ -44,8 +44,14 @@ function Thumb({ m, className }: { m: MediaChoice | null; className?: string }) 
 export function Composer({ slug, d, hrefs, connected = false }: { slug?: string; d: ComposerData; hrefs: { content: string; connect: string; exports: string; draftBase: string }; connected?: boolean }) {
   const router = useRouter();
   const draftHref = (id: string) => `${hrefs.draftBase}/${id}`;
-  const [content, setContent] = useState<PostContent>(d.content);
-  const [media, setMedia] = useState<MediaChoice | null>(d.media);
+  const attributed = (c: PostContent, m: MediaChoice | null): PostContent =>
+    m?.license?.attribution ? { ...c, instagram: { ...c.instagram, caption: withAttribution(c.instagram.caption, m.license.attribution) }, youtube: { ...c.youtube, description: withAttribution(c.youtube.description, m.license.attribution) } } : c;
+  const [content, setContent] = useState<PostContent>(() => (d.kind === "script" ? d.content : attributed(d.content, d.media)));
+  const [media, setMediaState] = useState<MediaChoice | null>(d.media);
+  const setMedia = (m: MediaChoice | null) => {
+    setMediaState(m);
+    if (m?.license?.attribution) setContent((c) => attributed(c, m));
+  };
   const [platforms, setPlatforms] = useState<Destination[]>(d.platforms);
   // Open on the platform that needs attention, so a problem is never hidden behind the other tab.
   const [tab, setTab] = useState<Destination>(() => {
@@ -175,7 +181,7 @@ export function Composer({ slug, d, hrefs, connected = false }: { slug?: string;
               <TextArea id="script" label="Script" rows={12} value={content.script} onChange={(v) => setContent((c) => ({ ...c, script: v }))} limit={LIMITS.script} error={err("script")} />
             ) : tab === "instagram" ? (
               <>
-                <TextArea id="ig-caption" label="Caption" value={content.instagram.caption} onChange={(v) => setIg({ caption: v })} limit={LIMITS.instagram.caption} error={err("instagram.caption")} />
+                <TextArea id="ig-caption" label="Caption" value={content.instagram.caption} onChange={(v) => setIg({ caption: v })} limit={LIMITS.instagram.caption} error={err("instagram.caption")} note={media?.license?.attribution ? "attribution added automatically" : undefined} />
                 <Input id="ig-comment" label="First comment (optional)" value={content.instagram.firstComment} onChange={(v) => setIg({ firstComment: v })} error={err("instagram.firstComment")} />
               </>
             ) : (
@@ -205,7 +211,10 @@ export function Composer({ slug, d, hrefs, connected = false }: { slug?: string;
             ) : null}
             <p className={cn("m-0 whitespace-pre-wrap break-words text-[13px] text-text", script && "max-h-[520px] overflow-y-auto")}>{previewText || <span className="text-muted">Your {script ? "script" : "caption"} shows here.</span>}</p>
           </div>
-          {!script && media ? <Banner tone="ok" title="License OK" text={media.rights} /> : null}
+          {!script && media && media.license && !media.license.ok ? <Banner tone="err" title="License stopped" text={`${media.license.message} This post can’t be scheduled.`} /> : !script && media ? <Banner tone="ok" title="License OK" text={media.rights} /> : null}
+          {!script && media?.license?.ok && platforms.some((p) => !media.license!.platforms.includes(p)) ? (
+            <Banner tone="warn" title="Not covered by the license" text={`${media.license.creator}’s license doesn’t allow ${platforms.filter((p) => !media.license!.platforms.includes(p)).map((p) => PLATFORM_LABEL[p]).join(" or ")}. Untick it before you schedule.`} />
+          ) : null}
           {!script && d.workspace.client ? <Banner tone="warn" title="Client approval required" text="Your client reviews each platform separately." /> : null}
         </div>
       </div>

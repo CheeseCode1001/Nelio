@@ -8,14 +8,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition, type ReactNode } from "react";
 import { toast } from "@/components/feedback/toaster";
-import { acceptFreeLicenseAction, cancelRequestAction, requestPrivateLicenseAction } from "@/lib/actions/licensing";
+import { acceptFreeLicenseAction, cancelRequestAction, importLicensedVideoAction, requestPrivateLicenseAction } from "@/lib/actions/licensing";
 import type { SourceData } from "@/lib/licensing";
 
 const TEXTAREA = "box-border min-h-[100px] w-full resize-y rounded-input border-2 border-border bg-surface-1 px-4 py-3 font-body text-sm text-text placeholder:text-muted";
 const THUMB = ["bg-orange", "bg-lime", "bg-cyan", "bg-yellow", "bg-pink", "bg-violet"];
 const TYPE_CHIP = { free: { tone: "ok", label: "Free" }, private: { tone: "blue", label: "Private" }, paid: { tone: "neutral", label: "Paid · later" } } as const;
 
-export interface SourceHrefs { marketplace: string; mine: string; studio: string; request: string; source: string }
+export interface SourceHrefs { marketplace: string; mine: string; studio: string; request: string; source: string; studioBase: string }
 
 function Feature({ f }: { f: NonNullable<SourceData["feature"]> }) {
   const video = useRef<HTMLVideoElement>(null);
@@ -41,14 +41,14 @@ function Feature({ f }: { f: NonNullable<SourceData["feature"]> }) {
   );
 }
 
-function Shorts({ items }: { items: SourceData["shorts"] }) {
+function Shorts({ items, onClip, busy }: { items: SourceData["shorts"]; onClip?: (id: string) => void; busy?: string | null }) {
   const strip = useRef<HTMLDivElement>(null);
   const scroll = (dir: 1 | -1) => strip.current?.scrollBy({ left: dir * 182 * 2, behavior: "smooth" });
   return (
     <Card>
       <CardHead
-        title="Popular with licensees"
-        sub="Scroll sideways for more shorts"
+        title={onClip ? "Pick a video to clip" : "Popular with licensees"}
+        sub={onClip ? "Your license covers these. Scroll sideways for more." : "Scroll sideways for more shorts"}
         right={
           <div className="flex gap-2">
             <button type="button" aria-label="Previous Popular shorts" onClick={() => scroll(-1)} className="tap-target inline-flex size-10 cursor-pointer items-center justify-center rounded-full border-2 border-border bg-surface-1 text-text"><Icon name="chev" size={18} className="rotate-180" /></button>
@@ -67,6 +67,11 @@ function Shorts({ items }: { items: SourceData["shorts"] }) {
               <div className="absolute inset-x-2.5 bottom-[38%] text-center">
                 <span className="rounded-lg border-2 border-outline bg-yellow px-2.5 py-[3px] font-display text-[15px] font-extrabold uppercase leading-[1.6] text-outline [box-decoration-break:clone]">{s.title}</span>
               </div>
+              {onClip ? (
+                <div className="absolute inset-x-2.5 bottom-2.5 z-[2] flex justify-center">
+                  <Button variant="cta" size="sm" icon="scissors" loading={busy === s.id} disabled={Boolean(busy)} onClick={() => onClip(s.id)} aria-label={`Clip ${s.title}`}>Clip this</Button>
+                </div>
+              ) : null}
             </div>
           </div>
         ))}
@@ -201,6 +206,17 @@ export function SourceDetail({ d, wsName, slug, hrefs, canAccept, initialDialog 
     router.push(to);
     router.refresh();
   };
+  const [clipping, setClipping] = useState<string | null>(null);
+  const licensed = d.mine.kind === "active" && d.mine.status.kind !== "suspended" && d.listing !== "suspended";
+  const clip = (id: string) => {
+    if (preview || !slug) return;
+    setClipping(id);
+    void importLicensedVideoAction(slug, id).then((r) => {
+      if (!r.ok) { setClipping(null); toast.error("Can’t clip this video", { description: r.error }); return; }
+      toast.success("Added to your Clipping Studio", { description: "Nelio AI is finding the best moments." });
+      router.push(`${hrefs.studioBase}/${r.assetId}`);
+    });
+  };
   const type = d.terms?.licenseType ?? "free";
   const chip = TYPE_CHIP[type];
   const s = d.summary;
@@ -209,7 +225,7 @@ export function SourceDetail({ d, wsName, slug, hrefs, canAccept, initialDialog 
   if (d.listing === "suspended") {
     cta = <Banner tone="err" title="This listing is suspended" text="Ownership is under review. Existing licenses are paused." />;
   } else if (d.mine.kind === "active") {
-    cta = <Banner tone="ok" title="You already have this license" text={d.mine.until ? `Active until ${d.mine.until}. Use it in the Clipping Studio.` : "Active until the owner revokes it. Use it in the Clipping Studio."} action={<ButtonLink href={hrefs.studio} variant="secondary" size="sm">Open studio</ButtonLink>} />;
+    cta = <Banner tone="ok" title="You already have this license" text={d.mine.until ? `Active until ${d.mine.until}. Pick a video below to clip it.` : "Active until the owner revokes it. Pick a video below to clip it."} action={<ButtonLink href={hrefs.studio} variant="secondary" size="sm">Open studio</ButtonLink>} />;
   } else if (d.mine.kind === "requested") {
     const id = d.mine.agreementId;
     cta = <Banner tone="blue" title="Request sent" text="We’ll notify you when they decide." action={<Button variant="secondary" size="sm" loading={pending} onClick={() => !preview && slug && start(async () => { const r = await cancelRequestAction(slug, id); if (!r.ok) toast.error("That didn’t work", { description: r.error }); router.refresh(); })}>Cancel request</Button>} />;
@@ -242,7 +258,7 @@ export function SourceDetail({ d, wsName, slug, hrefs, canAccept, initialDialog 
         <div className="flex min-w-0 flex-col gap-4">
           {d.feature ? <Card><Feature f={d.feature} /></Card> : null}
           {d.terms && d.terms.excludedCount > 0 ? <Banner tone="warn" title={`${d.terms.excludedCount} video${d.terms.excludedCount === 1 ? " is" : "s are"} excluded`} text="They contain licensed music or guest footage the owner doesn’t control. We skip them automatically." /> : null}
-          {d.shorts.length > 1 ? <Shorts items={d.shorts} /> : null}
+          {licensed && d.shorts.length ? <Shorts items={d.shorts} onClip={clip} busy={clipping} /> : d.shorts.length > 1 ? <Shorts items={d.shorts} /> : null}
         </div>
         <Card className="lg:self-start">
           <CardHead title="License terms" right={<Chip tone={chip.tone}>{chip.label}</Chip>} />

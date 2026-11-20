@@ -27,7 +27,7 @@ export default async function SourcePreview({ searchParams }: { searchParams: Pr
     : dialog === "approved" ? { ...PRIVATE, ...LMT, mine: { kind: "active", agreementId: "a1", until: "20 May 2027", status: { kind: "active", endsInDays: 180 } }, decided: { kind: "approved", note: null, months: 6, platforms: "Instagram" } }
     : dialog === "declined" ? { ...PRIVATE, ...LMT, mine: { kind: "declined", note: "Not licensing to new accounts right now." }, decided: { kind: "declined", note: "Not licensing to new accounts right now.", months: 6, platforms: "Instagram" } }
     : SAMPLE_SOURCE;
-  const hrefs = { marketplace: "/dev/ui/marketplace", mine: "/dev/ui/my-licenses", studio: "#CL-01", request: "#LI-03", source: "/dev/ui/source" };
+  const hrefs = { marketplace: "/dev/ui/marketplace", mine: "/dev/ui/my-licenses", studio: "#CL-01", studioBase: "#CL-03", request: "#LI-03", source: "/dev/ui/source" };
   const initial = (["accept", "request", "sent", "approved", "declined"] as const).find((x) => x === dialog) ?? null;
   return (
     <PreviewShell active="LI-01">

@@ -92,3 +92,14 @@ describe("parseChannelLink and claimMatches", () => {
     expect(claimMatches({ handle: null, externalId: "UCa" }, { id: "UCb", handle: null })).toBe(false);
   });
 });
+
+describe("withAttribution", () => {
+  it("adds it once", async () => {
+    const { withAttribution } = await import("./licensing");
+    const once = withAttribution("Myth #1 #budgeting", "@chefkemi");
+    expect(once).toBe("Myth #1 #budgeting · via @chefkemi");
+    expect(withAttribution(once, "@chefkemi")).toBe(once);
+    expect(withAttribution("", "@chefkemi")).toBe("via @chefkemi");
+    expect(withAttribution("text", "")).toBe("text");
+  });
+});
