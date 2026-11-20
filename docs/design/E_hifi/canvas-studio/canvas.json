@@ -1,0 +1,1402 @@
+{
+ "v": 3,
+ "attachments": {},
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-11-19T21:40:00Z"
+ },
+ "title": "Nelio Studio \u2014 High-fidelity UI",
+ "launch": {
+  "view": "canvas",
+  "page": "editor"
+ },
+ "pages": [
+  {
+   "id": "editor",
+   "name": "4a \u00b7 Editor"
+  },
+  {
+   "id": "translate",
+   "name": "4b \u00b7 Translate"
+  },
+  {
+   "id": "voicelab",
+   "name": "4c \u00b7 Voice Lab & consent"
+  },
+  {
+   "id": "generate",
+   "name": "4d \u00b7 Generate"
+  },
+  {
+   "id": "transform",
+   "name": "4e \u00b7 Transform"
+  }
+ ],
+ "boards": {
+  "Editor.dc.html": {
+   "x": 0,
+   "y": 820,
+   "w": 1440,
+   "h": 1000,
+   "title": "ED-01 Editor projects \u00b7 Filled",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Empty.dc.html": {
+   "x": 1520,
+   "y": 820,
+   "w": 1440,
+   "h": 1000,
+   "title": "ED-01 Editor projects \u00b7 Empty",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Loading.dc.html": {
+   "x": 3040,
+   "y": 820,
+   "w": 1440,
+   "h": 1000,
+   "title": "ED-01 Editor projects \u00b7 Loading",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Storage.dc.html": {
+   "x": 4560,
+   "y": 820,
+   "w": 1440,
+   "h": 1000,
+   "title": "ED-01 Editor projects \u00b7 Storage full",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Mobile.dc.html": {
+   "x": 6080,
+   "y": 820,
+   "w": 1800,
+   "h": 2040,
+   "title": "ED-01 Editor projects \u00b7 Mobile",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Workspace.dc.html": {
+   "x": 0,
+   "y": 3320,
+   "w": 1440,
+   "h": 1250,
+   "title": "ED-02 Editor workspace \u00b7 Filled",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Workspace-Loading.dc.html": {
+   "x": 1520,
+   "y": 3320,
+   "w": 1440,
+   "h": 1250,
+   "title": "ED-02 Editor workspace \u00b7 Loading",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Workspace-Empty.dc.html": {
+   "x": 3040,
+   "y": 3320,
+   "w": 1440,
+   "h": 1250,
+   "title": "ED-02 Editor workspace \u00b7 Empty timeline",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Workspace-Captions.dc.html": {
+   "x": 4560,
+   "y": 3320,
+   "w": 1440,
+   "h": 1250,
+   "title": "ED-02 Editor workspace \u00b7 Captions panel",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Workspace-Ai.dc.html": {
+   "x": 6080,
+   "y": 3320,
+   "w": 1440,
+   "h": 1250,
+   "title": "ED-02 Editor workspace \u00b7 AI edit running",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Workspace-Preview.dc.html": {
+   "x": 7600,
+   "y": 3320,
+   "w": 1440,
+   "h": 1250,
+   "title": "ED-02 Editor workspace \u00b7 AI edit preview",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Workspace-Unsaved.dc.html": {
+   "x": 9120,
+   "y": 3320,
+   "w": 1440,
+   "h": 1250,
+   "title": "ED-02 Editor workspace \u00b7 Unsaved changes",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Workspace-Offline.dc.html": {
+   "x": 10640,
+   "y": 3320,
+   "w": 1440,
+   "h": 1250,
+   "title": "ED-02 Editor workspace \u00b7 Offline",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Workspace-Mobile.dc.html": {
+   "x": 12160,
+   "y": 3320,
+   "w": 3552,
+   "h": 2515,
+   "title": "ED-02 Editor workspace \u00b7 Mobile",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Export.dc.html": {
+   "x": 0,
+   "y": 6295,
+   "w": 1440,
+   "h": 1250,
+   "title": "ED-03 Export \u00b7 Filled",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Export-Rendering.dc.html": {
+   "x": 1520,
+   "y": 6295,
+   "w": 1440,
+   "h": 1250,
+   "title": "ED-03 Export \u00b7 Rendering",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Export-Done.dc.html": {
+   "x": 3040,
+   "y": 6295,
+   "w": 1440,
+   "h": 1250,
+   "title": "ED-03 Export \u00b7 Done",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Export-Failed.dc.html": {
+   "x": 4560,
+   "y": 6295,
+   "w": 1440,
+   "h": 1250,
+   "title": "ED-03 Export \u00b7 Failed, refunded",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Export-Mobile.dc.html": {
+   "x": 6080,
+   "y": 6295,
+   "w": 1800,
+   "h": 2515,
+   "title": "ED-03 Export \u00b7 Mobile",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Templates.dc.html": {
+   "x": 0,
+   "y": 9270,
+   "w": 1440,
+   "h": 1000,
+   "title": "ED-04 Templates \u00b7 Filled",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Templates-Loading.dc.html": {
+   "x": 1520,
+   "y": 9270,
+   "w": 1440,
+   "h": 1000,
+   "title": "ED-04 Templates \u00b7 Loading",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Templates-Applying.dc.html": {
+   "x": 3040,
+   "y": 9270,
+   "w": 1440,
+   "h": 1000,
+   "title": "ED-04 Templates \u00b7 Applying",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Editor-Templates-Mobile.dc.html": {
+   "x": 4560,
+   "y": 9270,
+   "w": 1362,
+   "h": 2040,
+   "title": "ED-04 Templates \u00b7 Mobile",
+   "page": "editor",
+   "expand": "fill"
+  },
+  "Translate.dc.html": {
+   "x": 0,
+   "y": 820,
+   "w": 1440,
+   "h": 1000,
+   "title": "TR-01 Translate home \u00b7 Filled",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-Empty.dc.html": {
+   "x": 1520,
+   "y": 820,
+   "w": 1440,
+   "h": 1000,
+   "title": "TR-01 Translate home \u00b7 Empty",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-Loading.dc.html": {
+   "x": 3040,
+   "y": 820,
+   "w": 1440,
+   "h": 1000,
+   "title": "TR-01 Translate home \u00b7 Loading",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-Mobile.dc.html": {
+   "x": 4560,
+   "y": 820,
+   "w": 1362,
+   "h": 2040,
+   "title": "TR-01 Translate home \u00b7 Mobile",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-New.dc.html": {
+   "x": 0,
+   "y": 3320,
+   "w": 1440,
+   "h": 1150,
+   "title": "TR-02 New translation \u00b7 Filled",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-New-Noconsent.dc.html": {
+   "x": 1520,
+   "y": 3320,
+   "w": 1440,
+   "h": 1150,
+   "title": "TR-02 New translation \u00b7 Speaker without voice consent",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-New-Estimate.dc.html": {
+   "x": 3040,
+   "y": 3320,
+   "w": 1440,
+   "h": 1150,
+   "title": "TR-02 New translation \u00b7 Estimate",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-New-Mobile.dc.html": {
+   "x": 4560,
+   "y": 3320,
+   "w": 1362,
+   "h": 2325,
+   "title": "TR-02 New translation \u00b7 Mobile",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-Script.dc.html": {
+   "x": 0,
+   "y": 6105,
+   "w": 1440,
+   "h": 1100,
+   "title": "TR-03 Script review \u00b7 Filled",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-Script-Editing.dc.html": {
+   "x": 1520,
+   "y": 6105,
+   "w": 1440,
+   "h": 1100,
+   "title": "TR-03 Script review \u00b7 Editing a line",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-Script-Toolong.dc.html": {
+   "x": 3040,
+   "y": 6105,
+   "w": 1440,
+   "h": 1100,
+   "title": "TR-03 Script review \u00b7 Line too long",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-Script-Mobile.dc.html": {
+   "x": 4560,
+   "y": 6105,
+   "w": 1362,
+   "h": 2230,
+   "title": "TR-03 Script review \u00b7 Mobile",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-Versions.dc.html": {
+   "x": 0,
+   "y": 8795,
+   "w": 1440,
+   "h": 1050,
+   "title": "TR-04 Language versions \u00b7 Filled",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-Versions-Rendering.dc.html": {
+   "x": 1520,
+   "y": 8795,
+   "w": 1440,
+   "h": 1050,
+   "title": "TR-04 Language versions \u00b7 Rendering",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-Versions-Failed.dc.html": {
+   "x": 3040,
+   "y": 8795,
+   "w": 1440,
+   "h": 1050,
+   "title": "TR-04 Language versions \u00b7 One language failed",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "Translate-Versions-Mobile.dc.html": {
+   "x": 4560,
+   "y": 8795,
+   "w": 1362,
+   "h": 2135,
+   "title": "TR-04 Language versions \u00b7 Mobile",
+   "page": "translate",
+   "expand": "fill"
+  },
+  "VoiceLab.dc.html": {
+   "x": 0,
+   "y": 820,
+   "w": 1440,
+   "h": 1000,
+   "title": "VL-01 Voice Lab \u00b7 Filled",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Empty.dc.html": {
+   "x": 1520,
+   "y": 820,
+   "w": 1440,
+   "h": 1000,
+   "title": "VL-01 Voice Lab \u00b7 Empty",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Loading.dc.html": {
+   "x": 3040,
+   "y": 820,
+   "w": 1440,
+   "h": 1000,
+   "title": "VL-01 Voice Lab \u00b7 Loading",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Mobile.dc.html": {
+   "x": 4560,
+   "y": 820,
+   "w": 1362,
+   "h": 2040,
+   "title": "VL-01 Voice Lab \u00b7 Mobile",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Clone.dc.html": {
+   "x": 0,
+   "y": 3320,
+   "w": 1440,
+   "h": 1000,
+   "title": "VL-02 Clone my voice \u00b7 Filled",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Clone-Mic.dc.html": {
+   "x": 1520,
+   "y": 3320,
+   "w": 1440,
+   "h": 1000,
+   "title": "VL-02 Clone my voice \u00b7 Mic permission",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Clone-Noisy.dc.html": {
+   "x": 3040,
+   "y": 3320,
+   "w": 1440,
+   "h": 1000,
+   "title": "VL-02 Clone my voice \u00b7 Too noisy",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Clone-Noconsent.dc.html": {
+   "x": 4560,
+   "y": 3320,
+   "w": 1440,
+   "h": 1000,
+   "title": "VL-02 Clone my voice \u00b7 Consent line missing",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Clone-Processing.dc.html": {
+   "x": 6080,
+   "y": 3320,
+   "w": 1440,
+   "h": 1000,
+   "title": "VL-02 Clone my voice \u00b7 Processing",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Clone-Ready.dc.html": {
+   "x": 7600,
+   "y": 3320,
+   "w": 1440,
+   "h": 1000,
+   "title": "VL-02 Clone my voice \u00b7 Ready",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Clone-Mobile.dc.html": {
+   "x": 9120,
+   "y": 3320,
+   "w": 2676,
+   "h": 2040,
+   "title": "VL-02 Clone my voice \u00b7 Mobile",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Change.dc.html": {
+   "x": 0,
+   "y": 5820,
+   "w": 1440,
+   "h": 1000,
+   "title": "VL-03 Change a voice \u00b7 Filled",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Change-Rendering.dc.html": {
+   "x": 1520,
+   "y": 5820,
+   "w": 1440,
+   "h": 1000,
+   "title": "VL-03 Change a voice \u00b7 Rendering",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Change-Done.dc.html": {
+   "x": 3040,
+   "y": 5820,
+   "w": 1440,
+   "h": 1000,
+   "title": "VL-03 Change a voice \u00b7 Done",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Change-Mobile.dc.html": {
+   "x": 4560,
+   "y": 5820,
+   "w": 1362,
+   "h": 2040,
+   "title": "VL-03 Change a voice \u00b7 Mobile",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Tts.dc.html": {
+   "x": 0,
+   "y": 8320,
+   "w": 1440,
+   "h": 950,
+   "title": "VL-04 Text to voice \u00b7 Filled",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Tts-Generating.dc.html": {
+   "x": 1520,
+   "y": 8320,
+   "w": 1440,
+   "h": 950,
+   "title": "VL-04 Text to voice \u00b7 Generating",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Tts-Mobile.dc.html": {
+   "x": 3040,
+   "y": 8320,
+   "w": 924,
+   "h": 1945,
+   "title": "VL-04 Text to voice \u00b7 Mobile",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Request.dc.html": {
+   "x": 0,
+   "y": 10725,
+   "w": 1440,
+   "h": 1150,
+   "title": "VL-05 Request a voice \u00b7 Filled",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Request-Sent.dc.html": {
+   "x": 1520,
+   "y": 10725,
+   "w": 1440,
+   "h": 1150,
+   "title": "VL-05 Request a voice \u00b7 Invite sent",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Request-Declined.dc.html": {
+   "x": 3040,
+   "y": 10725,
+   "w": 1440,
+   "h": 1150,
+   "title": "VL-05 Request a voice \u00b7 Declined",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "VoiceLab-Request-Mobile.dc.html": {
+   "x": 4560,
+   "y": 10725,
+   "w": 1362,
+   "h": 2325,
+   "title": "VL-05 Request a voice \u00b7 Mobile",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "Likeness.dc.html": {
+   "x": 0,
+   "y": 13510,
+   "w": 1440,
+   "h": 1100,
+   "title": "ST-10 Likeness and voice \u00b7 Filled",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "Likeness-Empty.dc.html": {
+   "x": 1520,
+   "y": 13510,
+   "w": 1440,
+   "h": 950,
+   "title": "ST-10 Likeness and voice \u00b7 Empty",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "Likeness-Loading.dc.html": {
+   "x": 3040,
+   "y": 13510,
+   "w": 1440,
+   "h": 1100,
+   "title": "ST-10 Likeness and voice \u00b7 Loading",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "Likeness-Verify.dc.html": {
+   "x": 4560,
+   "y": 13510,
+   "w": 1440,
+   "h": 1100,
+   "title": "ST-10 Likeness and voice \u00b7 Verify likeness",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "Likeness-Revoke.dc.html": {
+   "x": 6080,
+   "y": 13510,
+   "w": 1440,
+   "h": 1100,
+   "title": "ST-10 Likeness and voice \u00b7 Revoke access",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "Likeness-Incoming.dc.html": {
+   "x": 7600,
+   "y": 13510,
+   "w": 1440,
+   "h": 1100,
+   "title": "ST-10 Likeness and voice \u00b7 Incoming request",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "Likeness-Mobile.dc.html": {
+   "x": 9120,
+   "y": 13510,
+   "w": 2676,
+   "h": 2230,
+   "title": "ST-10 Likeness and voice \u00b7 Mobile",
+   "page": "voicelab",
+   "expand": "fill"
+  },
+  "Generate.dc.html": {
+   "x": 0,
+   "y": 820,
+   "w": 1440,
+   "h": 1350,
+   "title": "GE-01 Generate \u00b7 Filled",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Empty.dc.html": {
+   "x": 1520,
+   "y": 820,
+   "w": 1440,
+   "h": 1250,
+   "title": "GE-01 Generate \u00b7 Empty",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Loading.dc.html": {
+   "x": 3040,
+   "y": 820,
+   "w": 1440,
+   "h": 1350,
+   "title": "GE-01 Generate \u00b7 Loading",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Mobile.dc.html": {
+   "x": 4560,
+   "y": 820,
+   "w": 1362,
+   "h": 2705,
+   "title": "GE-01 Generate \u00b7 Mobile",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Compose.dc.html": {
+   "x": 0,
+   "y": 3985,
+   "w": 1440,
+   "h": 1150,
+   "title": "GE-02 Prompt composer \u00b7 Filled",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Compose-Estimate.dc.html": {
+   "x": 1520,
+   "y": 3985,
+   "w": 1440,
+   "h": 1150,
+   "title": "GE-02 Prompt composer \u00b7 Estimate",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Compose-Blocked.dc.html": {
+   "x": 3040,
+   "y": 3985,
+   "w": 1440,
+   "h": 1150,
+   "title": "GE-02 Prompt composer \u00b7 Blocked prompt",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Compose-Mobile.dc.html": {
+   "x": 4560,
+   "y": 3985,
+   "w": 1362,
+   "h": 2325,
+   "title": "GE-02 Prompt composer \u00b7 Mobile",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Results.dc.html": {
+   "x": 0,
+   "y": 6770,
+   "w": 1440,
+   "h": 1150,
+   "title": "GE-03 Results \u00b7 Filled",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Results-Generating.dc.html": {
+   "x": 1520,
+   "y": 6770,
+   "w": 1440,
+   "h": 1150,
+   "title": "GE-03 Results \u00b7 Generating",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Results-Failed.dc.html": {
+   "x": 3040,
+   "y": 6770,
+   "w": 1440,
+   "h": 1150,
+   "title": "GE-03 Results \u00b7 One failed",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Results-Mobile.dc.html": {
+   "x": 4560,
+   "y": 6770,
+   "w": 1362,
+   "h": 2325,
+   "title": "GE-03 Results \u00b7 Mobile",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Characters.dc.html": {
+   "x": 0,
+   "y": 9555,
+   "w": 1440,
+   "h": 950,
+   "title": "GE-04 Characters \u00b7 Filled",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Characters-Empty.dc.html": {
+   "x": 1520,
+   "y": 9555,
+   "w": 1440,
+   "h": 950,
+   "title": "GE-04 Characters \u00b7 Empty",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Characters-Create.dc.html": {
+   "x": 3040,
+   "y": 9555,
+   "w": 1440,
+   "h": 950,
+   "title": "GE-04 Characters \u00b7 Create a character",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Characters-Mobile.dc.html": {
+   "x": 4560,
+   "y": 9555,
+   "w": 1362,
+   "h": 1945,
+   "title": "GE-04 Characters \u00b7 Mobile",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Storyboard.dc.html": {
+   "x": 0,
+   "y": 11960,
+   "w": 1440,
+   "h": 950,
+   "title": "GE-05 Storyboard \u00b7 Filled",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Storyboard-Generating.dc.html": {
+   "x": 1520,
+   "y": 11960,
+   "w": 1440,
+   "h": 950,
+   "title": "GE-05 Storyboard \u00b7 Generating all",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Generate-Storyboard-Mobile.dc.html": {
+   "x": 3040,
+   "y": 11960,
+   "w": 924,
+   "h": 1945,
+   "title": "GE-05 Storyboard \u00b7 Mobile",
+   "page": "generate",
+   "expand": "fill"
+  },
+  "Transform.dc.html": {
+   "x": 0,
+   "y": 820,
+   "w": 1440,
+   "h": 1150,
+   "title": "TF-01 Transform camera \u00b7 Filled",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Permission.dc.html": {
+   "x": 1520,
+   "y": 820,
+   "w": 1440,
+   "h": 1150,
+   "title": "TF-01 Transform camera \u00b7 Camera permission",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Denied.dc.html": {
+   "x": 3040,
+   "y": 820,
+   "w": 1440,
+   "h": 1150,
+   "title": "TF-01 Transform camera \u00b7 Permission denied",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Nocam.dc.html": {
+   "x": 4560,
+   "y": 820,
+   "w": 1440,
+   "h": 1150,
+   "title": "TF-01 Transform camera \u00b7 No camera",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Recording.dc.html": {
+   "x": 6080,
+   "y": 820,
+   "w": 1440,
+   "h": 1150,
+   "title": "TF-01 Transform camera \u00b7 Recording",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Layer.dc.html": {
+   "x": 7600,
+   "y": 820,
+   "w": 1440,
+   "h": 1150,
+   "title": "TF-01 Transform camera \u00b7 Layer sheet open",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Slow.dc.html": {
+   "x": 9120,
+   "y": 820,
+   "w": 1440,
+   "h": 1150,
+   "title": "TF-01 Transform camera \u00b7 Device too slow",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Mobile.dc.html": {
+   "x": 10640,
+   "y": 820,
+   "w": 3114,
+   "h": 2325,
+   "title": "TF-01 Transform camera \u00b7 Mobile",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Looks.dc.html": {
+   "x": 0,
+   "y": 3605,
+   "w": 1440,
+   "h": 1000,
+   "title": "TF-02 Look picker \u00b7 Filled",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Looks-Blocked.dc.html": {
+   "x": 1520,
+   "y": 3605,
+   "w": 1440,
+   "h": 1000,
+   "title": "TF-02 Look picker \u00b7 Blocked: real person",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Looks-Request.dc.html": {
+   "x": 3040,
+   "y": 3605,
+   "w": 1440,
+   "h": 1000,
+   "title": "TF-02 Look picker \u00b7 Request a likeness",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Looks-Mobile.dc.html": {
+   "x": 4560,
+   "y": 3605,
+   "w": 1362,
+   "h": 2040,
+   "title": "TF-02 Look picker \u00b7 Mobile",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Props.dc.html": {
+   "x": 0,
+   "y": 6105,
+   "w": 1440,
+   "h": 1000,
+   "title": "TF-03 Prop and scene swap \u00b7 Filled",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Props-Generating.dc.html": {
+   "x": 1520,
+   "y": 6105,
+   "w": 1440,
+   "h": 1000,
+   "title": "TF-03 Prop and scene swap \u00b7 Swapping",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Props-Swapped.dc.html": {
+   "x": 3040,
+   "y": 6105,
+   "w": 1440,
+   "h": 1000,
+   "title": "TF-03 Prop and scene swap \u00b7 Swapped",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Props-Mobile.dc.html": {
+   "x": 4560,
+   "y": 6105,
+   "w": 1362,
+   "h": 2040,
+   "title": "TF-03 Prop and scene swap \u00b7 Mobile",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Video.dc.html": {
+   "x": 0,
+   "y": 8605,
+   "w": 1440,
+   "h": 1000,
+   "title": "TF-04 Transform a video \u00b7 Filled",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Video-Estimate.dc.html": {
+   "x": 1520,
+   "y": 8605,
+   "w": 1440,
+   "h": 1000,
+   "title": "TF-04 Transform a video \u00b7 Estimate",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Video-Rendering.dc.html": {
+   "x": 3040,
+   "y": 8605,
+   "w": 1440,
+   "h": 1000,
+   "title": "TF-04 Transform a video \u00b7 Rendering",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Video-Mobile.dc.html": {
+   "x": 4560,
+   "y": 8605,
+   "w": 1362,
+   "h": 2040,
+   "title": "TF-04 Transform a video \u00b7 Mobile",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Review.dc.html": {
+   "x": 0,
+   "y": 11105,
+   "w": 1440,
+   "h": 950,
+   "title": "TF-05 Result review \u00b7 Filled",
+   "page": "transform",
+   "expand": "fill"
+  },
+  "Transform-Review-Mobile.dc.html": {
+   "x": 1520,
+   "y": 11105,
+   "w": 486,
+   "h": 1945,
+   "title": "TF-05 Result review \u00b7 Mobile",
+   "page": "transform",
+   "expand": "fill"
+  }
+ },
+ "order": [
+  "Editor.dc.html",
+  "Editor-Empty.dc.html",
+  "Editor-Loading.dc.html",
+  "Editor-Storage.dc.html",
+  "Editor-Mobile.dc.html",
+  "Editor-Workspace.dc.html",
+  "Editor-Workspace-Loading.dc.html",
+  "Editor-Workspace-Empty.dc.html",
+  "Editor-Workspace-Captions.dc.html",
+  "Editor-Workspace-Ai.dc.html",
+  "Editor-Workspace-Preview.dc.html",
+  "Editor-Workspace-Unsaved.dc.html",
+  "Editor-Workspace-Offline.dc.html",
+  "Editor-Workspace-Mobile.dc.html",
+  "Editor-Export.dc.html",
+  "Editor-Export-Rendering.dc.html",
+  "Editor-Export-Done.dc.html",
+  "Editor-Export-Failed.dc.html",
+  "Editor-Export-Mobile.dc.html",
+  "Editor-Templates.dc.html",
+  "Editor-Templates-Loading.dc.html",
+  "Editor-Templates-Applying.dc.html",
+  "Editor-Templates-Mobile.dc.html",
+  "Translate.dc.html",
+  "Translate-Empty.dc.html",
+  "Translate-Loading.dc.html",
+  "Translate-Mobile.dc.html",
+  "Translate-New.dc.html",
+  "Translate-New-Noconsent.dc.html",
+  "Translate-New-Estimate.dc.html",
+  "Translate-New-Mobile.dc.html",
+  "Translate-Script.dc.html",
+  "Translate-Script-Editing.dc.html",
+  "Translate-Script-Toolong.dc.html",
+  "Translate-Script-Mobile.dc.html",
+  "Translate-Versions.dc.html",
+  "Translate-Versions-Rendering.dc.html",
+  "Translate-Versions-Failed.dc.html",
+  "Translate-Versions-Mobile.dc.html",
+  "VoiceLab.dc.html",
+  "VoiceLab-Empty.dc.html",
+  "VoiceLab-Loading.dc.html",
+  "VoiceLab-Mobile.dc.html",
+  "VoiceLab-Clone.dc.html",
+  "VoiceLab-Clone-Mic.dc.html",
+  "VoiceLab-Clone-Noisy.dc.html",
+  "VoiceLab-Clone-Noconsent.dc.html",
+  "VoiceLab-Clone-Processing.dc.html",
+  "VoiceLab-Clone-Ready.dc.html",
+  "VoiceLab-Clone-Mobile.dc.html",
+  "VoiceLab-Change.dc.html",
+  "VoiceLab-Change-Rendering.dc.html",
+  "VoiceLab-Change-Done.dc.html",
+  "VoiceLab-Change-Mobile.dc.html",
+  "VoiceLab-Tts.dc.html",
+  "VoiceLab-Tts-Generating.dc.html",
+  "VoiceLab-Tts-Mobile.dc.html",
+  "VoiceLab-Request.dc.html",
+  "VoiceLab-Request-Sent.dc.html",
+  "VoiceLab-Request-Declined.dc.html",
+  "VoiceLab-Request-Mobile.dc.html",
+  "Likeness.dc.html",
+  "Likeness-Empty.dc.html",
+  "Likeness-Loading.dc.html",
+  "Likeness-Verify.dc.html",
+  "Likeness-Revoke.dc.html",
+  "Likeness-Incoming.dc.html",
+  "Likeness-Mobile.dc.html",
+  "Generate.dc.html",
+  "Generate-Empty.dc.html",
+  "Generate-Loading.dc.html",
+  "Generate-Mobile.dc.html",
+  "Generate-Compose.dc.html",
+  "Generate-Compose-Estimate.dc.html",
+  "Generate-Compose-Blocked.dc.html",
+  "Generate-Compose-Mobile.dc.html",
+  "Generate-Results.dc.html",
+  "Generate-Results-Generating.dc.html",
+  "Generate-Results-Failed.dc.html",
+  "Generate-Results-Mobile.dc.html",
+  "Generate-Characters.dc.html",
+  "Generate-Characters-Empty.dc.html",
+  "Generate-Characters-Create.dc.html",
+  "Generate-Characters-Mobile.dc.html",
+  "Generate-Storyboard.dc.html",
+  "Generate-Storyboard-Generating.dc.html",
+  "Generate-Storyboard-Mobile.dc.html",
+  "Transform.dc.html",
+  "Transform-Permission.dc.html",
+  "Transform-Denied.dc.html",
+  "Transform-Nocam.dc.html",
+  "Transform-Recording.dc.html",
+  "Transform-Layer.dc.html",
+  "Transform-Slow.dc.html",
+  "Transform-Mobile.dc.html",
+  "Transform-Looks.dc.html",
+  "Transform-Looks-Blocked.dc.html",
+  "Transform-Looks-Request.dc.html",
+  "Transform-Looks-Mobile.dc.html",
+  "Transform-Props.dc.html",
+  "Transform-Props-Generating.dc.html",
+  "Transform-Props-Swapped.dc.html",
+  "Transform-Props-Mobile.dc.html",
+  "Transform-Video.dc.html",
+  "Transform-Video-Estimate.dc.html",
+  "Transform-Video-Rendering.dc.html",
+  "Transform-Video-Mobile.dc.html",
+  "Transform-Review.dc.html",
+  "Transform-Review-Mobile.dc.html"
+ ],
+ "notes": {
+  "legend_editor": {
+   "x": 0,
+   "y": 0,
+   "text": "4a \u00b7 Editor \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "editor"
+  },
+  "n_ED_01": {
+   "x": 0,
+   "y": 520,
+   "text": "ED-01 Editor projects",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "editor",
+   "w": 240
+  },
+  "n_ED_02": {
+   "x": 0,
+   "y": 3020,
+   "text": "ED-02 Editor workspace",
+   "kind": "title1",
+   "maxW": 15712,
+   "page": "editor",
+   "w": 240
+  },
+  "n_ED_03": {
+   "x": 0,
+   "y": 5995,
+   "text": "ED-03 Export",
+   "kind": "title1",
+   "maxW": 7880,
+   "page": "editor",
+   "w": 240
+  },
+  "n_ED_04": {
+   "x": 0,
+   "y": 8970,
+   "text": "ED-04 Templates",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "editor",
+   "w": 240
+  },
+  "legend_translate": {
+   "x": 0,
+   "y": 0,
+   "text": "4b \u00b7 Translate \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "translate"
+  },
+  "n_TR_01": {
+   "x": 0,
+   "y": 520,
+   "text": "TR-01 Translate home",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "translate",
+   "w": 240
+  },
+  "n_TR_02": {
+   "x": 0,
+   "y": 3020,
+   "text": "TR-02 New translation",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "translate",
+   "w": 240
+  },
+  "n_TR_03": {
+   "x": 0,
+   "y": 5805,
+   "text": "TR-03 Script review",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "translate",
+   "w": 240
+  },
+  "n_TR_04": {
+   "x": 0,
+   "y": 8495,
+   "text": "TR-04 Language versions",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "translate",
+   "w": 240
+  },
+  "legend_voicelab": {
+   "x": 0,
+   "y": 0,
+   "text": "4c \u00b7 Voice Lab & consent \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "voicelab"
+  },
+  "n_VL_01": {
+   "x": 0,
+   "y": 520,
+   "text": "VL-01 Voice Lab",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "voicelab",
+   "w": 240
+  },
+  "n_VL_02": {
+   "x": 0,
+   "y": 3020,
+   "text": "VL-02 Clone my voice",
+   "kind": "title1",
+   "maxW": 11796,
+   "page": "voicelab",
+   "w": 240
+  },
+  "n_VL_03": {
+   "x": 0,
+   "y": 5520,
+   "text": "VL-03 Change a voice",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "voicelab",
+   "w": 240
+  },
+  "n_VL_04": {
+   "x": 0,
+   "y": 8020,
+   "text": "VL-04 Text to voice",
+   "kind": "title1",
+   "maxW": 3964,
+   "page": "voicelab",
+   "w": 240
+  },
+  "n_VL_05": {
+   "x": 0,
+   "y": 10425,
+   "text": "VL-05 Request a voice",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "voicelab",
+   "w": 240
+  },
+  "n_ST_10": {
+   "x": 0,
+   "y": 13210,
+   "text": "ST-10 Likeness and voice",
+   "kind": "title1",
+   "maxW": 11796,
+   "page": "voicelab",
+   "w": 240
+  },
+  "legend_generate": {
+   "x": 0,
+   "y": 0,
+   "text": "4d \u00b7 Generate \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "generate"
+  },
+  "n_GE_01": {
+   "x": 0,
+   "y": 520,
+   "text": "GE-01 Generate",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "generate",
+   "w": 240
+  },
+  "n_GE_02": {
+   "x": 0,
+   "y": 3685,
+   "text": "GE-02 Prompt composer",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "generate",
+   "w": 240
+  },
+  "n_GE_03": {
+   "x": 0,
+   "y": 6470,
+   "text": "GE-03 Results",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "generate",
+   "w": 240
+  },
+  "n_GE_04": {
+   "x": 0,
+   "y": 9255,
+   "text": "GE-04 Characters",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "generate",
+   "w": 240
+  },
+  "n_GE_05": {
+   "x": 0,
+   "y": 11660,
+   "text": "GE-05 Storyboard",
+   "kind": "title1",
+   "maxW": 3964,
+   "page": "generate",
+   "w": 240
+  },
+  "legend_transform": {
+   "x": 0,
+   "y": 0,
+   "text": "4e \u00b7 Transform \u2014 Each row is one screen. Left: its desktop states (1440 px) in order: filled, empty, loading, then edge states. Right: one mobile board (390 px) showing the same states; modals open as bottom sheets on mobile.",
+   "w": 720,
+   "size": "m",
+   "fill": "blue",
+   "page": "transform"
+  },
+  "n_TF_01": {
+   "x": 0,
+   "y": 520,
+   "text": "TF-01 Transform camera",
+   "kind": "title1",
+   "maxW": 13754,
+   "page": "transform",
+   "w": 240
+  },
+  "n_TF_02": {
+   "x": 0,
+   "y": 3305,
+   "text": "TF-02 Look picker",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "transform",
+   "w": 240
+  },
+  "n_TF_03": {
+   "x": 0,
+   "y": 5805,
+   "text": "TF-03 Prop and scene swap",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "transform",
+   "w": 240
+  },
+  "n_TF_04": {
+   "x": 0,
+   "y": 8305,
+   "text": "TF-04 Transform a video",
+   "kind": "title1",
+   "maxW": 5922,
+   "page": "transform",
+   "w": 240
+  },
+  "n_TF_05": {
+   "x": 0,
+   "y": 10805,
+   "text": "TF-05 Result review",
+   "kind": "title1",
+   "maxW": 2006,
+   "page": "transform",
+   "w": 240
+  },
+  "studio_link": {
+   "x": 800,
+   "y": 0,
+   "text": "Part of the Nelio design. The rest of the app (Command Center, Clipping Studio, publishing, settings\u2026) lives on the main canvas: https://claude.ai/artifact/5rE8YAdMngxLvgf5GsdPKu",
+   "w": 520,
+   "size": "m",
+   "fill": "teal",
+   "page": "editor"
+  }
+ },
+ "designSystems": []
+}
