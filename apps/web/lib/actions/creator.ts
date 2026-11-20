@@ -1,6 +1,6 @@
 "use server";
 
-import { PART_SIZE, abortMultipart, completeMultipart, db, headObject, isStorageConfigured, notify, signParts, startMultipart, storageKeys } from "@nelio/db";
+import { PART_SIZE, abortMultipart, completeMultipart, db, headObject, isStorageConfigured, notify, signParts, startMultipart, stopLicense, storageKeys } from "@nelio/db";
 import { ACCEPTED_TYPES, ATTRIBUTION_MAX, EXPIRY_CHOICES, LICENSE_EDITS, LICENSE_PLATFORMS, LICENSE_USES, checkUpload, expiresAtFor, parseChannelLink, validateTerms, videoTypeFor } from "@nelio/domain";
 import { randomBytes } from "node:crypto";
 import { revalidatePath } from "next/cache";
@@ -255,4 +255,18 @@ export async function requestManualCheckAction(input: { platform: "youtube" | "i
   await client.auditEvent.create({ data: { actorUserId: c.userId, action: "creator_channel.manual_check_requested", targetType: "creator_channel", targetId: row.id, metadata: { platform: input.platform } } });
   revalidatePath("/creator", "layout");
   return { ok: true, code };
+}
+
+// ------------------------------------------------------------------ LI-09 Revoke a licence
+
+/** Revokes one of the creator’s active licences. New use stops at once; scheduled posts are held, published ones flagged. */
+export async function revokeLicenseAction(agreementId: string, reason: string): Promise<{ ok: true; who: string; held: number; flagged: number } | Fail> {
+  const c = await creator();
+  if ("ok" in c) return c;
+  const a = await db().licenseAgreement.findFirst({ where: { id: agreementId, creatorId: c.creatorId, status: "active" }, select: { id: true, workspace: { select: { name: true } } } });
+  if (!a) return { ok: false, error: "That license isn’t active any more." };
+  const r = await db().$transaction((tx) => stopLicense(tx, { agreementId: a.id, why: "revoked", reason: reason.slice(0, 500), actorUserId: c.userId }), { timeout: 30_000 });
+  if (!r) return { ok: false, error: "That license isn’t active any more." };
+  revalidatePath("/creator", "layout");
+  return { ok: true, who: a.workspace.name, held: r.held, flagged: r.flagged };
 }

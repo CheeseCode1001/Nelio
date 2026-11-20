@@ -190,3 +190,37 @@ export async function importLicensedVideoAction(slug: string, creatorVideoId: st
   revalidatePath(`/w/${slug}/media`);
   return { ok: true, assetId: asset.id };
 }
+
+// ------------------------------------------------------------------ LI-04 Affected by a revocation
+
+async function heldPost(slug: string): Promise<Fail | { session: Session; ws: WorkspaceSummary }> {
+  const session = await getSession();
+  if (!session || session.user.needsMfa) return { ok: false, error: "Please sign in again." };
+  const ws = await findWorkspaceFor(db(), session.actor, slug);
+  if (!ws) return { ok: false, error: "You don’t have permission to do that here." };
+  const d = can(session.actor, "publish.schedule", ws);
+  if (!d.allowed || d.access === "R" || d.access === "V") return { ok: false, error: "You don’t have permission to change scheduled posts." };
+  return { session, ws };
+}
+
+/** “Remove from schedule”: a held post goes back to drafts. */
+export async function removeFromScheduleAction(slug: string, postId: string): Promise<{ ok: true } | Fail> {
+  const g = await heldPost(slug);
+  if ("ok" in g) return g;
+  const r = await db().post.updateMany({ where: { id: postId, workspaceId: g.ws.workspaceId, state: "on_hold" }, data: { state: "draft" } });
+  if (!r.count) return { ok: false, error: "That post isn’t on hold any more." };
+  await db().auditEvent.create({ data: { orgId: g.ws.orgId, workspaceId: g.ws.workspaceId, actorUserId: g.session.user.id, action: "post.unscheduled_after_license", targetType: "post", targetId: postId } });
+  revalidatePath(`/w/${slug}/licensing/mine`);
+  return { ok: true };
+}
+
+/** Takedown checklist: the person confirms the published post was taken down on the platform. */
+export async function confirmTakedownAction(slug: string, postId: string): Promise<{ ok: true } | Fail> {
+  const g = await heldPost(slug);
+  if ("ok" in g) return g;
+  const r = await db().post.updateMany({ where: { id: postId, workspaceId: g.ws.workspaceId, rightsFlag: "review" }, data: { rightsFlag: "taken_down" } });
+  if (!r.count) return { ok: false, error: "That post was already reviewed." };
+  await db().auditEvent.create({ data: { orgId: g.ws.orgId, workspaceId: g.ws.workspaceId, actorUserId: g.session.user.id, action: "post.taken_down_after_license", targetType: "post", targetId: postId } });
+  revalidatePath(`/w/${slug}/licensing/mine`);
+  return { ok: true };
+}

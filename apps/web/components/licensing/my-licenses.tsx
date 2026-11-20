@@ -1,9 +1,52 @@
 "use client";
 
-import { Banner, ButtonLink, Card, CardHead, Chip, EmptyState, Icon, Motion, PageHead, PersonAvatar, RowCard, RowCardList, RowCardSkeleton, Sk } from "@nelio/ui";
+import { Banner, Button, ButtonLink, Card, CardHead, Chip, EmptyState, Icon, Motion, PageHead, PersonAvatar, RowCard, RowCardList, RowCardSkeleton, Sk } from "@nelio/ui";
 import Link from "next/link";
-import type { ReactNode } from "react";
-import type { LicenseRow, MyLicensesData } from "@/lib/licensing";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { toast } from "@/components/feedback/toaster";
+import { confirmTakedownAction, removeFromScheduleAction } from "@/lib/actions/licensing";
+import type { AffectedPost, LicenseRow, MyLicensesData } from "@/lib/licensing";
+import { ResponsiveDialog } from "@nelio/ui";
+
+const STEPS = [
+  "Open the post on the platform where it’s published.",
+  "Delete or archive it (on Instagram: ··· › Delete; on YouTube Shorts: Studio › Content › Delete forever).",
+  "Remove it anywhere else you shared it, such as stories, highlights or playlists.",
+];
+
+/** “Remove from schedule” for held posts, and the takedown checklist for flagged published posts. */
+function AffectedActions({ a, slug }: { a: AffectedPost; slug?: string }) {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [pending, start] = useTransition();
+  const run = (fn: () => Promise<{ ok: boolean; error?: string }>, done: string) => {
+    if (!slug) { setOpen(false); return; }
+    start(async () => {
+      const r = await fn();
+      if (!r.ok) toast.error("That didn’t work", { description: "error" in r ? r.error : undefined });
+      else toast.success(done);
+      setOpen(false);
+      router.refresh();
+    });
+  };
+  if (!a.flagged) return <Button variant="secondary" size="sm" loading={pending} onClick={() => run(() => removeFromScheduleAction(slug!, a.id), "Moved back to drafts")}>Remove from schedule</Button>;
+  return (
+    <>
+      <Button variant="secondary" size="sm" onClick={() => setOpen(true)}>Open takedown checklist</Button>
+      <ResponsiveDialog open={open} onOpenChange={setOpen} title="Take down this post" description={a.title} maxWidth={520}>
+        <div className="flex flex-col gap-3.5">
+          <ol className="m-0 flex list-decimal flex-col gap-2 pl-5 text-sm text-text">{STEPS.map((s) => <li key={s}>{s}</li>)}</ol>
+          <p className="m-0 text-[13px] text-muted">Nelio can’t remove posts from platforms for you yet. Confirm once it’s down so the owner’s usage audit stays accurate.</p>
+          <div className="flex flex-wrap justify-end gap-2.5">
+            <Button variant="secondary" onClick={() => setOpen(false)}>Not yet</Button>
+            <Button variant="primary" loading={pending} onClick={() => run(() => confirmTakedownAction(slug!, a.id), "Marked as taken down")}>It’s taken down</Button>
+          </div>
+        </div>
+      </ResponsiveDialog>
+    </>
+  );
+}
 
 const TYPE_CHIP = { free: { tone: "ok", label: "Free" }, private: { tone: "blue", label: "Private" }, paid: { tone: "neutral", label: "Paid" } } as const;
 const STATUS_TONE: Record<LicenseRow["status"]["kind"], "blue" | "warn" | "err" | "neutral" | "ok"> = { active: "blue", expiring: "warn", expired: "err", revoked: "err", suspended: "warn", requested: "neutral", declined: "neutral", canceled: "neutral" };
@@ -14,7 +57,7 @@ export interface MyLicensesHrefs { marketplace: string; sourceBase: string; affe
  * LI-04 My licenses: Filled (with the revocation banner and affected content), Empty, Loading and Expired.
  * "Remove from schedule" and the takedown checklist act on held posts (rights recheck, slice 6).
  */
-export function MyLicenses({ d, hrefs, affectedActions }: { d: MyLicensesData; hrefs: MyLicensesHrefs; affectedActions?: (id: string) => ReactNode }) {
+export function MyLicenses({ d, hrefs, slug }: { d: MyLicensesData; hrefs: MyLicensesHrefs; slug?: string }) {
   const head = <PageHead eyebrow="Licensing" title="My licenses" actions={<ButtonLink href={hrefs.marketplace} variant="secondary">Browse marketplace</ButtonLink>} />;
   if (!d.rows.length) {
     return (
@@ -66,7 +109,7 @@ export function MyLicenses({ d, hrefs, affectedActions }: { d: MyLicensesData; h
                   <div className="truncate text-sm font-semibold text-text">{a.title}</div>
                   <div className="text-[13px] text-muted">{a.line}</div>
                 </div>
-                {affectedActions?.(a.id)}
+                <AffectedActions a={a} slug={slug} />
               </li>
             ))}
           </ul>

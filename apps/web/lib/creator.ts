@@ -199,3 +199,73 @@ export async function loadVerification(c: CreatorContext, youtubeReady: boolean)
       }),
   };
 }
+
+// ------------------------------------------------------------------ LI-08 Usage audit
+
+export const USAGE_TABS = ["all", "published", "scheduled", "on_hold"] as const;
+export type UsageTab = (typeof USAGE_TABS)[number];
+export interface UsageRow { id: string; who: string; video: string; clip: string; platform: "ig" | "yt" | "tt" | "fb" | null; platformName: string; status: "published" | "scheduled" | "on_hold"; held: "revoked" | "expired" | null; when: string }
+
+export async function loadUsage(c: CreatorContext, tab: UsageTab, take = 200): Promise<{ rows: UsageRow[]; tab: UsageTab; any: boolean }> {
+  const client = db();
+  type S = "published" | "scheduled" | "needs_approval" | "on_hold";
+  const states: S[] = tab === "published" ? ["published"] : tab === "scheduled" ? ["scheduled", "needs_approval"] : tab === "on_hold" ? ["on_hold"] : ["published", "scheduled", "needs_approval", "on_hold"];
+  const where = { render: { project: { asset: { license: { creatorId: c.creatorId } } } } };
+  const [posts, any] = await Promise.all([
+    client.post.findMany({
+      where: { ...where, state: { in: states } },
+      orderBy: { updatedAt: "desc" },
+      take,
+      select: { id: true, state: true, platforms: true, updatedAt: true, render: { select: { project: { select: { name: true, asset: { select: { filename: true, creatorVideoId: true, workspace: { select: { name: true } }, license: { select: { status: true } } } } } } } } },
+    }),
+    client.post.count({ where: { ...where, state: { in: ["published", "scheduled", "needs_approval", "on_hold"] } } }),
+  ]);
+  const videoIds = [...new Set(posts.map((p) => p.render?.project.asset.creatorVideoId).filter((x): x is string => Boolean(x)))];
+  const titles = new Map((await client.creatorVideo.findMany({ where: { id: { in: videoIds } }, select: { id: true, title: true } })).map((v) => [v.id, v.title]));
+  const label: Record<string, string> = { instagram: "Instagram", youtube: "YouTube", tiktok: "TikTok", facebook: "Facebook" };
+  const date = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "Africa/Lagos" });
+  return {
+    tab,
+    any: any > 0,
+    rows: posts.map((p) => {
+      const a = p.render!.project.asset;
+      const plat = p.platforms[0] as LicensePlatform | undefined;
+      const st = a.license?.status;
+      return {
+        id: p.id,
+        who: a.workspace.name,
+        video: (a.creatorVideoId && titles.get(a.creatorVideoId)) || a.filename,
+        clip: p.render!.project.name,
+        platform: plat && BADGE[plat] ? BADGE[plat] : null,
+        platformName: plat ? label[plat] ?? plat : "—",
+        status: p.state === "published" ? "published" : p.state === "on_hold" ? "on_hold" : "scheduled",
+        held: p.state === "on_hold" ? (st === "revoked" ? "revoked" : st === "expired" ? "expired" : null) : null,
+        when: date.format(p.updatedAt),
+      };
+    }),
+  };
+}
+
+// ------------------------------------------------------------------ LI-09 Revocations
+
+export interface PastRevocation { id: string; who: string; when: string; held: number; flagged: number }
+export interface ActiveLicense { id: string; who: string; type: LicenseKind; since: string; scheduled: number; published: number }
+export interface RevocationsData { past: PastRevocation[]; active: ActiveLicense[] }
+
+export async function loadRevocations(c: CreatorContext, now = new Date()): Promise<RevocationsData> {
+  const client = db();
+  const day = (d: Date) => new Intl.DateTimeFormat("en-CA", { timeZone: "Africa/Lagos" }).format(d);
+  const date = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "Africa/Lagos" });
+  const [revoked, active] = await Promise.all([
+    client.licenseAgreement.findMany({ where: { creatorId: c.creatorId, status: "revoked" }, orderBy: { revokedAt: "desc" }, take: 50, select: { id: true, revokedAt: true, workspace: { select: { name: true } } } }),
+    client.licenseAgreement.findMany({ where: { creatorId: c.creatorId, status: "active", OR: [{ expiresAt: null }, { expiresAt: { gt: now } }] }, orderBy: { startsAt: "desc" }, take: 100, select: { id: true, type: true, startsAt: true, workspace: { select: { name: true } } } }),
+  ]);
+  const impact = revoked.length ? await client.auditEvent.findMany({ where: { action: "license.revoked", targetId: { in: revoked.map((r) => r.id) } }, select: { targetId: true, metadata: true } }) : [];
+  const byId = new Map(impact.map((i) => [i.targetId!, i.metadata as { held?: number; flagged?: number }]));
+  type S = "scheduled" | "needs_approval" | "published";
+  const count = (id: string, states: S[]) => client.post.count({ where: { state: { in: states }, render: { project: { asset: { licenseAgreementId: id } } } } });
+  return {
+    past: revoked.map((r) => ({ id: r.id, who: r.workspace.name, when: r.revokedAt ? (day(r.revokedAt) === day(now) ? "Today" : date.format(r.revokedAt)) : "—", held: byId.get(r.id)?.held ?? 0, flagged: byId.get(r.id)?.flagged ?? 0 })),
+    active: await Promise.all(active.map(async (a) => ({ id: a.id, who: a.workspace.name, type: a.type, since: a.startsAt ? date.format(a.startsAt) : "—", scheduled: await count(a.id, ["scheduled", "needs_approval"]), published: await count(a.id, ["published"]) }))),
+  };
+}

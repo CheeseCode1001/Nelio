@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { NotBuiltYet } from "@/components/system/not-built";
-import { requireCreator } from "@/lib/creator";
+import { Revocations } from "@/components/creator/revocations";
+import { loadRevocations, requireCreator } from "@/lib/creator";
 
 export const metadata: Metadata = { title: "Revocations" };
 
-/** LI-09 Revoke a license is built later in Milestone 5. */
-export default async function Page() {
-  await requireCreator("/creator/revocations");
-  return <NotBuiltYet title="Revocations" screen="LI-09 Revoke a license" milestone={5} />;
+/** LI-09 Revoke a license. */
+export default async function RevocationsPage() {
+  const c = await requireCreator("/creator/revocations");
+  const d = await loadRevocations(c);
+  return <Revocations d={d} />;
 }

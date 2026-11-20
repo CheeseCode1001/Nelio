@@ -27,6 +27,8 @@ const DEV_PAGES = [
   { href: "/dev/ui/creator", label: "LI-05 states" },
   { href: "/dev/ui/verification", label: "LI-06 states" },
   { href: "/dev/ui/creator-terms", label: "LI-07 states" },
+  { href: "/dev/ui/usage", label: "LI-08 states" },
+  { href: "/dev/ui/revocations", label: "LI-09 states" },
   { href: "/dev/ui/payouts", label: "LI-10 gated" },
 ];
 

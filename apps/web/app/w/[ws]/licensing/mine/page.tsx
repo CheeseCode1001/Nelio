@@ -10,5 +10,5 @@ export default async function MyLicensesRoute({ params }: { params: Promise<{ ws
   const { ws } = await params;
   const { workspace, hrefs } = await requireLicensing(ws);
   const d = await loadMyLicenses(workspace.workspaceId);
-  return <MyLicenses d={d} hrefs={{ marketplace: hrefs.marketplace, sourceBase: hrefs.sourceBase, affected: "#affected" }} />;
+  return <MyLicenses slug={workspace.slug} d={d} hrefs={{ marketplace: hrefs.marketplace, sourceBase: hrefs.sourceBase, affected: "#affected" }} />;
 }
