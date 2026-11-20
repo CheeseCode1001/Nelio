@@ -76,7 +76,7 @@ Fixed during the check: the agent card name link and the tool-tile and draft-car
 | Vendor names in user-facing source | None (235 files scanned) |
 | Gradients | None in product code |
 | Licensing check | 26 / 26 pass. The first run failed once reading a stored video while the type check was loading the machine; the rerun passed. The database driver logs a deprecation warning about overlapping queries on one connection, which comes from inside the driver, not from Nelio code. |
-| Job framework check (Milestone 3) | Not run: the hosted dev Redis only accepts one allow-listed address, and this machine's public address has changed. The Redis instance itself is up. |
+| Job framework check (Milestone 3) | 24 / 24 pass. It first failed because the hosted dev Redis allowed only one address and this machine's address changes often; with the owner's approval the allow list now also covers the provider range 102.91.0.0/16 (connections still need the password). |
 | Pipeline check (Milestone 4) | Not run (spends Nelio AI and transcription credits) |
 | Signed-out access | Every workspace, creator, account, org, admin and onboarding page redirects to log in; the workspaces API answers 401; the YouTube sign-in start and callback refuse without a session; design previews are disabled in production builds |
 | Responsive (133 pages, every state) | 133 / 133 at 375, 768, 1024 and 1440, including a new check that the sticky header stays 69 px. Same accepted exceptions as §3.1 (inline links in running text). |
